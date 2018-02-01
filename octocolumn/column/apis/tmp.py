@@ -51,8 +51,6 @@ class TempCreateView(generics.GenericAPIView,
             user = self.request.user
             data = self.request.data
 
-            param_key = self.request.data.get('id')
-
             # 임시 저장 할 수있는 게시물 제한
             checkcount = self.check_post_count(user)
             if not checkcount:
@@ -71,7 +69,7 @@ class TempCreateView(generics.GenericAPIView,
             # 1. 작성중인 포스트 검색
             # 2. 있다면 업데이트 없다면 생성
 
-            if param_key is not None:
+            if data['id'] is not '':
                 if data['id'] is None:
                     serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                           main_content=data['main_content']))
@@ -93,7 +91,7 @@ class TempCreateView(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
-        if data['pk'] is None:
+        if data['id'] is None:
             return Response({"detail": "Post does not exist."}, status=status.HTTP_200_OK)
         return self.queryset.filter(author=user).delete(id=data['id'])
 
