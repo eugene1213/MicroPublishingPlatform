@@ -51,12 +51,6 @@ class TempCreateView(generics.GenericAPIView,
             user = self.request.user
             data = self.request.data
 
-            # 임시 저장 할 수있는 게시물 제한
-            checkcount = self.check_post_count(user)
-            if not checkcount:
-                return Response({"detail": "This account exceeded the number of articles you could write"},
-                                status=status.HTTP_406_NOT_ACCEPTABLE)
-
             # 1. 작가가 신청되어있는지 확인
             # 2. 작가 활성이 되어있는지를 확인
             author = self.is_author()
@@ -71,6 +65,13 @@ class TempCreateView(generics.GenericAPIView,
 
             if data['id'] is not '':
                 if data['id'] is None:
+
+                    # 임시 저장 할 수있는 게시물 제한
+                    checkcount = self.check_post_count(user)
+                    if not checkcount:
+                        return Response({"detail": "This account exceeded the number of articles you could write"},
+                                        status=status.HTTP_406_NOT_ACCEPTABLE)
+
                     serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                           main_content=data['main_content']))
                     return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
@@ -84,6 +85,12 @@ class TempCreateView(generics.GenericAPIView,
                         "id": data['id']
                     }}, status=status.HTTP_200_OK)
             else:
+                # 임시 저장 할 수있는 게시물 제한
+                checkcount = self.check_post_count(user)
+                if not checkcount:
+                    return Response({"detail": "This account exceeded the number of articles you could write"},
+                                    status=status.HTTP_406_NOT_ACCEPTABLE)
+
                 serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                       main_content=data['main_content']))
                 return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
