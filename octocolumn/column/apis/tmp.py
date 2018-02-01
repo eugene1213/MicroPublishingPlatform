@@ -80,7 +80,9 @@ class TempCreateView(generics.GenericAPIView,
                         title=data['title'],
                         main_content=data['main_content'])
 
-                    return Response({"temp":''}, status=status.HTTP_200_OK)
+                    return Response({"temp":{
+                        "id": data['id']
+                    }}, status=status.HTTP_200_OK)
             else:
                 serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                       main_content=data['main_content']))
