@@ -32,8 +32,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'username',
-            'password1',
-            'password2',
             'first_name',
             'last_name'
         )

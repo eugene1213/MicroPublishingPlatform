@@ -26,6 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+
+    # google_auth
+
+
+    # storages
     'storages',
 
     'rest_framework',
@@ -71,3 +76,5 @@ FACEBOOK_APP_SECRET_CODE = config_secret_debug['accounts']['facebook']['secret_c
 # print(CELERY_BROKER_URL)
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
+
+

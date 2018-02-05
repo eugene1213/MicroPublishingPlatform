@@ -26,7 +26,7 @@ def user_directory_path(instance, filename):
      images/2016/7/12/hjh/hjh-2016-07-12-158859.png """
     print()
     now = timezone.now()
-    path = "postfile/{username}/{year}/{month}/{day}/{filename}".format(
+    path = "post-image/{username}/{year}/{month}/{day}/{filename}".format(
         username=instance.author.pk,
         year=now.year,
         month=now.month,
@@ -53,7 +53,7 @@ class Temp(models.Model):
 
 class TempFile(models.Model):
     author = models.ForeignKey('member.User',null=True)
-    file = models.FileField('프로필 이미지',
+    file = models.FileField('포스트파일저장 이미지',
                             upload_to=user_directory_path,
                             blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

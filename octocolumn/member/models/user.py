@@ -9,8 +9,6 @@ from rest_framework.authtoken.models import Token
 __all__ = (
     'UserManager',
     'User',
-    'PointHistory',
-    'BuyList'
 )
 
 
@@ -44,15 +42,6 @@ class User(AbstractUser):
         default=USER_TYPE_DJANGO
     )
     created_at = models.DateField(auto_now_add=True)
-    point=models.IntegerField(default=0)
-    point_history = models.ManyToManyField(
-        'self',
-        symmetrical=False,
-        through='PointHistory',
-        related_name='point_use_history',
-    )
-
-
     # like_posts = models.ManyToManyField(
     #     'column.Post',
     #     related_name='like_users',
@@ -75,13 +64,10 @@ class User(AbstractUser):
         through='Relation',
         related_name='followers',
     )
-    buy_list = models.ManyToManyField(
-        'self',
-        symmetrical=False,
-        through='BuyList',
-        related_name='user_buylist',
-    )
     objects = UserManager()
+
+    REQUIRED_FIELDS = ["email"]
+
 
     class Meta:
         verbose_name = '사용자'
@@ -147,45 +133,6 @@ class RelationProxy(Relation):
         proxy = True
 
 
-class PointHistory(models.Model):
-    POINT_TYPE_CHARGE = 'c'
-    POINT_TYPE_BUY = 'b'
-    POINT_TYPE_REWARD = 'r'
-    CHOICE_POINT_TYPE = (
-        (POINT_TYPE_CHARGE,'Charge'),
-        (POINT_TYPE_BUY, 'Buy'),
-        (POINT_TYPE_REWARD, 'Reward'),
-
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='user_point_use_history',
-        null=True
-                             )
-    point_use_type = models.CharField(
-        max_length=1,
-        choices=CHOICE_POINT_TYPE,
-        null=False,
-        blank=False
-    )
-    point = models.IntegerField(default=0)
-    history = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
 
 
-class BuyList(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='buylist_user_relation',
-        null=True
-    )
-    # post = models.ForeignKey(
-    #     'column.Post',
-    #     on_delete=models.CASCADE,
-    #     related_name='buylist_post_relation',
-    #     null=True
-    #                          )
-    post = models.CharField(blank=True, max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
+

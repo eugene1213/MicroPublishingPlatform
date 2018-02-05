@@ -6,7 +6,8 @@ from django.utils import timezone
 
 
 __all__ =(
-    'ProfileImage',
+    'Profile',
+    'ProfileImage'
 )
 
 
@@ -25,7 +26,7 @@ def user_directory_path(instance, filename):
      images/{year}/{month}/{day}/{username}/{filename}
      images/2016/7/12/hjh/hjh-2016-07-12-158859.png """
     now = timezone.now()
-    path = "profileimages/{username}/{year}/{month}/{day}/{filename}".format(
+    path = "profile-images/{username}/{year}/{month}/{day}/{filename}".format(
         year=now.year,
         username=instance.user.username,
         month=now.month,
@@ -35,8 +36,13 @@ def user_directory_path(instance, filename):
     return path
 
 
+class Profile(models.Model):
+    user = models.OneToOneField('member.User', null=True)
+    phone = models.CharField(max_length=100)
+    image = models.ForeignKey('member.ProfileImage',null=True)
+
+
 class ProfileImage(models.Model):
-    user = models.ForeignKey('member.User',null=True)
     file = models.FileField('프로필 이미지',
                             upload_to=user_directory_path,
                             blank=True)
