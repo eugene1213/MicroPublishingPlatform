@@ -1,7 +1,10 @@
 from member.models import User
 
 __all__=(
-    'FacebookBackend'
+    'FacebookBackend',
+    'GoogleBackend',
+    'TwitterBackend',
+    'SecondPasswordBackend'
 )
 
 
@@ -45,3 +48,7 @@ class TwitterBackend:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
+
+
+class SecondPasswordBackend:
+    pass

@@ -1,11 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils import timezone
 from rest_framework.permissions import AllowAny
 from rest_framework import mixins, generics, status, exceptions
-from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer

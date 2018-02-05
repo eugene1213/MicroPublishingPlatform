@@ -55,6 +55,8 @@ MEDIAFILES_LOCATION = 'media'
 # DEFAULT_FILE_STORAGE = 'config.storages.MediaStorage'
 # STATICFILES_STORAGE = 'config.storages.StaticStorage'
 
+FACEBOOK_APP_ID = config_secret_debug['accounts']['facebook']['app_id']
+FACEBOOK_APP_SECRET_CODE = config_secret_debug['accounts']['facebook']['secret_code']
 
 
 # Celery
