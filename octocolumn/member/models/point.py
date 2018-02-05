@@ -1,11 +1,11 @@
 from django.db import models
 
 __all__ = (
-    'Point',
+    'PointHistory',
 )
 
 
-class Point(models.Model):
+class PointHistory(models.Model):
     POINT_TYPE_CHARGE = 'c'
     POINT_TYPE_BUY = 'b'
     POINT_TYPE_REWARD = 'r'
@@ -18,7 +18,6 @@ class Point(models.Model):
     user = models.ForeignKey(
         'member.User',
         on_delete=models.CASCADE,
-        related_name='user_point_use_history',
         null=True
                              )
     point_use_type = models.CharField(
@@ -27,6 +26,7 @@ class Point(models.Model):
         null=False,
         blank=False
     )
+
     point = models.IntegerField(default=0)
     history = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)

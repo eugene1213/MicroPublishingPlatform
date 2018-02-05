@@ -42,6 +42,7 @@ class User(AbstractUser):
         default=USER_TYPE_DJANGO
     )
     created_at = models.DateField(auto_now_add=True)
+    point = models.IntegerField(default=0)
     # like_posts = models.ManyToManyField(
     #     'column.Post',
     #     related_name='like_users',
