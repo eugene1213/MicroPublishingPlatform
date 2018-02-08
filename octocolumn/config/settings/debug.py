@@ -27,9 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
 
-    # google_auth
-
-
     # storages
     'storages',
 
@@ -78,3 +75,6 @@ print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 
+FCM_DJANGO_SETTINGS = {
+        "FCM_SERVER_KEY": config_secret_debug['accounts']['google']['firebase']['server-key']
+}
