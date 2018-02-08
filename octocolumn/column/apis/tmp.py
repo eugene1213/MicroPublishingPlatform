@@ -117,7 +117,7 @@ class TempFileUpload(generics.CreateAPIView):
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
-        file_obj = self.request.FILES['file[]']
+        file_obj = self.request.FILES['files[]']
 
         author = self.is_author()
 
@@ -129,8 +129,15 @@ class TempFileUpload(generics.CreateAPIView):
 
         serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user ,file=file_obj))
         if serializer:
-            return Response({"id":serializer.data['id'],"file":{"url":serializer.data['file']}}, status=status.HTTP_201_CREATED)
-        return Response({"fileUpload": "Upload Failed"},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"files[0]":
+                {
+                    "id": serializer.data['id'],
+                    "file": {
+                        "url": serializer.data['file']
+                    }
+                }
+            }, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Upload Failed"},status=status.HTTP_400_BAD_REQUEST)
 
 
 class TempListView(generics.ListCreateAPIView):
