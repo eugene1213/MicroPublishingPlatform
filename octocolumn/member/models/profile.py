@@ -37,9 +37,23 @@ def user_directory_path(instance, filename):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField('member.User', null=True)
-    phone = models.CharField(max_length=100)
-    image = models.ForeignKey('member.ProfileImage',null=True)
+    SEX_TYPE_MALE = 'm'
+    SEX_TYPE_FEMALE = 'f'
+    CHOICES_USER_TYPE = (
+        (SEX_TYPE_MALE, 'm'),
+        (SEX_TYPE_FEMALE, 'f'),
+    )
+    user = models.ForeignKey('member.User', null=True)
+    birth = models.DateField(null=True)
+    sex = models.CharField(
+        max_length=1,
+        choices=CHOICES_USER_TYPE,
+        null=True
+    )
+    phone = models.CharField(max_length=100,null=True)
+    jobs = models.CharField(max_length=255, null=True)
+    interview = models.CharField(max_length=255, null=True)
+    region = models.CharField(max_length=255,null=True)
 
 
 class ProfileImage(models.Model):

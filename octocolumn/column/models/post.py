@@ -68,7 +68,7 @@ class Post(models.Model):
 
 
 class PostLike(models.Model):
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey('column.Post')
     user = models.ForeignKey('member.User')
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -96,7 +96,7 @@ def update_post_like_count(sender, instance, **kwargs):
 class MyPost(models.Model):
     update_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('member.User',null=True)
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey('column.Post',null=True)
 
     def __str__(self):
         return '{} : {}'.format(
