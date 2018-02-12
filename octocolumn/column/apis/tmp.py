@@ -72,13 +72,14 @@ class TempCreateView(generics.GenericAPIView,
             return Response({"detail": "Abnormal Connected"},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
 
-        if data['id'] is not '':
+
+        if data['temp_id'] is not '':
             Temp.objects.filter(author=self.request.user, id=data['id']).update(
                 title=data['title'],
                 main_content=data['main_content'])
 
-            return Response({"temp": {
-                "id": data['id']
+            return Response({"temp":{
+                "id": data['temp_id']
             }}, status=status.HTTP_200_OK)
         else:
             # 임시 저장 할 수있는 게시물 제한
@@ -96,7 +97,13 @@ class TempCreateView(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
-        if data['id'] is None or data['id'] is '':
+        key = list(self.request.data.keys())
+
+        if len(key) is not 3:
+            return Response({"detail": "Abnormal Connected"},
+                            status=status.HTTP_406_NOT_ACCEPTABLE)
+
+        if data['temp_id'] is '':
             return Response({"detail": "Post does not exist."}, status=status.HTTP_200_OK)
         return self.queryset.filter(author=user).delete(id=data['id'])
 
