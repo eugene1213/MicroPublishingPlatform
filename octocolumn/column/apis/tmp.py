@@ -1,11 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils import timezone
 from rest_framework.permissions import AllowAny
 from rest_framework import mixins, generics, status, exceptions
-from rest_framework.parsers import FileUploadParser, MultiPartParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import  MultiPartParser
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
@@ -72,14 +69,13 @@ class TempCreateView(generics.GenericAPIView,
             return Response({"detail": "Abnormal Connected"},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
 
-
         if data['temp_id'] is not '':
-            Temp.objects.filter(author=self.request.user, id=data['id']).update(
+            Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(
                 title=data['title'],
                 main_content=data['main_content'])
 
-            return Response({"temp":{
-                "id": data['temp_id']
+            return Response({"temp": {
+                "temp_id": data['temp_id']
             }}, status=status.HTTP_200_OK)
         else:
             # 임시 저장 할 수있는 게시물 제한
@@ -90,7 +86,9 @@ class TempCreateView(generics.GenericAPIView,
 
             serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                   main_content=data['main_content']))
-            return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
+            return Response({"temp": {
+                "temp_id": serializer.data['id'],
+            }}, status=status.HTTP_201_CREATED)
 
     # 임시저장 삭제
     def delete(self, request):
