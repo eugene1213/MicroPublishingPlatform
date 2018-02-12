@@ -4,7 +4,8 @@ from typing import NamedTuple
 
 import requests
 from django.conf import settings
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, generics, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import APIException
@@ -21,6 +22,7 @@ from member.serializers import UserSerializer, SignUpSerializer
 __all__ = (
     'Login',
     'SignUp',
+    'Logout',
     'FacebookLogin'
 )
 
@@ -50,6 +52,20 @@ class Login(APIView):
         }
 
         return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class Logout(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            request.auth.delete()
+        except (AttributeError, ObjectDoesNotExist):
+            return Response({'detail': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        logout(request)
+        return Response({"detail": "Successfully logged out."},
+                        status=status.HTTP_200_OK)
 
 
 class SignUp(generics.CreateAPIView):
@@ -211,3 +227,5 @@ class FileUploadView(APIView):
         User.objects.filter(user=self.request.user).create(file=file_obj)
         # do some stuff with uploaded file
         return Response({"detail":"Upload Success"},status=204)
+
+

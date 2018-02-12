@@ -60,27 +60,23 @@ class TempCreateView(generics.GenericAPIView,
             # 1. 작성중인 포스트 검색
             # 2. 있다면 업데이트 없다면 생성
 
+            # if data['id'] is None:
+            #     return Response({"detail": "Abnormal Connect"}, status=status.HTTP_400_BAD_REQUEST)
+
+            key = list(self.request.data.keys())
+
+            if len(key) is not 3:
+                return Response({"detail": "Abnormal Connected"},
+                                status=status.HTTP_406_NOT_ACCEPTABLE)
+
             if data['id'] is not '':
-                if data['id'] is None:
+                Temp.objects.filter(author=self.request.user, id=data['id']).update(
+                    title=data['title'],
+                    main_content=data['main_content'])
 
-                    # 임시 저장 할 수있는 게시물 제한
-                    checkcount = self.check_post_count(user)
-                    if not checkcount:
-                        return Response({"detail": "This account exceeded the number of articles you could write"},
-                                        status=status.HTTP_406_NOT_ACCEPTABLE)
-
-                    serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
-                                                                          main_content=data['main_content']))
-                    return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
-                else:
-
-                    Temp.objects.filter(author=self.request.user, id=data['id']).update(
-                        title=data['title'],
-                        main_content=data['main_content'])
-
-                    return Response({"temp":{
-                        "id": data['id']
-                    }}, status=status.HTTP_200_OK)
+                return Response({"temp":{
+                    "id": data['id']
+                }}, status=status.HTTP_200_OK)
             else:
                 # 임시 저장 할 수있는 게시물 제한
                 checkcount = self.check_post_count(user)
@@ -97,7 +93,7 @@ class TempCreateView(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
-        if data['id'] is None:
+        if data['id'] is None or data['id'] is '':
             return Response({"detail": "Post does not exist."}, status=status.HTTP_200_OK)
         return self.queryset.filter(author=user).delete(id=data['id'])
 

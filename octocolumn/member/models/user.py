@@ -13,12 +13,12 @@ __all__ = (
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, user_type, password=None):
+    def create_user(self, email, first_name, last_name, user_type=None, password=None):
         user = self.model(
             email=email,
             first_name=first_name,
             last_name=last_name,
-            user_type=user_type
+            user_type=User.USER_TYPE_DJANGO
         )
         user.set_password(password)
         user.save()

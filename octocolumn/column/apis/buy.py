@@ -34,7 +34,6 @@ class PostBuy(APIView):
 
         user_queryset = User.objects.filter(username=self.request.user).get()
         post_queryset = Post.objects.filter(id=data['post_pk']).get()
-
         if post_queryset.price > user_queryset.point:
             raise Response({"detail":"There is not enough points."} , status=status.HTTP_400_BAD_REQUEST)
 

@@ -1,11 +1,12 @@
 from django.conf.urls import url
 
 from member import apis
-from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView
+from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout
 
 urlpatterns = [
     # api:member:login
     url(r'^login/$', Login.as_view(), name='login'),
+    url(r'^logout/$', Logout.as_view(), name='logout'),
     url(r'^signup/$',SignUp.as_view(), name='signup'),
     url(r'^facebook-login/', FacebookLogin.as_view(),name='facebook'),
     # url(r'^google-login/', apis.FacebookLogin.as_view()),
