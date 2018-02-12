@@ -75,7 +75,7 @@ class TempCreateView(generics.GenericAPIView,
                     main_content=data['main_content'])
 
                 return Response({"temp":{
-                    "id": data['temp_id']
+                    "temp_id": data['temp_id']
                 }}, status=status.HTTP_200_OK)
             else:
                 # 임시 저장 할 수있는 게시물 제한
@@ -86,7 +86,9 @@ class TempCreateView(generics.GenericAPIView,
 
                 serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                       main_content=data['main_content']))
-                return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
+                return Response({"temp": {
+                    "temp_id":serializer.data['id'],
+                }}, status=status.HTTP_201_CREATED)
 
     # 임시저장 삭제
     def delete(self, request):
