@@ -19,6 +19,7 @@ class Post(models.Model):
     main_content = models.TextField()
     # file = models.FileField()
     hit = models.PositiveIntegerField(default=0)
+    buy_count = models.PositiveIntegerField(default=0)
     price = models.IntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True)
     my_comment = models.OneToOneField(

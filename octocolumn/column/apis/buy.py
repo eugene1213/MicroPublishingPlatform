@@ -22,6 +22,9 @@ class PostBuy(APIView):
             return Response({"detail":"It's a post I've already purchased"} , status=status.HTTP_400_BAD_REQUEST)
         return BuyList.objects.get_or_create(user=self.request.user,post=post)
 
+    def increase_buy_count(self,post_id):
+        return Post.objects.filter(id=post_id).update(buy_count=+1)
+
     def post(self,request):
         data = self.request.data
         if not self.request.user.is_authenticated:
@@ -33,10 +36,12 @@ class PostBuy(APIView):
         if post_queryset.price > user_queryset.point:
             raise Response({"detail":"There is not enough points."} , status=status.HTTP_400_BAD_REQUEST)
 
-        self.decrease_point(post_queryset.price)
         if self.buylist_duplicate(post_queryset):
             PointHistory.objects.get_or_create(user=self.request.user,point_use_type='b',point=post_queryset.price,
                                               history=post_queryset.title)
+            self.decrease_point(post_queryset.price)
+            self.increase_buy_count(data['post_id'])
+
             return Response({"detail": "Success buy."}, status=status.HTTP_200_OK)
 
         return Response({"detail": "Failed buy."}, status=status.HTTP_400_BAD_REQUEST)

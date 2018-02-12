@@ -18,9 +18,9 @@ __all__ = (
 
 
 class TempCreateView(generics.GenericAPIView,
-             mixins.ListModelMixin,
-             mixins.CreateModelMixin,
-             mixins.DestroyModelMixin):
+                     mixins.ListModelMixin,
+                     mixins.CreateModelMixin,
+                     mixins.DestroyModelMixin):
     queryset = Temp.objects.all()
     serializer_class = TempSerializer
     permission_classes = (AllowAny,)
@@ -33,7 +33,7 @@ class TempCreateView(generics.GenericAPIView,
             author = None
             return author
 
-    def temp_result(self,user):
+    def temp_result(self, user):
         try:
             result = Temp.objects.all().get(author=user)
             return result
@@ -41,50 +41,31 @@ class TempCreateView(generics.GenericAPIView,
             result = None
             return result
 
-    def check_post_count(self,user):
+    def check_post_count(self, user):
         temp = Temp.objects.filter(author=user).count()
         if temp < 10:
             return True
-        # return temp
+            # return temp
 
     def post(self, request):
-            user = self.request.user
-            data = self.request.data
+        user = self.request.user
+        data = self.request.data
 
-            # 1. 작가가 신청되어있는지 확인
-            # 2. 작가 활성이 되어있는지를 확인
-            author = self.is_author()
-            if author is not None:
-                if not author.is_active:
-                    return Response({"detail": "This Account is Deactive"}, status=status.HTTP_401_UNAUTHORIZED)
-            else:
-                return Response({"detail": "This Account is not Author"}, status=status.HTTP_401_UNAUTHORIZED)
+        # 1. 작가가 신청되어있는지 확인
+        # 2. 작가 활성이 되어있는지를 확인
+        author = self.is_author()
+        if author is not None:
+            if not author.is_active:
+                return Response({"detail": "This Account is Deactive"}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({"detail": "This Account is not Author"}, status=status.HTTP_401_UNAUTHORIZED)
 
-            # 1. 작성중인 포스트 검색
-            # 2. 있다면 업데이트 없다면 생성
+        # 1. 작성중인 포스트 검색
+        # 2. 있다면 업데이트 없다면 생성
 
-            if data['id'] is not '':
-                if data['id'] is None:
+        if data['id'] is not '':
+            if data['id'] is None:
 
-                    # 임시 저장 할 수있는 게시물 제한
-                    checkcount = self.check_post_count(user)
-                    if not checkcount:
-                        return Response({"detail": "This account exceeded the number of articles you could write"},
-                                        status=status.HTTP_406_NOT_ACCEPTABLE)
-
-                    serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
-                                                                          main_content=data['main_content']))
-                    return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
-                else:
-
-                    Temp.objects.filter(author=self.request.user, id=data['id']).update(
-                        title=data['title'],
-                        main_content=data['main_content'])
-
-                    return Response({"temp":{
-                        "id": data['id']
-                    }}, status=status.HTTP_200_OK)
-            else:
                 # 임시 저장 할 수있는 게시물 제한
                 checkcount = self.check_post_count(user)
                 if not checkcount:
@@ -94,6 +75,25 @@ class TempCreateView(generics.GenericAPIView,
                 serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                       main_content=data['main_content']))
                 return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
+            else:
+
+                Temp.objects.filter(author=self.request.user, id=data['id']).update(
+                    title=data['title'],
+                    main_content=data['main_content'])
+
+                return Response({"temp": {
+                    "id": data['id']
+                }}, status=status.HTTP_200_OK)
+        else:
+            # 임시 저장 할 수있는 게시물 제한
+            checkcount = self.check_post_count(user)
+            if not checkcount:
+                return Response({"detail": "This account exceeded the number of articles you could write"},
+                                status=status.HTTP_406_NOT_ACCEPTABLE)
+
+            serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
+                                                                  main_content=data['main_content']))
+            return Response({"temp": serializer.data}, status=status.HTTP_201_CREATED)
 
     # 임시저장 삭제
     def delete(self, request):
@@ -118,8 +118,8 @@ class TempFileUpload(generics.CreateAPIView):
             author = None
             return author
 
-    #파일 업로드
-    def post(self, request,*args,**kwargs):
+    # 파일 업로드
+    def post(self, request, *args, **kwargs):
         file_obj = self.request.FILES['files[]']
 
         author = self.is_author()
@@ -130,10 +130,17 @@ class TempFileUpload(generics.CreateAPIView):
         else:
             return Response({"detail": "This Account is not Author"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user ,file=file_obj))
+        serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user, file=file_obj))
         if serializer:
-            return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-        return Response({"fileUpload": "Upload Failed"},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"files[0]":
+                {
+                    "id": serializer.data['id'],
+                    "file": {
+                        "url": serializer.data['file']
+                    }
+                }
+            }, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Upload Failed"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TempListView(generics.ListCreateAPIView):
@@ -147,7 +154,7 @@ class TempListView(generics.ListCreateAPIView):
             raise exceptions.NotAuthenticated()
 
         result = Temp.objects.filter(author=author)
-        serializer = self.get_serializer(result,many=True)
+        serializer = self.get_serializer(result, many=True)
 
         if result is None:
             return Response({"detail": ""}, status=status.HTTP_200_OK)
