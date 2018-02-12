@@ -57,6 +57,6 @@ class Comment(models.Model):
 
 
 class CommentLike(models.Model):
-    comment = models.ForeignKey('column.Comment')
+    comment = models.ForeignKey('column.Comment',null=True)
     user = models.ForeignKey('member.User',null=True)
     created_date = models.DateTimeField(auto_now_add=True)

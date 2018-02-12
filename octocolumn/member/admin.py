@@ -12,8 +12,8 @@ admin.site.unregister(Token)
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'first_name','last_name','point']
-    list_display_links = ['username']
+    list_display = ['email', 'first_name','last_name','point']
+    list_display_links = ['email']
 
 
 @admin.register(Author)

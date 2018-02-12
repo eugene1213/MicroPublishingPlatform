@@ -20,7 +20,6 @@ from member.serializers import UserSerializer, SignUpSerializer
 
 __all__ = (
     'Login',
-    'SignUpAPIView',
     'SignUp',
     'FacebookLogin'
 )
@@ -30,24 +29,18 @@ class Login(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        username = request.data['username']
+        email = request.data['email']
         password = request.data['password']
         user = authenticate(
-            username=username,
+            email=email,
             password=password,
         )
         if user:
             # 'user'키에 다른 dict로 유저에 대한 모든 정보를 보내줌
             token, token_created = Token.objects.get_or_create(user=user)
-            C = cookies.BaseCookie()
-
-            C["token"] = token.key
-            C["token"].httpOnly = None
             data = {
                 'token': token.key,
                 'user': UserSerializer(user).data,
-                'cookie': print(C),
-                'cookie_detail': C
             }
 
             return Response(data, status=status.HTTP_200_OK)
@@ -63,17 +56,6 @@ class SignUp(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = SignUpSerializer
-
-
-class SignUpAPIView(APIView):
-    permission_classes = (AllowAny,)
-
-    def post(self, request):
-        serializer = SignUpSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FacebookLogin(APIView):
@@ -123,7 +105,7 @@ class FacebookLogin(APIView):
         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
         if not user:
             user = User.objects.create_user(
-                username=f'fb_{request.data["facebook_user_id"]}',
+                email=f'fb_{request.data["facebook_user_id"]}',
                 user_type=User.USER_TYPE_FACEBOOK,
                 age=0,
             )
@@ -180,7 +162,7 @@ class FacebookLogin(APIView):
 #         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
 #         if not user:
 #             user = User.objects.create_user(
-#                 username=f'fb_{request.data["facebook_user_id"]}',
+#                 email=f'fb_{request.data["facebook_user_id"]}',
 #                 user_type=User.USER_TYPE_FACEBOOK,
 #                 age=0,
 #             )

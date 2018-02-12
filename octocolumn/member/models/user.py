@@ -1,8 +1,8 @@
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import (
-    AbstractUser,
-    UserManager as DjangoUserManager
-)
+    PermissionsMixin)
 from django.db import models
+from django.db.models import F
 from rest_framework.authtoken.models import Token
 
 
@@ -12,20 +12,56 @@ __all__ = (
 )
 
 
-class UserManager(DjangoUserManager):
-    def create_superuser(self, username,email,password=None,*args,**kwargs):
-        return super().create_superuser(username=username,email=email,password=password)
+class UserManager(BaseUserManager):
+    def create_user(self, email, first_name, last_name, user_type, password=None):
+        user = self.model(
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            user_type=user_type
+        )
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, last_name, first_name, password=None, *args,**kwargs):
+        user = self.model(
+            email=email,
+            last_name=last_name,
+            first_name=first_name,
+        )
+        user.set_password(password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        return user
 
     def create_facebook_user(self, user_info):
         return self.create_user(
-            username=user_info['id'],
+            email=user_info['id'],
+            first_name=user_info.get('first_name', ''),
+            last_name=user_info.get('last_name', ''),
+            user_type=User.USER_TYPE_FACEBOOK
+        )
+
+    def create_google_user(self, user_info):
+        return self.create_user(
+            email=user_info['id'],
+            first_name=user_info.get('first_name', ''),
+            last_name=user_info.get('last_name', ''),
+            user_type=User.USER_TYPE_FACEBOOK
+        )
+
+    def create_twitter_user(self, user_info):
+        return self.create_user(
+            email=user_info['id'],
             first_name=user_info.get('first_name', ''),
             last_name=user_info.get('last_name', ''),
             user_type=User.USER_TYPE_FACEBOOK
         )
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser, PermissionsMixin):
     USER_TYPE_FACEBOOK = 'f'
     USER_TYPE_DJANGO = 'd'
     USER_TYPE_GOOGLE = 'g'
@@ -41,8 +77,14 @@ class User(AbstractUser):
         choices=CHOICES_USER_TYPE,
         default=USER_TYPE_DJANGO
     )
+    email = models.EmailField(unique=True)
     created_at = models.DateField(auto_now_add=True)
     point = models.IntegerField(default=0)
+    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+
     # like_posts = models.ManyToManyField(
     #     'column.Post',
     #     related_name='like_users',
@@ -65,10 +107,20 @@ class User(AbstractUser):
         through='Relation',
         related_name='followers',
     )
+    user_buylist = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        through='BuyList',
+        related_name='buy_list',
+    )
     objects = UserManager()
 
-    REQUIRED_FIELDS = ["email"]
+    USERNAME_FIELD = 'email'
 
+    REQUIRED_FIELDS = [
+        'last_name',
+        'first_name'
+    ]
 
     class Meta:
         verbose_name = '사용자'
@@ -106,18 +158,28 @@ class User(AbstractUser):
         #     # Relation에 대한역참조 매니저를 사용하는 방법
         #     self.following_user_relations.create(to_user=user)
 
+    # 포인트 증가
+    def increase_point(self, point):
+        self.point = F('point') + point
+        self.save()
+
+    # 포인트 감소
+    def decrease_point(self, point):
+        self.point = F('point') - point
+        self.save()
+
 
 class Relation(models.Model):
     # User의 follow목록을 가질 수 있도록
     # MTM에 대한 중개모델을 구성
     # from_user, to_user, created_at으로 3개의 필드를 사용
     from_user = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.CASCADE,
         related_name='following_user_relations',
     )
     to_user = models.ForeignKey(
-        User,
+        'User',
         on_delete=models.CASCADE,
         related_name='follower_relations',
     )
@@ -125,13 +187,33 @@ class Relation(models.Model):
 
     def __str__(self):
         return f'Relation (' \
-               f'from: {self.from_user.username}, ' \
-               f'to: {self.to_user.username})'
+               f'from: {self.from_user.email}, ' \
+               f'to: {self.to_user.email})'
 
 
 class RelationProxy(Relation):
     class meta:
         proxy = True
+
+
+class BuyList(models.Model):
+    # User의 follow목록을 가질 수 있도록
+    # MTM에 대한 중개모델을 구성
+    # user, buy_list, created_at으로 3개의 필드를 사용
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='buylist_user_relation',
+        null=True
+    )
+    post_id = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'BuyList (' \
+               f'from: {self.user.email}, ' \
+               f'to: {self.post.title})'
+
 
 
 
