@@ -16,7 +16,7 @@ class PointHistory(models.Model):
 
     )
     user = models.ForeignKey(
-        'member.User',
+        'User',
         on_delete=models.CASCADE,
         null=True
                              )

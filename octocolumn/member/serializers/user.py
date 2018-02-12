@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
             'pk',
             'last_name',
             'first_name',
-            'username',
+            'email',
             'point',
             'is_active',
         )
@@ -31,7 +31,9 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'pk',
-            'username',
+            'email',
+            'password1',
+            'password2',
             'first_name',
             'last_name'
         )
@@ -43,8 +45,10 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(
-            username=validated_data['username'],
+            email=validated_data['email'],
             password=validated_data['password1'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name']
             # img_profile=validated_data.get('img_profile')
         )
 

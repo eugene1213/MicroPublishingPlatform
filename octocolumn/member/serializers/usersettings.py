@@ -10,13 +10,9 @@ class SecondPasswordSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'pk',
-            'username',
+            'user',
             'second_password'
         )
 
-    def validate(self, data):
-        second_password = data['second_password']
-        if type(second_password) is not int:
-            raise serializers.ValidationError('숫자만 입력이 가능합니다.')
-        return data
+
 

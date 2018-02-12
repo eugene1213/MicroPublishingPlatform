@@ -57,18 +57,28 @@ class Post(models.Model):
         return self.comment_set.all()
 
     # 조회수를 증가 시키는 메서드
-    def increase(self):
+    def increase_hits(self):
         self.hits = F('hits') + 1
         self.save()
 
     # 조회수를 감소 시키는 메서드
-    def decrease(self):
+    def decrease_hits(self):
         self.hits = F('hits') - 1
+        self.save()
+
+    # 구매횟수 증가
+    def increase_buy_count(self):
+        self.buy_count = F('buy_count') + 1
+        self.save()
+
+    # 구매횟수 감소
+    def decrease_buy_count(self):
+        self.buy_count = F('buy_count') - 1
         self.save()
 
 
 class PostLike(models.Model):
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey('column.Post')
     user = models.ForeignKey('member.User')
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -93,13 +103,13 @@ def update_post_like_count(sender, instance, **kwargs):
     # task_update_post_like_count.delay(post_pk=instance.post.pk)
 
 
-class MyPost(models.Model):
-    update_date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey('member.User',null=True)
-    post = models.ForeignKey(Post)
-
-    def __str__(self):
-        return '{} : {}'.format(
-            self.user,
-            self.post,
-        )
+# class MyPost(models.Model):
+#     update_date = models.DateTimeField(auto_now_add=True)
+#     user = models.ForeignKey('member.User',null=True)
+#     post = models.ForeignKey('column.Post',null=True)
+#
+#     def __str__(self):
+#         return '{} : {}'.format(
+#             self.user,
+#             self.post,
+#         )

@@ -12,8 +12,8 @@ __all__ = (
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('column.Post')
-    author = models.ForeignKey('member.User')
+    post = models.ForeignKey('column.Post',null=True)
+    author = models.ForeignKey('member.User',null=True)
     content = models.TextField(blank=True)
     html_content = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag')
@@ -57,6 +57,6 @@ class Comment(models.Model):
 
 
 class CommentLike(models.Model):
-    comment = models.ForeignKey('column.Comment')
+    comment = models.ForeignKey('column.Comment',null=True)
     user = models.ForeignKey('member.User',null=True)
     created_date = models.DateTimeField(auto_now_add=True)

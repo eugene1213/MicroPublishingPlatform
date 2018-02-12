@@ -51,4 +51,7 @@ class TwitterBackend:
 
 
 class SecondPasswordBackend:
+    def authenticate(self,request,user_id):
+        pass
+
     pass
