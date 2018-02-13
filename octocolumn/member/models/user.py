@@ -9,13 +9,14 @@ from rest_framework.authtoken.models import Token
 __all__ = (
     'UserManager',
     'User',
+    'BuyList'
 )
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, user_type=None, password=None):
+    def create_user(self, username, first_name, last_name, user_type=None, password=None):
         user = self.model(
-            email=email,
+            username=username,
             first_name=first_name,
             last_name=last_name,
             user_type=User.USER_TYPE_DJANGO
@@ -24,9 +25,9 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, email, last_name, first_name, password=None, *args,**kwargs):
+    def create_superuser(self, username, last_name, first_name, password=None, *args,**kwargs):
         user = self.model(
-            email=email,
+            username=username,
             last_name=last_name,
             first_name=first_name,
         )
@@ -38,7 +39,7 @@ class UserManager(BaseUserManager):
 
     def create_facebook_user(self, user_info):
         return self.create_user(
-            email=user_info['id'],
+            username=user_info['id'],
             first_name=user_info.get('first_name', ''),
             last_name=user_info.get('last_name', ''),
             user_type=User.USER_TYPE_FACEBOOK
@@ -46,7 +47,7 @@ class UserManager(BaseUserManager):
 
     def create_google_user(self, user_info):
         return self.create_user(
-            email=user_info['id'],
+            username=user_info['id'],
             first_name=user_info.get('first_name', ''),
             last_name=user_info.get('last_name', ''),
             user_type=User.USER_TYPE_FACEBOOK
@@ -54,11 +55,13 @@ class UserManager(BaseUserManager):
 
     def create_twitter_user(self, user_info):
         return self.create_user(
-            email=user_info['id'],
+            username=user_info['id'],
             first_name=user_info.get('first_name', ''),
             last_name=user_info.get('last_name', ''),
             user_type=User.USER_TYPE_FACEBOOK
         )
+
+
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -77,7 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=CHOICES_USER_TYPE,
         default=USER_TYPE_DJANGO
     )
-    email = models.EmailField(unique=True)
+    username = models.EmailField(unique=True)
     created_at = models.DateField(auto_now_add=True)
     point = models.IntegerField(default=0)
     last_name = models.CharField(max_length=255)
@@ -107,15 +110,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         through='Relation',
         related_name='followers',
     )
-    user_buylist = models.ManyToManyField(
-        'self',
-        symmetrical=False,
-        through='BuyList',
-        related_name='buy_list',
-    )
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
 
     REQUIRED_FIELDS = [
         'last_name',
@@ -158,16 +155,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         #     # Relation에 대한역참조 매니저를 사용하는 방법
         #     self.following_user_relations.create(to_user=user)
 
-    # 포인트 증가
-    def increase_point(self, point):
-        self.point = F('point') + point
-        self.save()
-
-    # 포인트 감소
-    def decrease_point(self, point):
-        self.point = F('point') - point
-        self.save()
-
 
 class Relation(models.Model):
     # User의 follow목록을 가질 수 있도록
@@ -187,8 +174,8 @@ class Relation(models.Model):
 
     def __str__(self):
         return f'Relation (' \
-               f'from: {self.from_user.email}, ' \
-               f'to: {self.to_user.email})'
+               f'from: {self.from_user.username}, ' \
+               f'to: {self.to_user.username})'
 
 
 class RelationProxy(Relation):
@@ -211,7 +198,7 @@ class BuyList(models.Model):
 
     def __str__(self):
         return f'BuyList (' \
-               f'from: {self.user.email}, ' \
+               f'from: {self.user.username}, ' \
                f'to: {self.post.title})'
 
 

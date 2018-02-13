@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import status, generics, mixins
+from rest_framework import status, generics, mixins, exceptions
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -34,8 +34,8 @@ class PostCreateView(generics.GenericAPIView,
         # return True
         pass
 
-    def decrease_point(self):
-        return User.objects.filter(user=self.request.user).update(point=self.request.user.point-300)
+    def decrease_point(self, point):
+        return User.objects.filter(id=self.request.user.id).update(point=point)
 
     def is_author(self):
         try:
@@ -44,6 +44,9 @@ class PostCreateView(generics.GenericAPIView,
         except ObjectDoesNotExist:
             author = None
             return author
+
+    def add_point_history(self):
+        pass
 
     # if is_post(data['temp_id']):
     #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
@@ -54,18 +57,21 @@ class PostCreateView(generics.GenericAPIView,
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
+
         author = self.is_author()
-
         if author is not None:
-            if author.is_active:
-                return Response({"detail": "This Account is Deactive"}, status=status.HTTP_200_OK)
-            else:
-                return Response({"detail": "This Account is not Author"}, status=status.HTTP_200_OK)
+            if not author.is_active:
+                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+        else:
+            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
 
-        temp = Temp.objects.filter(id=data['id']).get()
+        try:
+            temp = Temp.objects.filter(id=data['temp_id']).get()
+        except ObjectDoesNotExist:
+            raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
 
         if 300 > user.point:
-            raise Response({"detail": "There is not enough points."} , status=status.HTTP_400_BAD_REQUEST)
+            raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
         post, result = super().get_queryset().get_or_create(author=user, title=temp.title,
                                                             main_content=temp.main_content,
@@ -75,14 +81,19 @@ class PostCreateView(generics.GenericAPIView,
         # if is_post(data['temp_id']):
         #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
 
-        Temp.objects.delete(id=data['id'])
+        try:
+            Temp.objects.filter(id=data['temp_id']).delete()
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-        self.decrease_point()
+        user_queryset = User.objects.filter(id=self.request.user.id).get()
+
+        self.decrease_point(user_queryset.point - 300)
 
         if result:
             return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
         else:
-            return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({'detail': 'Already added'}, 200)
 
 
 #

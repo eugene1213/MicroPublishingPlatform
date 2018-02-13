@@ -53,9 +53,9 @@ class TempCreateView(generics.GenericAPIView,
         author = self.is_author()
         if author is not None:
             if not author.is_active:
-                return Response({"detail": "This Account is Deactive"}, status=status.HTTP_401_UNAUTHORIZED)
+                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
         else:
-            return Response({"detail": "This Account is not Author"}, status=status.HTTP_401_UNAUTHORIZED)
+            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
 
         # 1. 작성중인 포스트 검색
         # 2. 있다면 업데이트 없다면 생성
@@ -66,8 +66,7 @@ class TempCreateView(generics.GenericAPIView,
         key = list(self.request.data.keys())
 
         if len(key) is not 3:
-            return Response({"detail": "Abnormal Connected"},
-                            status=status.HTTP_406_NOT_ACCEPTABLE)
+            raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
         if data['temp_id'] is not '':
             Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(
@@ -77,12 +76,13 @@ class TempCreateView(generics.GenericAPIView,
             return Response({"temp": {
                 "temp_id": data['temp_id']
             }}, status=status.HTTP_200_OK)
+
         else:
             # 임시 저장 할 수있는 게시물 제한
             checkcount = self.check_post_count(user)
             if not checkcount:
-                return Response({"detail": "This account exceeded the number of articles you could write"},
-                                status=status.HTTP_406_NOT_ACCEPTABLE)
+                raise exceptions.ValidationError({"detail": "This account exceeded the number of articles you could write"},
+                                400)
 
             serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
                                                                   main_content=data['main_content']))
@@ -127,9 +127,9 @@ class TempFileUpload(generics.CreateAPIView):
 
         if author is not None:
             if not author.is_active:
-                return Response({"detail": "This Account is Deactive"}, status=status.HTTP_401_UNAUTHORIZED)
+                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
         else:
-            return Response({"detail": "This Account is not Author"}, status=status.HTTP_401_UNAUTHORIZED)
+            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
 
         serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user, file=file_obj))
         if serializer:
@@ -141,7 +141,7 @@ class TempFileUpload(generics.CreateAPIView):
                     }
                 }
             }, status=status.HTTP_201_CREATED)
-        return Response({"detail": "Upload Failed"}, status=status.HTTP_400_BAD_REQUEST)
+        raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
 
 class TempListView(generics.ListCreateAPIView):

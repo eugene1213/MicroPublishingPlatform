@@ -45,7 +45,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(
-            email=validated_data['email'],
+            email=validated_data['username'],
             password=validated_data['password1'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name']

@@ -29,6 +29,6 @@ class AuthorAplly(generics.GenericAPIView,
         if result:
             return Response({"detail":"Successfully added."}, status=status.HTTP_201_CREATED)
         else:
-            return Response({"detail":"Already added."}, status=status.HTTP_200_OK)
+            raise exceptions.APIException({"detail":"Already added."}, 200)
 
 

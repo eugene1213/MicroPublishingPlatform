@@ -9,7 +9,7 @@ class PostAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = ['id','author', 'title','created_date','content_size']
     list_display_links = ['id', 'title']
-    search_fields = ('author__email',)
+    search_fields = ('author__username',)
 
     def content_size(self, post):
         return mark_safe('<u>{}</u>글자'.format(len(post.main_content)))
@@ -22,7 +22,7 @@ class TempAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = ['id','author', 'title','modified_date','content_size']
     list_display_links = ['id', 'title']
-    search_fields = ('author__email',)
+    search_fields = ('author__username',)
 
     def content_size(self, post):
         return mark_safe('<u>{}</u>글자'.format(len(post.main_content)))
