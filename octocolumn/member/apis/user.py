@@ -211,21 +211,7 @@ class TokenUserInfoAPIView(APIView):
         return Response(UserSerializer(user).data)
 
 
-class UserDetailView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def post(self, request, pk=None):
-        return Response(UserSerializer(request.user).data)
-
-
-class FileUploadView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    parser_classes = (FileUploadParser,)
-
-    def put(self, request, filename, format=None):
-        file_obj = request.FILES['file']
-        User.objects.filter(user=self.request.user).create(file=file_obj)
-        # do some stuff with uploaded file
-        return Response({"detail":"Upload Success"},status=204)
-
+class PasswordResetAPIView(APIView):
+    def post(self, request):
+        pass
 
