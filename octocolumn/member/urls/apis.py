@@ -2,15 +2,17 @@ from django.conf.urls import url
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
-    GoogleLogin
+    GoogleLogin, UpdatePassword
 
 urlpatterns = [
     # api:member:login
     url(r'^login/$', Login.as_view(), name='login'),
     url(r'^logout/$', Logout.as_view(), name='logout'),
     url(r'^signup/$',SignUp.as_view(), name='signup'),
-    url(r'^facebook-login/', FacebookLogin.as_view(), name='facebook'),
+    url(r'^password-change/$', UpdatePassword.as_view(), name='password-change'),
 
+
+    url(r'^facebook-login/', FacebookLogin.as_view(), name='facebook'),
     url(r'^google-login/', GoogleLogin.as_view(), name='google'),
     # url(r'^facebook-login/', apis.FacebookLogin.as_view()),
 

@@ -16,13 +16,14 @@ from config import settings
 from member.backends import FacebookBackend
 from member.models import User
 from member.serializers import UserSerializer, SignUpSerializer
-
+from member.serializers.user import ChangePasswordSerializer
 
 __all__ = (
     'Login',
     'SignUp',
     'Logout',
     'FacebookLogin',
+    'UpdatePassword'
 )
 
 
@@ -143,67 +144,6 @@ class FacebookLogin(APIView):
             'token': user.token,
         }
         return Response(data)
-#
-#
-# class GoogleLogin(APIView):
-#     def post(self, request):
-#         # request.data에
-#         #   access_token
-#         #   facebook_user_id
-#         #       데이터가 전달됨
-#         class DebugTokenInfo(NamedTuple):
-#             client_id: str
-#             redirect_uri: str
-#             response_type: int
-#             is_valid: bool
-#             scopes: list
-#             type: # str
-#             user_id: str
-#
-#         # token(access_token)을 받아 해당 토큰을 Debug
-#         def get_debug_token_info(token):
-#             app_id = settings.FACEBOOK_APP_ID
-#             app_secret_code = settings.FACEBOOK_APP_SECRET_CODE
-#             app_access_token = f'{app_id}|{app_secret_code}'
-#
-#             url_debug_token = 'https://graph.facebook.com/debug_token'
-#             params_debug_token = {
-#                 'input_token': token,
-#                 'access_token': app_access_token,
-#             }
-#             response = requests.get(url_debug_token, params_debug_token)
-#             pprint(response.json())
-#             return DebugTokenInfo(**response.json()['data'])
-#
-#         # request.data로 전달된 access_token값을 페이스북API쪽에 debug요청, 결과를 받아옴
-#         debug_token_info = get_debug_token_info(request.data['access_token'])
-#
-#         if debug_token_info.user_id != request.data['facebook_user_id']:
-#             raise APIException('페이스북 토큰의 사용자와 전달받은 facebook_user_id가 일치하지 않음')
-#
-#         if not debug_token_info.is_valid:
-#             raise APIException('페이스북 토큰이 유효하지 않음')
-#
-#         # FacebookBackend를 사용해서 유저 인증
-#         user = FacebookBackend.authenticate(facebook_user_id=request.data['facebook_user_id'])
-#         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
-#         if not user:
-#             user = User.objects.create_user(
-#                 email=f'fb_{request.data["facebook_user_id"]}',
-#                 user_type=User.USER_TYPE_FACEBOOK,
-#                 age=0,
-#             )
-#         # 유저 시리얼라이즈 결과를 Response
-#         # token도 추가
-#         data = {
-#             'user': UserSerializer(user).data,
-#             'token': user.token,
-#         }
-#         return Response(data)
-#
-#     pass
-#
-#
 
 
 class TokenUserInfoAPIView(APIView):
@@ -217,7 +157,31 @@ class TokenUserInfoAPIView(APIView):
         return Response(UserSerializer(user).data)
 
 
-class PasswordResetAPIView(APIView):
-    def post(self, request):
-        pass
+class UpdatePassword(APIView):
+    """
+    An endpoint for changing password.
+    """
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_object(self, queryset=None):
+        if self.request.user.user_type is not 'd':
+            raise APIException('소셜계정은 비밀번호를 변경할수 없습니다.')
+        return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            old_password = serializer.data.get("old_password")
+            if not self.object.check_password(old_password):
+                return Response({"old_password": ["Wrong password."]},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
