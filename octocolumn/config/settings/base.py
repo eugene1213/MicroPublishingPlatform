@@ -10,7 +10,6 @@ import json
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -79,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
     {
-        'NAME': 'dbTest.passwordValidators.ComplexPasswordValidator',
+        'NAME': 'config.passwordValidators.ComplexPasswordValidator',
     },
 ]
 
@@ -146,6 +146,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -154,3 +155,18 @@ REST_FRAMEWORK = {
 }
 
 APPEND_SLASH = False
+
+# Google
+CLIENT_ID = config_secret_common['accounts']['google']['client_id']
+CLIENT_SECRET = config_secret_common['accounts']['google']['client_secret']
+REDIRECT_URI = config_secret_common['accounts']['google']['javascript_origins']
+AUTH_URI = config_secret_common['accounts']['google']['auth_uri']
+TOKEN_URI = config_secret_common['accounts']['google']['token_uri']
+
+# Facebook
+FACEBOOK_APP_ID = config_secret_common['accounts']['facebook']['app_id']
+FACEBOOK_APP_SECRET_CODE = config_secret_common['accounts']['facebook']['secret_code']
+
+
+
+

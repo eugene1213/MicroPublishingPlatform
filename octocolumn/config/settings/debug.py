@@ -27,9 +27,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
 
+    # social_login
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'rest_auth',
+    
+    # provider
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+
+
+
+
     # storages
     'storages',
 
+    # rest_framework
     'rest_framework',
     'rest_framework.authtoken',
 

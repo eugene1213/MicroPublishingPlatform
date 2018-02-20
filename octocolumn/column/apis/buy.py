@@ -19,7 +19,7 @@ class PostBuy(APIView):
     # 구매리스트에 존재하는지 판명
     def buylist_duplicate(self,post):
         buylist = BuyList.objects.filter(user=self.request.user, post_id=post.id)
-        if buylist is not None:
+        if len(buylist) is not None:
             raise exceptions.APIException({"detail":"It's a post I've already purchased"}, 400)
         return BuyList.objects.filter(user=self.request.user).create(post_id=post.id)
 

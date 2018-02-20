@@ -9,9 +9,10 @@ __all__=(
 
 
 class FacebookBackend:
-    def authenticate(self, request, facebook_user_id):
+    def authenticate(facebook_user_id):
+        print(f'fb_{facebook_user_id}')
         try:
-            return User.objects.get(username=f'fb_{facebook_user_id}')
+            return User.objects.get(social_id=f'fb_{facebook_user_id}')
         except User.DoesNotExist:
             return None
 
@@ -23,7 +24,7 @@ class FacebookBackend:
 
 
 class GoogleBackend:
-    def authenticate(self, request, google_user_id):
+    def authenticate(google_user_id):
         try:
             return User.objects.get(username=f'g_{google_user_id}')
         except User.DoesNotExist:

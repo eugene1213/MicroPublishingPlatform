@@ -56,26 +56,6 @@ class Post(models.Model):
             return self.comment_set.exclude(pk=self.my_comment.pk)
         return self.comment_set.all()
 
-    # 조회수를 증가 시키는 메서드
-    def increase_hits(self):
-        self.hits = F('hits') + 1
-        self.save()
-
-    # 조회수를 감소 시키는 메서드
-    def decrease_hits(self):
-        self.hits = F('hits') - 1
-        self.save()
-
-    # 구매횟수 증가
-    def increase_buy_count(self):
-        self.buy_count = F('buy_count') + 1
-        self.save()
-
-    # 구매횟수 감소
-    def decrease_buy_count(self):
-        self.buy_count = F('buy_count') - 1
-        self.save()
-
 
 class PostLike(models.Model):
     post = models.ForeignKey('column.Post')

@@ -1,8 +1,9 @@
+from pprint import pprint
+
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import (
     PermissionsMixin)
 from django.db import models
-from django.db.models import F
 from rest_framework.authtoken.models import Token
 
 
@@ -14,12 +15,14 @@ __all__ = (
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, first_name, last_name, user_type=None, password=None):
+    def create_user(self, username, first_name, last_name, user_type, social_id=None, password=None):
         user = self.model(
             username=username,
             first_name=first_name,
             last_name=last_name,
-            user_type=User.USER_TYPE_DJANGO
+            user_type=user_type,
+            social_id=social_id,
+            is_active=False
         )
         user.set_password(password)
         user.save()
@@ -37,35 +40,26 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_facebook_user(self, user_info):
-        return self.create_user(
-            username=user_info['id'],
-            first_name=user_info.get('first_name', ''),
-            last_name=user_info.get('last_name', ''),
-            user_type=User.USER_TYPE_FACEBOOK
-        )
-
-    def create_google_user(self, user_info):
-        return self.create_user(
-            username=user_info['id'],
-            first_name=user_info.get('first_name', ''),
-            last_name=user_info.get('last_name', ''),
-            user_type=User.USER_TYPE_FACEBOOK
-        )
-
-    def create_twitter_user(self, user_info):
-        return self.create_user(
-            username=user_info['id'],
-            first_name=user_info.get('first_name', ''),
-            last_name=user_info.get('last_name', ''),
-            user_type=User.USER_TYPE_FACEBOOK
-        )
-
-
+    #
+    # def create_google_user(self, user_info):
+    #     return self.create_user(
+    #         username=user_info['id'],
+    #         first_name=user_info.get('first_name', ''),
+    #         last_name=user_info.get('last_name', ''),
+    #         user_type=User.USER_TYPE_FACEBOOK
+    #     )
+    #
+    # def create_twitter_user(self, user_info):
+    #     return self.create_user(
+    #         username=user_info['id'],
+    #         first_name=user_info.get('first_name', ''),
+    #         last_name=user_info.get('last_name', ''),
+    #         user_type=User.USER_TYPE_FACEBOOK
+    #     )
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    USER_TYPE_FACEBOOK = 'f'
+    USER_TYPE_FACEBOOK = 'fb'
     USER_TYPE_DJANGO = 'd'
     USER_TYPE_GOOGLE = 'g'
     USER_TYPE_TWITTER = 't'
@@ -76,17 +70,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         (USER_TYPE_TWITTER, 'Twitter')
     )
     user_type = models.CharField(
-        max_length=1,
+        max_length=50,
         choices=CHOICES_USER_TYPE,
-        default=USER_TYPE_DJANGO
     )
     username = models.EmailField(unique=True)
-    created_at = models.DateField(auto_now_add=True)
+    social_id = models.CharField(null=True, max_length=255)
     point = models.IntegerField(default=0)
     last_name = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     # like_posts = models.ManyToManyField(
     #     'column.Post',
@@ -200,9 +194,6 @@ class BuyList(models.Model):
         return f'BuyList (' \
                f'from: {self.user.username}, ' \
                f'to: {self.post.title})'
-
-
-
 
 
 

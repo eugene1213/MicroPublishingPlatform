@@ -1,19 +1,18 @@
-from http import cookies
 from pprint import pprint
-from typing import NamedTuple
 
 import requests
-from django.conf import settings
 from django.contrib.auth import authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
+
 from rest_framework import status, generics, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import APIException
-from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from typing import NamedTuple
 
+from config import settings
 from member.backends import FacebookBackend
 from member.models import User
 from member.serializers import UserSerializer, SignUpSerializer
@@ -23,7 +22,7 @@ __all__ = (
     'Login',
     'SignUp',
     'Logout',
-    'FacebookLogin'
+    'FacebookLogin',
 )
 
 
@@ -75,7 +74,9 @@ class SignUp(generics.CreateAPIView):
 
 
 class FacebookLogin(APIView):
+    permission_classes = (AllowAny,)
     # /api/member/facebook-login/
+
     def post(self, request):
         # request.data에
         #   access_token
@@ -116,15 +117,25 @@ class FacebookLogin(APIView):
         if not debug_token_info.is_valid:
             raise APIException('페이스북 토큰이 유효하지 않음')
 
+        userid = debug_token_info.user_id
+
+        userinfo = User.objects.filter(username=request.data['email']).count()
+
+        if not userinfo == 0:
+            raise APIException('Already exists this email')
+
         # FacebookBackend를 사용해서 유저 인증
-        user = FacebookBackend.authenticate(facebook_user_id=request.data['facebook_user_id'])
+        user = FacebookBackend.authenticate(facebook_user_id=userid)
         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
         if not user:
             user = User.objects.create_user(
-                email=f'fb_{request.data["facebook_user_id"]}',
-                user_type=User.USER_TYPE_FACEBOOK,
-                age=0,
-            )
+                username=request.data['email'],
+                first_name=request.data['first_name'],
+                last_name=request.data['last_name'],
+                social_id=f'fb_{request.data["facebook_user_id"]}',
+                user_type='fb',
+                is_active = True
+                )
         # 유저 시리얼라이즈 결과를 Response
         # token도 추가
         data = {
@@ -146,7 +157,7 @@ class FacebookLogin(APIView):
 #             response_type: int
 #             is_valid: bool
 #             scopes: list
-#             type: str
+#             type: # str
 #             user_id: str
 #
 #         # token(access_token)을 받아 해당 토큰을 Debug
@@ -193,11 +204,6 @@ class FacebookLogin(APIView):
 #     pass
 #
 #
-# class TwitterLogin(APIView):
-#     def post(self, request):
-#         pass
-#
-#     pass
 
 
 class TokenUserInfoAPIView(APIView):
