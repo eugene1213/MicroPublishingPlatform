@@ -8,7 +8,7 @@ from . import apis
 urlpatterns = [
     # url(r'^', include(views)),
     url(r'^api/', include(apis, namespace='api')),
-    url(r'^api-test/', include('rest_framework.urls')),
+    url(r'^api-test/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
 
 ]

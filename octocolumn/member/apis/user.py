@@ -185,3 +185,12 @@ class UpdatePassword(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class RecoveryPassword(APIView):
+    def post(self):
+        pass
+
+
+class VerifyToken(APIView):
+    def get(self):
+        pass
