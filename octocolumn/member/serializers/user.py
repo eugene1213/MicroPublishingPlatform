@@ -2,6 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 from member.models import User
+from utils.customsendmail import signup_email_send
 
 __all__=(
     'UserSerializer',
@@ -46,7 +47,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        return User.objects.create_user(
+        user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password1'],
             first_name=validated_data['first_name'],
@@ -54,6 +55,15 @@ class SignUpSerializer(serializers.ModelSerializer):
             user_type='d'
             # img_profile=validated_data.get('img_profile')
         )
+
+        if user:
+            email = signup_email_send(user)
+            if not email:
+                raise serializers.ValidationError('이메일 발송에 실패하였습니다.')
+        else:
+            raise serializers.ValidationError('이메일을 다시한번 확인해주시기 바랍니다.')
+
+        return user
 
     def to_representation(self, instance):
         # serializer된 형태를 결정
