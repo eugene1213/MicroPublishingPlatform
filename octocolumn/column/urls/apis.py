@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView
+from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostView
 from column.apis.tmp import TempListView, TempFileUpload
 
 
@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^post-create/$', PostCreateView.as_view(), name='post-create'),
     url(r'^post-like/$', PostLikeToggleView.as_view(), name='buy'),
     url(r'^post-buy/$', PostBuy.as_view(), name='post-like'),
+    url(r'^post-view/$', PostView.as_view(), name='post-view'),
 
     # 임시저장
     url(r'^temp/$', TempCreateView.as_view(), name='post-create'),

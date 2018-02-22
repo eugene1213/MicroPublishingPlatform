@@ -1,13 +1,14 @@
 import time
+
 from django.db import models
-from django.db.models import F
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
+from utils.filepath import cover_image_user_directory_path, preview_image_user_directory_path
 
 __all__ = (
     'Post',
-    'PostLike'
+    'PostLike',
 )
 
 
@@ -34,6 +35,16 @@ class Post(models.Model):
         through='PostLike',
     )
     like_count = models.PositiveIntegerField(default=0)
+    cover_image = models.FileField('포스트커버 이미지',
+                            upload_to=cover_image_user_directory_path,
+                            blank=True,
+                            null=True
+                                   )
+    preview_image = models.FileField('포스트프리뷰 이미지',
+                            upload_to=preview_image_user_directory_path,
+                            blank=True,
+                            null =True
+    )
 
     class Meta:
         ordering = ['-pk', ]
@@ -93,3 +104,4 @@ def update_post_like_count(sender, instance, **kwargs):
 #             self.user,
 #             self.post,
 #         )
+

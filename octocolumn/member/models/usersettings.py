@@ -9,7 +9,7 @@ __all__ = (
 
 class OtherPassword(models.Model):
     user = models.ForeignKey('User', null=True)
-    second_password = models.IntegerField(default=None)
+    second_password = models.CharField(max_length=255)
     error_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):

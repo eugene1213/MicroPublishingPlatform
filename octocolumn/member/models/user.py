@@ -20,9 +20,6 @@ class UserManager(BaseUserManager):
             username=username,
             first_name=first_name,
             last_name=last_name,
-            user_type=user_type,
-            social_id=social_id,
-            is_active=False
         )
         user.set_password(password)
         user.save()
@@ -41,21 +38,44 @@ class UserManager(BaseUserManager):
         return user
 
     #
-    # def create_google_user(self, user_info):
-    #     return self.create_user(
-    #         username=user_info['id'],
-    #         first_name=user_info.get('first_name', ''),
-    #         last_name=user_info.get('last_name', ''),
-    #         user_type=User.USER_TYPE_FACEBOOK
-    #     )
-    #
-    # def create_twitter_user(self, user_info):
-    #     return self.create_user(
-    #         username=user_info['id'],
-    #         first_name=user_info.get('first_name', ''),
-    #         last_name=user_info.get('last_name', ''),
-    #         user_type=User.USER_TYPE_FACEBOOK
-    #     )
+    def create_facebook_user(self, user_info):
+        user = self.mdoel(
+            username=user_info['id'],
+            first_name=user_info['first_name'],
+            last_name=user_info['last_name'],
+            user_type=User.USER_TYPE_FACEBOOK,
+            social_id=user_info['social_id']
+        )
+        user.set_unusable_password()
+        user.is_active = True
+        user.save()
+        return user
+
+    def create_google_user(self, user_info):
+        user = self.mdoel(
+            username=user_info['id'],
+            first_name=user_info['first_name'],
+            last_name=user_info['last_name'],
+            user_type=User.USER_TYPE_GOOGLE,
+            social_id=user_info['social_id']
+        )
+        user.set_unusable_password()
+        user.is_active = True
+        user.save()
+        return user
+
+    def create_twitter_user(self, user_info):
+        user = self.mdoel(
+            username=user_info['id'],
+            first_name=user_info.get('first_name', ''),
+            last_name=user_info.get('last_name', ''),
+            user_type=User.USER_TYPE_TWITTER,
+            social_id=user_info['social_id']
+        )
+        user.set_unusable_password()
+        user.is_active = True
+        user.save()
+        return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -116,6 +136,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = '사용자'
         verbose_name_plural = f'{verbose_name} 목록'
+
+    def get_full_name(self):
+        return self.last_name + self.first_name
+
+    def get_short_name(self):
+        return self.first_name
 
     @property
     def token(self):

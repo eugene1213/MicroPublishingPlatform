@@ -27,6 +27,8 @@ class PostSerializer(serializers.ModelSerializer):
             'main_content',
             'my_comment',
             'comments',
+            'cover_image',
+            'preview_image'
         )
         read_only_fields = (
             'author',
@@ -64,6 +66,9 @@ class TempFileSerializer(serializers.ModelSerializer):
             'file',
             'author_id'
         )
+
+
+
 
 
 

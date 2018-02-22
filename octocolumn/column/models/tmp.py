@@ -1,39 +1,11 @@
-import os
 from django.db import models
-from django.utils import timezone
+
+from utils.filepath import temp_user_directory_path
 
 __all__ = (
     'Temp',
     'TempFile'
 )
-
-
-# 저장 경로 파일 이름 설정
-def set_filename_format(now, instance, filename):
-    """ file format setting e.g) {username}-{date}-{microsecond}{extension} hjh-2016-07-12-158859.png """
-    return "{username}-{date}-{microsecond}{extension}".format(
-        username=instance.author.pk,
-        date=str(now.date()),
-        microsecond=now.microsecond,
-        extension=os.path.splitext(filename)[1],
-    )
-
-
-#저장 경로 디렉토리 설정
-def user_directory_path(instance, filename):
-    """ image upload directory setting e.g)
-     images/{year}/{month}/{day}/{username}/{filename}
-     images/2016/7/12/hjh/hjh-2016-07-12-158859.png """
-    print()
-    now = timezone.now()
-    path = "post-image/{username}/{year}/{month}/{day}/{filename}".format(
-        username=instance.author.pk,
-        year=now.year,
-        month=now.month,
-        day=now.day,
-        filename=set_filename_format(now, instance,
-                                     filename), )
-    return path
 
 
 class Temp(models.Model):
@@ -54,6 +26,8 @@ class Temp(models.Model):
 class TempFile(models.Model):
     author = models.ForeignKey('member.User',null=True)
     file = models.FileField('포스트파일저장 이미지',
-                            upload_to=user_directory_path,
+                            upload_to=temp_user_directory_path,
                             blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+

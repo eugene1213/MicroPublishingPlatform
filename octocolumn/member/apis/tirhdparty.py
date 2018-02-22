@@ -65,13 +65,11 @@ class GoogleLogin(APIView):
         user = GoogleBackend.authenticate(google_user_id=user_id)
 
         if not user:
-            user = User.objects.create_user(
+            user = User.objects.create_google_user(
                 username=debug_token_info.email,
                 first_name=debug_token_info.given_name,
                 last_name=debug_token_info.family_name,
                 social_id=f'g_{user_id}',
-                user_type='g',
-                is_active=True
             )
 
         data = {

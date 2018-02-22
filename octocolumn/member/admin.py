@@ -15,7 +15,6 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'first_name','last_name','point']
     list_display_links = ['username']
 
-
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ['author', 'is_active','created_at']

@@ -37,16 +37,27 @@ class PointHistoryManager(models.Manager):
         instance.save()
         return instance
 
+    def publish(self, user, point, history):
+        instance = self.model(
+            user=user,
+            point_use_type=PointHistory.POINT_TYPE_PUBLISH,
+            point=point,
+            history=history
+        )
+        instance.save()
+        return instance
+
 
 class PointHistory(models.Model):
     POINT_TYPE_CHARGE = 'c'
+    POINT_TYPE_PUBLISH = 'p'
     POINT_TYPE_BUY = 'b'
     POINT_TYPE_REWARD = 'r'
     CHOICE_POINT_TYPE = (
         (POINT_TYPE_CHARGE,'Charge'),
         (POINT_TYPE_BUY, 'Buy'),
         (POINT_TYPE_REWARD, 'Reward'),
-
+        (POINT_TYPE_PUBLISH, 'Use')
     )
     user = models.ForeignKey(
         'User',

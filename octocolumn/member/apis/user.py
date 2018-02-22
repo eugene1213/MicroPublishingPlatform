@@ -31,10 +31,10 @@ class Login(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        email = request.data['email']
+        username = request.data['username']
         password = request.data['password']
         user = authenticate(
-            email=email,
+            username=username,
             password=password,
         )
         if user:
@@ -129,13 +129,11 @@ class FacebookLogin(APIView):
         user = FacebookBackend.authenticate(facebook_user_id=userid)
         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
         if not user:
-            user = User.objects.create_user(
+            user = User.objects.create_facebook_user(
                 username=request.data['email'],
                 first_name=request.data['first_name'],
                 last_name=request.data['last_name'],
                 social_id=f'fb_{request.data["facebook_user_id"]}',
-                user_type='fb',
-                is_active = True
                 )
         # 유저 시리얼라이즈 결과를 Response
         # token도 추가
