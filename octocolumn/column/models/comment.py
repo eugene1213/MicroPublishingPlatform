@@ -12,8 +12,9 @@ __all__ = (
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('column.Post',null=True)
-    author = models.ForeignKey('member.User',null=True)
+    post = models.ForeignKey('column.Post', null=True)
+    # 여기서의 author은 post의 author와 전혀무관
+    author = models.ForeignKey('member.User', null=True)
     content = models.TextField(blank=True)
     html_content = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag')

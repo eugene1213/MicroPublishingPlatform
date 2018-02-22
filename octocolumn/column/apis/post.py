@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from column.models import Temp, Comment
+from column.models import Temp, Comment, SearchTag
 from column.pagination import PostPagination
 from member.models import Author as AuthorModel, User, PointHistory, BuyList
 from ..models import Post
@@ -40,20 +40,33 @@ class PostCreateView(generics.GenericAPIView,
     def validate_code(self,code):
         pass
 
+    # 포인트 감소
     def decrease_point(self, point):
         return User.objects.filter(id=self.request.user.id).update(point=point)
 
+    # 작가인증
     def is_author(self):
         try:
-            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
+            author = AuthorModel.objects.filter(author_id=self.request.user.id).get()
             return author
         except ObjectDoesNotExist:
-            author = None
-            return author
+            return None
 
+    # 포인트사용내역에 추가
     def add_point_history(self,point,history):
         return PointHistory.objects.publish(user=self.request.user, point=point,
                                  history=history)
+
+    # 검색 태그 추가
+    def search_tag(self, post_id, tag):
+        search_tag = tag.split(',')
+        if search_tag.count() > 5:
+            raise exceptions.ValidationError({'detail': 'You can add up to 5'}, 200)
+
+        for i in search_tag:
+            SearchTag.objects.create(post_id=post_id, tag=i)
+            return True
+        return False
 
     # if is_post(data['temp_id']):
     #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
@@ -73,12 +86,12 @@ class PostCreateView(generics.GenericAPIView,
                 raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
         else:
             raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
-
+        # 템프파일이 삭제 되었을경우 에러 발생 예외처리
         try:
             temp = Temp.objects.filter(id=data['temp_id']).get()
         except ObjectDoesNotExist:
             raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
-
+        # 포인트가 모자르다면 에러발생
         if 300 > user.point:
             raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
@@ -88,10 +101,8 @@ class PostCreateView(generics.GenericAPIView,
                                                             preview_image=preview_file_obj,
                                                             cover_image=cover_file_obj
                                                             )
-
-        # if is_post(data['temp_id']):
-        #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
-
+        serializer = PostSerializer(result)
+        # 템프파일 삭제
         try:
             Temp.objects.filter(id=data['temp_id']).delete()
         except ObjectDoesNotExist:
@@ -101,14 +112,16 @@ class PostCreateView(generics.GenericAPIView,
 
         self.decrease_point(user_queryset.point - 300)
         self.add_point_history(point=300, history=self.request.data['title'])
+        # 태그를 추가하고 태그 추가 실패
+        if not self.search_tag(post_id=serializer.data['id'],tag=self.request.data['tag']):
+            raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
         if result:
             return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
         else:
-            raise exceptions.ValidationError({'detail': 'Already added'}, 200)
+            raise exceptions.ValidationError({'detail': 'Already added'}, 400)
 
 
-#
 class PostListCreateView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -146,9 +159,11 @@ class PostView(APIView):
     permission_classes = (AllowAny,)
 
     def is_buyed(self, post_id):
-        if len(BuyList.objects.filter(user=self.request.user, post_id=post_id)) is not 0:
+        try:
+            BuyList.objects.filter(user=self.request.user, post_id=post_id).get()
             return False
-        return True
+        except ObjectDoesNotExist:
+            return True
 
     def post(self, request):
         data = self.request.data
