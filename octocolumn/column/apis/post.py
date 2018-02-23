@@ -73,7 +73,7 @@ class PostCreateView(generics.GenericAPIView,
 
     # base64 파일 파일 형태로
     def base64_content(self,image):
-        if image is not None or '':
+        if image is not None or not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
