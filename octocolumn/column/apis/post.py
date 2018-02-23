@@ -125,7 +125,7 @@ class PostCreateView(generics.GenericAPIView,
         user_queryset = User.objects.filter(id=self.request.user.id).get()
 
         self.decrease_point(user_queryset.point - 300)
-        self.add_point_history(point=300, history=self.request.data['title'])
+        self.add_point_history(point=300, history=temp.title)
         # 태그를 추가하고 태그 추가 실패
         # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
         #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
