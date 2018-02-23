@@ -27,7 +27,7 @@ class PostCreateView(generics.GenericAPIView,
                      mixins.DestroyModelMixin):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
     parser_classes = (MultiPartParser,)
 
     def is_post(self, temp_id):
@@ -47,10 +47,11 @@ class PostCreateView(generics.GenericAPIView,
     # 작가인증
     def is_author(self):
         try:
-            author = AuthorModel.objects.filter(author_id=self.request.user.id).get()
+            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
             return author
         except ObjectDoesNotExist:
-            return None
+            author = None
+            return author
 
     # 포인트사용내역에 추가
     def add_point_history(self,point,history):
