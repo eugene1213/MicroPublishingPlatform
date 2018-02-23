@@ -35,12 +35,12 @@ class Post(models.Model):
         through='PostLike',
     )
     like_count = models.PositiveIntegerField(default=0)
-    cover_image = models.FileField('포스트커버 이미지',
+    cover_image = models.ImageField('포스트커버 이미지',
                             upload_to=cover_image_user_directory_path,
                             blank=True,
                             null=True
                                    )
-    preview_image = models.FileField('포스트프리뷰 이미지',
+    preview_image = models.ImageField('포스트프리뷰 이미지',
                             upload_to=preview_image_user_directory_path,
                             blank=True,
                             null =True
