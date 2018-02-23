@@ -16,18 +16,18 @@ class OtherPassword(models.Model):
         return '{} : {}'.format(
             self.user,
             self.second_password,
-            self.e_count
+            self.error_count
         )
 
     # 오입력시 카운트 증가 시키는 메서드
-    def increase(self):
-        self.error_count = F('error_count') + 1
-        self.save()
+    def increase(self, user):
+        user.error_count = F('error_count') + 1
+        user.save()
 
     # 비밀번호 오입력시 카운트를 초기화 시키는 메서드
-    def decrease(self):
-        self.error_count = 0
-        self.save()
+    def decrease(self, user):
+        user.error_count = 0
+        user.save()
 
 
 class UserSetting(models.Model):
