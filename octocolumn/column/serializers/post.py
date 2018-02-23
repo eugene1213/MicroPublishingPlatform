@@ -35,10 +35,10 @@ class PostSerializer(serializers.ModelSerializer):
             'my_comment',
         )
 
-    # def to_representation(self, instance):
-    #     ret = super().to_representation(instance)
-    #     ret['is_like'] = self.context['request'].user in instance.like_users.all()
-    #     return ret
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['is_like'] = self.context['request'].user in instance.like_users.all()
+        return ret
 
 
 class TempSerializer(serializers.ModelSerializer):

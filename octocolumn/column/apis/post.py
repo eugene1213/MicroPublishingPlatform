@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
 from rest_framework.generics import get_object_or_404
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,7 +31,7 @@ class PostCreateView(generics.GenericAPIView,
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (AllowAny,)
-    parser_classes = (MultiPartParser,)
+    parser_classes = (JSONParser,)
 
     def is_post(self, temp_id):
         # temp = Temp.objects.filter(id=temp_id)
