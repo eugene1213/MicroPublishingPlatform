@@ -58,7 +58,6 @@ class PostSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'author',
-            'photo',
             'main_content',
             'my_comment',
             'comments',
