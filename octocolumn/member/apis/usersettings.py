@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import exceptions, generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -23,8 +24,11 @@ class SecondPasswordCreateView(generics.CreateAPIView):
         else:
             raise exceptions.NotAuthenticated()
 
-    def validated_password(self, data):
+    def validate_password(self, data):
         second_password = data
+
+        if int(second_password) is not int:
+            raise exceptions.ValidationError({"detail":'패스워드는 숫자만 입력하셔야 합니다.'})
 
         if len(second_password) is not 4:
             raise exceptions.ValidationError({"detail":'패스워드는 4자리만 입력하셔야 합니다.'})
@@ -32,9 +36,10 @@ class SecondPasswordCreateView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        numeric_password = self.validated_password(self.request.data['second_password'])
+        numeric_password = self.validate_password(self.request.data['second_password'])
+        password = make_password(numeric_password, None, 'PBKDF2')
 
-        serializer = SecondPasswordSerializer(super().get_queryset().get_or_create(user=user, second_password=numeric_password))
+        serializer = SecondPasswordSerializer(OtherPassword.objects.create(user=user, second_password=password))
 
         if serializer:
             return Response({"detail": serializer.validated_data}, status=status.HTTP_201_CREATED)
@@ -56,8 +61,9 @@ class ValidationSecondPassword(APIView):
         if user_data.error_count >= 5:
             return Response({"detail": "The number of errors exceeded"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if numeric_password is not user_data.second_password:
-            OtherPassword.objects.filter(user=user).increase()
+        if not check_password(numeric_password, user_data.second_password):
+            OtherPassword.objects.increase(user=user)
+            return Response({"detail": "Failed Credential"}, status=status.HTTP_401_UNAUTHORIZED)
         return Response({"detail": "Success Credential"}, status=status.HTTP_200_OK)
 
 

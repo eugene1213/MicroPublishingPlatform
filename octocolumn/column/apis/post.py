@@ -1,4 +1,7 @@
+import base64
+
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
 from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import MultiPartParser
@@ -69,14 +72,21 @@ class PostCreateView(generics.GenericAPIView,
             return True
         return False
 
+    # base64 파일 파일 형태로
+    def base64_content(self,image):
+        format, imgstr = image.split(';base64,')
+        ext = format.split('/')[-1]
+        data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+        return data
+
     # if is_post(data['temp_id']):
     #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
 
     def post(self, request):
         user = self.request.user
         data = self.request.data
-        preview_file_obj = self.request.FILES['preview']
-        cover_file_obj = self.request.FILES['cover']
+        preview_file_obj = self.base64_content(self.request.data['preview'])
+        cover_file_obj = self.base64_content(self.request.data['cover'])
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
@@ -95,15 +105,16 @@ class PostCreateView(generics.GenericAPIView,
         # 포인트가 모자르다면 에러발생
         if 300 > user.point:
             raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
+        print(preview_file_obj)
 
-        post, result = super().get_queryset().get_or_create(author=user, title=temp.title,
-                                                            main_content=temp.main_content,
-                                                            price=data['price'],
-                                                            preview_image=preview_file_obj,
-                                                            cover_image=cover_file_obj
-                                                            )
-        serializer = PostSerializer(result)
+        serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
+                                                        main_content=temp.main_content,
+                                                        price=data['price'],
+                                                        preview_image=preview_file_obj,
+                                                        cover_image=cover_file_obj
+                                                        ))
         # 템프파일 삭제
+
         try:
             Temp.objects.filter(id=data['temp_id']).delete()
         except ObjectDoesNotExist:
@@ -114,10 +125,10 @@ class PostCreateView(generics.GenericAPIView,
         self.decrease_point(user_queryset.point - 300)
         self.add_point_history(point=300, history=self.request.data['title'])
         # 태그를 추가하고 태그 추가 실패
-        if not self.search_tag(post_id=serializer.data['id'],tag=self.request.data['tag']):
-            raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+        # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+        #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
-        if result:
+        if serializer:
             return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
         else:
             raise exceptions.ValidationError({'detail': 'Already added'}, 400)

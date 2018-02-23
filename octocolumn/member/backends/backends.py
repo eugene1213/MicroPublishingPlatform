@@ -52,7 +52,7 @@ class TwitterBackend:
 
 
 class SecondPasswordBackend:
-    def authenticate(self,request,user_id):
+    def authenticate(self,user=None, password=None):
         pass
 
     pass
