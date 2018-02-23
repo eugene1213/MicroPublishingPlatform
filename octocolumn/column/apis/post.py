@@ -31,7 +31,6 @@ class PostCreateView(generics.GenericAPIView,
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (AllowAny,)
-    parser_classes = (JSONParser,)
 
     def is_post(self, temp_id):
         # temp = Temp.objects.filter(id=temp_id)
