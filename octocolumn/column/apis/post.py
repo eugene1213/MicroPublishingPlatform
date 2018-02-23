@@ -73,10 +73,12 @@ class PostCreateView(generics.GenericAPIView,
 
     # base64 파일 파일 형태로
     def base64_content(self,image):
-        format, imgstr = image.split(';base64,')
-        ext = format.split('/')[-1]
-        data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
-        return data
+        if image is not None or not '':
+            format, imgstr = image.split(';base64,')
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+            return data
+        raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     # if is_post(data['temp_id']):
     #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
@@ -84,6 +86,7 @@ class PostCreateView(generics.GenericAPIView,
     def post(self, request):
         user = self.request.user
         data = self.request.data
+
         preview_file_obj = self.base64_content(self.request.data['preview'])
         cover_file_obj = self.base64_content(self.request.data['cover'])
 
