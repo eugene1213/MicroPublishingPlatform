@@ -51,6 +51,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'author',
             'main_content',
             'my_comment',
+            'created_date'
             'comments',
             'cover_image',
             'preview_image'
