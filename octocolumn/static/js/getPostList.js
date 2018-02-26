@@ -10,10 +10,7 @@ $(document).ready(function(){
         },
         success: function(json) {
 
-            var content = json[0].post.main_content.trim();                            // 전체 글자수
-            var countSpace = ((content.match(/\s/g) || []).length)/2;       // 띄어쓰기를 0.5글자 계산
-            var sum = content.length - 3.5 - countSpace;                    // 전체 글자수에서 띄어쓰기 갯수*0.5 뺀 값
-            var time = Math.round(sum / 500);                               // 1분/500자 반올림
+            var time = Math.round(typo_count / 500);                               // 1분/500자 반올림
 
             console.log(json);
             $(".fb1_txt_1").text(json[0].post.title);
