@@ -1,6 +1,7 @@
 import base64
 import re
 
+from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
@@ -157,12 +158,13 @@ class PostListView(ListAPIView):
             user = User.objects.filter(pk=i.author_id).get()
             # profile_img = ProfileImage.objects.filter(id=i.author_id).get()
             serializer = PostSerializer(i)
+            time =datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
             data = {
                 "post":{
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
-                    "created_date": serializer.data['created_date'],
+                    "created_date": time.strftime('%B %d'),
                     "typo_count": len(self.remove_tag(content)),
                     "author": {
                         "author_id": serializer.data['author'],
