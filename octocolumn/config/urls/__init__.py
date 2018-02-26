@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
+from config.views import index
 from member.apis.verify import VerifyEmail, PasswordResetEmail
 from . import apis
 
@@ -15,6 +16,8 @@ urlpatterns = [
         VerifyEmail.as_view(), name='verifyChecking'),
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         PasswordResetEmail.as_view(), name='password-reset'),
+
+    url(r'^index/$', index)
 ]
 urlpatterns += static(
     settings.MEDIA_URL,
