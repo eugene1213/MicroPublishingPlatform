@@ -20,8 +20,7 @@ $(document).ready(function(){
             $(".fb1_txt_2").text(json[0].post.main_content.substr(0,100));
             $(".profile_name").text(json[0].post.author.username);
             $(".profile_readtime").text(time+" min read");
-            
-            //$(".profile_date").text(json[0].post.created_date);
+            $(".profile_date").text(json[0].post.created_date);
             
             $(".fb1_img").css("background","url("+json[0].post.cover_img+")");
             console.log("통신성공");
