@@ -26,6 +26,8 @@ class PostSerializer(serializers.ModelSerializer):
             'author',
             'main_content',
             'my_comment',
+            'title',
+            'created_date',
             'comments',
             'cover_image',
             'preview_image'
@@ -35,10 +37,10 @@ class PostSerializer(serializers.ModelSerializer):
             'my_comment',
         )
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        ret['is_like'] = self.context['request'].user in instance.like_users.all()
-        return ret
+    # def to_representation(self, instance):
+    #     ret = super().to_representation(instance)
+    #     ret['is_like'] = self.context['request'].user in instance.like_users.all()
+    #     return ret
 
 
 class PostListSerializer(serializers.ModelSerializer):
@@ -51,7 +53,8 @@ class PostListSerializer(serializers.ModelSerializer):
             'author',
             'main_content',
             'my_comment',
-            'created_date'
+            'title',
+            'created_date',
             'comments',
             'cover_image',
             'preview_image'

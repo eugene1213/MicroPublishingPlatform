@@ -1,4 +1,5 @@
 import base64
+import re
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
@@ -10,7 +11,8 @@ from rest_framework.views import APIView
 
 from column.models import Temp, Comment, SearchTag
 from column.pagination import PostPagination
-from member.models import Author as AuthorModel, User, PointHistory, BuyList
+from config.settings import SITE_ID
+from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
 from ..models import Post
 from ..serializers import PostSerializer, PostListSerializer
 
@@ -138,13 +140,43 @@ class PostCreateView(generics.GenericAPIView,
 class PostListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = PostSerializer
-    model = serializer_class.Meta.model
+    queryset = Post.objects.all()
     pagination_class = PostPagination
 
-    def get_queryset(self):
+    def remove_tag(self, post):
+        cleaner = re.compile('<.*?>')
+        clean_text = re.sub(cleaner, '', post)
+        return clean_text
 
-        queryset = self.model.objects.all()
-        return queryset.order_by('-created_date')
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.order_by('-created_date')[:5]
+        lists = []
+        for i in post:
+            content = i.main_content
+            rm_content = self.remove_tag(content)[0:1000]
+            user = User.objects.filter(pk=i.author_id).get()
+            # profile_img = ProfileImage.objects.filter(id=i.author_id).get()
+            serializer = PostSerializer(i)
+            data = {
+                "post":{
+                    "title": serializer.data['title'],
+                    "main_content": rm_content,
+                    "cover_img": serializer.data['cover_image'],
+                    "created_date": serializer.data['created_date'],
+                    "typo_count": len(self.remove_tag(content)),
+                    "author": {
+                        "author_id": serializer.data['author'],
+                        "username": user.last_name + user.first_name,
+                        "achevement": "",
+                        "profile_img": "",
+                        "cover_img": ""
+
+                    }
+                }
+            }
+            lists.append(data)
+
+        return Response(lists)
 
 
 class PostLikeToggleView(APIView):
