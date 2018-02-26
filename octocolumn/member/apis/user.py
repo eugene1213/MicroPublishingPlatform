@@ -133,7 +133,7 @@ class FacebookLogin(APIView):
                 username=request.data['email'],
                 first_name=request.data['first_name'],
                 last_name=request.data['last_name'],
-                social_id=f'fb_{request.data["facebook_user_id"]}',
+                    social_id=f'fb_{request.data["facebook_user_id"]}',
                 )
         # 유저 시리얼라이즈 결과를 Response
         # token도 추가
