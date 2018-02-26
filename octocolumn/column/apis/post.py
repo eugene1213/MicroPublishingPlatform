@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
 from rest_framework.generics import get_object_or_404
-from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -127,8 +126,8 @@ class PostCreateView(generics.GenericAPIView,
         self.decrease_point(user_queryset.point - 300)
         self.add_point_history(point=300, history=temp.title)
         # 태그를 추가하고 태그 추가 실패
-        # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-        #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+        if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+            raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
         if serializer:
             return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
