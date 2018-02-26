@@ -14,7 +14,8 @@ class ProfileImageUpload(generics.CreateAPIView):
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
-        file_obj = self.request.FILES['files[]']
+        profile_file_obj = self.base64_content(self.request.data['profile'])
+        cover_file_obj = self.base64_content(self.request.data['profile_cover'])
 
         serializer = ProfileImageSerializer(ProfileImage.objects.create(author=self.request.user ,file=file_obj))
         if serializer:

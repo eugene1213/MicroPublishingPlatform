@@ -109,7 +109,6 @@ class PostCreateView(generics.GenericAPIView,
         # 포인트가 모자르다면 에러발생
         if 300 > user.point:
             raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
-        print(preview_file_obj)
 
         serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
                                                         main_content=temp.main_content,
@@ -164,7 +163,7 @@ class PostListView(ListAPIView):
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
-                    "created_date": time.strftime('%B %d'),
+                    "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
                     "typo_count": len(self.remove_tag(content)),
                     "author": {
                         "author_id": serializer.data['author'],
