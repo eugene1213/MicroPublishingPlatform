@@ -13,6 +13,7 @@ from config.settings import CLIENT_ID
 from member.backends import GoogleBackend
 from member.models import User
 from member.serializers import UserSerializer
+from utils.jwt import jwt_payload_handler, jwt_encode_handler
 
 __all__ =(
     'GoogleLogin',
@@ -44,7 +45,6 @@ class GoogleLogin(APIView):
 
         def get_debug_token_info(token):
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
-            pprint(idinfo)
             return DebugTokenInfo(**idinfo)
 
         debug_token_info = get_debug_token_info(request.data['access_token'])
@@ -71,9 +71,11 @@ class GoogleLogin(APIView):
                 last_name=debug_token_info.family_name,
                 social_id=f'g_{user_id}',
             )
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
 
         data = {
             'user': UserSerializer(user).data,
-            'token': user.token
+            'token': token
         }
         return Response(data)

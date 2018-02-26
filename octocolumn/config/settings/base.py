@@ -6,6 +6,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+import datetime
 import json
 import os
 
@@ -166,5 +167,10 @@ FACEBOOK_APP_ID = config_secret_common['accounts']['facebook']['app_id']
 FACEBOOK_APP_SECRET_CODE = config_secret_common['accounts']['facebook']['secret_code']
 
 
-
+# JWT
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),  # Token expires * minutes after being issued
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),  # Token can be refreshed up to * minutes after being issued
+ }
 

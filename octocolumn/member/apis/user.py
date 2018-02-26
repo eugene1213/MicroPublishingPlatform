@@ -1,3 +1,4 @@
+import token
 from pprint import pprint
 
 import requests
@@ -12,11 +13,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from typing import NamedTuple
 
+from rest_framework_jwt.settings import api_settings
+
 from config import settings
 from member.backends import FacebookBackend
 from member.models import User
 from member.serializers import UserSerializer, SignUpSerializer
 from member.serializers.user import ChangePasswordSerializer
+from utils.jwt import jwt_payload_handler, jwt_encode_handler
 
 __all__ = (
     'Login',
@@ -25,6 +29,8 @@ __all__ = (
     'FacebookLogin',
     'UpdatePassword'
 )
+
+
 
 
 class Login(APIView):
@@ -39,9 +45,12 @@ class Login(APIView):
         )
         if user:
             # 'user'키에 다른 dict로 유저에 대한 모든 정보를 보내줌
-            token, token_created = Token.objects.get_or_create(user=user)
+            # token, token_created = Token.objects.get_or_create(user=user)
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+
             data = {
-                'token': token.key,
+                'token': token,
                 'user': UserSerializer(user).data,
             }
 
@@ -133,13 +142,15 @@ class FacebookLogin(APIView):
                 username=request.data['email'],
                 first_name=request.data['first_name'],
                 last_name=request.data['last_name'],
-                    social_id=f'fb_{request.data["facebook_user_id"]}',
+                social_id=f'fb_{request.data["facebook_user_id"]}',
                 )
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
         # 유저 시리얼라이즈 결과를 Response
         # token도 추가
         data = {
             'user': UserSerializer(user).data,
-            'token': user.token,
+            'token': token,
         }
         return Response(data)
 
