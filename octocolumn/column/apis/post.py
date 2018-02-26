@@ -10,12 +10,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from column.models import Temp, Comment, SearchTag
+from column.models import Temp, SearchTag
 from column.pagination import PostPagination
-from config.settings import SITE_ID
-from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
+from member.models import Author as AuthorModel, User, PointHistory, BuyList
 from ..models import Post
-from ..serializers import PostSerializer, PostListSerializer
+from ..serializers import PostSerializer
 
 __all__ = (
     # 'PostListCreateView',
@@ -158,13 +157,14 @@ class PostListView(ListAPIView):
             # profile_img = ProfileImage.objects.filter(id=i.author_id).get()
             serializer = PostSerializer(i)
             time =datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+            text = self.remove_tag(content)
             data = {
                 "post":{
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
-                    "typo_count": len(self.remove_tag(content)),
+                    "typo_count": len(text) - text.count(' ')/2,
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + user.first_name,
