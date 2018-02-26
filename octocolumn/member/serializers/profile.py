@@ -8,10 +8,11 @@ __all__ =(
 
 
 class ProfileImageSerializer(serializers.ModelSerializer):
-    file = serializers.FileField(use_url=True)
 
     class Meta:
         model = Profile
         fields = (
-            'file'
+            'pk',
+            'cover_image',
+            'profile_image'
         )
