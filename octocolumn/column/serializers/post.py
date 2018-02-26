@@ -9,7 +9,8 @@ from ..models import Post
 __all__ = (
     'PostSerializer',
     'TempSerializer',
-    'TempFileSerializer'
+    'TempFileSerializer',
+    'PostListSerializer'
 )
 
 
@@ -17,7 +18,6 @@ class PostSerializer(serializers.ModelSerializer):
     # 아래 코드가 동작하도록 CommentSerializer를 구현
     my_comment = CommentSerializer(read_only=True)
     comments = CommentSerializer(read_only=True, many=True)
-
 
     class Meta:
         model = Post
@@ -39,6 +39,26 @@ class PostSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         ret['is_like'] = self.context['request'].user in instance.like_users.all()
         return ret
+
+
+class PostListSerializer(serializers.ModelSerializer):
+    Post = PostSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Post
+        fields = (
+            'pk',
+            'author',
+            'main_content',
+            'my_comment',
+            'comments',
+            'cover_image',
+            'preview_image'
+        )
+        read_only_fields = (
+            'author',
+            'my_comment',
+        )
 
 
 class TempSerializer(serializers.ModelSerializer):

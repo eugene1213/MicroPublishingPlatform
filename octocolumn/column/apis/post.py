@@ -3,7 +3,7 @@ import base64
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,7 +12,7 @@ from column.models import Temp, Comment, SearchTag
 from column.pagination import PostPagination
 from member.models import Author as AuthorModel, User, PointHistory, BuyList
 from ..models import Post
-from ..serializers import PostSerializer
+from ..serializers import PostSerializer, PostListSerializer
 
 __all__ = (
     # 'PostListCreateView',
@@ -135,24 +135,16 @@ class PostCreateView(generics.GenericAPIView,
             raise exceptions.ValidationError({'detail': 'Already added'}, 400)
 
 
-class PostListCreateView(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
+class PostListView(ListAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = PostSerializer
+    model = serializer_class.Meta.model
     pagination_class = PostPagination
 
-    def perform_create(self, serializer):
-        # serializer.save()로 생성된 Post instance를 instance변수에 할당
-        instance = serializer.save(author=self.request.user)
-        # comment_content에 request.data의 'comment'에 해당하는 값을 할당
-        comment_content = self.request.data.get('comment')
-        # 'comment'에 값이 왔을 경우, my_comment항목을 채워줌
-        if comment_content:
-            instance.my_comment = Comment.objects.create(
-                post=instance,
-                author=instance.author,
-                content=comment_content
-            )
-            instance.save()
+    def get_queryset(self):
+
+        queryset = self.model.objects.all()
+        return queryset.order_by('-created_date')
 
 
 class PostLikeToggleView(APIView):
