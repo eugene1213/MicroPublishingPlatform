@@ -30,7 +30,7 @@ MEDIA_URL = '/media/'
 
 # Static Root폴더
 #   octocolumn_project/.static_root/
-STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
 
 # Static폴더
 #    octocolumn_project/instagram/static/

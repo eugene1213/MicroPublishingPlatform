@@ -6,6 +6,8 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.deploy.application'
 
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
 
 # Application definition
 INSTALLED_APPS = [
