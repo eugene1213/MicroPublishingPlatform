@@ -40,7 +40,7 @@ class PostCreateView(generics.GenericAPIView,
         # return True
         pass
 
-    def validate_code(self,code):
+    def validate_code(self,  code):
         pass
 
     # 포인트 감소
@@ -73,8 +73,8 @@ class PostCreateView(generics.GenericAPIView,
         return False
 
     # base64 파일 파일 형태로
-    def base64_content(self,image):
-        if image is not None or not '':
+    def base64_content(self, image):
+        if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
@@ -136,11 +136,10 @@ class PostCreateView(generics.GenericAPIView,
             raise exceptions.ValidationError({'detail': 'Already added'}, 400)
 
 
-class PostListView(ListAPIView):
+class PostListView(APIView):
     permission_classes = (AllowAny,)
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    pagination_class = PostPagination
 
     def remove_tag(self, post):
         cleaner = re.compile('<.*?>')
@@ -148,7 +147,8 @@ class PostListView(ListAPIView):
         return clean_text
 
     def get(self, request, *args, **kwargs):
-        post = Post.objects.order_by('-created_date')[:5]
+        post = Post.objects.order_by('-created_date')[:15]
+
         lists = []
         for i in post:
             content = i.main_content
@@ -160,6 +160,7 @@ class PostListView(ListAPIView):
             text = self.remove_tag(content)
             data = {
                 "post":{
+                    "post_id":serializer.data['id'],
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
@@ -167,7 +168,7 @@ class PostListView(ListAPIView):
                     "typo_count": len(text) - text.count(' ')/2,
                     "author": {
                         "author_id": serializer.data['author'],
-                        "username": user.last_name + user.first_name,
+                        "username": user.last_name + " " + user.first_name,
                         "achevement": "",
                         "profile_img": "",
                         "cover_img": ""
@@ -177,7 +178,7 @@ class PostListView(ListAPIView):
             }
             lists.append(data)
 
-        return Response(lists)
+        return Response(lists, status=status.HTTP_200_OK)
 
 
 class PostLikeToggleView(APIView):
