@@ -143,10 +143,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
 
-    @property
-    def token(self):
-        return Token.objects.get_or_create(user=self)[0].key
-
     def follow_toggle(self, user):
         # 1. 주어진 user가 User객체인지 확인
         #    아니면 raise ValueError()

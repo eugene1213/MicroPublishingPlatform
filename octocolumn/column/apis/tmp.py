@@ -50,12 +50,12 @@ class TempCreateView(generics.GenericAPIView,
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
-        author = self.is_author()
-        if author is not None:
-            if not author.is_active:
-                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        else:
-            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
+        # author = self.is_author()
+        # if author is not None:
+        #     if not author.is_active:
+        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+        # else:
+        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
 
         # 1. 작성중인 포스트 검색
         # 2. 있다면 업데이트 없다면 생성

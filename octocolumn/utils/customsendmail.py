@@ -1,4 +1,4 @@
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -17,9 +17,10 @@ def signup_email_send(user):
         'token': account_activation_token.make_token(user),
     })
     to_email = user.username
-    email = EmailMessage(
-        mail_subject, message, to=[to_email]
+    email = EmailMultiAlternatives(
+        mail_subject, to=[to_email]
     )
+    email.attach_alternative(message, "text/html")
     if not email.send():
         return False
     return True
@@ -35,7 +36,7 @@ def password_reset_email_send(user):
         'token': account_activation_token.make_token(user),
     })
     to_email = user.username
-    email = EmailMessage(
+    email = EmailMultiAlternatives(
         mail_subject, message, to=[to_email]
     )
     if not email.send():

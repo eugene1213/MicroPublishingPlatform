@@ -1,4 +1,3 @@
-from pprint import pprint
 
 from google.auth.transport import requests
 from google.oauth2 import id_token
@@ -13,7 +12,7 @@ from config.settings import CLIENT_ID
 from member.backends import GoogleBackend
 from member.models import User
 from member.serializers import UserSerializer
-from utils.jwt import jwt_payload_handler, jwt_encode_handler
+from utils.jwt import jwt_token_generator
 
 __all__ =(
     'GoogleLogin',
@@ -71,11 +70,10 @@ class GoogleLogin(APIView):
                 last_name=debug_token_info.family_name,
                 social_id=f'g_{user_id}',
             )
-        payload = jwt_payload_handler(user)
-        token = jwt_encode_handler(payload)
+
 
         data = {
             'user': UserSerializer(user).data,
-            'token': token
+            'token': jwt_token_generator(user)
         }
         return Response(data)

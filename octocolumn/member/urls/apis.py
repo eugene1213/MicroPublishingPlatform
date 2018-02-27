@@ -3,7 +3,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
-    GoogleLogin, UpdatePassword
+    GoogleLogin, UpdatePassword, Follower
 
 urlpatterns = [
     # api:member:login
@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^google-login/', GoogleLogin.as_view(), name='google'),
     # url(r'^facebook-login/', apis.FacebookLogin.as_view()),
 
+    # follower
+    url(r'^follow/', Follower.as_view(), name='facebook'),
 
     # api:author 신청
     url(r'^author-apply', apis.AuthorAplly.as_view(),name='apply'),
