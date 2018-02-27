@@ -160,7 +160,7 @@ class PostListView(APIView):
             text = self.remove_tag(content)
             data = {
                 "post":{
-                    "post_id":serializer.data['id'],
+                    "post_id":serializer.data['pk'],
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
