@@ -71,7 +71,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         data = {
             'user': ret,
-            'token': instance.token,
         }
         # 마지막엔 serializer.data를 출력했을 때 반환될 값을 반환해줘야 함
         return data

@@ -94,12 +94,12 @@ class PostCreateView(generics.GenericAPIView,
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
 
-        author = self.is_author()
-        if author is not None:
-            if not author.is_active:
-                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        else:
-            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
+        # author = self.is_author()
+        # if author is not None:
+        #     if not author.is_active:
+        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+        # else:
+        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
         # 템프파일이 삭제 되었을경우 에러 발생 예외처리
         try:
             temp = Temp.objects.filter(id=data['temp_id']).get()
@@ -158,9 +158,15 @@ class PostListView(APIView):
             serializer = PostSerializer(i)
             time =datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
             text = self.remove_tag(content)
+            to_user = User.objects.filter(pk=serializer.data['author']).get()
+            to_user.save()
+            # from_user = User.objects.filter(pk=self.request.user.id).get()
+            # from_user.save()
+            follower_count = to_user.following_users.count()
+            # status = from_user.following_user.filter(to_user=serializer.data['author'])
             data = {
                 "post":{
-                    "post_id":serializer.data['pk'],
+                    "post_id": serializer.data['pk'],
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
@@ -169,6 +175,8 @@ class PostListView(APIView):
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + " " + user.first_name,
+                        # "follow_status": status,
+                        "follower_count": follower_count,
                         "achevement": "",
                         "profile_img": "",
                         "cover_img": ""
