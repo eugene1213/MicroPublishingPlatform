@@ -1,4 +1,3 @@
-google-api-python-client
 awscli==1.12.0
 awsebcli==3.12.1
 blessed==1.14.2
@@ -34,3 +33,8 @@ websocket-client==0.44.0
 urllib3==1.22
 django-s3-storage==0.12.3
 boto==2.48.0
+djangorestframework-jwt==1.11.0
+google-auth==1.4.1
+google-api-python-client==1.6.5
+google-auth-oauthlib
+django-cors-headers==2.1.0
