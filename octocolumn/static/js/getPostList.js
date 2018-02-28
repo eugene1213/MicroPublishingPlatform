@@ -20,8 +20,8 @@ function getData(){
             console.log(json);
 
             data = json;
-
-            for(var i=1; i<=5; i++){
+            
+            for(var i=1; i<=json.length; i++){
                 var readTime = Math.round(json[i-1].post.typo_count / 500);                               // 1분/500자 반올림
                 
                 $("#card_"+i+" .fb1_img").css("background","url("+json[i-1].post.cover_img+")");        // 커버사진
