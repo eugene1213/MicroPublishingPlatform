@@ -10,8 +10,8 @@
 .header-wrap{
     background-color: #2a292a;
     width: 100%;
-    min-width: 1340px;
     height: 33px;
+    min-width: 605px;
     margin: 0 auto;
     margin-top: -1px;
     padding-top: 1px;
@@ -115,16 +115,28 @@ li {
     text-align: center;
 
 }
-.btn-logo {
+.btn-logo-wrap {
     position: absolute;
-    width: 130px;
-    height: 24px;
-    margin: auto;
-    margin-top: 4px;
+    width: 100%;
     text-align: center;
     line-height: 24px;
     font-size: 22px;
+    margin-top: -1px;
     cursor: pointer;
+}
+.btn-logo {
+    margin: auto;
+    display: inline-block;
+    height: 24px;
+    margin-top: 4px;
+    padding-top: 1px;
+    min-width: 116px;
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.btn-right-wrap {
+    float: right;
 }
 .btn-notice {
     float: left;

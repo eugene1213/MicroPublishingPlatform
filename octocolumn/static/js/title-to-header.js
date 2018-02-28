@@ -8,6 +8,8 @@ function title2header(){
             titleText = $(".title").text();
             $("#header-title").text(titleText);
 
+            headerController();
+
         } else $("#header-title").text("octocolumn");
     });
 }

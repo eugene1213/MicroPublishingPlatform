@@ -17,16 +17,22 @@ function headerController(){
     var pointWidth = $('.btn-point').width();
     var noticeWidth = $('.btn-notice').width();
     var userWidth = $('.btn-user').width();
+    var logoWidth = $("#header-title").width();
 
     var marginWidth = W - menuWidth - searchWidth - pointWidth - noticeWidth - userWidth - 70;
     var logoMarginLeft = (windowWidth - 130)/2;
-    
-    if( logoMarginLeft >= 491) $('.btn-logo').css('margin-left', logoMarginLeft + 'px');
-    else $('.btn-logo').css('margin-left', '491px');
-    
-    if( marginWidth >= 0 ) {
-        $('.btn-point').css("margin-right",marginWidth/2 + 'px');
-        $('.btn-notice').css("margin-left",marginWidth/2 + 'px');
+
+    if(windowWidth < 605 + logoWidth){
+
+        $(".btn-logo-wrap").width(605 + logoWidth);
+        if(logoWidth > 116){
+            $(".header-wrap").css("min-width", 604 + (logoWidth - 116));
+        }else{
+            $(".header-wrap").attr("style","");
+        }
+    }else{
+
+        $(".btn-logo-wrap").width(windowWidth);
     }
 }
 // 로그인 버튼 클릭시 모달창 온, 오프
