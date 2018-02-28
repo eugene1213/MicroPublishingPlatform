@@ -10,7 +10,7 @@ WORKDIR     /srv/app
 RUN         pyenv local app
 
 # requirements설치
-RUN         /root/.pyenv/versions/app/bin/pip install -r requirements.txt
+RUN         /root/.pyenv/versions/app/bin/pip install -r /srv/app/requirements/requirements.txt
 
 ## supervisor파일 복사
 COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/

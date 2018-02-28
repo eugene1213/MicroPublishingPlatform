@@ -35,7 +35,6 @@ class Login(APIView):
     def post(self, request, *args, **kwargs):
         username = request.data['username']
         password = request.data['password']
-        print(password)
         user = authenticate(
             username=username,
             password=password,

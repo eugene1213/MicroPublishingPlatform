@@ -7,8 +7,7 @@ from rest_framework.views import APIView
 from typing import NamedTuple
 from rest_framework.response import Response
 
-
-from config.settings import CLIENT_ID
+from config.settings.base import CLIENT_ID
 from member.backends import GoogleBackend
 from member.models import User
 from member.serializers import UserSerializer
