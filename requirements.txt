@@ -1,3 +1,4 @@
+google-api-python-client
 awscli==1.12.0
 awsebcli==3.12.1
 blessed==1.14.2
@@ -30,3 +31,4 @@ termcolor==1.1.0
 typing==3.6.2
 wcwidth==0.1.7
 websocket-client==0.44.0
+urllib3==1.22

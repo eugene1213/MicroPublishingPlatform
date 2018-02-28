@@ -1,0 +1,35 @@
+{
+  "django":{
+    "secret_key":"3c7upz*f)k7-c8jm(fdcfe!086^xp$#zk3dzc5k68lanuufb-q",
+    "allowed_hosts":"*",
+    "databases":{
+      "engine":"django.db.backends.postgresql_psycopg2",
+      "name":"octocolumn",
+      "user":"octocolumn",
+      "password":"octocolumn",
+      "host":"127.0.0.1",
+      "port":"5432"
+
+    },
+    "email": {
+      "host": "smtp.gmail.com",
+      "host_user": "develop@octocolumn.com",
+      "host_password": "devocto1234"
+    }
+  },
+  "accounts":{
+    "facebook":{
+    "app_id" : "591269587709921" ,
+    "secret_code" :"0bef4b65c4ec01eb73703a042812e612"
+  },
+    "google":{
+        "client_id":"425443288081-89dhplmopfrsrkk2tbjiu0it6rcemup1.apps.googleusercontent.com",
+        "project_id":"devocto-194301",
+        "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+        "token_uri":"https://accounts.google.com/o/oauth2/token",
+        "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret":"6XCN4QehNRO844ebBbDe39DA",
+        "javascript_origins":["http://localhost:3000"]
+    }
+  }
+}

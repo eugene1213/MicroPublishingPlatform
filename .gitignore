@@ -2,8 +2,9 @@
 ### Custom ###
 
 **/.idea/*
-**/.config_secret/
-**/.config/
+**/.config_secret/settings_common.json
+**/.config_secret/settings_debug.json
+# **/.config/
 **/migrations/**
 **/.media/*
 **/.static_root/*
