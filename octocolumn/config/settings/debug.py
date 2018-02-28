@@ -7,10 +7,26 @@ config_secret_debug = json.loads(open(CONFIG_SECRET_DEBUG_FILE).read())
 WSGI_APPLICATION = 'config.wsgi.debug.application'
 
 # Static URLs
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
-MEDIA_URL = '/media/'
+# MEDIA폴더
+#   octocolumn_project/.media/
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+MEDIA_URL = '/media/'
+
+# Static Root폴더
+#   octocolumn_project/.static_root/
+
+
+# Static폴더
+#    octocolumn_project/instagram/static/
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 # Debug Mode so True
 DEBUG = True
