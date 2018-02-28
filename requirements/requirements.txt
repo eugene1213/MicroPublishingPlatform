@@ -33,3 +33,4 @@ wcwidth==0.1.7
 websocket-client==0.44.0
 urllib3==1.22
 django-s3-storage==0.12.3
+boto==2.48.0
