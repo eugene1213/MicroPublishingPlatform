@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<html lang="ko_KR">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../static/css/header.css">
+    <link rel="stylesheet" href="../../static/css/common2.css">
+    <link rel="stylesheet" href="../../static/css/sass/write.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="../../static/js/medium-editor/dist/css/medium-editor.css">
+    <link rel="stylesheet" href="../../static/js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css">
+    <link rel="stylesheet" href="../../static/css/themes/default.css">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
+    <script type="text/javascript" src="../../static/js/medium-editor/dist/js/medium-editor.js"></script>
+    <script type="text/javascript" src="../../static/js/handlebars-v4.0.11.js"></script>
+    <script type="text/javascript" src="../../static/js/blueimp-file-upload/js/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="../../static/js/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="../../static/js/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="../../static/js/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js"></script>
+    <script type="text/javascript" src="../../static/js/dom-to-image.min.js"></script>
+    <script type="text/javascript" src="../../static/js/script.js"></script>
+    <script type="text/javascript" src="../../static/js/sidebar.js"></script>
+    <script type="text/javascript" src="../../static/js/noisyType.js"></script>
+    <script type="text/javascript" src="../../static/js/saveTmp.js"></script>
+    <script type="text/javascript" src="../../static/js/progress-bar.js"></script>
+    <script type="text/javascript" src="../../static/js/tag-editor.js"></script>
+    <script type="text/javascript" src="../../static/js/create-preview.js"></script>
+    <script type="text/javascript" src="../../static/js/cover-image.js"></script>
+    <script type="text/javascript" src="../../static/js/post.js"></script>
+    <script type="text/javascript" src="../../static/js/title-to-header.js"></script>
+</head>
+    <body>
+        <div class="header">
+            <div class="header-wrap">
+                <div class="btn-menu">
+                    <img src="asset/img/header/burger@2x.png">
+                    <div>octocolumn</div>
+                    <ul>
+                        <li>최근 글</li>
+                        <li>피드</li>
+                        <li>구매한 글</li>
+                        <li>북마크</li>
+                        <li>브랜드 페이지</li>
+                        <li>작가신청</li>
+                        <li>포인트 구매</li>
+                        <li>설정</li>
+                        <li>고객센터</li>
+                        <li>이용약관</li>
+                        <li>개인정보 처리방침</li>
+                        <li>운영정책</li>
+                        <li>로그아웃</li>
+                        <li><p>octocolumn.com</p></li>
+                        <li><p>Copyright octocolumn.com</p></li>
+                        <li><p>All Rights Reserved</p></li>
+                        <li><p>주식회사 옥토칼럼</p></li>
+                        <li><p>대표 오정민</p></li>
+                        <li><p>사업자등록번호</p></li>
+                        <li><p>576-52-00020</p></li>
+                        <li><p>통신판매업신고 2016</p></li>
+                        <li><p>수원권선 0350</p></li>
+                        <li><p>개인정보관리 책임자 오정민</p></li>
+                        <li><p>경기도 수원시 권선구 정조로</p></li>
+                        <li><p>580-9</p></li>
+                        <li><p>연락처</p></li>
+                        <li><p>mackenzie@octocolumn.com</p></li>
+                        <li><p>고객센터 070-4809-7166</p></li>                      
+                    </ul><!-- sidebar -->
+                </div>
+                <div class="btn-search">
+                    <img src="asset/img/header/Combined Shape@2x.png">
+                </div>
+                <div class="btn-point">
+                    <div class="point">1000p</div>
+                    <img src="asset/img/header/bar-chart@2x.png">
+                </div>
+                <div class="btn-logo" id="header-title">
+                    octocolumn
+                </div>
+                <div class="btn-notice">
+                    <img src="asset/img/header/Shapei@2x.png">
+                </div>
+                <div class="btn-user" onclick="modal_on()">
+                    joyce Henry
+                    <img >
+                </div>
+            </div><!-- header-wrap-->
+        </div><!-- //header -->
+        <div class="container" id="container">
+            <div class="audio-wrap">
+                <audio preload id="audio_1">
+                    <source src="asset/mp3/key-01.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_2">
+                    <source src="asset/mp3/key-02.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_3">
+                    <source src="asset/mp3/key-03.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_4">
+                    <source src="asset/mp3/key-04.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_5">
+                    <source src="asset/mp3/key-new-01.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_6">
+                    <source src="asset/mp3/key-new-02.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_7">
+                    <source src="asset/mp3/key-new-03.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_8">
+                    <source src="asset/mp3/key-new-04.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_9">
+                    <source src="asset/mp3/key-new-05.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_return_1">
+                    <source src="asset/mp3/return-01.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_return_2">
+                    <source src="asset/mp3/return-02.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_return_3">
+                    <source src="asset/mp3/return-03.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_return_4">
+                    <source src="asset/mp3/return-new.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_space_1">
+                    <source src="asset/mp3/space-01.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_space_2">
+                    <source src="asset/mp3/space-02.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_space_3">
+                    <source src="asset/mp3/space-03.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_backspace_1">
+                    <source src="asset/mp3/backspace-01.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_backspace_2">
+                    <source src="asset/mp3/backspace-02.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_backspace_3">
+                    <source src="asset/mp3/backspace-03.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_scrollUp">
+                    <source src="asset/mp3/scrollUp.mp3" type="audio/mp3">
+                </audio>
+                <audio preload id="audio_scrollDown">
+                    <source src="asset/mp3/scrollDown.mp3" type="audio/mp3">
+                </audio>
+            </div>
+            <div class="toggle-wrap">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <p id="btn-off">OFF</p>
+                <p id="btn-on" style="display:none;">ON</p>
+                <button class="btn-save">저장</button>
+                <button class="btn-publish" id="publish">발행<span class="css-arrow"></span>
+                </button>
+                <!-- arrow-box -->
+                <div class="arrow-box">
+                    <div class="cover-wrap">
+                        <div class="cover-text">표지 사진</div>
+                        <div class="cover-disc">당신의 이야기를 가장 잘 나타낼 수 있도록 멋진 사진을 설정해보세요.</div>
+                        <div class="cover-img-wrap">
+                            <div class="cover-img-css-wrap">
+                                <div class="default-img-css-wrap">
+                                    <div class="default-img-css"></div>
+                                </div>
+                                <span class="default-img-text">표지 사진 설정</span>
+                            </div>
+                            <input type='file' id="imgInp" accept=".jpg,.jpeg,.png"/>
+                            <img id="blah" src="" alt=""/>
+                        </div>
+                    </div>
+                    <div class="tag-wrap">
+                        <div class="tag-text">태그</div>
+                        <div class="tag-disc">당신의 이야기가 더 많은 사람들에게 다가갈 수 있도록 최대 5개의 태그를 설정해보세요.</div>
+                        <input class="tag-input" maxlength="20" type="text" placeholder="태그 추가하기...">
+                        <div class="tag-added">
+                            <!-- <div class="added-tag-wrap">
+                                <div class="tag-cancel"></div>
+                                <div class="tag-name">태그</div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="price-wrap">
+                        <div class="price-text">가격</div>
+                        <div id="audio-player-container">
+                            <div class="audio-progress" id="audio-progress">
+                                <div id="draggable-point" style="left:20%;position:absolute;" class="draggable ui-widget-content">
+                                    <div id="audio-progress-handle"></div>
+                                </div>
+                                <div id="audio-progress-bar" class="bar" style="width:10%">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="posX"></div>
+                        <div class="price-set-wrap">
+                            <div class="price-set-decimal">100</div>
+                            <div class="price-set-point">Point</div>
+                        </div>
+                    </div>
+                    <button class="btn-publish-final">발행하기</button>
+                </div>
+                <!-- //arrow-box -->
+            </div>
+            <div class="profile-wrap">
+                <div class="profile-img">
+                    <img src="http://placehold.it/64x64" alt="">
+                </div>
+                <div class="profile-sub-wrap">
+                    <div class="username">Denise Hawkins</div>
+                    <div class="state">작성중</div>
+                    <div class="read-time"></div>
+                </div>
+            </div>
+            <div id="srcElement">
+                <div class="title" id="title"></div>
+                <div class="editable" id="editable"></div>
+            </div>
+            <div id="tmp"></div>
+            <div class="preview-wrap">
+                <div class="preview" id="preview">
+                    <div class="btn-cancel-wrap">
+                        <div class="btn-cancel"></div>
+                    </div>
+                    <div class="ready2publish">Ready to publish?</div>
+                    <div class="preview-cover-img">
+                        <img id="preview-cover-img" src="http://placehold.it/944x401" alt="">
+                    </div>
+                    <div class="preview-title"></div>
+                    <div class="preview-content-info">
+                        <div class="preview-read-time"></div>
+                        <div class="preview-by">by</div>
+                        <div class="preview-author"></div>
+                        <div class="preview-create-date">2017. 12. 18 18:33</div>
+                    </div>
+                    <div class="preview-main-content" id="preview-main-content">
+                        <img src="" alt="">
+                        <!-- preview-image -->
+                    </div>
+                    <div class="preview-tag-wrap">
+                    </div>
+                    <div class="preview-notice-wrap">
+                        <span>발행하려는 글의 정보를 확인하시고, octo-code를 입력해서 글을 발행해주세요.<br/>
+                            글을 발행한 후에는</span>
+                        <span class="hightlight">수정, 삭제가 불가능</span><!--
+                        --><span>하며, 발행 버튼을 누르면 발행비</span>
+                        <span class="preview-price price-set-decimal">100</span><!--
+                        --><span>P가 차감됩니다.</span>
+                    </div>
+                    <div class="preview-br-wrap">
+                        <div class="preview-br-list-wrap">
+                            <span class="preview-br-list">제목</span>
+                            <span class="preview-br-list preview-title">title</span>
+                        </div>
+                        <div class="preview-br-list-wrap">
+                            <span class="preview-br-list">태그</span>
+                            <span class="preview-br-list" id="tag_all">tag_all</span>
+                        </div>
+                        <div class="preview-br-list-wrap">
+                            <span class="preview-br-list">가격</span>
+                            <span class="preview-br-list price-set-decimal">100</span>
+                            <span>point</span>
+                        </div>
+                        <div class="preview-br-list-wrap">
+                            <span class="preview-br-list">octo-code</span>
+                            <input type="text" class="octo-code" id="octo-code-1" maxlength="1" required>
+                            <input type="text" class="octo-code" id="octo-code-2" maxlength="1" required>
+                            <input type="text" class="octo-code" id="octo-code-3" maxlength="1" required>
+                            <input type="text" class="octo-code" id="octo-code-4" maxlength="1" required>
+                            <button class="find-octo-code-button">octo-code 찾기</button>
+                        </div>
+                        <div class="preview-br-list-wrap preview-agreement-wrap">
+                            <span class="preview-br-list"></span>
+                            <span class="preview-br-list preview-agreement">본인은 ‘환불불가정책’에 동의합니다.</span>
+                            <input type="checkbox" class="agreement-checkbox" style="width:24px;height:24px;">
+                        </div>
+                    </div>
+                    <div class="preview-button-wrap">
+                        <button class="done-publish btn_disabled" id="done-publish" disabled="disabled">발행</button>
+                        <button class="cancel-publish" id="cancel-publish">취소</button>
+                    </div>
+                    <div class="preview-terms-wrap">
+                        <span class="preview-terms">대가성 콘텐츠 표기, 사용자 아이디 정책, 서비스 운영정책, 서비스 이용약관, 저작권법</span><!--
+                     --><span>을 참고하세요.</span>
+                    </div>
+                </div> 
+            </div>
+            <script>
+                var titleEditor = new MediumEditor('.title', {
+                    disableReturn: true
+                });
+                var editor = new MediumEditor('.editable');
+                $(function () {
+                    $('.editable').mediumInsert({
+                        editor: editor, // (MediumEditor) Instance of MediumEditor
+                        enabled: true, // (boolean) If the plugin is enabled
+                        addons: { // (object) Addons configuration
+                            images: { // (object) Image addon configuration
+                                label: '<span class="fa fa-camera"></span>', // (string) A label for an image addon
+                                uploadScript: null, // DEPRECATED: Use fileUploadOptions instead
+                                deleteScript: 'delete.py', // (string) A relative path to a delete script
+                                deleteMethod: 'POST',
+                                fileDeleteOptions: {}, // (object) extra parameters send on the delete ajax request, see http://api.jquery.com/jquery.ajax/
+                                preview: true, // (boolean) Show an image before it is uploaded (only in browsers that support this feature)
+                                captions: true, // (boolean) Enable captions
+                                captionPlaceholder: 'Type caption for image (optional)', // (string) Caption placeholder
+                                autoGrid: 3, // (integer) Min number of images that automatically form a grid
+                                formData: {}, // DEPRECATED: Use fileUploadOptions instead
+                                fileUploadOptions: { // (object) File upload configuration. See https://github.com/blueimp/jQuery-File-Upload/wiki/Options
+                                    url: 'http://127.0.0.1:8000/api/column/tmpimageupload/', // (string) A relative path to an upload script
+                                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i // (regexp) Regexp of accepted file types
+                                },
+                                styles: { // (object) Available image styles configuration
+                                    wide: { // (object) Image style configuration. Key is used as a class name added to an image, when the style is selected (.medium-insert-images-wide)
+                                        label: '<span class="fa fa-align-justify"></span>', // (string) A label for a style
+                                        added: function ($el) {}, // (function) Callback function called after the style was selected. A parameter $el is a current active paragraph (.medium-insert-active)
+                                        removed: function ($el) {} // (function) Callback function called after a different style was selected and this one was removed. A parameter $el is a current active paragraph (.medium-insert-active)
+                                    },
+                                    left: {
+                                        label: '<span class="fa fa-align-left"></span>'
+                                    },
+                                    right: {
+                                        label: '<span class="fa fa-align-right"></span>'
+                                    },
+                                    // grid: {
+                                    //     label: '<span class="fa fa-th"></span>'
+                                    // },
+                                    full: {
+                                        label: '<span class="fa fa-align-justify"></span>'
+                                    }
+                                },
+                                actions: { // (object) Actions for an optional second toolbar
+                                    remove: { // (object) Remove action configuration
+                                        label: '<span class="fa fa-times"></span>', // (string) Label for an action
+                                        clicked: function ($el) { // (function) Callback function called when an action is selected
+                                            var $event = $.Event('keydown');
+                                            
+                                            $event.which = 8;
+                                            $(document).trigger($event);   
+                                        }
+                                    }
+                                },
+                                messages: {
+                                    acceptFileTypesError: 'This file is not in a supported format: ',
+                                    maxFileSizeError: 'This file is too big: '
+                                },
+                                uploadCompleted: function ($el, data) {
+                                    console.log('f');
+                                }, // (function) Callback function called when upload is completed
+                                uploadFailed: function (uploadErrors, data) {}, // (function) Callback function called when upload failed
+                                slideshow: {
+                                    label: '<span class="fa fa-play"></span>',
+                                    added: function ($el) {
+                                        // Initialize slideshow
+                                        $el.cycle({
+                                        slides: 'figure'
+                                        });
+                                    },
+                                    removed: function ($el) {
+                                        // Destroy slideshow
+                                        $el.cycle('destroy');
+                                    }
+                                }
+                            },
+                            embeds: { // (object) Embeds addon configuration
+                                label: '<span class="fa fa-youtube-play"></span>', // (string) A label for an embeds addon
+                                placeholder: 'Paste a YouTube, Vimeo, Facebook, Twitter or Instagram link and press Enter', // (string) Placeholder displayed when entering URL to embed
+                                captions: true, // (boolean) Enable captions
+                                captionPlaceholder: 'Type caption (optional)', // (string) Caption placeholder
+                                oembedProxy: 'http://medium.iframe.ly/api/oembed?iframe=1', // (string/null) URL to oEmbed proxy endpoint, such as Iframely, Embedly or your own. You are welcome to use "http://medium.iframe.ly/api/oembed?iframe=1" for your dev and testing needs, courtesy of Iframely. *Null* will make the plugin use pre-defined set of embed rules without making server calls.
+                                styles: { // (object) Available embeds styles configuration
+                                    wide: { // (object) Embed style configuration. Key is used as a class name added to an embed, when the style is selected (.medium-insert-embeds-wide)
+                                        label: '<span class="fa fa-align-justify"></span>', // (string) A label for a style
+                                        added: function ($el) {}, // (function) Callback function called after the style was selected. A parameter $el is a current active paragraph (.medium-insert-active)
+                                        removed: function ($el) {} // (function) Callback function called after a different style was selected and this one was removed. A parameter $el is a current active paragraph (.medium-insert-active)
+                                    },
+                                    left: {
+                                        label: '<span class="fa fa-align-left"></span>'
+                                    },
+                                    right: {
+                                        label: '<span class="fa fa-align-right"></span>'
+                                    }
+                                },
+                                actions: { // (object) Actions for an optional second toolbar
+                                    remove: { // (object) Remove action configuration
+                                        label: '<span class="fa fa-times"></span>', // (string) Label for an action
+                                        clicked: function ($el) { // (function) Callback function called when an action is selected
+                                            var $event = $.Event('keydown');
+                                            
+                                            $event.which = 8;
+                                            $(document).trigger($event);   
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+                var check = $("input[type='checkbox']");
+                check.click(function(){
+                    $(".toggle-wrap p").toggle();
+                });
+//여기부터
+
+            </script>
+        </div>
+    </body>
+</html>

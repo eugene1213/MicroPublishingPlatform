@@ -16,6 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="../../static/css/main.css">
 	<script src="../../static/js/jquery-1.9.1.min.js"></script>
 	<script src="../../static/js/script.js"></script>
+	<script src="../../static/js/getPostList.js"></script>
+	<script src="../../static/js/balloon.js"></script>
 </head>
 <body>
 	<header class="header">
@@ -122,7 +124,7 @@
 			</div>
 			<div class="main_hr"></div>
 			<div class="feedbox_box1">
-				<div class="feedbox1">
+				<div class="feedbox1" id="card_1">
 					<div class="fb1_img"></div>
 					<div class="fb1_txt">
 						<div class="fb1_txt_1">
@@ -140,7 +142,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="feedbox3" style="margin-right: 16px;">
+				<div class="feedbox3" id="card_2" style="margin-right: 16px;">
 					<div class="fb1_img"></div>
 					<div class="fb1_txt">
 						<div class="fb1_txt_1">
@@ -155,7 +157,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="feedbox3">
+				<div class="feedbox3" id="card_3">
 					<div class="fb1_img"></div>
 					<div class="fb1_txt">
 						<div class="fb1_txt_1">
@@ -172,7 +174,7 @@
 				</div>
 			</div>
 			<div class="feedbox_box2">
-				<div class="feedbox2">
+				<div class="feedbox2" id="card_4">
 					<div class="fb1_img"></div>
 					<div class="fb1_txt">
 						<div class="fb1_txt_1">
@@ -191,7 +193,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="feedbox4">
+			<div class="feedbox4" id="card_5">
 				<div class="fb1_img"></div>
 				<div class="fb1_txt">
 					<div class="fb1_txt_1">
@@ -308,5 +310,52 @@ Cras quis nulla commodo, aliquam lectus sed, blandit augue. Cras ullamcorper bib
 			</div>
 		</div>
 	</div>
+	<!-- flip -->
+	<div class="flip">
+		<!-- arrow_box -->
+		<div class="arrow_box_1">
+			<div class="card_background_img">
+				<img class="card_profile_img" src="http://placehold.it/56x56">
+			</div>
+			<div class="wrap-followers">
+				<div class="followers">
+					Followers
+				</div>
+				<div class="num_of_followers">
+					3.1K
+				</div>
+			</div>
+			<div class="btn-follow">
+				Follow
+			</div>
+			<div class="card_profile_name">
+				Emily Walters
+			</div>
+			<div class="card_profile_title">
+				정치전문가
+			</div>
+			<div class="socialbar">
+				<a><img src="../../static/images/icons/balloon/fb-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/t-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info"></a>
+			</div>
+		</div>
+		<div class="arrow_box_2">
+			<div class="card_profile_info">
+				Tousled food truck polaroid, salvia bespoke small batch Pinterest Marfa. Fingerstache authentic craft beer, food truck Banksy Carles kale chips hoodie. Trust fund artisan master cleanse fingerstache post-ironic, fashion axe art party Etsy direct trade retro organic. Cliche Shoreditch Odd Future Pinterest, pug disrupt photo booth VHS literally occupy gluten-free polaroid Intelligentsia PBR mustache. Locavore fashion axe chia, iPhone cardigan disrupt Etsy dreamcatcher. Craft beer selvage fanny pack, 8-bit post-ironic keffiyeh iPhone mlkshk pop-up. Pug blog asymmetrical ethnic, stumptown shabby chic chillwave ugh before they sold out.
+			</div>
+			<div class="socialbar">
+				<a><img src="../../static/images/icons/balloon/fb-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/t-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a>
+				<a><img src="../../static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info2"></a>
+			</div>
+		</div>
+		<!-- //arrow_box -->
+	</div>
+	<!-- //flip -->
 </body>
 </html>

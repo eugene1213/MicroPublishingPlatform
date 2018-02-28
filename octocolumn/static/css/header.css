@@ -1,0 +1,164 @@
+.header {
+    position: fixed;
+    margin: 0 auto;
+    width: 100%;
+    height: 32px;
+    color: #fafafa;
+    font-weight: bold;
+    z-index: 2000;
+}
+.header-wrap{
+    background-color: #2a292a;
+    width: 100%;
+    min-width: 1340px;
+    height: 33px;
+    margin: 0 auto;
+    margin-top: -1px;
+    padding-top: 1px;
+}
+.btn-menu {
+    float: left;
+    width: 136px;
+    height: 24px;
+    margin-top: 4px;
+    margin-left: 10px;
+    padding-left: 5px;
+    line-height: 24px;
+    font-size: 14px;
+    border: 1px solid #fafafa;
+    border-radius: 5px;
+}
+.btn-menu > div {
+    width: 123px;
+    height: 24px;
+    text-align: center;
+    cursor: pointer;
+}
+.btn-menu > img {
+    float: left;
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+    margin-top: 4px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+.btn-menu > ul {
+    display: none;
+    width: 136px;
+    margin-top: 0;
+    margin-left: -16px;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    background-color: #2a292a;
+    line-height: 30px;
+}
+li {
+    cursor: pointer;
+}
+.btn-menu > ul > :nth-child(5), .btn-menu > ul > :nth-child(8), .btn-menu > ul > :nth-child(12) {
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid white;
+}
+.btn-menu > ul > :nth-child(13) {
+    margin-bottom: 15px;
+}
+.btn-menu ul li p {
+    width: 120px;
+    font-size: 10px;
+    color: gray;
+    line-height: 11px;
+    padding: 0; }
+    
+.btn-search {
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+    margin-left: 10px;
+    border: 1px solid #fafafa;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-search > img {
+    width: 12px;
+    height: 12px;
+    margin-left: 6px;
+    margin-top: 6px;
+}
+.btn-point {
+    float: left;
+    width: 108px;
+    height: 24px;
+    margin-top: 4px;
+    margin-left: 10px;
+    border: 1px solid #fafafa;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-point > img {
+    float: right;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+.point {
+    float: left;
+    width: 85px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+
+}
+.btn-logo {
+    position: absolute;
+    width: 130px;
+    height: 24px;
+    margin: auto;
+    margin-top: 4px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 22px;
+    cursor: pointer;
+}
+.btn-notice {
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+    cursor: pointer;
+}
+.btn-notice > img {
+    float: left;
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+    margin-top: 2px;
+}
+.btn-user {
+    float: left;
+    width: 144px;
+    height: 24px;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 5px;
+    line-height: 24px;
+    font-size: 12px; 
+    text-align: center;
+    border: 1px solid #fafafa;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-user > img {
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    border-radius: 6px;
+}
