@@ -29,7 +29,7 @@
     "secret_code" :"0bef4b65c4ec01eb73703a042812e612 "
   },
     "google":{
-        "client_id":"425443288081-89dhplmopfrsrkk2tbjiu0it6rcemup1.apps.googleusercontent.com",
+        "client_id":"425443288081-89dhplmopfrsrkk2tbjiu0it6rcemup1.apps.googleus ercontent.com",
         "project_id":"devocto-194301",
         "auth_uri":"https://accounts.google.com/o/oauth2/auth",
         "token_uri":"https://accounts.google.com/o/oauth2/token",
