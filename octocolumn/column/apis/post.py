@@ -127,8 +127,8 @@ class PostCreateView(generics.GenericAPIView,
         self.decrease_point(user_queryset.point - 300)
         self.add_point_history(point=300, history=temp.title)
         # 태그를 추가하고 태그 추가 실패
-        if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-            raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+        # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+        #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
         if serializer:
             return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
