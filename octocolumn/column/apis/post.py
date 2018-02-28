@@ -101,8 +101,11 @@ class PostCreateView(generics.GenericAPIView,
         # else:
         #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
         # 템프파일이 삭제 되었을경우 에러 발생 예외처리
+        if data['temp'] == '':
+            raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
+
         try:
-            temp = Temp.objects.filter(id=data['temp_id']).get()
+            Temp.objects.filter(id=data['temp_id']).get()
         except ObjectDoesNotExist:
             raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
         # 포인트가 모자르다면 에러발생
@@ -116,7 +119,6 @@ class PostCreateView(generics.GenericAPIView,
                                                         cover_image=cover_file_obj
                                                         ))
         # 템프파일 삭제
-
         try:
             Temp.objects.filter(id=data['temp_id']).delete()
         except ObjectDoesNotExist:
