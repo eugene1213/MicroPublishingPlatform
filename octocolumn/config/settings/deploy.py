@@ -35,30 +35,20 @@ AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
 AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
 AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['s3_bucket_name']
 AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
+AWS_QUERYSTRING_AUTH = False
 
 S3_USE_SIGV4 = True
 
 AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_S3_REGION_NAME
-AWS_S3_CUSTOM_DOMAIN = 'd14m8s09lmueg.cloudfront.net'
-AWS_QUERYSTRING_AUTH = False
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-AWS_S3_URL_PROTOCOL = 'https'
-# StaticFile Setting
-STATIC_URL = 'd14m8s09lmueg.cloudfront.net/static/'
+# Static Setting
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-#Media Setting
-MEDIA_URL = 'd14m8s09lmueg.cloudfront.net/media/'
-
-# Storage settings
-# STATICFILES_LOCATION = 'static'
-# MEDIAFILES_LOCATION = 'media'
-# DEFAULT_FILE_STORAGE = 'config.storages.MediaStorage'
-# STATICFILES_STORAGE = 'config.storages.StaticStorage'
-
-# Static URLs
+# Media Setting
+MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 
 # 배포모드니까 DEBUG는 False
