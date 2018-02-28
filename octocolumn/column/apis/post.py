@@ -101,7 +101,7 @@ class PostCreateView(generics.GenericAPIView,
         # else:
         #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
         # 템프파일이 삭제 되었을경우 에러 발생 예외처리
-        if data['temp'] == '':
+        if data['temp_id'] == '':
             raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
 
         try:
