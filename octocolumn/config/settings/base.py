@@ -22,7 +22,6 @@ CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.jso
 CONFIG_SECRET_DEBUG_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_debug.json')
 CONFIG_SECRET_DEPLOY_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_deploy.json')
 
-
 config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 # MEDIA폴더
 #   octocolumn_project/.media/
