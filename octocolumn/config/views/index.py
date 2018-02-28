@@ -8,3 +8,5 @@ __all__ = (
 def index(request):
     return render_to_response('view/main.html')
 
+def write(request):
+    return render_to_response('view/write.html')
