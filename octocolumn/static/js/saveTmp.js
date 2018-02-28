@@ -29,8 +29,9 @@ function saveTmp(auto){
         temp_id = localStorage.getItem("temp_id");
     var title = "";
 
-    $(".title").html() == "" ? title = "제목없음" :title = $(".title").html();        // 제목이 빈 값이면 제목없음으로 대체
+    $(".title").html() == "" ? title = "제목없음" :title = $(".title").text();        // 제목이 빈 값이면 제목없음으로 대체
     
+    title = $.trim(title);
     if(auto == true){
         if($(".editable").text().length < 543) return console.log("분량 미달");       // 분량 미달이면 자동저장x
     }
