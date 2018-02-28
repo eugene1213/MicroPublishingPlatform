@@ -1,0 +1,32 @@
+{
+  "django":{
+    "secret_key":"3c7upz*f)k7-c8jm(fdcfe!086^xp$#zk3dzc5k68lanuufb-q",
+    "allowed_hosts":"*",
+    "databases":{
+      "engine":"django.db.backends.postgresql_psycopg2",
+      "name":"octo",
+      "user":"devocto",
+      "password":"!devocto1234",
+      "host":"octocolumn.cgkhz06rcrfm.ap-northeast-2.rds.amazonaws.com",
+      "port":"5432"
+
+    },
+    "email":{
+      "host":"smtp.gmail.com",
+      "host_user":"jhe0956@gmail.com",
+      "host_password":"#bisu103702"
+    }
+  },
+  "aws":{
+    "access_key_id":"AKIAIY5AQYDMHDGVT7UQ",
+    "secret_access_key":"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",
+    "s3_region_name":"ap-northeast-2",
+    "s3_bucket_name":"devtestserver"
+  },
+  "accounts":{
+    "facebook":{
+    "app_id" : "179102022820792" ,
+    "secret_code" :"4fda545ffcdf14347f8cc64e3343c5b4"
+  }
+  }
+}

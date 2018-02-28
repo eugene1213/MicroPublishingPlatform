@@ -3,7 +3,7 @@
 
 **/.idea/*
 **/.config_secret/
-**/.config/
+# **/.config/
 **/migrations/**
 **/.media/*
 **/.static_root/*
