@@ -91,7 +91,7 @@ print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-LOG_FILE = os.path.join(ROOT_DIR, '.error_log', 'myLog.log')
+LOG_FILE = os.path.join(ROOT_DIR, 'error_log', 'myLog.log')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
