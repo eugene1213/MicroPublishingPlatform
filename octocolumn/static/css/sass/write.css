@@ -44,10 +44,12 @@ input, button {
     .container .editable p, .container .editable h1, .container .editable blockquote, .container .editable h2, .container #tmp p, .container #tmp h1, .container #tmp blockquote, .container #tmp h2 {
       display: block;
       width: 952px;
-      margin: auto; }
+      margin: auto;
+      line-height: 2em; }
     .container .editable b, .container #tmp b {
       width: 952px;
-      margin: auto; }
+      margin: auto;
+      line-height: 2em; }
     .container .editable blockquote, .container #tmp blockquote {
       -webkit-margin-before: 1em;
       -webkit-margin-after: 1em; }

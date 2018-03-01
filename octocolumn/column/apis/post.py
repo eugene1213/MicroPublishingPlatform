@@ -105,7 +105,7 @@ class PostCreateView(generics.GenericAPIView,
             raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
 
         try:
-            Temp.objects.filter(id=data['temp_id']).get()
+            temp = Temp.objects.filter(id=data['temp_id']).get()
         except ObjectDoesNotExist:
             raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
         # 포인트가 모자르다면 에러발생
