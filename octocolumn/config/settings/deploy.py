@@ -90,55 +90,55 @@ print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-LOG_FILE = os.path.join(ROOT_DIR, '.error_log', 'myLog.log')
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters':
-        {
-            'verbose':
-              {
-                  'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-                  'datefmt' : "%d/%b/%Y %H:%M:%S"
-              },
-            'simple':
-                {
-                    'format': '%(levelname)s %(message)s'
-                },
-        },
-    'handlers':
-        {
-            'file':
-                {
-                    'level': 'DEBUG',
-                    'class': 'logging.handlers.RotatingFileHandler',
-                    'filename': LOG_FILE,
-                    'formatter': 'verbose',
-                    'maxBytes': 1024*1024*10, 'backupCount': 5,
-                },
-        },
-    'loggers':
-        {
-            'django':
-                {
-                    'handlers': ['file'],
-                    'propagate': True,
-                    'level':'INFO',
-                },
-            'django.request':
-                {
-                    'handlers':['file'],
-                    'propagate': False,
-                    'level':'INFO',
-                },
-            'myAppName':
-                {
-                    'handlers': ['file'],
-                    'level': 'DEBUG',
-                },
-        }
-}
+#
+# LOG_FILE = os.path.join(ROOT_DIR, '.error_log', 'myLog.log')
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters':
+#         {
+#             'verbose':
+#               {
+#                   'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+#                   'datefmt' : "%d/%b/%Y %H:%M:%S"
+#               },
+#             'simple':
+#                 {
+#                     'format': '%(levelname)s %(message)s'
+#                 },
+#         },
+#     'handlers':
+#         {
+#             'file':
+#                 {
+#                     'level': 'DEBUG',
+#                     'class': 'logging.handlers.RotatingFileHandler',
+#                     'filename': LOG_FILE,
+#                     'formatter': 'verbose',
+#                     'maxBytes': 1024*1024*10, 'backupCount': 5,
+#                 },
+#         },
+#     'loggers':
+#         {
+#             'django':
+#                 {
+#                     'handlers': ['file'],
+#                     'propagate': True,
+#                     'level':'INFO',
+#                 },
+#             'django.request':
+#                 {
+#                     'handlers':['file'],
+#                     'propagate': False,
+#                     'level':'INFO',
+#                 },
+#             'myAppName':
+#                 {
+#                     'handlers': ['file'],
+#                     'level': 'DEBUG',
+#                 },
+#         }
+# }
 
 
 
