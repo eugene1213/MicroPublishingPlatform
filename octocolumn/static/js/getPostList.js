@@ -8,7 +8,7 @@ function getData(){
 
     var data = {};
     $.ajax({
-        url: "http://127.0.0.1:8000/api/column/postList/",
+        url: "/api/column/postList/",
         async: false,
         type: 'GET',
         dataType: 'json',
