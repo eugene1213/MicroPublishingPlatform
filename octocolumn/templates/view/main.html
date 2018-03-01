@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	{% load static %}
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="viewport" content="width=1280, user-scalable=no, target-densitydpi=medium-dpi">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,12 +13,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="x-rim-auto-match" content="none">
 	<title>octoclumn</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/common.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-	<script src="../../static/js/jquery-1.9.1.min.js"></script>
-	<script src="../../static/js/script.js"></script>
-	<script src="../../static/js/getPostList.js"></script>
-	<script src="../../static/js/balloon.js"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+	<script src="{% static 'js/script.js' %}"></script>
+	<script src="{% static 'js/getPostList.js' %}"></script>
+	<script src="{% static 'js/balloon.js' %}"></script>
 </head>
 <body>
 	<header class="header">
@@ -335,11 +336,11 @@ Cras quis nulla commodo, aliquam lectus sed, blandit augue. Cras ullamcorper bib
 				정치전문가
 			</div>
 			<div class="socialbar">
-				<a><img src="../../static/images/icons/balloon/fb-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/t-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info"></a>
+				<a><img src="{% static 'images/icons/balloon/fb-shape-copy-2@3x.png' %}"></a>
+				<a><img src="{% static 'images/icons/balloon/isn-combined-shape-copy-2@3x.png' %}"></a>
+				<a><img src="{% static 'images/icons/balloon/t-shape-copy-2@3x.png"></a>
+				<a><img src="{% static 'images/icons/balloon/bl-combined-shape-copy-2@3x.png' %}"></a>
+				<a><img src="{% static 'images/icons/balloon/inf-combined-shape-copy-2@3x.png' %}" class="more-info"></a>
 			</div>
 		</div>
 		<div class="arrow_box_2">
@@ -347,11 +348,11 @@ Cras quis nulla commodo, aliquam lectus sed, blandit augue. Cras ullamcorper bib
 				Tousled food truck polaroid, salvia bespoke small batch Pinterest Marfa. Fingerstache authentic craft beer, food truck Banksy Carles kale chips hoodie. Trust fund artisan master cleanse fingerstache post-ironic, fashion axe art party Etsy direct trade retro organic. Cliche Shoreditch Odd Future Pinterest, pug disrupt photo booth VHS literally occupy gluten-free polaroid Intelligentsia PBR mustache. Locavore fashion axe chia, iPhone cardigan disrupt Etsy dreamcatcher. Craft beer selvage fanny pack, 8-bit post-ironic keffiyeh iPhone mlkshk pop-up. Pug blog asymmetrical ethnic, stumptown shabby chic chillwave ugh before they sold out.
 			</div>
 			<div class="socialbar">
-				<a><img src="../../static/images/icons/balloon/fb-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/t-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a>
-				<a><img src="../../static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info2"></a>
+				<a><img src="{% static 'images/icons/balloon/fb-shape-copy-2@3x.png' %}"></a>
+				<a><img src="{% static 'images/icons/balloon/isn-combined-shape-copy-2@3x.png' %}"></a>
+				<a><img src="{% static 'images/icons/balloon/t-shape-copy-2@3x.png"></a>
+				<a><img src="{% static 'images/icons/balloon/bl-combined-shape-copy-2@3x.png' %}"></a>
+				<a><img src="{% static 'images/icons/balloon/inf-combined-shape-copy-2@3x.png' %}" class="more-info2"></a>
 			</div>
 		</div>
 		<!-- //arrow_box -->

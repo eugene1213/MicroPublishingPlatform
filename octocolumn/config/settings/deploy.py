@@ -1,13 +1,16 @@
 # deploy.py
 from .base import *
 
+
 config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
+
+# 배포모드니까 DEBUG는 False
+DEBUG = False
+ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
+
 
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.deploy.application'
-
-STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -19,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'storages',
 
     'django_s3_storage',
 
@@ -43,17 +47,22 @@ AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_S3_REGION_NAME
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 # Static Setting
-STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
+STATICFILES_LOCATION = 'static'
+STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+        custom_domain=AWS_S3_CUSTOM_DOMAIN,
+        staticfiles_location=STATICFILES_LOCATION,
+    )
+
 
 # Media Setting
-MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
+    custom_domain=AWS_S3_CUSTOM_DOMAIN,
+    mediafiles_location=MEDIAFILES_LOCATION,
+)
 
-
-# 배포모드니까 DEBUG는 False
-DEBUG = False
-ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
 
 # Database
 DATABASES = {
@@ -81,4 +90,7 @@ print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+
 
