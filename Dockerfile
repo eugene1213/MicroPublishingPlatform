@@ -41,7 +41,8 @@ RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py c
 #WORKDIR     /srv/app/octocolumn
 
 #RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
-#RUN         /root/.pyenv/versions/app/bin/python manage.py migrate --noinput
+RUN         /root/.pyenv/versions/app/bin/python manage.py makemigrations --noinput
+RUN         /root/.pyenv/versions/app/bin/python manage.py migrate --settings=config.settings.deploy --noinput
 
 RUN         cp /srv/app/.config/supervisor/* \
                 /etc/supervisor/conf.d/
