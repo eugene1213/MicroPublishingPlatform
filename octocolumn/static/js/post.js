@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    isAuthor();         // 작가인지 확인
+    
     /* 발행버튼 클릭시 발행메뉴 드롭다운 */
     $(".btn-publish").click(function(event) {
 
@@ -88,6 +90,24 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
         success: function(json) {
             console.log("발행됨");
             localStorage.setItem("temp_id", '');
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+function isAuthor() {
+    $.ajax({
+        url: "http://127.0.0.1:8000/api/column/isauthor/",
+        type: 'POST',
+        dataType: 'json',
+        headers: {
+            'Authorization' : 'jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImV1Z2VuZTJAb2N0b2NvbHVtbi5jb20iLCJleHAiOjE1MjAyMjUyMzcsIm9yaWdfaWF0IjoxNTE5NjIwNDM3fQ.dB-EHzQg3h1CyyTDIJPkyrn0ydNgdACvbQJvYxYxENk'
+        },
+        success: function(json) {
+            if(json.author) console.log("작가입니다.");
+            else console.log("뉴비입니다.")
         },
         error: function(error) {
             console.log(error);
