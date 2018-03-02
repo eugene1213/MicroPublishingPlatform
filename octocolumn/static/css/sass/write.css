@@ -22,11 +22,12 @@ input, button {
     outline: none; }
     .container .title.medium-editor-placeholder:after {
       content: "제목" !important; }
+  .container .editable {
+    min-height: 690px; }
   .container .editable, .container #tmp {
     width: 100%;
     margin: auto;
     margin-bottom: 400px;
-    min-height: 690px;
     position: relative; }
     .container .editable a:link, .container #tmp a:link {
       text-decoration: none;
