@@ -91,7 +91,7 @@ print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-LOG_FILE = os.path.join(ROOT_DIR, 'error_log', 'myLog.log')
+ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -113,7 +113,7 @@ LOGGING = {
                 {
                     'level': 'DEBUG',
                     'class': 'logging.handlers.RotatingFileHandler',
-                    'filename': LOG_FILE,
+                    'filename': os.path.join(ERROR_DIR, 'debug.log'),
                     'formatter': 'verbose',
                     'maxBytes': 1024*1024*10, 'backupCount': 5,
                 },
