@@ -26,11 +26,13 @@ input, button {
             content: "제목" !important;
         }
     }
+    .editable {
+        min-height: 690px;
+    }
     .editable, #tmp {
         width: 100%;
         margin: auto;
         margin-bottom: 400px;
-        min-height: 690px;
         position: relative;
 
         a:link {

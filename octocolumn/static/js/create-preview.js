@@ -7,6 +7,7 @@ $(document).ready(function() {
         dom2img();                              // 미리보기 이미지 렌더링
         previewCoverImg();                      // 설정된 커버이미지 미리보기에 출력
         previewContentInfo();                   // 설정된 값들 미리보기에 출력
+
         previewModalHeight();                   // 모달 높이 계산해서 보여줌
 
         $(".arrow-box").hide();
@@ -50,8 +51,8 @@ function previewModalHeight(){
 
     console.log(previewHeight);
     console.log(htmlHeight);
-    (previewHeight >= htmlHeight) ? $(".preview-wrap").height(previewHeight + 50) : $(".preview-wrap").height(htmlHeight);
-
+    
+    $(".preview-wrap").height(htmlHeight);
     $(".preview-wrap").show();
 }
 
