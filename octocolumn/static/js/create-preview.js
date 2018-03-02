@@ -51,6 +51,11 @@ function previewModalHeight(){
 
     console.log(previewHeight);
     console.log(htmlHeight);
+
+    $(".preview").load(function(){
+
+        console.log(1);
+    });
     
     $(".preview-wrap").height(htmlHeight);
     $(".preview-wrap").show();
