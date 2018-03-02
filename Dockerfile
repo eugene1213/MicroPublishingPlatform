@@ -35,23 +35,23 @@ COPY        .files/favicon.ico /srv/app/favicon.ico
 #RUN         npm install
 #RUN         npm run build
 
+
+
+# collectstatic 실행
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+# manage.py
+#WORKDIR     /srv/app/octocolumn
+
+#RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
+
+
 RUN         cp /srv/app/.config/supervisor/* \
                 /etc/supervisor/conf.d/
 
 CMD         supervisord -n
 EXPOSE      80
-
-# collectstatic 실행
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
-# manage.py
-#WORKDIR     /srv/app/octocolumn
-
-#RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
-
-
-
 
 # 실행시
 # docker run --rm -it -p 9000:8000 eb /bin/zsh

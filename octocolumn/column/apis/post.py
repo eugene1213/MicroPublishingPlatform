@@ -20,7 +20,8 @@ __all__ = (
     # 'PostListCreateView',
     'PostLikeToggleView',
     'PostCreateView',
-    'PostView'
+    'PostView',
+    'AuthorResult'
 )
 
 
@@ -149,7 +150,7 @@ class PostListView(APIView):
         return clean_text
 
     def get(self, request, *args, **kwargs):
-        post = Post.objects.order_by('-created_date')[:15]
+        post = Post.objects.order_by('-created_date')[:5]
 
         lists = []
         for i in post:
@@ -223,3 +224,15 @@ class PostView(APIView):
 
         # 구매하지 않았을때 프리뷰 페이지 출려
         return Response("프리뷰")
+
+
+class AuthorResult(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self,request):
+        try:
+            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
+            if author is not None:
+                return Response({"author": True}, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response({"author": False}, status=status.HTTP_200_OK)

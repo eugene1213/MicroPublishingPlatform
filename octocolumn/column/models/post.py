@@ -18,7 +18,6 @@ class Post(models.Model):
     author = models.ForeignKey('member.User', null=True)
     title = models.CharField(max_length=255)
     main_content = models.TextField()
-    # file = models.FileField()
     hit = models.PositiveIntegerField(default=0)
     buy_count = models.PositiveIntegerField(default=0)
     price = models.IntegerField(default=0)
