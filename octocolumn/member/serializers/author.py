@@ -17,6 +17,8 @@ class AuthorSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'is_active',
+            'intro',
+            'blog',
             'created_at'
         )
 

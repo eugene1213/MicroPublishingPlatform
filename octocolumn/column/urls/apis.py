@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 
-from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostView
+from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostView, AuthorResult
 from column.apis.post import PostListView
 from column.apis.tmp import TempListView, TempFileUpload
 
@@ -15,7 +15,7 @@ urlpatterns = [
             url(r'^$', PostListView.as_view(), name="post-list"),
             url(r'^(?P<page>\w+)$', PostListView.as_view(), name="post-list-page")
     ])),
-
+    url(r'^isauthor/$', AuthorResult.as_view(), name='post-view'),
 
     # 임시저장
     url(r'^temp/$', TempCreateView.as_view(), name='post-create'),
