@@ -1,45 +1,46 @@
 <!DOCTYPE HTML>
 <html lang="ko_KR">
 <head>
+    {% load static %}
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <!-- CSS -->
-    <link rel="stylesheet" href="../../static/css/header.css">
-    <link rel="stylesheet" href="../../static/css/common2.css">
-    <link rel="stylesheet" href="../../static/css/sass/write.css">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sass/write.css' %}">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <link rel="stylesheet" href="../../static/js/medium-editor/dist/css/medium-editor.css">
-    <link rel="stylesheet" href="../../static/js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css">
-    <link rel="stylesheet" href="../../static/css/themes/default.css">
+    <link rel="stylesheet" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
+    <link rel="stylesheet" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themes/default.css' %}">
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
-    <script type="text/javascript" src="../../static/js/medium-editor/dist/js/medium-editor.js"></script>
-    <script type="text/javascript" src="../../static/js/handlebars-v4.0.11.js"></script>
-    <script type="text/javascript" src="../../static/js/blueimp-file-upload/js/jquery.fileupload.js"></script>
-    <script type="text/javascript" src="../../static/js/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
-    <script type="text/javascript" src="../../static/js/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
-    <script type="text/javascript" src="../../static/js/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js"></script>
-    <script type="text/javascript" src="../../static/js/dom-to-image.min.js"></script>
-    <script type="text/javascript" src="../../static/js/script2.js"></script>
-    <script type="text/javascript" src="../../static/js/sidebar.js"></script>
-    <script type="text/javascript" src="../../static/js/noisyType.js"></script>
-    <script type="text/javascript" src="../../static/js/saveTmp.js"></script>
-    <script type="text/javascript" src="../../static/js/progress-bar.js"></script>
-    <script type="text/javascript" src="../../static/js/tag-editor.js"></script>
-    <script type="text/javascript" src="../../static/js/create-preview.js"></script>
-    <script type="text/javascript" src="../../static/js/cover-image.js"></script>
-    <script type="text/javascript" src="../../static/js/post.js"></script>
-    <script type="text/javascript" src="../../static/js/title-to-header.js"></script>
+    <script type="text/javascript" src="{% static 'js/medium-editor/dist/js/medium-editor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/handlebars-v4.0.11.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.fileupload.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.iframe-transport.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/saveTmp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/create-preview.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cover-image.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/post.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 </head>
     <body>
         <div class="header">
             <div class="header-wrap">
                 <div class="btn-menu">
-                    <img src="../../static/images/icons/header/burger2.png">
+                    <img src="{% static 'images/icons/header/burger2.png' %}">
                     <div>octocolumn</div>
                     <ul>
                         <li>최근 글</li>
@@ -73,20 +74,26 @@
                     </ul><!-- sidebar -->
                 </div>
                 <div class="btn-search">
-                    <img src="../../static/images/icons/header/CombinedShape2.png">
+                    <img src="{% static 'images/icons/header/CombinedShape2.png' %}">
                 </div>
                 <div class="btn-point">
                     <div class="point">1000p</div>
-                    <img src="../../static/images/icons/header/bar_chart2.png">
+                    <img src="{% static 'images/icons/header/bar_chart2.png' %}">
                 </div>
+                <div class="btn-logo" id="header-title">
+                    octocolumn
+                </div>
+                <div class="btn-notice">
+                    <img src="{% static 'images/icons/header/Shape2.png' %}">
                 <div class="btn-logo-wrap">
                     <div class="btn-logo" id="header-title">
                         octocolumn
                     </div>
+
                 </div>
                 <div class="btn-right-wrap">
                     <div class="btn-notice">
-                        <img src="../../static/images/icons/header/Shape2.png">
+                        <img src="{% static 'images/icons/header/Shape2.png' %}">
                     </div>
                     <div class="btn-user" onclick="modal_on()">
                         joyce Henry
@@ -98,67 +105,67 @@
         <div class="container" id="container">
             <div class="audio-wrap">
                 <audio preload id="audio_1">
-                    <source src="../../static/mp3/key-01.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-01.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_2">
-                    <source src="../../static/mp3/key-02.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-02.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_3">
-                    <source src="../../static/mp3/key-03.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-03.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_4">
-                    <source src="../../static/mp3/key-04.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-04.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_5">
-                    <source src="../../static/mp3/key-new-01.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-new-01.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_6">
-                    <source src="../../static/mp3/key-new-02.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-new-02.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_7">
-                    <source src="../../static/mp3/key-new-03.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-new-03.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_8">
-                    <source src="../../static/mp3/key-new-04.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-new-04.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_9">
-                    <source src="../../static/mp3/key-new-05.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/key-new-05.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_return_1">
-                    <source src="../../static/mp3/return-01.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/return-01.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_return_2">
-                    <source src="../../static/mp3/return-02.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/return-02.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_return_3">
-                    <source src="../../static/mp3/return-03.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/return-03.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_return_4">
-                    <source src="../../static/mp3/return-new.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/return-new.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_space_1">
-                    <source src="../../static/mp3/space-01.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/space-01.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_space_2">
-                    <source src="../../static/mp3/space-02.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/space-02.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_space_3">
-                    <source src="../../static/mp3/space-03.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/space-03.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_backspace_1">
-                    <source src="../../static/mp3/backspace-01.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/backspace-01.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_backspace_2">
-                    <source src="../../static/mp3/backspace-02.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/backspace-02.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_backspace_3">
-                    <source src="../../static/mp3/backspace-03.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/backspace-03.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_scrollUp">
-                    <source src="../../static/mp3/scrollUp.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/scrollUp.mp3' %}" type="audio/mp3">
                 </audio>
                 <audio preload id="audio_scrollDown">
-                    <source src="../../static/mp3/scrollDown.mp3" type="audio/mp3">
+                    <source src="{% static 'mp3/scrollDown.mp3' %}" type="audio/mp3">
                 </audio>
             </div>
             <div class="toggle-wrap">
