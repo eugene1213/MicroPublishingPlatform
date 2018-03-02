@@ -149,7 +149,7 @@ class PostListView(APIView):
         return clean_text
 
     def get(self, request, *args, **kwargs):
-        post = Post.objects.order_by('-created_date')[:15]
+        post = Post.objects.order_by('-created_date')[:5]
 
         lists = []
         for i in post:
