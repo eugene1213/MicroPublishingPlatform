@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    isAuthor();         // 작가인지 확인
+    var data = isAuthor();
     
     /* 발행버튼 클릭시 발행메뉴 드롭다운 */
     $(".btn-publish").click(function(event) {
@@ -18,7 +18,7 @@ $(document).ready(function(){
                 $(".btn-publish-final").attr("disabled", "true");
                 $(".btn-publish-final").addClass("btn_disabled");
             }
-
+            
             $(".arrow-box").show();
             $(".css-arrow").css("transform","rotate(180deg)");
         }
@@ -38,8 +38,7 @@ $(document).ready(function(){
         var price = $(".preview-br-list-wrap > .price-set-decimal").text();
         var temp_id = localStorage.getItem("temp_id");
 
-        publish(temp_id, cover_img, preview_img, tag, code, price);
-
+        data ? publish(temp_id, cover_img, preview_img, tag, code, price) : console.log("다음단계모달팝업");
     });
 });
 
@@ -96,21 +95,33 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
         }
     });
 }
-
+/* 작가인지 확인 */
 function isAuthor() {
+    var data;
+    
     $.ajax({
         url: "http://127.0.0.1:8000/api/column/isauthor/",
         type: 'POST',
+        async: false,
         dataType: 'json',
         headers: {
             'Authorization' : 'jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImV1Z2VuZTJAb2N0b2NvbHVtbi5jb20iLCJleHAiOjE1MjAyMjUyMzcsIm9yaWdfaWF0IjoxNTE5NjIwNDM3fQ.dB-EHzQg3h1CyyTDIJPkyrn0ydNgdACvbQJvYxYxENk'
         },
         success: function(json) {
-            if(json.author) console.log("작가입니다.");
-            else console.log("뉴비입니다.")
+
+            data = json.author;
+
+            if(data) {
+                $(".ready2publish").text("Ready to publish?");
+            }
+            else {
+                $(".ready2publish").text("Become a writer");
+                $("#done-publish").text("다음 단계");
+            }
         },
         error: function(error) {
             console.log(error);
         }
     });
+    return data;
 }

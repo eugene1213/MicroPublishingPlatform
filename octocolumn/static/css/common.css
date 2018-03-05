@@ -2,22 +2,18 @@ html{
 	overflow-y: scroll;
 }
 *{
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
-	vertical-align: top;
+	vertical-align: baseline;
 	text-decoration:none;
 	background-repeat: no-repeat;
 	list-style: none;
 	word-break:keep-all;
-	-webkit-appearance: none;
 	-webkit-text-size-adjust: none !important;
 	border-radius: 0px;
 	-webkit-border-radius:0;
-	@include border-radius(0);
+	border-radius: 0;
 	outline-width: 0;
 	font-family:"SpoqaHanSans";
-	color: #000000;
+	color: #2a292a;
 }
 
 body{
@@ -26,20 +22,20 @@ body{
 
 a{
 	text-decoration: none;
-	color: #000000;
+	color: #2a292a;
 	display: block;
 }
 
 a:link {
-	color: #000000;
+	color: #2a292a;
 	text-decoration: none;
 }
 a:visited{
-	color: #000000;
+	color: #2a292a;
 	text-decoration: none;
 }
 a:hover{
-	color: #000000;
+	color: #2a292a;
 	text-decoration: none;
 }
 

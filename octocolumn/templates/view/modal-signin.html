@@ -1,0 +1,268 @@
+{% load static %}
+ <!-- modal_block_wrap -->
+ <div class="modal_block_wrap">
+    <!-- modal_window -->
+    <div class="modal_window signinWith">
+        <a class="close_btn" href="javascript:modal_off();">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">
+            Welcome Back
+        </div>
+        <div class="welcome2">
+            다시 오신 것을 환영합니다.<br>
+            당신의 이야기를 쓰고, 사랑하는 작가와 주제를 탐험하고,<br>
+            중요한 이야기를 나눌 수 있도록 로그인하십시오.
+        </div>
+        <div class="btn_wrap">
+            <div class="btn-signin">
+                <img src="{% static 'images/icons/modal/fill-42-copy@3x.png' %}">
+                Sign in with Facebook
+            </div>
+            <div class="btn-signin">
+                <img src="{% static 'images/icons/modal/fill-46-copy@3x.png' %}">
+                Sign in with Google
+            </div>
+            <div class="btn-signin">
+                <img src="{% static 'images/icons/modal/fill-44-copy@3x.png' %}">
+                Sign in with Twitter
+            </div>
+            <div class="btn-signin" onclick="signin()">
+                <img src="{% static 'images/icons/modal/group-2@3x.png' %}">
+                Sign in with email
+            </div>
+        </div>
+        <div class="signup-wrap">
+            <span>아직 계정이 없다구요?</span>
+            <a onclick="signup()">지금 만드세요!</a>
+        </div>
+    </div>
+    <!-- //modal_window -->
+    <!-- modal_window signin -->
+    <div class="modal_window signin">
+        <a class="close_btn" href="javascript:modal_off();">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">Sign in with email</div>
+        <div class="welcome2">
+            octocolumn과 연결된 당신의 이메일과 비밀번호를 입력하세요.<br>
+            계정이 없거나, 비밀번호를 잊었다해도 걱정마시구요.<br>
+        </div>
+        <div class="form_wrap">{% csrf_token %}
+            <form action="http://127.0.0.1:8000/member/login/" method="POST" class="signin_form">
+                <span>이메일 주소</span>
+                <input type="text" name="username">
+                <span>비밀번호</span>
+                <input type="password" name="password">
+                <input type="checkbox">
+                <span>나를 기억해요.</span>
+                <span onclick="findPass()">비밀번호를 잊었나요?</span>
+                <button>Sign in</button>
+            </form>
+        </div>
+        <div class="signup-wrap">
+            <span>아직 계정이 없다구요?</span>
+            <a onclick="signup()">지금 만드세요!</a>
+        </div>
+        <div class="preview">
+            <!-- <img src="" alt=""> -->
+            <span onclick="signinWith()">이전단계로 돌아가기</span>
+        </div>
+    </div>
+    <!-- //modal_window signin_form -->
+    <!-- //modal_window findPass -->
+    <div class="modal_window findPass">
+        <a class="close_btn" href="javascript:modal_off();">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">Forgot your password?</div>
+        <div class="welcome2">
+            비밀번호가 기억나지 않으세요?<br>
+            octocolumn에 가입한 이메일 주소를 입력해주세요.<br>
+            해당 이메일을 통해 비밀번호를 재설정해주세요.<br>
+        </div>
+        <div class="form_wrap">
+            <form action="" class="signin_form">
+                <span>이메일 주소</span>
+                <input type="email">
+                <button>비밀번호 재설정 이메일 받기</button>
+            </form>
+        </div>
+        <div class="signup-wrap">
+            <span>아직 계정이 없다구요?</span>
+            <a onclick="signup()">지금 만드세요!</a>
+        </div>
+        <div class="preview">
+            <!-- <img src="" alt=""> -->
+            <span onclick="signin()">이전단계로 돌아가기</span>
+        </div>
+    </div>
+    <!-- //modal_window findPass -->
+    <!-- modal_window signup -->
+    <div class="modal_window signup">
+        <a class="close_btn" href="javascript:modal_off();">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">Sign up with email</div>
+        <div class="welcome2">
+            일반적인 이용을 위해서라면, 일반 계정을 만들어주세요.<br>
+            비지니스 계정은 brands.octocolumn.com만 이용가능합니다.<br>
+        </div>
+        <!-- form_wrap -->
+        <div class="form_wrap">
+            <div class="check_wrap">
+                <div class="checkbox checked" id="normal">
+                </div>
+                <label for="normal">일반 계정</label>
+                <div class="checkbox unchecked" id="business">
+                </div>
+                <label for="business">비지니스 계정</label>
+            </div>
+            <div class="name_wrap">
+                <div class="name">
+                    <span>성</span>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="name">
+                    <span>이름</span>
+                    <input type="text" id="firstName" required>
+                </div>
+            </div>
+            <span>이메일 주소</span>
+            <input type="text" id="email" required>
+            <span>비밀번호(영문, 숫자 포함 8자리 이상)</span>
+            <input type="password" id="password1" required>
+            <span>비밀번호 재입력</span>
+            <input type="password" id="password2" required>
+            <button class="btn_signup btn_disabled" disabled="disabled" onclick="signup_api();">
+                Sign up
+            </button>
+            <div class="agreement">
+                저는 octocolumn의
+                <span onclick="term()"> 이용약관</span><!--
+                -->과<!--
+                --><span onclick="privacy()"> 개인정보취급방침</span><!--
+                -->에 동의합니다.
+                <input type="checkbox" class="agree_checkbox">
+            </div>
+        </div>
+        <!-- //form_wrap -->
+        <div class="signup-wrap">
+            <span>
+                이미 계정이 있다구요?
+            </span>
+            <a onclick="signinWith()">
+                로그인하셔야죠!
+            </a>
+        </div>
+        <div class="preview">
+            <!-- <img src="" alt=""> -->
+            <span onclick="signinWith()">
+                이전단계로 돌아가기
+            </span>
+        </div>
+    </div>
+    <!-- //modal_window signup -->
+    <!-- modal_window check_email -->
+    <div class="modal_window check_email">
+        <a class="close_btn" href="javascript:modal_off()">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">
+            Check your inbox
+        </div>
+        <div class="welcome2">
+            <span>eiwofj@ogheocm.com</span>에 대한 확인 링크를 이메일로 보내 드렸습니다.<br>
+            해당 이메일의 받은 편지함을 열어서, 메일에 포함된 링크를 클릭하여 계정 설정을 완료하세요.<br>
+        </div>
+        <button class="btn_ok" onclick="modal_off()">
+            오케이
+        </button>
+    </div>
+    <!-- //modal_window check_email -->
+    <!-- modal_window term -->
+    <div class="modal_window term">
+        <a class="close_btn" href="javascript:modal_off()">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">
+            Term of Service
+        </div>
+        <div class="scroll_wrap">
+            <div class="scrollbar" id="style-1">
+                <div class="force-overflow">
+                    <h2>제1조. 목적</h2>
+                    본 서비스 약관(이하 “약관”이라 합니다)은 옥토칼럼(이하 “회사”라 합니다)이 제공하는<br>
+                    서비스(이용고객 또는 회원이 PC, 휴대형단말기 등 각종 유무선 기기 또는 프로그램을 <br>
+                    통하여 이용할 수 있도록 제공하는 모든 인터넷 서비스를 의미하며, 회사가 공개한 API를<br>
+                    이용하여 제3자가 개발 또는 구축한 프로그램이나 서비스를 통하여 이용 고객 또는<br>
+                    회원에게 제공되는 경우를 포함합니다. 이하 같습니다.)와 관련하여, 회사와 이용고객(또는 회원)간에 서비스의 이용조건 및 절차, 회사와 회원간의 권리·의무 및 책임 사항 <br>
+                    기타 필요한 사항을 규정함을 목적으로 합니다.<br>
+                    
+                    <ol><h2>제2조. 약관의 효력 및 개정</h2></ol>
+                    <li>회사는 본 약관의 내용을 회원이 쉽게 알 수 있도록 초기 서비스 화면에 게시합니다.</li>
+                    <li>회사는 약관의 규제에 관한 법률, 전자거래기본법, 전자상거래 등에서의 소비자보호에</li>
+                    관한 법률, 정보통신망 이용촉진 및 정보보호등에 관한 법률 등 관계 법령에 위배되지 <br>
+                    않는 범위 안에서 이 약관을 개정할 수 있습니다.<br>
+                    <li>회원은 변경된 약관에 동의하지 않을 경우, 서비스 이용 계약을 해지할 수 있습니다.</li>
+                    <li>회사가 제3항에 따라 개정약관을 공지 또는 통지하면서 회원에게 개정약관 적용일까지 거부 의사를 표시하지 않으면 승인한 것으로 본다는 뜻을 명확하게 공지 또는 통지하였음에도 불구하고 회원이 명시적으로 거부 의사를 표시하지 아니한 경우 회원이 개정약관에 동의한 것으로 봅니다.</li>
+                    
+                    <ol><h2>제3조. 용어의 정의</h2>
+                    본 약관에서 사용되는 주요한 용어의 정의는 다음과 같습니다.</ol>
+                    <li value='1'>회원 : 서비스에 개인정보를 제공하여 회원등록을 한 자로서, 회사와 서비스 이용계약을 체결하고 회원 아이디를 부여받은 자를 말합니다.</li>
+                    <li>서비스 약관 : 서비스 이용과 관련하여 회사와 회원 간에 체결하는 계약을 말합니다.</li>
+                    <li>회원 아이디(이하 "ID") : 회원의 식별과 서비스 이용을 위하여 회원이 선정하고 회사가 승인하는 이메일 주소를 말합니다.</li>
+                    <li>비밀번호 : 회원이 부여받은 ID와 일치된 회원임을 확인하고 회원의 권익 보호를 위하여 회원이 선정한 문자와 숫자의 조합을 말합니다.</li>
+                    <li>게시물 : 회원이 서비스에 게시한 부호·문자·음성·음향·영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 말합니다.</li>
+                </div>
+            </div>
+            <button onclick="signup()">
+                확인
+            </button>
+        </div>
+    </div>
+    <!-- //modal_window term -->
+    <!-- modal_window privacy -->
+    <div class="modal_window privacy">
+        <a class="close_btn" href="javascript:modal_off()">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">
+            Privacy Policy
+        </div>
+        <div class="scroll_wrap">
+            <div class="scrollbar" id="style-1">
+                <div class="force-overflow">
+                    <h2>제1조. 목적</h2>
+                    본 서비스 약관(이하 “약관”이라 합니다)은 옥토칼럼(이하 “회사”라 합니다)이 제공하는<br>
+                    서비스(이용고객 또는 회원이 PC, 휴대형단말기 등 각종 유무선 기기 또는 프로그램을 <br>
+                    통하여 이용할 수 있도록 제공하는 모든 인터넷 서비스를 의미하며, 회사가 공개한 API를<br>
+                    이용하여 제3자가 개발 또는 구축한 프로그램이나 서비스를 통하여 이용 고객 또는<br>
+                    회원에게 제공되는 경우를 포함합니다. 이하 같습니다.)와 관련하여, 회사와 이용고객(또는 회원)간에 서비스의 이용조건 및 절차, 회사와 회원간의 권리·의무 및 책임 사항 <br>
+                    기타 필요한 사항을 규정함을 목적으로 합니다.<br>
+                    
+                    <ol><h2>제2조. 약관의 효력 및 개정</h2></ol>
+                    <li>회사는 본 약관의 내용을 회원이 쉽게 알 수 있도록 초기 서비스 화면에 게시합니다.</li>
+                    <li>회사는 약관의 규제에 관한 법률, 전자거래기본법, 전자상거래 등에서의 소비자보호에</li>
+                    관한 법률, 정보통신망 이용촉진 및 정보보호등에 관한 법률 등 관계 법령에 위배되지 <br>
+                    않는 범위 안에서 이 약관을 개정할 수 있습니다.<br>
+                    <li>회원은 변경된 약관에 동의하지 않을 경우, 서비스 이용 계약을 해지할 수 있습니다.</li>
+                    <li>회사가 제3항에 따라 개정약관을 공지 또는 통지하면서 회원에게 개정약관 적용일까지 거부 의사를 표시하지 않으면 승인한 것으로 본다는 뜻을 명확하게 공지 또는 통지하였음에도 불구하고 회원이 명시적으로 거부 의사를 표시하지 아니한 경우 회원이 개정약관에 동의한 것으로 봅니다.</li>
+                    
+                    <ol><h2>제3조. 용어의 정의</h2>
+                    본 약관에서 사용되는 주요한 용어의 정의는 다음과 같습니다.</ol>
+                    <li value='1'>회원 : 서비스에 개인정보를 제공하여 회원등록을 한 자로서, 회사와 서비스 이용계약을 체결하고 회원 아이디를 부여받은 자를 말합니다.</li>
+                    <li>서비스 약관 : 서비스 이용과 관련하여 회사와 회원 간에 체결하는 계약을 말합니다.</li>
+                    <li>회원 아이디(이하 "ID") : 회원의 식별과 서비스 이용을 위하여 회원이 선정하고 회사가 승인하는 이메일 주소를 말합니다.</li>
+                    <li>비밀번호 : 회원이 부여받은 ID와 일치된 회원임을 확인하고 회원의 권익 보호를 위하여 회원이 선정한 문자와 숫자의 조합을 말합니다.</li>
+                    <li>게시물 : 회원이 서비스에 게시한 부호·문자·음성·음향·영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 말합니다.</li>
+                </div>
+            </div>
+            <button onclick="signup()">
+                확인
+            </button>
+        </div>
+    </div>
+    <!-- //modal_window privacy -->
+</div>
+<!-- //modal_block_wrap -->
