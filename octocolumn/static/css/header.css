@@ -134,6 +134,7 @@ li {
     max-width: 300px;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-family: "Akzidenz";
 }
 .btn-right-wrap {
     float: right;

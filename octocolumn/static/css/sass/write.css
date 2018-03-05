@@ -331,11 +331,12 @@ input, button {
     border-radius: 50%; }
   .toggle-wrap p {
     margin: 0px;
-    margin-top: 8px;
+    width: 20px;
+    margin-top: 5px;
     margin-left: 4px;
     display: inline-block;
     font-size: 7px;
-    font-weight: bold; }
+    font-family: "SpoqaHanSansBold"; }
   .toggle-wrap .btn-save {
     width: 62px;
     height: 22px;
@@ -599,7 +600,7 @@ input, button {
       height: 36px;
       font-size: 24px;
       line-height: 36px;
-      font-weight: bold; }
+      font-family: "SpoqaHanSansBold"; }
     .profile-wrap .profile-sub-wrap .state {
       display: inline-block;
       margin-top: 4px;

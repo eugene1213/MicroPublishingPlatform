@@ -15,90 +15,17 @@
 	<title>octoclumn</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
 	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>
+	<script src="{% static 'js/script2.js' %}"></script>
 	<script src="{% static 'js/getPostList.js' %}"></script>
 	<script src="{% static 'js/balloon.js' %}"></script>
+	<script src="{% static 'js/signup.js' %}"></script>
 </head>
 <body>
-	<header class="header">
-		<div class="menu_wrap">
-			<div class="menu_left">
-				<div class="menuBtn">Menu</div>
-				<div class="search"> </div>
-				<div class="chart"> </div>
-			</div>
-			<h1 class="logo"><a href="#top">octocolumn</a></h1>
-			<div class="menu_right">
-				<div class="alarm"> </div>
-				<div class="login">
-					Singin/Singup
-				</div>
-			</div>
-		</div><!-- class="menu_wrap" -->
-		<div class="sidebar"><!-- class="sidebar" START -->
-			<div class="sidebar_menu">
-				Recent Posts
-			</div>
-			<div class="sidebar_menu">
-				Feed
-			</div>
-			<div class="sidebar_menu">
-				Purchased Posts
-			</div>
-			<div class="sidebar_menu">
-				Bookmarks
-			</div>
-			<div class="sidebar_menu">
-				Brand Page
-			</div>
-			<div class="sidebar_hr">
-
-			</div>
-			<div class="sidebar_menu">
-				Become a Writer
-			</div>
-			<div class="sidebar_menu">
-				Point Shop
-			</div>
-			<div class="sidebar_menu">
-				Settings
-			</div>
-			<div class="sidebar_hr">
-
-			</div>
-			<div class="sidebar_menu">
-				Support
-			</div>
-			<div class="sidebar_menu">
-				Terms of Service
-			</div>
-			<div class="sidebar_menu">
-				Privacy Policy
-			</div>
-			<div class="sidebar_menu">
-				Rules
-			</div>
-			<div class="sidebar_hr">
-			</div>
-			<div class="sidebar_menu" style="margin-bottom:202px;">
-				Sign out
-			</div>
-			<div class="footer_txt" style="margin-bottom: 9px;">
-				octocolumn.com<br />
-				Copyright octocolumn.com<br />
-				All Rights Reserved<br />
-				주식회사 옥토칼럼<br />
-				대표 오정민<br />
-				사업자등록번호 576-52-00020<br />
-				통신판매업신고 2016 수원권선 0350<br />
-				개인정보관리 책임자 오정민<br />
-				경기도 수원시 권선구 정조로 580-9<br />
-				연락처 mackenzie@octocolumn.com<br />
-				고객센터 070-4809-7166<br />
-			</div>
-		</div> <!-- class="sidebar" END -->
-	</header><!-- class="header" -->
+	{% include 'view/header.html' %}
 	<div class="main">
 		<div class="main_txt1">
 			Read.<br />
@@ -358,5 +285,6 @@ Cras quis nulla commodo, aliquam lectus sed, blandit augue. Cras ullamcorper bib
 		<!-- //arrow_box -->
 	</div>
 	<!-- //flip -->
+	{% include 'view/modal-signin.html' %}
 </body>
 </html>
