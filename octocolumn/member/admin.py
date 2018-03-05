@@ -52,10 +52,10 @@ class AuthorAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_per_page = 20
-    list_display = ['id', 'title', 'created_at', 'author', 'content_size', 'hit', 'buy_count']
+    list_display = ['id', 'title', 'created_date', 'author', 'content_size', 'hit', 'buy_count']
     list_display_links = ['id', 'title']
     search_fields = ('author__username',)
-    ordering = ('-id', '-created_at')
+    ordering = ('-id', '-created_date')
     list_filter = (CreatedDateFilter,)
 
     fieldsets = (
@@ -66,12 +66,12 @@ class PostAdmin(admin.ModelAdmin):
             'fields': ('title', 'main_content',),
         }],
         ['구매 정보', {
-            'fields': ('hit', 'price', 'created_at', 'buy_count')
+            'fields': ('hit', 'price', 'created_date', 'buy_count')
         }]
 
     )
 
-    readonly_fields = ['author', 'hit', 'buy_count', 'created_at']
+    readonly_fields = ['author', 'hit', 'buy_count', 'created_date']
 
     def remove_tag(self, post):
         cleaner = re.compile('<.*?>')

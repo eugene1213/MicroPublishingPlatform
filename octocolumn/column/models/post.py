@@ -22,7 +22,7 @@ class Post(models.Model):
     hit = models.PositiveIntegerField(default=0)
     buy_count = models.PositiveIntegerField(default=0)
     price = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     my_comment = models.OneToOneField(
         'Comment',
         blank=True,

@@ -19,7 +19,7 @@ class Comment(models.Model):
     content = models.TextField(blank=True)
     parent = models.ForeignKey('Comment', null=True)
     # html_content = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     like_users = models.ManyToManyField(
         'member.User',
         through='CommentLike',

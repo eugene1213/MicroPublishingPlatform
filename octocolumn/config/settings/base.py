@@ -156,3 +156,5 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),  # Token can be refreshed up to * minutes after being issued
  }
 
+
+CSRF_COOKIE_SECURE = True
