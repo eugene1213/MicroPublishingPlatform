@@ -23,7 +23,7 @@ def login(request):
             form.login(request)
             if next_path:
                 return redirect(next_path)
-            return redirect('post:post_list')
+            return redirect('views')
     else:
         # GET요청에서는 Form을 보여줌
         form = LoginForm()

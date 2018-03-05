@@ -3,6 +3,7 @@ from audioop import reverse
 
 from django.db import models
 
+from member.models import User
 from .others import Tag
 
 __all__ = (
@@ -16,10 +17,9 @@ class Comment(models.Model):
     # 여기서의 author은 post의 author와 전혀무관
     author = models.ForeignKey('member.User', null=True)
     content = models.TextField(blank=True)
-    html_content = models.TextField(blank=True)
-    tags = models.ManyToManyField('Tag')
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
+    parent = models.ForeignKey('Comment', null=True)
+    # html_content = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     like_users = models.ManyToManyField(
         'member.User',
         through='CommentLike',
@@ -56,8 +56,34 @@ class Comment(models.Model):
         self.html_content = ori_content
         super().save(update_fields=['html_content'])
 
+    def comment_like_toggle(self, user):
+        # 1. 주어진 user가 User객체인지 확인
+        #    아니면 raise ValueError()
+        # 2. 주어진 user를 follow하고 있으면 해제
+        #    안 하고 있으면 follow함
+        if not isinstance(user, User):
+            raise ValueError('"user" argument must be User instance!')
+
+        comment_like, relation_created = self.like_user_relation.get_or_create(user=user)
+        if relation_created:
+            return True
+        comment_like.delete()
+        return False
+
 
 class CommentLike(models.Model):
-    comment = models.ForeignKey('column.Comment',null=True)
-    user = models.ForeignKey('member.User',null=True)
-    created_date = models.DateTimeField(auto_now_add=True)
+    comment = models.ForeignKey(
+        'Comment',
+        null=True,
+    )
+    user = models.ForeignKey(
+        'member.User',
+         null=True,
+         related_name='like_user_relation',
+                             )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (
+            ('comment', 'user'),
+        )

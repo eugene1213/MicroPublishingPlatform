@@ -23,8 +23,9 @@ class AuthorAplly(generics.GenericAPIView,
     #작가 신청메서드
     def post(self, request):
         user = self.request.user
+        data = self.request.data
 
-        author, result = super().get_queryset().get_or_create(author=user)
+        author, result = super().get_queryset().get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
         if result:
             return Response({"detail":"Successfully added."}, status=status.HTTP_201_CREATED)

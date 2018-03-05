@@ -9,6 +9,7 @@ from utils.filepath import cover_image_user_directory_path, preview_image_user_d
 __all__ = (
     'Post',
     'PostLike',
+    'PreAuthorPost'
 )
 
 
@@ -21,7 +22,7 @@ class Post(models.Model):
     hit = models.PositiveIntegerField(default=0)
     buy_count = models.PositiveIntegerField(default=0)
     price = models.IntegerField(default=0)
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     my_comment = models.OneToOneField(
         'Comment',
         blank=True,
@@ -76,6 +77,28 @@ class PostLike(models.Model):
         unique_together = (
             ('post', 'user'),
         )
+
+
+class PreAuthorPost(models.Model):
+    author = models.ForeignKey('member.User', null=True)
+    title = models.CharField(max_length=255)
+    main_content = models.TextField()
+    price = models.IntegerField(default=0)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    cover_image = models.ImageField('포스트커버 이미지',
+                                    upload_to=cover_image_user_directory_path,
+                                    blank=True,
+                                    null=True
+                                    )
+    preview_image = models.ImageField('포스트프리뷰 이미지',
+                                      upload_to=preview_image_user_directory_path,
+                                      blank=True,
+                                      null=True
+                                      )
+
+    class Meta:
+        ordering = ['-pk', ]
 
 
 @receiver(post_save, sender=PostLike, dispatch_uid='postlike_save_update_like_count')

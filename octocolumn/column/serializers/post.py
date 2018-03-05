@@ -10,7 +10,8 @@ __all__ = (
     'PostSerializer',
     'TempSerializer',
     'TempFileSerializer',
-    'PostListSerializer'
+    'PostListSerializer',
+    'PreAuthorPostSerializer'
 )
 
 
@@ -91,7 +92,18 @@ class TempFileSerializer(serializers.ModelSerializer):
         )
 
 
+class PreAuthorPostSerializer(serializers.ModelSerializer):
+    # 아래 코드가 동작하도록 CommentSerializer를 구현
+    my_comment = CommentSerializer(read_only=True)
+    comments = CommentSerializer(read_only=True, many=True)
 
-
-
-
+    class Meta:
+        model = Post
+        fields = (
+            'pk',
+            'author',
+            'main_content',
+            'title',
+            'cover_image',
+            'preview_image'
+        )
