@@ -3,6 +3,7 @@ from django.contrib.auth import (
     logout as django_logout,
 )
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
 
 from ..forms import LoginForm
 
@@ -11,19 +12,17 @@ __all__ = (
     'logout',
 )
 
-
+@csrf_exempt
 def login(request):
     # GET파라미터의 'next'값을 사용하도록 수정
-    next_path = request.GET.get('next')
 
     # POST요청 (Form submit)의 경우
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             form.login(request)
-            if next_path:
-                return redirect(next_path)
-            return redirect('post:post_list')
+            print(request.COOKIES)
+            return redirect('views:index')
     else:
         # GET요청에서는 Form을 보여줌
         form = LoginForm()

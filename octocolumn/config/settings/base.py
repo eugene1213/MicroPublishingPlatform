@@ -39,22 +39,12 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
+
 
 # media
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
-
-
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
 ROOT_URLCONF = 'config.urls'
 
@@ -166,3 +156,5 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),  # Token can be refreshed up to * minutes after being issued
  }
 
+
+CSRF_COOKIE_SECURE = True

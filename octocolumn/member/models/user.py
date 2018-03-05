@@ -92,6 +92,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_type = models.CharField(
         max_length=50,
         choices=CHOICES_USER_TYPE,
+        default='d'
     )
     username = models.EmailField(unique=True)
     social_id = models.CharField(null=True, max_length=255)
@@ -100,7 +101,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    # waiting = models.PositiveIntegerField(default=0)
+    waiting = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # like_posts = models.ManyToManyField(

@@ -12,11 +12,11 @@ from utils.tokengenerator import account_activation_token
 def signup_email_send(user):
     # 이메일 발송
     mail_subject = 'Octocolumn 이메일 인증.'
-    # urlrequest = request
-    # url = get_current_site(urlrequest)
+    urlrequest = request
+    url = get_current_site(urlrequest)
     message = render_to_string('singup_activation.html', {
         'user': user,
-        'domain': 'localhost:8000',
+        'domain': url,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })
@@ -33,13 +33,14 @@ def signup_email_send(user):
 def password_reset_email_send(user):
     # 이메일 발송
     mail_subject = 'Octocolumn 비밀번호 변경.'
+    urlrequest = request
+    url = get_current_site(urlrequest)
     message = render_to_string('pw_change.html', {
         'user': user,
-        'domain': HttpRequest.get_full_path,
+        'domain': url,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })
-    print(HttpRequest.get_full_path)
     to_email = user.username
     email = EmailMultiAlternatives(
         mail_subject, message, to=[to_email]

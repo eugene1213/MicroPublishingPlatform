@@ -12,6 +12,18 @@ ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.deploy.application'
 
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',

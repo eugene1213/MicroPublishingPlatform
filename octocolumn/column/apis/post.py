@@ -5,16 +5,15 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
-from rest_framework.generics import get_object_or_404, ListAPIView
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from column.models import Temp, SearchTag
-from column.pagination import PostPagination
+from column.models import Temp, SearchTag, PreAuthorPost
 from member.models import Author as AuthorModel, User, PointHistory, BuyList
 from ..models import Post
-from ..serializers import PostSerializer
+from ..serializers import PostSerializer, PreAuthorPostSerializer
 
 __all__ = (
     # 'PostListCreateView',
@@ -95,48 +94,83 @@ class PostCreateView(generics.GenericAPIView,
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
 
-        # author = self.is_author()
-        # if author is not None:
-        #     if not author.is_active:
-        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        # else:
-        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
-        # 템프파일이 삭제 되었을경우 에러 발생 예외처리
-        if data['temp_id'] == '':
-            raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
+        author = self.is_author()
+        if author is not None:
+            if author.is_active:
+                if data['temp_id'] == '':
+                    raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
 
-        try:
-            temp = Temp.objects.filter(id=data['temp_id']).get()
-        except ObjectDoesNotExist:
-            raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
-        # 포인트가 모자르다면 에러발생
-        if 300 > user.point:
-            raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
+                try:
+                    temp = Temp.objects.filter(id=data['temp_id']).get()
+                except ObjectDoesNotExist:
+                    raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
+                # 포인트가 모자르다면 에러발생
+                if 300 > user.point:
+                    raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-        serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
-                                                        main_content=temp.main_content,
-                                                        price=data['price'],
-                                                        preview_image=preview_file_obj,
-                                                        cover_image=cover_file_obj
-                                                        ))
-        # 템프파일 삭제
-        try:
-            Temp.objects.filter(id=data['temp_id']).delete()
-        except ObjectDoesNotExist:
-            raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
+                serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
+                                                                main_content=temp.main_content,
+                                                                price=data['price'],
+                                                                preview_image=preview_file_obj,
+                                                                cover_image=cover_file_obj
+                                                                ))
+                # 템프파일 삭제
+                try:
+                    Temp.objects.filter(id=data['temp_id']).delete()
+                except ObjectDoesNotExist:
+                    raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-        user_queryset = User.objects.filter(id=self.request.user.id).get()
+                user_queryset = User.objects.filter(id=self.request.user.id).get()
 
-        self.decrease_point(user_queryset.point - 300)
-        self.add_point_history(point=300, history=temp.title)
-        # 태그를 추가하고 태그 추가 실패
-        # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-        #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+                self.decrease_point(user_queryset.point - 300)
+                self.add_point_history(point=300, history=temp.title)
+                # 태그를 추가하고 태그 추가 실패
+                # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+                #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
-        if serializer:
-            return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+                if serializer:
+                    return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+                else:
+                    raise exceptions.ValidationError({'detail': 'Already added'}, 400)
+            else:
+                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+
         else:
-            raise exceptions.ValidationError({'detail': 'Already added'}, 400)
+            if data['temp_id'] == '':
+                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
+
+            try:
+                temp = Temp.objects.filter(id=data['temp_id']).get()
+            except ObjectDoesNotExist:
+                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
+            # 포인트가 모자르다면 에러발생
+            if 300 > user.point:
+                raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
+
+            serializer = PreAuthorPostSerializer(PreAuthorPost.objects.create(author=user, title=temp.title,
+                                                                              main_content=temp.main_content,
+                                                                              price=data['price'],
+                                                                              preview_image=preview_file_obj,
+                                                                              cover_image=cover_file_obj
+                                                                              ))
+            # 템프파일 삭제
+            try:
+                Temp.objects.filter(id=data['temp_id']).delete()
+            except ObjectDoesNotExist:
+                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
+
+            user_queryset = User.objects.filter(id=self.request.user.id).get()
+
+            self.decrease_point(user_queryset.point - 300)
+            self.add_point_history(point=300, history=temp.title)
+            # 태그를 추가하고 태그 추가 실패
+            # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+            #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+
+            if serializer:
+                return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+            else:
+                raise exceptions.ValidationError({'detail': 'Already added'}, 400)
 
 
 class PostListView(APIView):
@@ -211,14 +245,14 @@ class PostView(APIView):
     def is_buyed(self, post_id):
         try:
             BuyList.objects.filter(user=self.request.user, post_id=post_id).get()
-            return False
-        except ObjectDoesNotExist:
             return True
+        except ObjectDoesNotExist:
+            return False
 
     def post(self, request):
         data = self.request.data
 
-        if not self.is_buyed(data['post_id']):
+        if self.is_buyed(data['post_id']):
             # 구매했을때 원본 출력
             return Response("원본")
 
