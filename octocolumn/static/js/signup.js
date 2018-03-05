@@ -7,12 +7,6 @@ function signup_api(){
     var password1 = $("#password1").val().trim();
     var password2 = $("#password2").val().trim();
 
-    console.log(lastName);
-    console.log(firstName);
-    console.log(email);
-    console.log(password1);
-    console.log(password2);
-
     $.ajax({
         url: "http://127.0.0.1:8000/api/member/signup/",
         async: false,
