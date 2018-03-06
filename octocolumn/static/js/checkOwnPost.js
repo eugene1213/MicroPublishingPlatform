@@ -23,13 +23,13 @@ function isBought(post_id) {
             if(json.detail.isBuy) {
                 window.location.href = "/column/read/"
             }else {
-                var preview_img = json.detail.preview_img;
+                var preview_image = json.detail.preview_image;
                 console.log(json);
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
 
                 var img = new Image();
-                img.src = json.detail.preview_img;
+                img.src = json.detail.preview_image;
 
                 $("#preview-main-content > img").replaceWith(img);
 
