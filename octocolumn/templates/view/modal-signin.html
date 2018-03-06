@@ -48,7 +48,7 @@
             octocolumn과 연결된 당신의 이메일과 비밀번호를 입력하세요.<br>
             계정이 없거나, 비밀번호를 잊었다해도 걱정마시구요.<br>
         </div>
-        <div class="form_wrap">{% csrf_token %}
+        <div class="form_wrap">
             <form action="http://127.0.0.1:8000/member/login/" method="POST" class="signin_form">
                 <span>이메일 주소</span>
                 <input type="text" name="username">

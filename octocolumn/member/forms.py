@@ -1,8 +1,5 @@
 from django import forms
 from django.contrib.auth import authenticate, login as django_login
-from django.http import HttpResponse
-
-from utils.jwt import jwt_payload_handler, jwt_encode_handler
 
 
 class LoginForm(forms.Form):
@@ -55,8 +52,5 @@ class LoginForm(forms.Form):
         # Django의 Session에 해당 User정보를 추가,
         # Response에는 SessionKey값을 Set-Cookie 헤더에 담아 보냄
         # 이후 브라우저와의 요청응답에서는 로그인을 유지함
-        payload = jwt_payload_handler(self.user)
-        token = jwt_encode_handler(payload)
-        response = HttpResponse()
-        response.set_cookie("jwt", token)
+
         django_login(request, self.user)

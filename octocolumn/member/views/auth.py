@@ -21,6 +21,7 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             form.login(request)
+            print(request)
             print(request.COOKIES)
             return redirect('views:index')
     else:
