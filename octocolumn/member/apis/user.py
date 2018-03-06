@@ -49,9 +49,10 @@ class Login(APIView):
             if api_settings.JWT_AUTH_COOKIE:
                 now = timezone.localtime()
                 expiration = (now + api_settings.JWT_EXPIRATION_DELTA)
+                print(expiration)
                 response.set_cookie(api_settings.JWT_AUTH_COOKIE,
                                     response.data['token'],
-                                    expires=expiration,
+                                    max_age=21600,
                                     httponly=True)
 
             return response
