@@ -296,8 +296,11 @@ class IsBuyPost(APIView):
 
             # print(hashlib.md5(param.encode("utf")).hexdigest())
             if serializer:
-                return Response({"preview": serializer.data['preview_image'],
-                                 "cover": serializer.data['cover_image']},
+                return Response({"detail": {
+                    "isBuy": False,
+                    "preview": serializer.data['preview_image'],
+                    "cover": serializer.data['cover_image']
+                }},
                                 status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
 
