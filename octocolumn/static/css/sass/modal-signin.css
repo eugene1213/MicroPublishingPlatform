@@ -89,6 +89,8 @@
         font-size: 8px;
         font-weight: 300; }
       .modal_block_wrap .modal_window .form_wrap input[type=text], .modal_block_wrap .modal_window .form_wrap input[type=password], .modal_block_wrap .modal_window .form_wrap input[type=email] {
+        font-size: 14px;
+        text-align: center;
         width: 304px;
         height: 38px;
         border-radius: 8px;

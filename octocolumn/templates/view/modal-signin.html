@@ -1,4 +1,6 @@
 {% load static %}
+<script src="{% static 'js/signup.js' %}"></script>
+<script src="{% static 'js/signin.js' %}"></script>
  <!-- modal_block_wrap -->
  <div class="modal_block_wrap">
     <!-- modal_window -->
@@ -49,16 +51,14 @@
             계정이 없거나, 비밀번호를 잊었다해도 걱정마시구요.<br>
         </div>
         <div class="form_wrap">
-            <form action="http://127.0.0.1:8000/member/login/" method="POST" class="signin_form">
-                <span>이메일 주소</span>
-                <input type="text" name="username">
-                <span>비밀번호</span>
-                <input type="password" name="password">
-                <input type="checkbox">
-                <span>나를 기억해요.</span>
-                <span onclick="findPass()">비밀번호를 잊었나요?</span>
-                <button>Sign in</button>
-            </form>
+            <span>이메일 주소</span>
+            <input type="text" name="username" id="email-signin">
+            <span>비밀번호</span>
+            <input type="password" name="password" id="password-signin">
+            <input type="checkbox" id="checkbox-signin">
+            <span>나를 기억해요.</span>
+            <span onclick="findPass()">비밀번호를 잊었나요?</span>
+            <button id="btn-signin">Sign in</button>
         </div>
         <div class="signup-wrap">
             <span>아직 계정이 없다구요?</span>
@@ -121,19 +121,19 @@
             <div class="name_wrap">
                 <div class="name">
                     <span>성</span>
-                    <input type="text" id="lastName" required>
+                    <input type="text" id="lastName-signup" required>
                 </div>
                 <div class="name">
                     <span>이름</span>
-                    <input type="text" id="firstName" required>
+                    <input type="text" id="firstName-signup" required>
                 </div>
             </div>
             <span>이메일 주소</span>
-            <input type="text" id="email" required>
+            <input type="text" id="email-signup" required>
             <span>비밀번호(영문, 숫자 포함 8자리 이상)</span>
-            <input type="password" id="password1" required>
+            <input type="password" id="password1-signup" required>
             <span>비밀번호 재입력</span>
-            <input type="password" id="password2" required>
+            <input type="password" id="password2-signup" required>
             <button class="btn_signup btn_disabled" disabled="disabled" onclick="signup_api();">
                 Sign up
             </button>
