@@ -19,8 +19,11 @@ __all__ = (
     # 'PostListCreateView',
     'PostLikeToggleView',
     'PostCreateView',
-    'PostView',
-    'AuthorResult'
+    'PostReadView',
+    'PostPreReadView',
+    'AuthorResult',
+    'IsBuyPost',
+    'PostListView'
 )
 
 
@@ -239,8 +242,8 @@ class PostLikeToggleView(APIView):
         return Response({'created': post_like_created})
 
 
-class PostView(APIView):
-    permission_classes = (AllowAny,)
+class PostReadView(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def is_buyed(self, post_id):
         try:
@@ -249,15 +252,51 @@ class PostView(APIView):
         except ObjectDoesNotExist:
             return False
 
-    def post(self, request):
-        data = self.request.data
+    def get(self, request, *args, **kwargs):
+        param = self.kwargs.get('pk')
 
-        if self.is_buyed(data['post_id']):
+        post = Post.objects.filter(pk=param).get()
+        serializer = PostSerializer(post)
+        if self.is_buyed(param):
             # 구매했을때 원본 출력
-            return Response("원본")
+            if serializer:
+                return Response(serializer.data['main_content'], status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+        raise exceptions.ValidationError({'detail': 'You did not buy this post'}, 400)
 
-        # 구매하지 않았을때 프리뷰 페이지 출려
-        return Response("프리뷰")
+
+class PostPreReadView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        param = self.kwargs.get('pk')
+        post = Post.objects.filter(pk=param).get()
+        serializer = PostSerializer(post)
+
+        if serializer:
+            return Response(serializer.data['preview_image'], status=status.HTTP_200_OK)
+        raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+
+
+class IsBuyPost(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        param = self.kwargs.get('pk')
+        try:
+            BuyList.objects.filter(user=self.request.user, post_id=param).get()
+            post = Post.objects.filter(pk=param).get()
+            serializer = PostSerializer(post)
+            if serializer:
+                return Response({"preview":serializer.data['preview_image'],
+                                 "cover":serializer.data['cover_image']},
+                                status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+
+        except ObjectDoesNotExist:
+            return Response({"detail": {
+                "isBuy": False
+            }}, status=status.HTTP_200_OK)
 
 
 class AuthorResult(APIView):

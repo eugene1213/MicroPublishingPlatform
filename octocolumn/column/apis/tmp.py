@@ -11,6 +11,8 @@ from member.models import Author as AuthorModel
 
 __all__ = (
     'TempCreateView',
+    'TempListView',
+    'TempFileUpload'
 )
 
 

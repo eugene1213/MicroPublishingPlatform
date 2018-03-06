@@ -24,5 +24,4 @@ urlpatterns += static(
     document_root=settings.MEDIA_ROOT,
 )
 
-urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]
 
