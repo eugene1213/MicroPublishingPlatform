@@ -285,9 +285,14 @@ class IsBuyPost(APIView):
         param = self.kwargs.get('pk')
         try:
             BuyList.objects.filter(user=self.request.user, post_id=param).get()
-            return Response({"detail":{
-                "isBuy": True
-            }}, status=status.HTTP_200_OK)
+            post = Post.objects.filter(pk=param).get()
+            serializer = PostSerializer(post)
+            if serializer:
+                return Response({"preview":serializer.data['preview_image'],
+                                 "cover":serializer.data['cover_image']},
+                                status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+
         except ObjectDoesNotExist:
             return Response({"detail": {
                 "isBuy": False

@@ -40,7 +40,7 @@ class CommentListView(ListAPIView):
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         post = Post.objects.filter(pk=param).get()
-        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date')
+        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date')[:5]
         serializer = CommentSerializer(comment, many=True)
 
         list = []
