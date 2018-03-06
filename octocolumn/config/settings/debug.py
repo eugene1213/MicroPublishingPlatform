@@ -42,7 +42,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'silk.middleware.SilkyMiddleware',
 ]
 
 # Application definition
@@ -60,7 +59,6 @@ INSTALLED_APPS = [
 
     # storages
     'storages',
-    'silk',
 
     # rest_framework
     'rest_framework',

@@ -45,20 +45,26 @@ class Login(APIView):
                 'token': jwt_token_generator(user),
                 'user': UserSerializer(user).data,
             }
-            response = Response(data, status=status.HTTP_200_OK)
-            if api_settings.JWT_AUTH_COOKIE:
-                now = timezone.localtime()
-                expiration = (now + api_settings.JWT_EXPIRATION_DELTA)
-                print(expiration)
-                response.set_cookie(api_settings.JWT_AUTH_COOKIE,
-                                    response.data['token'],
-                                    max_age=21600,
-                                    httponly=True)
 
-            return response
+            if data['user']['is_actvie']:
+                response = Response(data, status=status.HTTP_200_OK)
+                if api_settings.JWT_AUTH_COOKIE:
+                    now = timezone.localtime()
+                    expiration = (now + api_settings.JWT_EXPIRATION_DELTA)
+                    print(expiration)
+                    response.set_cookie(api_settings.JWT_AUTH_COOKIE,
+                                        response.data['token'],
+                                        max_age=21600,
+                                        httponly=True)
+
+                return response
+            data = {
+                "detail": "This Account is not Activate"
+            }
+            return Response(data, status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
-            'message': 'Invalid credentials'
+            'detail': 'Invalid credentials'
         }
 
         return Response(data, status=status.HTTP_401_UNAUTHORIZED)
