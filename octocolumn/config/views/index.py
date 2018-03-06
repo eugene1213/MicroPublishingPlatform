@@ -7,7 +7,7 @@ __all__ = (
 
 
 def index(request):
-    if request.COOKIES is not None:
+    if request.COOKIES is not '':
         if request.COOKIES['token']:
             response = render_to_response("view/main.html", {"login": True})
             return response
