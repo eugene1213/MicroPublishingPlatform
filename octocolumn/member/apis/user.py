@@ -1,6 +1,4 @@
-import token
-from pprint import pprint
-
+from django.utils import timezone
 import requests
 from django.contrib.auth import authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,6 +10,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from typing import NamedTuple
+
+from rest_framework_jwt.settings import api_settings
 
 from config import settings
 from member.backends import FacebookBackend
@@ -45,8 +45,16 @@ class Login(APIView):
                 'token': jwt_token_generator(user),
                 'user': UserSerializer(user).data,
             }
+            response = Response(data, status=status.HTTP_200_OK)
+            if api_settings.JWT_AUTH_COOKIE:
+                now = timezone.localtime()
+                expiration = (now + api_settings.JWT_EXPIRATION_DELTA)
+                response.set_cookie(api_settings.JWT_AUTH_COOKIE,
+                                    response.data['token'],
+                                    expires=expiration,
+                                    httponly=True)
 
-            return Response(data, status=status.HTTP_200_OK)
+            return response
 
         data = {
             'message': 'Invalid credentials'
