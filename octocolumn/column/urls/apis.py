@@ -1,10 +1,7 @@
 from django.conf.urls import url, include
 
-from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostView, AuthorResult, \
-    CommentListView, CommentCreateView
-from column.apis.post import PostListView
-from column.apis.tmp import TempListView, TempFileUpload
-
+from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
+    CommentListView, CommentCreateView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView
 
 urlpatterns = [
     # 포스트 생성
@@ -14,13 +11,16 @@ urlpatterns = [
     # 포스트 구매
     url(r'^post-buy/$', PostBuy.as_view(), name='post-like'),
     # 포스트 읽기
-    url(r'^post-view/$', PostView.as_view(), name='post-view'),
+    url(r'^post-view/$', PostReadView.as_view(), name='post-view'),
+    # 포스트 프리뷰
+    url(r'^post-preview/$', PostPreReadView.as_view(), name='post-view'),
+
     # 포스트 리스트
     url(r'^postList/', include([
             url(r'^$', PostListView.as_view(), name="post-list"),
             url(r'^(?P<page>\w+)$', PostListView.as_view(), name="post-list-page")
     ])),
-
+    url(r'^post-isbuy/(?P<pk>\d+)$', IsBuyPost.as_view(), name='post-isbuy'),
 
     # 작가 구분
     url(r'^isauthor/$', AuthorResult.as_view(), name='post-view'),

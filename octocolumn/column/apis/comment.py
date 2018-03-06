@@ -40,15 +40,14 @@ class CommentListView(ListAPIView):
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         post = Post.objects.filter(pk=param).get()
-        comment = Comment.objects.filter(post_id=param, parent__isnull=True).all()
-        serializer = CommentSerializer(comment)
+        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date')
+        serializer = CommentSerializer(comment, many=True)
 
-        print(serializer.data)
-
+        list = []
         if serializer:
+            # for i in serializer.data:
             # author_id = serializer.data['author']
             # user = User.objects.filter(pk=author_id).get()
-            # list = []
             # data = {
             #     "comment":{
             #         "comment_id": serializer.data['pk'],
