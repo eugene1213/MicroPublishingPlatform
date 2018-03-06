@@ -21,7 +21,6 @@ class CommentCreateView(APIView):
 
     def post(self, request):
         post_id = self.request.data['post_id']
-        # post_id = self.request.data['post_id']
         content = self.request.data['content']
         post = Post.objects.filter(pk=post_id).get()
         user = self.request.user
@@ -41,8 +40,9 @@ class CommentListView(ListAPIView):
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         post = Post.objects.filter(pk=param).get()
-        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_at')
+        comment = Comment.objects.filter(post_id=param, parent__isnull=True).all()
         serializer = CommentSerializer(comment)
+
         print(serializer.data)
 
         if serializer:
@@ -56,10 +56,8 @@ class CommentListView(ListAPIView):
             #         "comment_content": serializer.data['content'],
             #     }
             # }
-            return Response({}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         raise exceptions.ValidationError({'detail': ''}, 400)
-
-
 
 
 class CommentLikeToggleView(APIView):

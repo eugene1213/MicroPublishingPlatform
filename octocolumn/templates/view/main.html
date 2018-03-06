@@ -24,7 +24,7 @@
 	<script src="{% static 'js/balloon.js' %}"></script>
 </head>
 <body>
-	{% if request.COOKIES %}
+	{% if login %}
 		{% include 'view/header_on.html' %}
 	{% else %}
 	<script>console.log("토큰이 읎다")</script>

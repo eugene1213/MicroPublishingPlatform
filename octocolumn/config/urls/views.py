@@ -12,7 +12,5 @@ urlpatterns = [
     url(r'^read/$', read, name='read'),
 
     # url(r'^post/', include('column.urls.views', namespace='post')),
-    url(r'^member/', include('member.urls.views', namespace='member')),
-    #
 
 ]
