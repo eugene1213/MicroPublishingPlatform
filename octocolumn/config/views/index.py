@@ -10,3 +10,6 @@ def index(request):
 
 def write(request):
     return render_to_response('view/write.html')
+
+def read(request):
+    return render_to_response('view/read.html')
