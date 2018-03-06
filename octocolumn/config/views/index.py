@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 __all__ = (
     'index',
@@ -6,7 +7,10 @@ __all__ = (
 
 
 def index(request):
-    return render_to_response('view/main.html')
+    if request.COOKIES['token']:
+        response = render_to_response("view/main.html", {"login": True})
+        return response
+    return render_to_response('view/main.html',)
 
 def write(request):
     return render_to_response('view/write.html')
