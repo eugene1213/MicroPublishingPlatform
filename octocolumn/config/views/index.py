@@ -7,9 +7,11 @@ __all__ = (
 
 
 def index(request):
-    if request.COOKIES['token']:
-        response = render_to_response("view/main.html", {"login": True})
-        return response
+    if request.COOKIES is not None:
+        if request.COOKIES['token']:
+            response = render_to_response("view/main.html", {"login": True})
+            return response
+        return render_to_response('view/main.html',)
     return render_to_response('view/main.html',)
 
 def write(request):
