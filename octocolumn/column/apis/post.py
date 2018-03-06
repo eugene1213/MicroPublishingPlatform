@@ -1,4 +1,5 @@
 import base64
+import hashlib
 import re
 
 from datetime import datetime
@@ -285,18 +286,20 @@ class IsBuyPost(APIView):
         param = self.kwargs.get('pk')
         try:
             BuyList.objects.filter(user=self.request.user, post_id=param).get()
-            post = Post.objects.filter(pk=param).get()
-            serializer = PostSerializer(post)
-            if serializer:
-                return Response({"preview":serializer.data['preview_image'],
-                                 "cover":serializer.data['cover_image']},
-                                status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+            return Response({"detail": {
+                "isBuy": True
+            }}, status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
-            return Response({"detail": {
-                "isBuy": False
-            }}, status=status.HTTP_200_OK)
+            post = Post.objects.filter(pk=param).get()
+            serializer = PostSerializer(post)
+
+            # print(hashlib.md5(param.encode("utf")).hexdigest())
+            if serializer:
+                return Response({"preview": serializer.data['preview_image'],
+                                 "cover": serializer.data['cover_image']},
+                                status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
 
 
 class AuthorResult(APIView):

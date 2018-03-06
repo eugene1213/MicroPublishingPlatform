@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from column.models import Comment, Post
 from column.serializers import CommentSerializer
 from member.models import User
+from utils.pagination import CommentPagination
 
 __all__ = (
     'CommentListView',
@@ -36,12 +37,14 @@ class CommentCreateView(APIView):
 class CommentListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = CommentSerializer
+    pagination_class = CommentPagination
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         post = Post.objects.filter(pk=param).get()
-        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date')[:5]
-        serializer = CommentSerializer(comment, many=True)
+        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date')
+        page = self.paginate_queryset(comment)
+        serializer = CommentSerializer(page, many=True)
 
         list = []
         if serializer:
