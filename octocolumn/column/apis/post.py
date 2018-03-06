@@ -299,7 +299,6 @@ class IsBuyPost(APIView):
                 return Response({"detail": {
                     "isBuy": False,
                     "preview": serializer.data['preview_image'],
-                    "cover": serializer.data['cover_image']
                 }},
                                 status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)

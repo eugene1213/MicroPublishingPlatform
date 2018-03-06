@@ -132,7 +132,8 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
-    'SEARCH_PARAM': 'keyword'
+    'SEARCH_PARAM': 'keyword',
+
 }
 
 APPEND_SLASH = False
