@@ -543,10 +543,7 @@ body.back{
 }
 .read .mainImg{
 	width: 100%;
-	height: 816px;
 	margin: 0 auto;
-	text-align: center;
-	background: #bbb;
 }
 .read .sectionImg{
 	height: 1316px;
@@ -562,12 +559,12 @@ body.back{
 	margin-bottom: 90px;
 }
 .read h2{
-  height: 72px;
+  	height: 72px;
 	line-height: 72px;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: left;
-  color: #2a292a;
+	font-size: 32px;
+	font-weight: bold;
+	text-align: left;
+	color: #2a292a;
 	padding-top: 17px;
 	border-bottom: 1.5px solid #979797;
 	letter-spacing: -0.03em;

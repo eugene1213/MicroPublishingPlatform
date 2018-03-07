@@ -20,7 +20,7 @@
     float: left;
     width: 136px;
     height: 24px;
-    margin-top: 4px;
+    margin-top: 3px;
     margin-left: 10px;
     padding-left: 5px;
     line-height: 24px;
@@ -33,20 +33,22 @@
     height: 24px;
     text-align: center;
     cursor: pointer;
+    color: #fafafa;
+    font-weight: 300;
 }
 .btn-menu > img {
     float: left;
     width: 14px;
     height: 14px;
     margin-right: 10px;
-    margin-top: 4px;
+    margin-top: 5px;
     margin-left: 4px;
     cursor: pointer;
 }
 .btn-menu > ul {
     display: none;
-    width: 136px;
-    margin-top: 0;
+    width: 144px;
+    margin-top: 5px;
     margin-left: -16px;
     padding-top: 20px;
     padding-left: 10px;
@@ -56,7 +58,9 @@
     line-height: 30px;
 }
 li {
+    font-weight: 300;
     cursor: pointer;
+    color: #fafafa;
 }
 .btn-menu > ul > :nth-child(5), .btn-menu > ul > :nth-child(8), .btn-menu > ul > :nth-child(12) {
     padding-bottom: 15px;
@@ -71,13 +75,15 @@ li {
     font-size: 10px;
     color: gray;
     line-height: 11px;
-    padding: 0; }
+    padding: 0;
+    color: #fafafa;
+}
     
 .btn-search {
     float: left;
     width: 24px;
     height: 24px;
-    margin-top: 4px;
+    margin-top: 3px;
     margin-left: 10px;
     border: 1px solid #fafafa;
     border-radius: 5px;
@@ -93,7 +99,7 @@ li {
     float: left;
     width: 108px;
     height: 24px;
-    margin-top: 4px;
+    margin-top: 3px;
     margin-left: 10px;
     border: 1px solid #fafafa;
     border-radius: 5px;
@@ -113,7 +119,8 @@ li {
     font-size: 14px;
     line-height: 24px;
     text-align: center;
-
+    color: #fafafa;
+    font-weight: 300;
 }
 .btn-logo-wrap {
     position: absolute;
@@ -131,10 +138,11 @@ li {
     margin-top: 4px;
     padding-top: 1px;
     min-width: 116px;
-    max-width: 300px;
+    max-width: 400px;
     text-overflow: ellipsis;
     overflow: hidden;
     font-family: "Akzidenz";
+    color: #fafafa;
 }
 .btn-right-wrap {
     float: right;
@@ -143,7 +151,7 @@ li {
     float: left;
     width: 24px;
     height: 24px;
-    margin-top: 4px;
+    margin-top: 6px;
     cursor: pointer;
 }
 .btn-notice > img {
@@ -157,7 +165,7 @@ li {
     float: left;
     width: 144px;
     height: 24px;
-    margin-top: 4px;
+    margin-top: 3px;
     margin-left: 10px;
     margin-right: 10px;
     padding-left: 5px;
@@ -167,6 +175,10 @@ li {
     border: 1px solid #fafafa;
     border-radius: 5px;
     cursor: pointer;
+}
+.btn-user > span {
+    color: #fafafa;
+    font-weight: 300;
 }
 .btn-user > img {
     float: right;

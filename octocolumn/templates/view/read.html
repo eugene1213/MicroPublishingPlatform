@@ -16,18 +16,20 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sub.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
 	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>
 	<script src="{% static 'js/script2.js' %}"></script>
 	<script src="{% static 'js/getPost.js' %}"></script>
+	<script src="{% static 'js/sidebar.js' %}"></script>
 </head>
 <body>
 	{% if login %}
 		{% include 'view/header_on.html' %}
 	{% else %}
-	<script>console.log("토큰이 읎다")</script>
-		{% include 'view/header.html' %}
+	<script>window.location.href = "/"</script>
 	{% endif %}
 	<div class="read">
 		<div class="mainImg">

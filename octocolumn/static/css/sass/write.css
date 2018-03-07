@@ -170,7 +170,8 @@ input, button {
           font-weight: bold; }
         .container .preview-wrap .preview .preview-content-info .preview-create-date {
           position: absolute;
-          margin-left: 656px;
+          width: 140px;
+          margin-left: 638px;
           color: #c4c3c3; }
       .container .preview-wrap .preview .preview-main-content {
         width: 100%;
