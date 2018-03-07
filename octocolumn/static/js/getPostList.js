@@ -16,8 +16,9 @@ $(document).ready(function(){
             var title = data[card_id-1].post.title;
             var date = data[card_id-1].post.created_datetime;
             var author = data[card_id-1].post.author;
+            var tag = data[card_id-1].post.tag;
 
-            isBought(post_id, cover_img, title, date, author);
+            isBought(post_id, cover_img, title, date, author, tag);
             
         }
     });
