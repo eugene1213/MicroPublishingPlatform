@@ -1,13 +1,12 @@
-from rest_framework import status, exceptions
+from rest_framework import status, exceptions, generics
 from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Comment, Post
+from column.pagination import CommentPagination
 from column.serializers import CommentSerializer
-from member.models import User
-from utils.pagination import CommentPagination
 
 __all__ = (
     'CommentListView',
@@ -34,32 +33,31 @@ class CommentCreateView(APIView):
             return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
 
 
-class CommentListView(ListAPIView):
+class CommentListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = CommentSerializer
     pagination_class = CommentPagination
 
-    def get(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         post = Post.objects.filter(pk=param).get()
-        comment = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date')
-        page = self.paginate_queryset(comment)
+        queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()
+
+        page = self.paginate_queryset(queryset)
         serializer = CommentSerializer(page, many=True)
 
-        list = []
-        if serializer:
-            # for i in serializer.data:
-            # author_id = serializer.data['author']
-            # user = User.objects.filter(pk=author_id).get()
-            # data = {
-            #     "comment":{
-            #         "comment_id": serializer.data['pk'],
-            #         "username": user.last_name + " " + user.first_name,
-            #         "comment_content": serializer.data['content'],
-            #     }
-            # }
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        raise exceptions.ValidationError({'detail': ''}, 400)
+        if page is not None:
+            serializer = CommentSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        return Response(serializer.data)
+
+    def get(self, request, *args, **kwargs):
+        param = self.kwargs.get('pk')
+        if param == '':
+            raise exceptions.ValidationError({'detail': 'this param is wht'}, 400)
+
+        return self.list(request)
 
 
 class CommentLikeToggleView(APIView):

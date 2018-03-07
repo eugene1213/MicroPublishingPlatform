@@ -12,12 +12,18 @@ __all__ = (
 )
 
 
+class CommentManager(models.Manager):
+    def all(self):
+        instance = super(CommentManager, self).filter(parent=None)
+        return instance
+
+
 class Comment(models.Model):
     post = models.ForeignKey('column.Post', null=True)
     # 여기서의 author은 post의 author와 전혀무관
-    author = models.ForeignKey('member.User', null=True)
+    user = models.ForeignKey('member.User', null=True)
     content = models.TextField(blank=True)
-    parent = models.ForeignKey('Comment', null=True)
+    parent = models.ForeignKey('self', null=True)
     # html_content = models.TextField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     like_users = models.ManyToManyField(
@@ -25,6 +31,8 @@ class Comment(models.Model):
         through='CommentLike',
         related_name='like_comments',
     )
+
+    objects = CommentManager()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -69,6 +77,15 @@ class Comment(models.Model):
             return True
         comment_like.delete()
         return False
+
+    def children(self):  # replies
+        return Comment.objects.filter(parent=self)
+
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True
 
 
 class CommentLike(models.Model):
