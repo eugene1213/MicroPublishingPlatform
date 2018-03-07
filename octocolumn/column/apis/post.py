@@ -190,7 +190,9 @@ class PostListView(APIView):
         clean_text = re.sub(cleaner, '', post)
         return clean_text
 
-    def tag(self,post):
+
+    # 태그 처리 함수
+    def tag(self, post):
         tag = SearchTag.objects.filter(post=post)
         tag_serializer = SearchTagSerializer(tag, many=True)
         if tag_serializer:
@@ -218,9 +220,8 @@ class PostListView(APIView):
             # status = from_user.following_user.filter(to_user=serializer.data['author'])
             tag = self.tag(i)
 
-
             data = {
-                "post":{
+                "post": {
                     "post_id": serializer.data['pk'],
                     "title": serializer.data['title'],
                     "main_content": rm_content,
