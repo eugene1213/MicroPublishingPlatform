@@ -72,9 +72,7 @@
             // The expected data type of the upload response, sets the dataType
             // option of the $.ajax upload requests:
             dataType: 'json',
-            headers: {
-                'Authorization': 'token 7cc7cc118e1f4e569e1c81e805bd1617a0f97a07'
-            },
+
 
             // Error and info messages:
             messages: {

@@ -1,0 +1,144 @@
+[08/Mar/2018 03:07:32] INFO [django.server:124] "GET / HTTP/1.1" 200 38538
+[08/Mar/2018 03:07:33] WARNING [django.server:124] "GET /api/column/postList/ HTTP/1.1" 401 31
+[08/Mar/2018 03:07:33] WARNING [django.server:124] "POST /api/member/userInfo/ HTTP/1.1" 401 31
+[08/Mar/2018 03:07:50] INFO [django.server:124] "GET / HTTP/1.1" 200 38919
+[08/Mar/2018 03:07:50] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:08:23] ERROR [django.request:135] Internal Server Error: /api/member/signup/
+Traceback (most recent call last):
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/views.py", line 494, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/views.py", line 454, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/views.py", line 491, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/generics.py", line 192, in post
+    return self.create(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/mixins.py", line 21, in create
+    self.perform_create(serializer)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/mixins.py", line 26, in perform_create
+    serializer.save()
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/rest_framework/serializers.py", line 214, in save
+    self.instance = self.create(validated_data)
+  File "/Users/joohyonlee/devocto/octocolumn/octocolumn/member/serializers/user.py", line 60, in create
+    email = signup_email_send(user)
+  File "/Users/joohyonlee/devocto/octocolumn/octocolumn/utils/customsendmail.py", line 16, in signup_email_send
+    url = get_current_site(urlrequest)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/shortcuts.py", line 15, in get_current_site
+    return Site.objects.get_current(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/models.py", line 65, in get_current
+    return self._get_site_by_request(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/models.py", line 40, in _get_site_by_request
+    host = request.get_host()
+AttributeError: module 'django.http.request' has no attribute 'get_host'
+[08/Mar/2018 03:08:23] ERROR [django.server:124] "POST /api/member/signup/ HTTP/1.1" 500 27
+[08/Mar/2018 03:10:30] WARNING [django.server:124] "POST /api/member/signup/ HTTP/1.1" 400 69
+[08/Mar/2018 03:11:20] WARNING [django.server:124] "POST /api/member/signup/ HTTP/1.1" 400 69
+[08/Mar/2018 03:11:30] WARNING [django.server:124] "POST /api/member/signup/ HTTP/1.1" 400 69
+[08/Mar/2018 03:11:49] WARNING [django.server:124] "POST /api/member/signup/ HTTP/1.1" 400 69
+[08/Mar/2018 03:14:12] INFO [django.server:124] "GET / HTTP/1.1" 200 38919
+[08/Mar/2018 03:14:12] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:14:13] INFO [django.server:124] "GET / HTTP/1.1" 200 38919
+[08/Mar/2018 03:14:13] INFO [django.server:124] "GET / HTTP/1.1" 200 38919
+[08/Mar/2018 03:14:13] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:14:13] INFO [django.server:124] "GET / HTTP/1.1" 200 38919
+[08/Mar/2018 03:14:14] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:29:00] INFO [django.server:124] "GET /admin/ HTTP/1.1" 302 0
+[08/Mar/2018 03:29:00] ERROR [django.request:135] Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/models.py", line 44, in _get_site_by_request
+    SITE_CACHE[host] = self.get(domain__iexact=host)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/db/models/query.py", line 380, in get
+    self.model._meta.object_name
+django.contrib.sites.models.DoesNotExist: Site matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 393, in login
+    return LoginView.as_view(**defaults)(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 67, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/decorators/debug.py", line 76, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 63, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 67, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 63, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 67, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/utils/decorators.py", line 63, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/auth/views.py", line 90, in dispatch
+    return super(LoginView, self).dispatch(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/views/generic/edit.py", line 174, in get
+    return self.render_to_response(self.get_context_data())
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/auth/views.py", line 124, in get_context_data
+    current_site = get_current_site(self.request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/shortcuts.py", line 15, in get_current_site
+    return Site.objects.get_current(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/models.py", line 65, in get_current
+    return self._get_site_by_request(request)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/contrib/sites/models.py", line 50, in _get_site_by_request
+    SITE_CACHE[domain] = self.get(domain__iexact=domain)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/joohyonlee/.pyenv/versions/3.6.3/envs/docker-test/lib/python3.6/site-packages/django/db/models/query.py", line 380, in get
+    self.model._meta.object_name
+django.contrib.sites.models.DoesNotExist: Site matching query does not exist.
+[08/Mar/2018 03:29:00] ERROR [django.server:124] "GET /admin/login/?next=/admin/ HTTP/1.1" 500 27
+[08/Mar/2018 03:30:26] INFO [django.server:124] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 1738
+[08/Mar/2018 03:35:40] INFO [django.server:124] "GET / HTTP/1.1" 200 38919
+[08/Mar/2018 03:35:41] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:35:44] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 38919
+[08/Mar/2018 03:35:57] WARNING [django.server:124] "POST /api/member/login/ HTTP/1.1" 401 32
+[08/Mar/2018 03:36:23] INFO [django.server:124] "POST /api/member/login/ HTTP/1.1" 200 334
+[08/Mar/2018 03:36:23] INFO [django.server:124] "GET / HTTP/1.1" 200 38538
+[08/Mar/2018 03:36:23] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:36:23] INFO [django.server:124] "POST /api/member/userInfo/ HTTP/1.1" 200 142
+[08/Mar/2018 03:36:34] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 441
+[08/Mar/2018 03:36:37] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 28149
+[08/Mar/2018 03:36:37] INFO [django.server:124] "POST /api/column/isauthor/ HTTP/1.1" 200 15
+[08/Mar/2018 03:36:45] INFO [django.server:124] "OPTIONS /api/column/tmpimageupload/ HTTP/1.1" 200 0
+[08/Mar/2018 03:36:45] WARNING [django.server:124] "POST /api/column/tmpimageupload/ HTTP/1.1" 401 49
+[08/Mar/2018 03:39:53] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 28149
+[08/Mar/2018 03:39:53] INFO [django.server:124] "POST /api/column/isauthor/ HTTP/1.1" 200 15
+[08/Mar/2018 03:39:59] WARNING [django.server:124] "POST /api/column/tmpimageupload/ HTTP/1.1" 401 49
+[08/Mar/2018 03:45:25] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 28149
+[08/Mar/2018 03:45:25] INFO [django.server:124] "POST /api/column/isauthor/ HTTP/1.1" 200 15
+[08/Mar/2018 03:45:26] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 28149
+[08/Mar/2018 03:45:26] INFO [django.server:124] "POST /api/column/isauthor/ HTTP/1.1" 200 15
+[08/Mar/2018 03:45:35] WARNING [django.server:124] "POST /api/column/tmpimageupload/ HTTP/1.1" 401 49
+[08/Mar/2018 03:48:46] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 28149
+[08/Mar/2018 03:48:46] INFO [django.server:124] "POST /api/column/isauthor/ HTTP/1.1" 200 15
+[08/Mar/2018 03:48:55] INFO [django.server:124] "OPTIONS /api/column/tmpimageupload/ HTTP/1.1" 200 0
+[08/Mar/2018 03:48:55] WARNING [django.server:124] "POST /api/column/tmpimageupload/ HTTP/1.1" 401 49
