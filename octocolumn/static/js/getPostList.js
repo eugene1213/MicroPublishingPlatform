@@ -14,9 +14,10 @@ $(document).ready(function(){
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
             var cover_img = data[card_id-1].post.cover_img;
             var title = data[card_id-1].post.title;
-            var date = data[card_id-1].post.date;
+            var date = data[card_id-1].post.created_datetime;
+            var author = data[card_id-1].post.author;
 
-            isBought(post_id, cover_img, title, date);
+            isBought(post_id, cover_img, title, date, author);
             
         }
     });
