@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'storages',
 
     'django_s3_storage',
+    'django-ipware',
 
     'rest_framework',
     'rest_framework.authtoken',

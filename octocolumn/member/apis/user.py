@@ -2,6 +2,7 @@ from django.utils import timezone
 import requests
 from django.contrib.auth import authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
+from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
 from rest_framework.authtoken.models import Token
@@ -15,7 +16,7 @@ from rest_framework_jwt.settings import api_settings
 
 from config import settings
 from member.backends import FacebookBackend
-from member.models import User
+from member.models import User, ConnectedLog, ProfileImage
 from member.serializers import UserSerializer, SignUpSerializer
 from member.serializers.user import ChangePasswordSerializer
 from utils.jwt import jwt_token_generator
@@ -32,6 +33,13 @@ __all__ = (
 
 class Login(APIView):
     permission_classes = (AllowAny,)
+
+    def saved_login_log(self):
+        log = ConnectedLog()
+        log.user = self.request.user
+        log.ip_address = get_ip(self.request)
+        log.user_agent = self.request.META['HTTP_USER_AGENT']
+        return log.save()
 
     def post(self, request, *args, **kwargs):
         username = request.data['username']
@@ -54,7 +62,7 @@ class Login(APIView):
                                         response.data['token'],
                                         max_age=21600,
                                         httponly=True)
-
+                self.saved_login_log()
                 return response
             data = {
                 "detail": "This Account is not Activate"
@@ -211,9 +219,11 @@ class VerifyToken(APIView):
 class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
+    def post(self,request):
         serializer = UserSerializer(self.request.user)
+        profile_imgage = ProfileImage.objects.filter(user=self.request.user).profile_image
 
         if serializer:
-            return Response(serializer.data ,status=status.HTTP_200_OK)
+            return Response({serializer.data,
+                             {"profileImg": profile_imgage}}, status=status.HTTP_200_OK)
         return Response({"detail": "NO User"})
