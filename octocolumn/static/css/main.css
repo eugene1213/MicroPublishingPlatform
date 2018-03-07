@@ -41,6 +41,9 @@
 	cursor: pointer;
 	display: block;
 }
+.fb1_img, .fb1_txt_1, .fb1_txt_2, .profile_img, .profile_name, .profile_mark {
+	cursor: pointer;
+}
 .mainfeed{
 	width: 945px;
 	height: 2530px;

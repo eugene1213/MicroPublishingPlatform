@@ -9,6 +9,7 @@
   .preview-wrap .preview {
     margin: auto;
     margin-top: 154px;
+    position: relative;
     width: 944px;
     padding-bottom: 28px;
     background-color: #ffffff;
@@ -17,14 +18,14 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5); }
     .preview-wrap .preview .btn-cancel-wrap {
       cursor: pointer;
-      position: fixed;
-      right: 198px;
-      top: 154px;
+      position: absolute;
+      right: -56px;
+      top: -8px;
       width: 32px;
       height: 32px; }
+      .preview-wrap .preview .btn-cancel-wrap * {
+        position: fixed; }
       .preview-wrap .preview .btn-cancel-wrap .btn-cancel {
-        margin-top: 6px;
-        margin-left: 9px;
         transform: rotate(45deg); }
         .preview-wrap .preview .btn-cancel-wrap .btn-cancel:before {
           display: block;
@@ -45,6 +46,20 @@
           height: 45px;
           background: #ffffff;
           z-index: 1; }
+      .preview-wrap .preview .btn-cancel-wrap .preview_purchaseBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 8px;
+        font-weight: normal;
+        text-align: center;
+        color: #ffffff;
+        border-radius: 4px;
+        background-color: rgba(0, 75, 141, 0.8);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        margin-top: 72px;
+        margin-left: -11px;
+        line-height: 32px;
+        font-weight: 200; }
     .preview-wrap .preview .ready2publish {
       width: 624px;
       margin: auto;
