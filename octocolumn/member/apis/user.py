@@ -231,7 +231,7 @@ class UserInfo(APIView):
         print(profile_image)
 
         if serializer:
-            return Response({"user":serializer.data,
+            return Response({"user": serializer.data,
                              "profileImg": profile_image},
                             status=status.HTTP_200_OK)
         return Response({"detail": "NO User"})

@@ -73,7 +73,7 @@ class PointHistory(models.Model):
 
     point = models.IntegerField(default=0)
     history = models.CharField(max_length=255)
-    post = models.ForeignKey('column.Post', null=True)
+    # post = models.ForeignKey('column.Post', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     objects = PointHistoryManager()
 
