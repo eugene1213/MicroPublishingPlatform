@@ -25,6 +25,7 @@ def write(request):
 
 def read(request, post_id):
     print(post_id)
+    print(request.user)
     post = Post.objects.filter(pk=post_id)
     if BuyList.objects.filter(user=request.user, post=post).count() == 0:
         return HttpResponseRedirect('/')
