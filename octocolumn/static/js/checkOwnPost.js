@@ -7,7 +7,6 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
         type: 'GET',
         dataType: 'json',
         success: function(json) {
-            window.location.href = "/read/"+post_id;
             if(json.detail.isBuy) {
                 window.location.href = "/column/read/"+post_id;
             }else {
@@ -27,6 +26,7 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
                 $(".preview-read-time").text(readtime);
                 $(".preview-author").text(author.username);
                 $(".priceBtn > .btn").text(price + "P로 구매");
+                $(".priceBtn .btn").attr("id","post"+post_id);
 
                 //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             
