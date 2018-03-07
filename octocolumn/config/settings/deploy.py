@@ -103,7 +103,7 @@ DATABASES = {
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
-CORS_ORIGIN_ALLOW_ALL = True
+
 
 ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
 LOGGING = {
@@ -156,5 +156,9 @@ LOGGING = {
 
 
 CSRF_COOKIE_SECURE = True
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 SITE_ID = 1

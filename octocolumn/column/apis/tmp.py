@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
 
-from member.models import Author as AuthorModel
+from member.models import Author as AuthorModel, User
 
 __all__ = (
     'TempCreateView',
@@ -132,8 +132,9 @@ class TempFileUpload(generics.CreateAPIView):
         #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
         # else:
         #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
+        user = User.objects.filter(pk=self.request.user.id).get()
 
-        serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user, file=file_obj))
+        serializer = TempFileSerializer(TempFile.objects.create(author=user, file=file_obj))
         if serializer:
             return Response({"files[0]":
                 {

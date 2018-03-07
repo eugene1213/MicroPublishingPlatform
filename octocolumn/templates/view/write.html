@@ -325,8 +325,9 @@
                                 autoGrid: 3, // (integer) Min number of images that automatically form a grid
                                 formData: {}, // DEPRECATED: Use fileUploadOptions instead
                                 fileUploadOptions: { // (object) File upload configuration. See https://github.com/blueimp/jQuery-File-Upload/wiki/Options
-                                    url: 'http://127.0.0.1:8000/api/column/tmpimageupload/', // (string) A relative path to an upload script
-                                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i // (regexp) Regexp of accepted file types
+                                    url: '/api/column/tmpimageupload/', // (string) A relative path to an upload script
+                                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i, // (regexp) Regexp of accepted file types
+                                    withCredentials: true,
                                 },
                                 styles: { // (object) Available image styles configuration
                                     wide: { // (object) Image style configuration. Key is used as a class name added to an image, when the style is selected (.medium-insert-images-wide)
