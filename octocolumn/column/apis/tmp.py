@@ -104,7 +104,7 @@ class TempCreateView(generics.GenericAPIView,
                             status=status.HTTP_406_NOT_ACCEPTABLE)
 
         if data['temp_id'] is '':
-            return Response({"detail": "Post does not exist."}, status=status.HTTP_200_OK)
+            return Response({"detail": "Temp does not exist."}, status=status.HTTP_200_OK)
         return self.queryset.filter(author=user).delete(id=data['id'])
 
 
@@ -125,13 +125,13 @@ class TempFileUpload(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         file_obj = self.request.FILES['files[]']
 
-        author = self.is_author()
-
-        if author is not None:
-            if not author.is_active:
-                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        else:
-            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
+        # author = self.is_author()
+        #
+        # if author is not None:
+        #     if not author.is_active:
+        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+        # else:
+        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
 
         serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user, file=file_obj))
         if serializer:
