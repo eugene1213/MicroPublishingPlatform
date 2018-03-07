@@ -11,11 +11,12 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from column.models import Temp, SearchTag, PreAuthorPost
+from column.models import Temp, SearchTag
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList
+from octo.models import UsePoint
 from ..models import Post
-from ..serializers import PostSerializer, PreAuthorPostSerializer
+from ..serializers import PostSerializer
 
 __all__ = (
     # 'PostListCreateView',
@@ -39,11 +40,11 @@ class PostCreateView(generics.GenericAPIView,
     permission_classes = (AllowAny,)
 
     def is_post(self, temp_id):
-        # temp = Temp.objects.filter(id=temp_id)
-        # if temp.author_id != self.request.user.id:
-        #   return False
-        # return True
-        pass
+        temp = Temp.objects.filter(id=temp_id).get()
+        print(self.request.user)
+        if temp.author == self.request.user:
+            return True
+        return False
 
     def validate_code(self,  code):
         pass
@@ -62,21 +63,24 @@ class PostCreateView(generics.GenericAPIView,
             return author
 
     # 포인트사용내역에 추가
-    def add_point_history(self,point,history):
+    def add_point_history(self, point, history):
         return PointHistory.objects.publish(user=self.request.user, point=point,
-                                 history=history)
+                                            history=history)
 
     # 검색 태그 추가
     def search_tag(self, post_id, tag):
         search_tag = tag.split(',')
         print(search_tag)
         if len(search_tag) > 5:
-            raise exceptions.ValidationError({'detail': 'You can add up to 5'}, 200)
+            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
 
         for i in search_tag:
             SearchTag.objects.create(post_id=post_id, tag=i)
 
         return True
+
+    def major_point(self):
+        return UsePoint.objects.filter(type='major_user').get()
 
 
     # base64 파일 파일 형태로
@@ -87,9 +91,6 @@ class PostCreateView(generics.GenericAPIView,
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
-
-    # if is_post(data['temp_id']):
-    #   raise exceptions.ParseError({"detail":"You are not the owner of this article"})
 
     def post(self, request):
         user = self.request.user
@@ -114,8 +115,15 @@ class PostCreateView(generics.GenericAPIView,
                     temp = Temp.objects.filter(id=data['temp_id']).get()
                 except ObjectDoesNotExist:
                     raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
+
                 # 포인트가 모자르다면 에러발생
-                if 300 > user.point:
+                # 정확한 정보를 위해 db의 유저 정보를 가져온다
+                user_queryset = User.objects.filter(id=self.request.user.id).get()
+
+                if self.is_post(data['temp_id']):
+                    raise exceptions.ParseError({"detail": "You are not the owner of this article"})
+
+                if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
                 serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
@@ -134,10 +142,11 @@ class PostCreateView(generics.GenericAPIView,
                 except ObjectDoesNotExist:
                     raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-                user_queryset = User.objects.filter(id=self.request.user.id).get()
+                # 유저 포인트 업데이트
+                user_queryset.point -= self.major_point().point
+                user_queryset.save()
 
-                self.decrease_point(user_queryset.point - 300)
-                self.add_point_history(point=300, history=temp.title)
+                self.add_point_history(point=self.major_point().point, history=temp.title)
                 # 태그를 추가하고 태그 추가 실패
 
                 if serializer:
@@ -145,44 +154,10 @@ class PostCreateView(generics.GenericAPIView,
                 else:
                     raise exceptions.ValidationError({'detail': 'Already added'}, 400)
             else:
-                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+                raise exceptions.NotAcceptable({"detail": "This Account is Deactive "}, 401)
 
         else:
-            if data['temp_id'] == '':
-                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
-
-            try:
-                temp = Temp.objects.filter(id=data['temp_id']).get()
-            except ObjectDoesNotExist:
-                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
-            # 포인트가 모자르다면 에러발생
-            if 300 > user.point:
-                raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
-
-            serializer = PreAuthorPostSerializer(PreAuthorPost.objects.create(author=user, title=temp.title,
-                                                                              main_content=temp.main_content,
-                                                                              price=data['price'],
-                                                                              preview_image=preview_file_obj,
-                                                                              cover_image=cover_file_obj
-                                                                              ))
-            # 템프파일 삭제
-            try:
-                Temp.objects.filter(id=data['temp_id']).delete()
-            except ObjectDoesNotExist:
-                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
-
-            user_queryset = User.objects.filter(id=self.request.user.id).get()
-
-            self.decrease_point(user_queryset.point - 300)
-            self.add_point_history(point=300, history=temp.title)
-            # 태그를 추가하고 태그 추가 실패
-            # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-            #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
-
-            if serializer:
-                return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
-            else:
-                raise exceptions.ValidationError({'detail': 'Already added'}, 400)
+            raise exceptions.NotAcceptable({"detail": "This Account is not author"}, 401)
 
 
 class PostListView(APIView):
@@ -194,7 +169,6 @@ class PostListView(APIView):
         cleaner = re.compile('<.*?>')
         clean_text = re.sub(cleaner, '', post)
         return clean_text
-
 
     # 태그 처리 함수
     def tag(self, post):
@@ -284,7 +258,7 @@ class PostReadView(APIView):
         if self.is_buyed(param):
             # 구매했을때 원본 출력
             if serializer:
-                return Response(serializer.data['main_content'], status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
         raise exceptions.ValidationError({'detail': 'You did not buy this post'}, 400)
 
@@ -323,14 +297,14 @@ class IsBuyPost(APIView):
                     "isBuy": False,
                     "preview": serializer.data['preview_image'],
                 }},
-                                status=status.HTTP_200_OK)
+                    status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
 
 
 class AuthorResult(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def post(self,request):
+    def post(self, request):
         try:
             author = AuthorModel.objects.all().get(author_id=self.request.user.id)
             if author is not None:

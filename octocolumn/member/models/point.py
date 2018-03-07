@@ -76,3 +76,7 @@ class PointHistory(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = PointHistoryManager()
+
+    class Meta:
+        verbose_name = '포인트 사용내역'
+        verbose_name_plural = f'{verbose_name} 목록'

@@ -48,6 +48,8 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-pk', ]
+        verbose_name = '포스팅된 컬럼'
+        verbose_name_plural = f'{verbose_name} 목록'
 
     def add_comment(self, user, content):
         # 자신을 post로 갖고, 전달받은 user를 author로 가지며
@@ -83,7 +85,7 @@ class PreAuthorPost(models.Model):
     author = models.ForeignKey('member.User', null=True)
     title = models.CharField(max_length=255)
     main_content = models.TextField()
-    price = models.IntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True)
 
     cover_image = models.ImageField('포스트커버 이미지',

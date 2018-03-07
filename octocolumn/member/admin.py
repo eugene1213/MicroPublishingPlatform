@@ -3,13 +3,13 @@ from rest_framework.authtoken.models import Token
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from octo.models import PublishPoint
-from column.models import Post, Temp
+from octo.models import UsePoint
+from column.models import Post
 
 import re
 
-from member.models import User, Author
-from utils.filters import CreatedDateFilter
+from member.models import User, Author, PointHistory
+from utils.filters import CreatedDateFilter, UsePointFilter
 
 admin.site.unregister(Group)
 admin.site.unregister(Token)
@@ -41,12 +41,15 @@ class UserAdmin(admin.ModelAdmin):
     def post_count(self, obj):
         return Post.objects.filter(author=obj).count()
 
+    def has_add_permission(self, request):
+        return False
+
     post_count.short_description = '포스팅'
 
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ['author', 'is_active', 'created_at']
+    list_display = ['author', 'is_active', 'intro', 'blog', 'created_at']
     list_display_links = ['author']
 
 
@@ -74,6 +77,10 @@ class PostAdmin(admin.ModelAdmin):
 
     readonly_fields = ['author', 'hit', 'buy_count', 'created_date']
 
+    class Meta:
+        verbose_name = '작가'
+        verbose_name_plural = f'{verbose_name} 목록'
+
     def remove_tag(self, post):
         cleaner = re.compile('<.*?>')
         clean_text = re.sub(cleaner, '', post)
@@ -86,10 +93,25 @@ class PostAdmin(admin.ModelAdmin):
     content_size.short_description = '글자수'
 
 
-@admin.register(PublishPoint)
-class PublishPoint(admin.ModelAdmin):
-    list_display = ['type']
-    list_display_links = ['type']
+@admin.register(UsePoint)
+class PublishPointAdmin(admin.ModelAdmin):
+    list_display = ['type', 'point']
+    list_display_links = ['type', 'point']
+
+
+@admin.register(PointHistory)
+class PointHistoryAdmin(admin.ModelAdmin):
+    list_per_page = 20
+    list_display = ['user', 'point', 'point_use_type', 'created_at']
+    search_fields = ('user__username',)
+    actions = None
+    list_filter = (UsePointFilter,)
+
+    class Meta:
+        label = '포인트 사용내역'
+
+    def has_add_permission(self, request):
+        return False
 
 
 
