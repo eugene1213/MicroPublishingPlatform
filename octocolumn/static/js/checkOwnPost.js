@@ -7,9 +7,9 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
         type: 'GET',
         dataType: 'json',
         success: function(json) {
-            
+            window.location.href = "/read/"+post_id;
             if(json.detail.isBuy) {
-                window.location.href = "/column/read/"
+                window.location.href = "/column/read/"+post_id;
             }else {
                 var preview_image = json.detail.preview;
 

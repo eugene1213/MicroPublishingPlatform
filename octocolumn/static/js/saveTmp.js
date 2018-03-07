@@ -24,7 +24,7 @@ $(window).resize(function(){
 /* 임시저장 */
 function saveTmp(auto){
         
-    var main_content = $(".editable").html();
+    var main_content = editor.getContent();
     var temp_id = "";
         temp_id = localStorage.getItem("temp_id");
     var title = "";
@@ -43,7 +43,7 @@ function saveTmp(auto){
         dataType: 'json',
         data: {
             title: title,
-            main_content: main_content.trim(),
+            main_content: main_content,
             temp_id : temp_id
         },
         success: function(json) {

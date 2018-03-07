@@ -29,6 +29,7 @@ def write(request):
 
 
 def read(request, post_id):
+
     if request.COOKIES:
         if request.COOKIES['token']:
             response = render_to_response("view/read.html", {"login": True})

@@ -745,9 +745,10 @@ body.back{
 .read .contents .text{
 	float: right;
 	width: 620px;
-  font-size: 24px;
-  font-weight: 200;
-  color: #2a292a;
+	font-size: 24px;
+	font-weight: 200;
+	color: #2a292a;
+	line-height: 1.5em;
 	letter-spacing: -0.02em;
 	box-sizing: border-box;
 }
