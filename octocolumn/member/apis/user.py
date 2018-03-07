@@ -219,11 +219,19 @@ class VerifyToken(APIView):
 class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
+    def profile_image(self):
+
+        if len(ProfileImage.objects.filter(user=self.request.user)) != 0:
+            return ProfileImage.objects.filter(user=self.request.user).profile_image
+        return None
+
     def post(self,request):
         serializer = UserSerializer(self.request.user)
-        profile_imgage = ProfileImage.objects.filter(user=self.request.user).profile_image
+        profile_image = self.profile_image()
+        print(profile_image)
 
         if serializer:
-            return Response({serializer.data,
-                             {"profileImg": profile_imgage}}, status=status.HTTP_200_OK)
+            return Response({"user":serializer.data,
+                             "profileImg": profile_image},
+                            status=status.HTTP_200_OK)
         return Response({"detail": "NO User"})
