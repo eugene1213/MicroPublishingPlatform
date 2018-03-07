@@ -11,10 +11,14 @@ $(document).ready(function(){
         var post_id = e.target.getAttribute("id");
         if(post_id > 0){
 
-            isBought(post_id, cover_img, title);
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
             var cover_img = data[card_id-1].post.cover_img;
             var title = data[card_id-1].post.title;
+            var date = data[card_id-1].post.created_datetime;
+            var author = data[card_id-1].post.author;
+
+            isBought(post_id, cover_img, title, date, author);
+            
         }
     });
     $(".btn-cancel-wrap").click(function(){
