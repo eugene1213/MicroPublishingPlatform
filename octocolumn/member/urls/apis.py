@@ -3,7 +3,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
-    GoogleLogin, UpdatePassword, Follower
+    GoogleLogin, UpdatePassword, Follower, UserInfo
 
 urlpatterns = [
     # api:member:login
@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^logout/$', Logout.as_view(), name='logout'),
     url(r'^signup/$',SignUp.as_view(), name='signup'),
     url(r'^password-change/$', UpdatePassword.as_view(), name='password-change'),
+    url(r'^userInfo/$', UserInfo.as_view(), name='signup'),
 
     # 토큰 관련
     url(r'^api-token-refresh/', refresh_jwt_token),

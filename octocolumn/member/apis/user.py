@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, generics, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import APIException
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from typing import NamedTuple
@@ -25,7 +25,8 @@ __all__ = (
     'SignUp',
     'Logout',
     'FacebookLogin',
-    'UpdatePassword'
+    'UpdatePassword',
+    'UserInfo'
 )
 
 
@@ -68,7 +69,7 @@ class Login(APIView):
 
 
 class Logout(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
@@ -119,7 +120,6 @@ class FacebookLogin(APIView):
                 'access_token': app_access_token,
             }
             response = requests.get(url_debug_token, params_debug_token)
-            pprint(response.json())
             return DebugTokenInfo(**response.json()['data'])
 
         # request.data로 전달된 access_token값을 페이스북API쪽에 debug요청, 결과를 받아옴
@@ -206,3 +206,14 @@ class RecoveryPassword(APIView):
 class VerifyToken(APIView):
     def get(self):
         pass
+
+
+class UserInfo(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = UserSerializer(self.request.user)
+
+        if serializer:
+            return Response(serializer.data ,status=status.HTTP_200_OK)
+        return Response({"detail": "NO User"})

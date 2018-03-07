@@ -13,7 +13,8 @@ from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag
 from column.serializers.tag import SearchTagSerializer
-from member.models import Author as AuthorModel, User, PointHistory, BuyList
+from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
+from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from ..models import Post
 from ..serializers import PostSerializer
@@ -264,10 +265,30 @@ class PostReadView(APIView):
                 # 조회수 증가
                 post.hit += 1
                 post.save()
+                # 작가임
+                user = User.objects.filter(pk=post.author_id)
+                time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+                return Response({
+                    "detail":{
+                        "post_id": serializer.data['pk'],
+                        "cover_img": serializer.data['cover_image'],
+                        "main_content": serializer.data['main_content'],
+                        "title": serializer.data['title'],
+                        "tag": serializer.data['tag'],
+                        "author":{
+                            "author_id": serializer.data['author'],
+                            "username": user.last_name + " " + user.first_name,
+                            "achevement": "",
+                            "profile_img": "",# ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
+                            "cover_img": "",
+                        },
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                        'created_datetime': time.strftime('%Y.%m.%d'),
+
+                    }
+                }, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
-        raise exceptions.ValidationError({'detail': 'You did not buy this post'}, 400)
+        raise exceptions.ValidationError(False, 400)
 
 
 class PostPreReadView(APIView):
