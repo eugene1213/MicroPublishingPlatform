@@ -190,6 +190,13 @@ class PostListView(APIView):
         clean_text = re.sub(cleaner, '', post)
         return clean_text
 
+    def tag(self,post):
+        tag = SearchTag.objects.filter(post=post)
+        tag_serializer = SearchTagSerializer(tag, many=True)
+        if tag_serializer:
+            return tag_serializer.data
+        return None
+
     def get(self, request, *args, **kwargs):
         post = Post.objects.order_by('-created_date')[:5]
 
@@ -209,8 +216,9 @@ class PostListView(APIView):
             # from_user.save()
             follower_count = to_user.following_users.count()
             # status = from_user.following_user.filter(to_user=serializer.data['author'])
-            tag = SearchTag.objects.filter(post=i)
-            tag_serializer = SearchTagSerializer(tag, many=True)
+            tag = self.tag(i)
+
+
             data = {
                 "post":{
                     "post_id": serializer.data['pk'],
@@ -220,7 +228,7 @@ class PostListView(APIView):
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
                     'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ')/2,
-                    "tag": tag_serializer.data,
+                    "tag": tag,
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + " " + user.first_name,
