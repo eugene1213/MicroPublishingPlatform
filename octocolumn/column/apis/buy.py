@@ -17,7 +17,7 @@ class PostBuy(APIView):
     def buylist_duplicate(self,post):
         buylist = BuyList.objects.filter(user=self.request.user, post_id=post.id)
         if len(buylist) is not None:
-            raise exceptions.APIException({"detail":"It's a post I've already purchased"}, 400)
+            raise exceptions.APIException({"detail": "It's a post I've already purchased"}, 400)
         return BuyList.objects.filter(user=self.request.user).create(post_id=post.id)
 
     def post(self,request):
@@ -34,7 +34,7 @@ class PostBuy(APIView):
 
         # 구매한 기록이 있는지를 확인
         if self.buylist_duplicate(post_queryset):
-            if PointHistory.objects.filter(user=self.request.user, post_id=post_queryset.id) is not None:
+            if PointHistory.objects.filter(user=self.request.user, post_id=post_queryset.id).get() is not None:
                 raise exceptions.APIException({"detail": "Failed insert PointHistory."}, 400)
 
             # 구매내역에 추가

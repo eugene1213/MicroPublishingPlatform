@@ -9,7 +9,7 @@ from member.apis.verify import VerifyEmail, PasswordResetEmail
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^write/$', write, name='write'),
-    url(r'^read/$', read, name='read'),
+    url(r'^read/(?P<post_id>\d+)$', read, name='read'),
 
     # url(r'^post/', include('column.urls.views', namespace='post')),
 
