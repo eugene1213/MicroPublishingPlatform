@@ -1,5 +1,6 @@
 	{% load static %}
 	<script src="{% static 'js/header_on.js' %}"></script>
+	<script src="{% static 'js/title-to-header.js' %}"></script>
 	<script src="{% static 'js/logout.js' %}"></script>
 	<div class="header">
 		<div class="header-wrap">
@@ -12,7 +13,7 @@
 					<li>Purchased Posts</li>
 					<li>Bookmarks</li>
 					<li class="under-line">Brand Page</li>
-					<li>New Story</li>
+					<li onclick='window.location.href="/write/"'>New Story</li>
 					<li>Point Shop</li>
 					<li>Settings</li>
 					<li class="under-line">Stats</li>

@@ -2,9 +2,11 @@ function currentPage2header() {
 
     var current_url = window.location.href;
     var currentPage = current_url.split("/");
-        currentPage = currentPage[currentPage.length-2];
+    var length = currentPage.length;
+        currentPage = currentPage[length-2];
 
-        if(currentPage != ""){
+        
+        if(currentPage != "" && length > 4){
             currentPage == "write" ? $(".btn-menu > img + div").text("New Story") : $(".btn-menu > img + div").text(currentPage);
         }else{
             $(".btn-menu > img + div").text("octocolumn");
