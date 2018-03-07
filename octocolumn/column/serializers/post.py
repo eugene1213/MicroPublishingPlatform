@@ -29,6 +29,7 @@ class PostSerializer(serializers.ModelSerializer):
             'my_comment',
             'title',
             'created_date',
+            'price',
             'comments',
             'cover_image',
             'preview_image'

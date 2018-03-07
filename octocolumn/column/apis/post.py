@@ -102,11 +102,14 @@ class PostCreateView(generics.GenericAPIView,
         # 2. 작가 활성이 되어있는지를 확인
 
         author = self.is_author()
+        # 작가 일 경우
         if author is not None:
+
+            # 작가가 활성화 되지 않았을경우
             if author.is_active:
+                # 임시저장 파일이 없을 경우
                 if data['temp_id'] == '':
                     raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
-
                 try:
                     temp = Temp.objects.filter(id=data['temp_id']).get()
                 except ObjectDoesNotExist:
@@ -121,6 +124,10 @@ class PostCreateView(generics.GenericAPIView,
                                                                 preview_image=preview_file_obj,
                                                                 cover_image=cover_file_obj
                                                                 ))
+                # 태그 추가
+                if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+                    raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+
                 # 템프파일 삭제
                 try:
                     Temp.objects.filter(id=data['temp_id']).delete()
@@ -132,8 +139,6 @@ class PostCreateView(generics.GenericAPIView,
                 self.decrease_point(user_queryset.point - 300)
                 self.add_point_history(point=300, history=temp.title)
                 # 태그를 추가하고 태그 추가 실패
-                if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-                    raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
                 if serializer:
                     return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
@@ -230,6 +235,7 @@ class PostListView(APIView):
                     'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ')/2,
                     "tag": tag,
+                    "price":serializer.data['price'],
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + " " + user.first_name,
