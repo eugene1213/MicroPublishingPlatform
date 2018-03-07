@@ -155,7 +155,6 @@ LOGGING = {
 }
 
 
-
-
 CSRF_COOKIE_SECURE = True
 
+SITE_ID = 1
