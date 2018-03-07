@@ -19,7 +19,6 @@ from ..models import Post
 from ..serializers import PostSerializer
 
 __all__ = (
-    # 'PostListCreateView',
     'PostLikeToggleView',
     'PostCreateView',
     'PostReadView',
@@ -120,8 +119,8 @@ class PostCreateView(generics.GenericAPIView,
                 # 정확한 정보를 위해 db의 유저 정보를 가져온다
                 user_queryset = User.objects.filter(id=self.request.user.id).get()
 
-                if self.is_post(data['temp_id']):
-                    raise exceptions.ParseError({"detail": "You are not the owner of this article"})
+                # if self.is_post(data['temp_id']):
+                #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
 
                 if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
@@ -255,9 +254,16 @@ class PostReadView(APIView):
 
         post = Post.objects.filter(pk=param).get()
         serializer = PostSerializer(post)
+
+        # 구매를 했는지를 검사
         if self.is_buyed(param):
             # 구매했을때 원본 출력
             if serializer:
+
+                # 조회수 증가
+                post.hit += 1
+                post.save()
+
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
         raise exceptions.ValidationError({'detail': 'You did not buy this post'}, 400)
