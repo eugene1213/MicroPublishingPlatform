@@ -256,10 +256,16 @@ class PostReadView(APIView):
             return tag_serializer.data
         return None
 
+    def post_exist(self, post_id):
+        if Post.objects.filter(pk=post_id).count() == 0:
+            raise exceptions.ValidationError({'detail': 'Does not exist post'}, 400)
+        return Post.objects.filter(pk=post_id).get()
+
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
 
-        post = Post.objects.filter(pk=param).get()
+        post = self.post_exist(param)
+
         serializer = PostSerializer(post)
 
         # 구매를 했는지를 검사
