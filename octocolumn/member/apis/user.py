@@ -1,7 +1,6 @@
 from django.utils import timezone
 import requests
 from django.contrib.auth import authenticate, logout
-from django.core.exceptions import ObjectDoesNotExist
 from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
@@ -80,14 +79,11 @@ class Logout(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        try:
-            request.auth.delete()
-        except (AttributeError, ObjectDoesNotExist):
-            return Response({'detail': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
-
-        logout(request)
-        return Response({"detail": "Successfully logged out."},
+        response = Response({"detail": "Successfully logged out."},
                         status=status.HTTP_200_OK)
+
+        response.delete_cookie('token')
+        return response
 
 
 class SignUp(generics.CreateAPIView):
@@ -228,7 +224,6 @@ class UserInfo(APIView):
     def post(self,request):
         serializer = UserSerializer(self.request.user)
         profile_image = self.profile_image()
-        print(profile_image)
 
         if serializer:
             return Response({"user": serializer.data,

@@ -317,8 +317,9 @@ class IsBuyPost(APIView):
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
+        print(BuyList.objects.filter(user=self.request.user, post=param).get() is 0)
         try:
-            BuyList.objects.filter(user=self.request.user, post_id=param).get()
+            BuyList.objects.filter(user=self.request.user, post=param).get()
             return Response({"detail": {
                 "isBuy": True
             }}, status=status.HTTP_200_OK)

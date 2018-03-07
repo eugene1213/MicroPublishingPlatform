@@ -217,7 +217,7 @@ class BuyList(models.Model):
     def __str__(self):
         return f'BuyList (' \
                f'from: {self.user.username}, ' \
-               f'to: {self.post_id})'
+               f'to: {self.post})'
 
 
 
