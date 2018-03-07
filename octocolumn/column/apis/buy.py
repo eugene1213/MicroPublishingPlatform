@@ -46,7 +46,7 @@ class PostBuy(APIView):
             user_queryset.point -= post_queryset.price
             user_queryset.save()
 
-            # 구매횟수 증가
+            # 구매횟수 증가 업데이트
             post_queryset.buy_count += 1
             post_queryset.save()
 
