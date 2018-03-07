@@ -68,13 +68,15 @@ class PostCreateView(generics.GenericAPIView,
     # 검색 태그 추가
     def search_tag(self, post_id, tag):
         search_tag = tag.split(',')
-        if search_tag.count() > 5:
+        print(search_tag)
+        if len(search_tag) > 5:
             raise exceptions.ValidationError({'detail': 'You can add up to 5'}, 200)
 
         for i in search_tag:
             SearchTag.objects.create(post_id=post_id, tag=i)
-            return True
-        return False
+
+        return True
+
 
     # base64 파일 파일 형태로
     def base64_content(self, image):
@@ -129,8 +131,8 @@ class PostCreateView(generics.GenericAPIView,
                 self.decrease_point(user_queryset.point - 300)
                 self.add_point_history(point=300, history=temp.title)
                 # 태그를 추가하고 태그 추가 실패
-                # if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-                #     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+                if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+                    raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
                 if serializer:
                     return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
