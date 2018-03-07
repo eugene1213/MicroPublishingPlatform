@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.permissions import AllowAny
@@ -23,9 +24,7 @@ class VerifyEmail(APIView):
             user.is_active = True
             user.save()
 
-            serializer = UserSerializer(user)
-            # return redirect('home')
-            return Response(serializer.data, status=200)
+            return HttpResponseRedirect(redirect_to='/')
         else:
             return Response('Activation link is invalid!', status=404)
 

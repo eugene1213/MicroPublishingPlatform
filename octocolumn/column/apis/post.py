@@ -212,6 +212,7 @@ class PostListView(APIView):
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
+                    'created_datetime': serializer['created_date'],
                     "typo_count": len(text) - text.count(' ')/2,
                     "author": {
                         "author_id": serializer.data['author'],
