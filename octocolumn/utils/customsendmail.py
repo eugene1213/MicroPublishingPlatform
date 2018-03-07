@@ -12,11 +12,11 @@ from utils.tokengenerator import account_activation_token
 def signup_email_send(user):
     # 이메일 발송
     mail_subject = 'Octocolumn 이메일 인증.'
-    urlrequest = request
-    url = get_current_site(urlrequest)
+    # urlrequest = request
+    # url = get_current_site(urlrequest)
     message = render_to_string('singup_activation.html', {
         'user': user,
-        'domain': url,
+        'domain': 'localhost:8000',
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })
