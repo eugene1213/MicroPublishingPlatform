@@ -197,7 +197,8 @@ class PostListView(APIView):
             user = User.objects.filter(pk=i.author_id).get()
             # profile_img = ProfileImage.objects.filter(id=i.author_id).get()
             serializer = PostSerializer(i)
-            time =datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+            time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+            time2 = datetime.strptime(serializer.data['created_date'].split('T')[1].split('.')[0], '%H:%M:%S')
             text = self.remove_tag(content)
             to_user = User.objects.filter(pk=serializer.data['author']).get()
             to_user.save()
@@ -212,7 +213,7 @@ class PostListView(APIView):
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
-                    'created_datetime': serializer['created_date'],
+                    'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ')/2,
                     "author": {
                         "author_id": serializer.data['author'],
