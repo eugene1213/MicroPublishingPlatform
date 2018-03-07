@@ -1,38 +1,33 @@
 {% load static %}
+<script src="{% static 'js/logout.js' %}"></script>
 <div class="header">
     <div class="header-wrap">
         <div class="btn-menu">
             <img src="{% static 'images/icons/header/burger2.png' %}">
             <div>octocolumn</div>
             <ul>
-                <li>최근 글</li>
-                <li>피드</li>
-                <li>구매한 글</li>
-                <li>북마크</li>
-                <li>브랜드 페이지</li>
-                <li>작가신청</li>
-                <li>포인트 구매</li>
-                <li>설정</li>
-                <li>고객센터</li>
-                <li>이용약관</li>
-                <li>개인정보 처리방침</li>
-                <li>운영정책</li>
-                <li>로그아웃</li>
-                <li><p>octocolumn.com</p></li>
-                <li><p>Copyright octocolumn.com</p></li>
-                <li><p>All Rights Reserved</p></li>
-                <li><p>주식회사 옥토칼럼</p></li>
-                <li><p>대표 오정민</p></li>
-                <li><p>사업자등록번호</p></li>
-                <li><p>576-52-00020</p></li>
-                <li><p>통신판매업신고 2016</p></li>
-                <li><p>수원권선 0350</p></li>
-                <li><p>개인정보관리 책임자 오정민</p></li>
-                <li><p>경기도 수원시 권선구 정조로</p></li>
-                <li><p>580-9</p></li>
-                <li><p>연락처</p></li>
-                <li><p>mackenzie@octocolumn.com</p></li>
-                <li><p>고객센터 070-4809-7166</p></li>                      
+                <li class="under-line">Recent Post</li>
+                <li>Terms of Service</li>
+                <li>Privacy Policy</li>
+                <li class="under-line">Rules</li>
+                <li onclick="modal_on()">Signin/ Signup</li>
+                <div class="footer">
+                    octocolumn.com<br/>
+                    Copyright octocolumn.com<br/>
+                    All Rights Reserved<br/>
+                    주식회사 옥토칼럼<br/>
+                    대표 오정민<br/>
+                    사업자등록번호<br/>
+                    576-52-00020<br/>
+                    통신판매업신고 2016<br/>
+                    수원권선 0350<br/>
+                    개인정보관리 책임자 오정민<br/>
+                    경기도 수원시 권선구 정조로<br/>
+                    580-9<br/>
+                    연락처<br/>
+                    mackenzie@octocolumn.com<br/>
+                    고객센터 070-4809-7166<br/>
+                </div>                     
             </ul><!-- sidebar -->
         </div>
         <div class="btn-search">
@@ -42,7 +37,7 @@
             <img src="{% static 'images/icons/header/bar_chart2.png' %}">
         </div>
         <div class="btn-logo-wrap">
-            <div class="btn-logo" id="header-title">
+            <div class="btn-logo" id="header-title" onclick='window.location.href="/"'>
                 octocolumn
             </div>
         </div>

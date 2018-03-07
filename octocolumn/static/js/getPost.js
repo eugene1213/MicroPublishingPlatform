@@ -4,6 +4,8 @@ $(document).ready(function(){
     var post_id = current_url.split("/");
         post_id = post_id[post_id.length-1];
 
+    hidingHeader();
+
     $.ajax({
         url: "/api/column/post-view/"+post_id,
         async: false,

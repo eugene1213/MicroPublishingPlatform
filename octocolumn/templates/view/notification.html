@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=1280, user-scalable=no, target-densitydpi=medium-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
+	<meta name="description" content="octoclumn" />
+	<meta name="keyworads" content="octoclumn">
+	<meta name="copyright" content="octoclumn"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="x-rim-auto-match" content="none">
+	<title>octoclumn</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sub.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+	<script src="{% static 'js/script.js' %}"></script>
+
+</head>
+
+
+<body class="back">
+
+	<div class="mBg"></div>
+	{% if login %}
+        {% include 'view/header_on.html' %}
+    {% else %}
+        {% include 'view/header.html' %}
+    {% endif %}
+	<div class="notification_box">
+		<div class="notification_menu">
+			<div class="notification_menutit1">
+				<div class="img_box"></div>
+				<div class="menutit1">Notifications</div>
+			</div>
+			<div class="notifi_hr"></div>
+			<div class="notification_menutit2">
+				<div class="img_box"></div>
+				<div class="menutit1">Inbox (2)</div>
+			</div>
+			<div class="notification_menutit3">
+				<div class="img_box"></div>
+				<div class="menutit1">Anchor</div>
+			</div>
+			<div class="notification_menutit4">
+				<div class="img_box"></div>
+				<div class="menutit1">Trash</div>
+				<div class="noti_button">비우기</div>
+			</div>
+		</div>
+		<div class="notification_menubox">
+			<div class="menubox_inner1">
+				<div class="noti_profile"></div>
+				<div class="noti_name">Joan Burke</div>
+				<div class="noti_date">2017. 12. 18 18:33</div>
+				<div class="noti_btn1"></div>
+				<div class="noti_btn2"></div>
+				<div class="noti_text">당신을 Follow했습니다.</div>
+			</div>
+			<div class="menubox_inner2">
+				<div class="noti_profile"></div>
+				<div class="noti_name">octocolumn</div>
+				<div class="noti_date">2017. 12. 18 18:33</div>
+				<div class="noti_btn1"></div>
+				<div class="noti_btn2"></div>
+				<div class="noti_text">업적 <span>올빼미족</span>을 달성했습니다.</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
