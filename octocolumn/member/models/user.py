@@ -211,13 +211,13 @@ class BuyList(models.Model):
         related_name='buylist_user_relation',
         null=True
     )
-    post = models.PositiveIntegerField()
+    post = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'BuyList (' \
                f'from: {self.user.username}, ' \
-               f'to: {self.post_id})'
+               f'to: {self.post})'
 
 
 

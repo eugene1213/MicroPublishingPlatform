@@ -62,7 +62,7 @@ class Login(APIView):
                                         response.data['token'],
                                         max_age=21600,
                                         httponly=True)
-                self.saved_login_log()
+                # self.saved_login_log()
                 return response
             data = {
                 "detail": "This Account is not Activate"
@@ -80,14 +80,12 @@ class Logout(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        try:
-            request.auth.delete()
-        except (AttributeError, ObjectDoesNotExist):
-            return Response({'detail': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
-
-        logout(request)
-        return Response({"detail": "Successfully logged out."},
+        response = Response({"detail": "Successfully logged out."},
                         status=status.HTTP_200_OK)
+
+        if response.delete_cookie('token'):
+            return response
+        return Response({'detail': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SignUp(generics.CreateAPIView):
@@ -228,7 +226,6 @@ class UserInfo(APIView):
     def post(self,request):
         serializer = UserSerializer(self.request.user)
         profile_image = self.profile_image()
-        print(profile_image)
 
         if serializer:
             return Response({"user": serializer.data,
