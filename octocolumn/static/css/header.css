@@ -36,6 +36,7 @@
     cursor: pointer;
     color: #fafafa;
     font-weight: 300;
+    margin-top: -1px;
 }
 .btn-menu > img {
     float: left;
@@ -48,10 +49,11 @@
 }
 .btn-menu > ul {
     display: none;
+    overflow: scroll;
     width: 144px;
     margin-top: 5px;
     margin-left: -16px;
-    padding-top: 20px;
+    padding-top: 40px;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 20px;
@@ -63,7 +65,7 @@ li {
     cursor: pointer;
     color: #fafafa;
 }
-.btn-menu > ul > :nth-child(5), .btn-menu > ul > :nth-child(8), .btn-menu > ul > :nth-child(12) {
+.under-line {
     padding-bottom: 15px;
     margin-bottom: 20px;
     border-bottom: 1px solid white;
@@ -79,7 +81,14 @@ li {
     padding: 0;
     color: #fafafa;
 }
-    
+.footer {
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 100;
+    opacity: 0.4;
+    line-height: 1.4em;
+    margin-bottom: 10px;
+}
 .btn-search {
     float: left;
     width: 24px;
@@ -117,6 +126,7 @@ li {
     float: left;
     width: 85px;
     height: 24px;
+    margin-top: -1px;
     font-size: 14px;
     line-height: 24px;
     text-align: center;
@@ -180,6 +190,7 @@ li {
 .btn-user > span {
     color: #fafafa;
     font-weight: 300;
+    margin-top: -1px;
 }
 .btn-user > img {
     float: right;

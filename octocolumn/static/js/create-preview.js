@@ -49,9 +49,6 @@ function previewModalHeight(){
     var htmlHeight = $("html").height();
     var previewHeight = $(".preview").height();
 
-    console.log(previewHeight);
-    console.log(htmlHeight);
-
     $(".preview").load(function(){
 
         console.log(1);

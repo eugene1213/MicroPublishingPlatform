@@ -137,21 +137,32 @@
 }
 .mainfeed .feedbox1 .fb1_txt .fb1_txt_1{
 	font-size: 24px;
-	font-weight: 400;
-	width: auto;
-	height: 96px;
-	display: block;
-	float: left;
-	line-height: 28px;
+    font-weight: 400;
+    width: 288px;
+    height: 96px;
+    float: left;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox1 .fb1_txt .fb1_txt_2{
 	font-size: 15px;
 	font-weight: 300;
-	width: auto;
-	height: 184px;
-	display: block;
-	float: left;
-	line-height: 24px;
+	width: 288px;
+    height: 173px;
+    margin-bottom: 8px;
+    float: left;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox1 .fb1_txt .profile_box{
 	width: 100%;
@@ -249,21 +260,32 @@
 }
 .mainfeed .feedbox2 .fb1_txt .fb1_txt_1{
 	font-size: 24px;
-	font-weight: 400;
-	width: auto;
-	height: 96px;
-	display: block;
-	float: left;
-	line-height: 28px;
+    font-weight: 400;
+    width: 288px;
+    height: 96px;
+    float: left;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox2 .fb1_txt .fb1_txt_2{
 	font-size: 15px;
 	font-weight: 300;
-	width: auto;
-	height: 184px;
-	display: block;
-	float: left;
-	line-height: 24px;
+	width: 288px;
+    height: 173px;
+    margin-bottom: 24px;
+    float: left;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox2 .fb1_txt .profile_box{
 	width: 100%;
@@ -361,13 +383,18 @@
 }
 .mainfeed .feedbox3 .fb1_txt .fb1_txt_1{
 	font-size: 24px;
-	font-weight: 400;
-	width: auto;
+    font-weight: 400;
+    width: 288px;
 	height: 96px;
-	display: block;
-	float: left;
-	line-height: 28px;
-	margin-bottom: 25px;
+	margin-bottom: 24px;
+    float: left;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox3 .fb1_txt .fb1_txt_2{
 	font-size: 15px;
@@ -475,21 +502,32 @@
 }
 .mainfeed .feedbox4 .fb1_txt .fb1_txt_1{
 	font-size: 24px;
-	font-weight: 400;
-	width: auto;
-	height: 96px;
-	display: block;
-	float: left;
-	line-height: 28px;
+    font-weight: 400;
+    width: 440px;
+    height: 96px;
+    float: left;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox4 .fb1_txt .fb1_txt_2{
 	font-size: 15px;
 	font-weight: 300;
-	width: auto;
-	height: 184px;
-	display: block;
-	float: left;
-	line-height: 24px;
+	width: 440px;
+    height: 173px;
+    margin-bottom: 8px;
+    float: left;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }
 .mainfeed .feedbox4 .fb1_txt .profile_box{
 	width: 292px;
@@ -711,4 +749,7 @@
 	margin: 40px;
 	margin-bottom: 24px;
 	font-size: 8px;
+	font-weight: 300;
+	line-height: 1.4em;
+	overflow: scroll;
 }

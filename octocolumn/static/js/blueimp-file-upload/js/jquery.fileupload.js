@@ -220,7 +220,7 @@
                 }
             },
             done: function (e, data) {
-                console.log('asdf');
+                
             },
 
             // Other callbacks:

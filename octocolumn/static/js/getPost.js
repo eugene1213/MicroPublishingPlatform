@@ -4,6 +4,8 @@ $(document).ready(function(){
     var post_id = current_url.split("/");
         post_id = post_id[post_id.length-1];
 
+    hidingHeader();
+
     $.ajax({
         url: "/api/column/post-view/"+post_id,
         async: false,
@@ -16,9 +18,16 @@ $(document).ready(function(){
             var title = json.detail.title;
             var author = json.detail.author.username;
             var main_content = json.detail.main_content;
-            var tag = json.detail.tag;
+            var tagArray = json.detail.tag;
             var created_datetime = json.detail.created_datetime;
             var post_id = json.detail.post_id;
+
+            for(var i in tagArray) {
+                
+                var tagText = tagArray[i].tag;
+        
+                $(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tagText+"</div>");
+            }
             
             $(".mainImg > img").attr("src",cover_img);
             $(".read_wrap > h2").text(title);

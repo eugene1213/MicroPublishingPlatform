@@ -11,7 +11,7 @@ function getUserInfo() {
         type: 'POST',
         dataType: 'json',
         success: function(json) {
-            console.log(json.user);
+            
             var point = json.user.point;
             var username = json.username;
             var first_name = json.user.first_name;
