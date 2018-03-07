@@ -1,7 +1,6 @@
 from django.utils import timezone
 import requests
 from django.contrib.auth import authenticate, logout
-from django.core.exceptions import ObjectDoesNotExist
 from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
@@ -83,9 +82,8 @@ class Logout(APIView):
         response = Response({"detail": "Successfully logged out."},
                         status=status.HTTP_200_OK)
 
-        if response.delete_cookie('token'):
-            return response
-        return Response({'detail': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+        response.delete_cookie('token')
+        return response
 
 
 class SignUp(generics.CreateAPIView):
