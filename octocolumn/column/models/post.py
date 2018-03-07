@@ -83,7 +83,7 @@ class PreAuthorPost(models.Model):
     author = models.ForeignKey('member.User', null=True)
     title = models.CharField(max_length=255)
     main_content = models.TextField()
-    price = models.IntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True)
 
     cover_image = models.ImageField('포스트커버 이미지',

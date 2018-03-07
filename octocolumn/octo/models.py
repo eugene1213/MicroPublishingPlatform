@@ -3,10 +3,8 @@ from django.db import models
 # Create your models here.
 
 
-class PublishPoint(models.Model):
-    type = models.ForeignKey('PointType', null=True)
+class UsePoint(models.Model):
+    type = models.CharField(max_length=255)
     point = models.PositiveIntegerField()
 
 
-class PointType(models.Model):
-    type = models.CharField(max_length=255)

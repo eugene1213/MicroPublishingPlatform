@@ -3,7 +3,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from octo.models import PublishPoint
+from octo.models import UsePoint
 from column.models import Post, Temp
 
 import re
@@ -86,7 +86,7 @@ class PostAdmin(admin.ModelAdmin):
     content_size.short_description = '글자수'
 
 
-@admin.register(PublishPoint)
+@admin.register(UsePoint)
 class PublishPoint(admin.ModelAdmin):
     list_display = ['type']
     list_display_links = ['type']
