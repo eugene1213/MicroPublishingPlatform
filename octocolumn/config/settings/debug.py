@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
     'member',
     'column',
+    'octo'
 
 ]
 
