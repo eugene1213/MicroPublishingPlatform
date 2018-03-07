@@ -11,7 +11,7 @@ urlpatterns = [
     # 포스트 구매
     url(r'^post-buy/$', PostBuy.as_view(), name='post-like'),
     # 포스트 읽기
-    url(r'^post-view/$', PostReadView.as_view(), name='post-view'),
+    url(r'^post-view/(?P<pk>\d+)$', PostReadView.as_view(), name='post-view'),
     # 포스트 프리뷰
     url(r'^post-preview/$', PostPreReadView.as_view(), name='post-view'),
 

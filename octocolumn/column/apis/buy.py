@@ -12,9 +12,6 @@ __all__ = (
 
 
 class PostBuy(APIView):
-    # point 감소 로직
-    def decrease_point(self, point):
-        return User.objects.filter(id=self.request.user.id).update(point=point)
 
     # 구매리스트에 존재하는지 판명
     def buylist_duplicate(self,post):
@@ -22,10 +19,6 @@ class PostBuy(APIView):
         if len(buylist) is not None:
             raise exceptions.APIException({"detail":"It's a post I've already purchased"}, 400)
         return BuyList.objects.filter(user=self.request.user).create(post_id=post.id)
-
-    # 구매시 카운트 증가 로직
-    def increase_buy_count(self,post_id):
-        return Post.objects.filter(id=post_id).increase_buy_count()
 
     def post(self,request):
         data = self.request.data
@@ -35,19 +28,27 @@ class PostBuy(APIView):
         user_queryset = User.objects.filter(id=self.request.user.id).get()
         post_queryset = Post.objects.filter(id=data['post_id']).get()
 
+        # 포인트가 적을시에 오류 발생
         if post_queryset.price > user_queryset.point:
-            raise exceptions.APIException({"detail":"There is not enough points."}, 400)
+            raise exceptions.APIException({"detail": "There is not enough points."}, 400)
 
+        # 구매한 기록이 있는지를 확인
         if self.buylist_duplicate(post_queryset):
             if PointHistory.objects.filter(user=self.request.user, post_id=post_queryset.id) is not None:
                 raise exceptions.APIException({"detail": "Failed insert PointHistory."}, 400)
 
+            # 구매내역에 추가
             PointHistory.objects.buy(user=self.request.user, point=post_queryset.price,
-                                              history=post_queryset.title)
+                                     history=post_queryset.title)
 
             BuyList.objects.get_or_create(user=self.request.user, post_id=post_queryset.id)
-            self.decrease_point(user_queryset.point-post_queryset.price)
-            self.increase_buy_count(data['post_id'])
+            # 유저 포인트 업데이트
+            user_queryset.point -= post_queryset.price
+            user_queryset.save()
+
+            # 구매횟수 증가
+            post_queryset.buy_count += 1
+            post_queryset.save()
 
             return Response({"detail": "Success buy."}, status=status.HTTP_200_OK)
 

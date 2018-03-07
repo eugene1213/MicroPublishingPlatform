@@ -48,6 +48,8 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-pk', ]
+        verbose_name = '포스팅된 컬럼'
+        verbose_name_plural = f'{verbose_name} 목록'
 
     def add_comment(self, user, content):
         # 자신을 post로 갖고, 전달받은 user를 author로 가지며
