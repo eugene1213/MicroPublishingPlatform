@@ -251,6 +251,13 @@ class PostReadView(APIView):
         except ObjectDoesNotExist:
             return False
 
+    def tag(self, post):
+        tag = SearchTag.objects.filter(post=post)
+        tag_serializer = SearchTagSerializer(tag, many=True)
+        if tag_serializer:
+            return tag_serializer.data
+        return None
+
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
 
@@ -266,15 +273,16 @@ class PostReadView(APIView):
                 post.hit += 1
                 post.save()
                 # 작가임
-                user = User.objects.filter(pk=post.author_id)
+                user = User.objects.filter(pk=post.author_id).get()
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+                SearchTagSerializer()
                 return Response({
                     "detail":{
                         "post_id": serializer.data['pk'],
                         "cover_img": serializer.data['cover_image'],
                         "main_content": serializer.data['main_content'],
                         "title": serializer.data['title'],
-                        "tag": serializer.data['tag'],
+                        "tag": self.tag(post),
                         "author":{
                             "author_id": serializer.data['author'],
                             "username": user.last_name + " " + user.first_name,
