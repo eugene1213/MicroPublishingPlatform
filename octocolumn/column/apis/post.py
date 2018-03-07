@@ -119,8 +119,8 @@ class PostCreateView(generics.GenericAPIView,
                 # 정확한 정보를 위해 db의 유저 정보를 가져온다
                 user_queryset = User.objects.filter(id=self.request.user.id).get()
 
-                if self.is_post(data['temp_id']):
-                    raise exceptions.ParseError({"detail": "You are not the owner of this article"})
+                # if self.is_post(data['temp_id']):
+                #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
 
                 if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
