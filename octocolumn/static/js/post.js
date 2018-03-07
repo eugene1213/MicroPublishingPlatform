@@ -70,14 +70,14 @@ function btn_activation(){
 function publish(temp_id, cover_img, preview_img, tag, code, price) {
     
     $.ajax({
-        url: "http://127.0.0.1:8000/api/column/post-create/",
+        url: "/api/column/post-create/",
         async: false,
         type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
-        headers: {
-            'Authorization' : 'jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImV1Z2VuZTJAb2N0b2NvbHVtbi5jb20iLCJleHAiOjE1MjAyMjUyMzcsIm9yaWdfaWF0IjoxNTE5NjIwNDM3fQ.dB-EHzQg3h1CyyTDIJPkyrn0ydNgdACvbQJvYxYxENk'
-        },
         data: JSON.stringify({
             "temp_id" : temp_id,
             "cover" : cover_img,
@@ -97,22 +97,22 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
 }
 /* 작가인지 확인 */
 function isAuthor() {
-    var data;
+    var data;       // 작가인지 알려주는 boolean 값
     
     $.ajax({
-        url: "http://127.0.0.1:8000/api/column/isauthor/",
+        url: "/api/column/isauthor/",
         type: 'POST',
         async: false,
-        dataType: 'json',
-        headers: {
-            'Authorization' : 'jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImV1Z2VuZTJAb2N0b2NvbHVtbi5jb20iLCJleHAiOjE1MjAyMjUyMzcsIm9yaWdfaWF0IjoxNTE5NjIwNDM3fQ.dB-EHzQg3h1CyyTDIJPkyrn0ydNgdACvbQJvYxYxENk'
+        xhrFields: {
+            withCredentials: true
         },
+        dataType: 'json',
         success: function(json) {
 
             data = json.author;
 
             if(data) {
-                $(".ready2publish").text("Ready to publish?");
+                $(".ready2publish").text("Ready to publish?");      // 작가면 모달창 상단에 보여줄 텍스트
             }
             else {
                 $(".ready2publish").text("Become a writer");

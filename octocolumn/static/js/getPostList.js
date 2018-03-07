@@ -1,6 +1,25 @@
 $(document).ready(function(){
 
-    popBalloon(getData());
+    var data = getData();
+    popBalloon(data);
+
+    console.log(data);
+    
+
+    $(document).click(function(e){
+        
+        var post_id = e.target.getAttribute("id");
+        if(post_id > 0){
+
+            isBought(post_id, cover_img, title);
+            var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
+            var cover_img = data[card_id-1].post.cover_img;
+            var title = data[card_id-1].post.title;
+        }
+    });
+    $(".btn-cancel-wrap").click(function(){
+        $(".preview-wrap").hide();
+    });
 });
 
 function getData(){
@@ -27,10 +46,10 @@ function getData(){
                 $("#card_"+i+" .fb1_txt_1").attr("id", json[i-1].post.post_id);
                 $("#card_"+i+" .fb1_txt_2").attr("id", json[i-1].post.post_id);
 
-                $("#card_"+i+" .fb1_img > a > img").attr("src",json[i-1].post.cover_img);
-                //$("#card_"+i+" .fb1_img").css("background","url("+json[i-1].post.cover_img+")");        // 커버사진
-                $("#card_"+i+" .fb1_txt_1 > a").text(json[i-1].post.title);                                 // 제목
-                $("#card_"+i+" .fb1_txt_2 > a").text(json[i-1].post.main_content.substr(0,100));            // 내용
+                $("#card_"+i+" .fb1_img > img").attr("src",json[i-1].post.cover_img);
+                // $("#card_"+i+" .fb1_img").css("background","url("+json[i-1].post.cover_img+")");        // 커버사진
+                $("#card_"+i+" .fb1_txt_1").text(json[i-1].post.title);                                 // 제목
+                $("#card_"+i+" .fb1_txt_2").text(json[i-1].post.main_content.substr(0,100));            // 내용
                 $("#card_"+i+" .profile_date").text(json[i-1].post.created_date);                       // 작성일
 
                 $("#card_"+i+" .profile_name").text(json[i-1].post.author.username);                    // 작가이름

@@ -1,17 +1,5 @@
-$(document).ready(function(){
-
-    $(document).click(function(e){
-
-        var post_id = e.target.getAttribute("id");
-        
-        isBought(post_id);
-    });
-});
-
 /* 구매했는지 체크 */
-function isBought(post_id) {
-
-    var post_id = post_id
+function isBought(post_id, cover_img, title) {
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
@@ -23,16 +11,19 @@ function isBought(post_id) {
             if(json.detail.isBuy) {
                 window.location.href = "/column/read/"
             }else {
-                var preview_image = json.detail.preview_image;
-                console.log(json);
+                var preview_image = json.detail.preview;
+
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
 
                 var img = new Image();
-                img.src = json.detail.preview_image;
+                img.src = json.detail.preview;
 
                 $("#preview-main-content > img").replaceWith(img);
 
+                $("#preview-cover-img").attr("src",cover_img);
+                $(".preview-title").text(title);
+            
                 $(".preview-wrap").height($("html").height());
                 $(".preview-wrap").show();
             }
