@@ -18,4 +18,4 @@ class SearchTag(models.Model):
     tag = models.CharField(max_length=255)
 
     def __str__(self):
-        return 'Post({}), Tag({})'.format(self.post, self.name)
+        return 'Post({}), Tag({})'.format(self.post, self.tag)
