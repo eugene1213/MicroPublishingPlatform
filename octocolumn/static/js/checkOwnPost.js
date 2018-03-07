@@ -1,5 +1,5 @@
 /* 구매했는지 체크 */
-function isBought(post_id, cover_img, title) {
+function isBought(post_id, cover_img, title, date) {
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
@@ -23,6 +23,7 @@ function isBought(post_id, cover_img, title) {
 
                 $("#preview-cover-img").attr("src",cover_img);
                 $(".preview-title").text(title);
+                $(".preview-create-date").text(date);
             
                 $(".preview-wrap").height($("html").height());
                 $(".preview-wrap").show();
