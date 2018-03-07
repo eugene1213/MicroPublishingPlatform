@@ -18,7 +18,9 @@ $(document).ready(function(){
             var author = data[card_id-1].post.author;
             var tag = data[card_id-1].post.tag;
 
-            isBought(post_id, cover_img, title, date, author, tag);
+            var readtime = $("#card_" + card_id + " .profile_readtime").text();
+
+            isBought(post_id, cover_img, title, date, author, tag, readtime);
             
         }
     });

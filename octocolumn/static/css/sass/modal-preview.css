@@ -87,9 +87,27 @@
       justify-content: flex-start;
       width: 624px;
       margin: auto;
-      margin-bottom: 93px; }
+      margin-bottom: 93px;
+      font-weight: 200;
+      line-height: 26px; }
+      .preview-wrap .preview .preview-content-info .priceBtn {
+        float: left;
+        margin-right: 70px; }
+        .preview-wrap .preview .preview-content-info .priceBtn .btn {
+          display: inline-block;
+          padding: 0px 10px;
+          height: 26px;
+          line-height: 24px;
+          text-align: center;
+          border-radius: 4px;
+          color: #fff;
+          background-color: rgba(0, 75, 141, 0.8);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+          margin-right: 16px;
+          cursor: pointer; }
       .preview-wrap .preview .preview-content-info .preview-read-time {
         margin-right: 82px;
+        font-weight: 200;
         color: #c4c3c3; }
       .preview-wrap .preview .preview-content-info .preview-by {
         margin-right: 17px;
