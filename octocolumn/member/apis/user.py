@@ -62,7 +62,7 @@ class Login(APIView):
                                         response.data['token'],
                                         max_age=21600,
                                         httponly=True)
-                self.saved_login_log()
+                # self.saved_login_log()
                 return response
             data = {
                 "detail": "This Account is not Activate"
