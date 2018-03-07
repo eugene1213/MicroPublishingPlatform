@@ -1,5 +1,11 @@
 $(document).ready(function(){
     headerController();
+
+    $(".btn-logo-wrap").click(function(e){
+        if(e.clientX > window.innerWidth - 160) {
+            modal_on();
+        }
+    });
 });
 
 $(window).resize(function (){

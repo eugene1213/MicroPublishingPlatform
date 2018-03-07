@@ -211,7 +211,7 @@ class BuyList(models.Model):
         related_name='buylist_user_relation',
         null=True
     )
-    post = models.PositiveIntegerField()
+    post = models.ForeignKey('column.Post',null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
