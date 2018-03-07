@@ -25,6 +25,8 @@ function isBought(post_id, cover_img, title, date, author) {
                 $(".preview-title").text(title);
                 $(".preview-create-date").text(date);
                 $(".preview-author").text(author);
+
+                //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             
                 $(".preview-wrap").height($("html").height());
                 $(".preview-wrap").show();
