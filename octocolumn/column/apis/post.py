@@ -41,7 +41,6 @@ class PostCreateView(generics.GenericAPIView,
 
     def is_post(self, temp_id):
         temp = Temp.objects.filter(id=temp_id).get()
-        print(self.request.user)
         if temp.author == self.request.user:
             return True
         return False
@@ -70,7 +69,6 @@ class PostCreateView(generics.GenericAPIView,
     # 검색 태그 추가
     def search_tag(self, post_id, tag):
         search_tag = tag.split(',')
-        print(search_tag)
         if len(search_tag) > 5:
             raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
 
@@ -317,7 +315,6 @@ class IsBuyPost(APIView):
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
-        print(BuyList.objects.filter(user=self.request.user, post=param).get() is 0)
         try:
             BuyList.objects.filter(user=self.request.user, post=param).get()
             return Response({"detail": {
@@ -328,7 +325,6 @@ class IsBuyPost(APIView):
             post = Post.objects.filter(pk=param).get()
             serializer = PostSerializer(post)
 
-            # print(hashlib.md5(param.encode("utf")).hexdigest())
             if serializer:
                 return Response({"detail": {
                     "isBuy": False,

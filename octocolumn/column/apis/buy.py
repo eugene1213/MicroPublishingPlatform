@@ -15,12 +15,12 @@ class PostBuy(APIView):
 
     # 구매리스트에 존재하는지 판명
     def buylist_duplicate(self, post):
-        buylist = BuyList.objects.filter(user=self.request.user, post=post.pk)
+        buylist = BuyList.objects.filter(user=self.request.user, post=post)
         if self.request.user is None:
             raise exceptions.APIException({"detail": "Abnormal connect"}, 400)
         if len(buylist) != 0:
             raise exceptions.APIException({"detail": "It's a post I've already purchased"}, 400)
-        return BuyList.objects.create(user=self.request.user, post=post.pk)
+        return BuyList.objects.create(user=self.request.user, post=post)
 
     def post(self,request):
         data = self.request.data
@@ -43,7 +43,7 @@ class PostBuy(APIView):
             PointHistory.objects.buy(user=self.request.user, point=post_queryset.price,
                                      history=post_queryset.title)
 
-            BuyList.objects.get_or_create(user=self.request.user, post=post_queryset.pk)
+            BuyList.objects.get_or_create(user=self.request.user, post=post_queryset)
             # 유저 포인트 업데이트
             user_queryset.point -= post_queryset.price
             user_queryset.save()
