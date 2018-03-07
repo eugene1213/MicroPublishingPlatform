@@ -22,6 +22,8 @@ function buy(){
         },
         success: function(json) {
             console.log("구매됨");
+            alert("글을 구매했습니다.");
+            window.location.href = "/read/" + post_id;
         },
         error: function(error) {
             console.log(error);
