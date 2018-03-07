@@ -264,10 +264,22 @@ class PostReadView(APIView):
                 # 조회수 증가
                 post.hit += 1
                 post.save()
+                # 작가임
+                user = User.objects.filter(pk=post.author_id)
+                time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+                return Response({
+                    "detail":{
+                        "cover_img": serializer.data['cover_image'],
+                        "main_content": serializer.data['main_content'],
+                        "title": serializer.data['title'],
+                        "tag": serializer.data['tag'],
+                        "username": user.last_name + " " + user.first_name,
+                        'created_datetime': time.strftime('%Y.%m.%d'),
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                    }
+                }, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
-        raise exceptions.ValidationError({'detail': 'You did not buy this post'}, 400)
+        raise exceptions.ValidationError(False, 400)
 
 
 class PostPreReadView(APIView):
