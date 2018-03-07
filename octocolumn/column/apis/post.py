@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag, PreAuthorPost
+from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList
 from ..models import Post
 from ..serializers import PostSerializer, PreAuthorPostSerializer
@@ -208,6 +209,8 @@ class PostListView(APIView):
             # from_user.save()
             follower_count = to_user.following_users.count()
             # status = from_user.following_user.filter(to_user=serializer.data['author'])
+            tag = SearchTag.objects.filter(post=i)
+            tag_serializer = SearchTagSerializer(tag, many=True)
             data = {
                 "post":{
                     "post_id": serializer.data['pk'],
@@ -217,6 +220,7 @@ class PostListView(APIView):
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
                     'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ')/2,
+                    "tag": tag_serializer.data,
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + " " + user.first_name,
