@@ -24,9 +24,9 @@ function headerController(){
 
     if(windowWidth < 605 + logoWidth){
 
-        $(".btn-logo-wrap").width(605 + logoWidth);
+        $(".btn-logo-wrap").width(628 + logoWidth);
         if(logoWidth > 116){
-            $(".header-wrap").css("min-width", 604 + (logoWidth - 116));
+            $(".header-wrap").css("min-width", 628 + (logoWidth - 116));
         }else{
             $(".header-wrap").attr("style","");
         }
