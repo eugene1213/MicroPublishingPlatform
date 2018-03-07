@@ -1,3 +1,4 @@
+from django.contrib.auth.middleware import get_user
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -20,13 +21,17 @@ def index(request):
 
 
 def write(request):
-    return render_to_response('view/write.html')
+    if request.COOKIES:
+        if request.COOKIES['token']:
+            response = render_to_response("view/write.html", {"login": True})
+            return response
+    return render_to_response('view/main.html')
 
 
 def read(request, post_id):
-    print(post_id)
-    print(request.user)
-    post = Post.objects.filter(pk=post_id)
-    if BuyList.objects.filter(user=request.user, post=post).count() == 0:
-        return HttpResponseRedirect('/')
-    return render_to_response('view/read.html')
+
+    if request.COOKIES:
+        if request.COOKIES['token']:
+            response = render_to_response("view/read.html", {"login": True})
+            return response
+    return render_to_response('view/main.html')
