@@ -1,3 +1,4 @@
+{% load static %}
 <div class="preview-wrap">
     <div class="preview" id="preview">
         <div class="btn-cancel-wrap">
@@ -28,17 +29,17 @@
             <div class="click">
                 <div class="star">
                     <div class="star_click">
-                        <div id="star-five"></div>
-                        <!-- <img src="images/icons/read/yst.png" alt="평가">
-                        <img src="images/icons/read/yst.png" alt="평가">
-                        <img src="images/icons/read/yst.png" alt="평가">
-                        <img src="images/icons/read/yst.png" alt="평가">
-                        <img src="images/icons/read/Star.png" alt="평가"> -->
+                        <!-- <div id="star-five"></div> -->
+                        <img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
+                        <img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
+                        <img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
+                        <img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
+                        <img src="{% static 'images/icons/read/Star.png' %}" alt="평가">
                     </div><!-- star_click -->
                     별점
                 </div>
                 <div class="sns">
-                        <img src="images/icons/read/bm.png" alt="북마크">
+                        <img src="{% static 'images/icons/read/bm.png' %}" alt="북마크">
                 </div>
             </div><!-- click -->
             <div class="contents_wrap">
@@ -65,10 +66,72 @@
                 </div><!-- class="contents" -->
                 <div class="comment_wrap">
                     <div class="comment">
-                        <img src="images/icons/read/message-square.png" alt="댓글">
+                        <img src="{% static 'images/icons/read/message-square.png' %}" alt="댓글">
                         <span>222</span>
                     </div>
-                    <img src="images/icons/read/alert-triangle.png" alt="경고">
+                    <img src="{% static 'images/icons/read/alert-triangle.png' %}" alt="경고">
+                </div><!-- class="comment_wrap" -->
+            </div><!-- class="contents_wrap" -->
+        </div>
+        <div class="comment1">
+            <div class="contents_wrap">
+                <div class="contents">
+                    <div class="contents_title">
+                        <div class="picture">
+                            <img src="http://placehold.it/120">
+                        </div>
+                        <div class="name">Eric Ellis</div>
+                        <div class="title_name">여심 저격수</div>
+                        <div class="btnFollow">Follow</div>
+                    </div>
+                    <div class="text">
+                        Donec facilisis tortor ut augue lacinia, at viverra est semper.
+                        Sed sapien metus, scelerisque nec pharetra id, tempor a tortor.
+                        Pellentesque non dignissim neque.
+                        Ut porta viverra est, ut dignissim elit elementum ut.
+                        Nunc vel rhoncus nibh, ut tincidunt turpis.
+                        Integer ac enim pellentesque, adipiscing metus id, pharetra odio.
+                        Donec bibendum nunc sit amet tortor scelerisque luctus et sit amet mauris.
+                    </div>
+                </div><!-- class="contents" -->
+                <div class="comment_wrap">
+                    <div class="date">May 11</div>
+                    <div class="comment">
+                        <img src="{% static 'images/icons/read/message-square.png' %}" alt="댓글">
+                        <span>222</span>
+                    </div>
+                    <img src="{% static 'images/icons/read/alert-triangle.png' %}" alt="경고">
+                </div><!-- class="comment_wrap" -->
+            </div><!-- class="contents_wrap" -->
+        </div>
+        <div class="comment1">
+            <div class="contents_wrap">
+                <div class="contents">
+                    <div class="contents_title">
+                        <div class="picture">
+                            <img src="http://placehold.it/120">
+                        </div>
+                        <div class="name">Eric Ellis</div>
+                        <div class="title_name">여심 저격수</div>
+                        <div class="btnFollow">Follow</div>
+                    </div>
+                    <div class="text">
+                        Donec facilisis tortor ut augue lacinia, at viverra est semper.
+                        Sed sapien metus, scelerisque nec pharetra id, tempor a tortor.
+                        Pellentesque non dignissim neque.
+                        Ut porta viverra est, ut dignissim elit elementum ut.
+                        Nunc vel rhoncus nibh, ut tincidunt turpis.
+                        Integer ac enim pellentesque, adipiscing metus id, pharetra odio.
+                        Donec bibendum nunc sit amet tortor scelerisque luctus et sit amet mauris.
+                    </div>
+                </div><!-- class="contents" -->
+                <div class="comment_wrap">
+                    <div class="date">May 11</div>
+                    <div class="comment">
+                        <img src="{% static 'images/icons/read/message-square.png' %}" alt="댓글">
+                        <span>222</span>
+                    </div>
+                    <img src="{% static 'images/icons/read/alert-triangle.png' %}" alt="경고">
                 </div><!-- class="comment_wrap" -->
             </div><!-- class="contents_wrap" -->
         </div>

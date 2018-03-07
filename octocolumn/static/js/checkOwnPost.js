@@ -1,5 +1,5 @@
 /* 구매했는지 체크 */
-function isBought(post_id, cover_img, title, date, author, tag, readtime) {
+function isBought(post_id, cover_img, title, date, author, tag, readtime, price) {
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
@@ -26,6 +26,7 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime) {
                 $(".preview-create-date").text(date);
                 $(".preview-read-time").text(readtime);
                 $(".preview-author").text(author.username);
+                $(".priceBtn > .btn").text(price + "P로 구매");
 
                 //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             

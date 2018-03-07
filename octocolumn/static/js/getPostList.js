@@ -17,10 +17,11 @@ $(document).ready(function(){
             var date = data[card_id-1].post.created_datetime;
             var author = data[card_id-1].post.author;
             var tag = data[card_id-1].post.tag;
+            var price = data[card_id-1].post.price;
 
             var readtime = $("#card_" + card_id + " .profile_readtime").text();
 
-            isBought(post_id, cover_img, title, date, author, tag, readtime);
+            isBought(post_id, cover_img, title, date, author, tag, readtime, price);
             
         }
     });
