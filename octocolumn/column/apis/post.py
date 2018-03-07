@@ -288,7 +288,7 @@ class PostReadView(APIView):
                     }
                 }, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({'detail': 'expected error'}, 400)
-        raise exceptions.ValidationError(False, 400)
+        return Response(False, 200)
 
 
 class PostPreReadView(APIView):
