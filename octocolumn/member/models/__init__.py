@@ -3,3 +3,4 @@ from .user import *
 from .profile import *
 from .usersettings import *
 from .point import *
+from.connectedlog import *

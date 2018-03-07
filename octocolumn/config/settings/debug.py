@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     # rest_framework
     'rest_framework',
     'rest_framework.authtoken',
+    'ipware',
 
     'member',
     'column',
