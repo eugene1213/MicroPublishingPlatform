@@ -21,9 +21,6 @@ class CommentPagination(PageNumberPagination):
     def get_paginated_response(self, data):
         p = '^http:'
 
-
-        print(data)
-
         next_i = self.get_next_link()
         if next_i is None:
             next_url = None
