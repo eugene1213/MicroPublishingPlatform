@@ -21,6 +21,9 @@ class CommentPagination(PageNumberPagination):
     def get_paginated_response(self, data):
         p = '^http:'
 
+
+        print(data)
+
         next_i = self.get_next_link()
         if next_i is None:
             next_url = None
@@ -33,21 +36,9 @@ class CommentPagination(PageNumberPagination):
         else:
             previous_url = re.sub(p, 'https:', previous_i)
 
-        list = []
-        for i in data:
-            user = User.objects.filter(pk=i['author']).get()
-            data = {
-                "author": user.last_name + ' ' + user.first_name,
-                "content": i['content'],
-                "created_date": i['created_date'],
-                "parent_id": i['parent_id']
-
-            }
-            list.append(data)
-
         ret = collections.OrderedDict()
         ret["count"] = self.page.paginator.count
         ret["next"] = next_url
         ret["previous"] = previous_url
-        ret["results"] = list
+        ret["results"] = data
         return Response(ret)
