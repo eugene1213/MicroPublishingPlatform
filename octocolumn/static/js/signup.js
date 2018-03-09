@@ -1,8 +1,7 @@
 
 function signup_api(){
 
-    var lastName = $("#lastName-signup").val().trim();
-    var firstName = $("#firstName-signup").val().trim();
+    var nickName = $("#nickName-signup").val().trim();
     var email = $("#email-signup").val().trim();
     var password1 = $("#password1-signup").val().trim();
     var password2 = $("#password2-signup").val().trim();
@@ -13,8 +12,7 @@ function signup_api(){
         type: 'POST',
         dataType: 'json',
         data: {
-            last_name: lastName,
-            first_name: firstName,
+            nick_name: nickName,
             username : email,
             password1 : password1,
             password2 : password2

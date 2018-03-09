@@ -44,6 +44,8 @@ $(document).ready(function(){
             window.location.href = "/"
         }
     });
+
+    title2header("read");
 });
 function coverImgController(){
 

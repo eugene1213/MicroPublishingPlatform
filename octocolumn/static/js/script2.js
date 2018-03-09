@@ -112,9 +112,11 @@ function checkbox(){
         $(this).removeClass("unchecked");     // x  v (v x)
         
         if($(".checked").is("#business")){
-            $(".name_wrap").replaceWith("<div class='business_wrap'><div class='name'><span>기업이름</span><input type='text' name='bussiness'></div></div>");
+            $(".name_wrap > .name > span").text("기업이름");
+            $(".name_wrap > .name > input[type=text]").attr("id","businessName-signup");
         }else if($(".checked").is("#normal")){
-            $(".business_wrap").replaceWith("<div class='name_wrap'><div class='name'><span>성</span><input type='text' name='last'></div><div class='name'><span>이름</span><input type='text' name='first'></div></div>");
+            $(".name_wrap > .name > span").text("이름");
+            $(".name_wrap > .name > input[type=text]").attr("id","nickName-signup");
         }
     });
 }
