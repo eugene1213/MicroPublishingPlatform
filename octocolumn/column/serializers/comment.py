@@ -15,7 +15,7 @@ class CommentSerializer(ModelSerializer):
 
     def get_reply_count(self, obj):
         if obj.is_parent:
-            return obj.children().count()
+            return obj.children().count() + self.get_reply_count(obj.children())
         return 0
 
     reply_count = SerializerMethodField()
