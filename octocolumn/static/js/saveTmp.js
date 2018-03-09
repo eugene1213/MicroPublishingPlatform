@@ -1,7 +1,7 @@
 //타이핑을 멈추고 5초간 입력이 없으면 작성중인 내용 임시저장
 $(document).ready(function(){
     
-    title2header();
+    title2header("write");
     saveHandler();
 
     var placeholderCoord = $("#title").offset().left; // 에디터 placeholder 부분에서 마우스 커서가 변하지 않고 위치가 맞지 않는 문제 해결.가상요소(:after)라서 style태그를 추가하는 방식으로만 해결 가능

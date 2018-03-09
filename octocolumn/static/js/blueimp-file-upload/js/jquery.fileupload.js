@@ -220,7 +220,7 @@
                 }
             },
             done: function (e, data) {
-                
+
             },
 
             // Other callbacks:
@@ -281,10 +281,7 @@
             processData: false,
             contentType: false,
             cache: false,
-            timeout: 0,
-            headers: {
-                Authorization: 'token 8486961630196efedab16ce0baed51c071c7983f'
-            }
+            timeout: 0
         },
 
         // A list of options that require reinitializing event listeners and/or

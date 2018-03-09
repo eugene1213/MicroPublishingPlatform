@@ -10,6 +10,16 @@ $(document).ready(function() {
 
         previewModalHeight();                   // 모달 높이 계산해서 보여줌
 
+        $(window).scroll(function(){
+            if($(document).scrollTop() > $(".preview").height()) {
+
+                $('#html').on('scroll touchmove mousewheel', function(event) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  return false;
+                });
+            }
+        });
         $(".arrow-box").hide();
         $(".css-arrow").css("transform","rotate(360deg)");
     });
@@ -46,15 +56,10 @@ $(document).ready(function() {
 /* preview-wrap 높이 */
 function previewModalHeight(){
 
-    var htmlHeight = $("html").height();
+    var editorHeight = $(".editable").height();
     var previewHeight = $(".preview").height();
-
-    $(".preview").load(function(){
-
-        console.log(1);
-    });
     
-    $(".preview-wrap").height(htmlHeight);
+    $(".preview-wrap").height(editorHeight + 1600);
     $(".preview-wrap").show();
 }
 

@@ -70,7 +70,7 @@
             font-size: 24px;
             font-weight: bold;
             line-height: 41px;
-            border-top: 2px solid black;
+            border-top: 2px solid #2a292a;
         }
         .signup-wrap {
             width: 304px;
@@ -143,7 +143,7 @@
             span {
                 height: 16px;
                 font-size: 8px;
-                color: black;
+                color: #2a292a;
             }
         }
         &.signin .form_wrap {
@@ -217,21 +217,21 @@
                         }
                     }
                 }
-                .name_wrap {
-                    display: flex;
-                    justify-content: space-between;
+                // .name_wrap {
+                //     display: flex;
+                //     justify-content: space-between;
 
-                    .name {
-                        width: 144px;
+                //     .name {
+                //         width: 144px;
 
-                        &:nth-child(2){
-                            margin-left: 16px;
-                        }
-                    }
-                    input:nth-of-type(1), input:nth-of-type(2) {
-                        width: 144px;
-                    }
-                }
+                //         &:nth-child(2){
+                //             margin-left: 16px;
+                //         }
+                //     }
+                //     input:nth-of-type(1), input:nth-of-type(2) {
+                //         width: 144px;
+                //     }
+                // }
                 .agreement {
                     font-size: 8px;
 
@@ -253,7 +253,7 @@
                 border-radius: 4px;
                 background-color: #004b8d;
                 box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-                color: white;
+                color: #F5F5F5;
                 font-size: 16px;
                 cursor: pointer;
             }
@@ -263,7 +263,7 @@
                 width: 576px;
                 height: 408px;
                 padding-top: 55px;
-                border-top: 2px solid black;
+                border-top: 2px solid #2a292a;
                 margin-left: 184px;
 
                 button {
@@ -274,7 +274,7 @@
                     font-size: 16px;
                     font-weight: bold;
                     text-align: center;
-                    border: 1px solid black;
+                    border: 1px solid #2a292a;
                     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
                     border-radius: 4px;
                     cursor: pointer;
@@ -298,6 +298,7 @@
                 li {
                     list-style: decimal;
                     padding-left: 10px;
+                    color: #2a292a;
                 }
             }
             #style-1::-webkit-scrollbar-track
