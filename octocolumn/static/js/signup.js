@@ -7,7 +7,7 @@ function signup_api(){
     var password2 = $("#password2-signup").val().trim();
 
     $.ajax({
-        url: "http://127.0.0.1:8000/api/member/signup/",
+        url: "/api/member/signup/",
         async: false,
         type: 'POST',
         dataType: 'json',

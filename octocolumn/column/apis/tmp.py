@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import mixins, generics, status, exceptions
 from rest_framework.parsers import  MultiPartParser
 from rest_framework.response import Response
@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
 
-from member.models import Author as AuthorModel
+from member.models import Author as AuthorModel, User
 
 __all__ = (
     'TempCreateView',
@@ -22,7 +22,7 @@ class TempCreateView(generics.GenericAPIView,
                      mixins.DestroyModelMixin):
     queryset = Temp.objects.all()
     serializer_class = TempSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def is_author(self):
         try:
@@ -104,12 +104,12 @@ class TempCreateView(generics.GenericAPIView,
                             status=status.HTTP_406_NOT_ACCEPTABLE)
 
         if data['temp_id'] is '':
-            return Response({"detail": "Post does not exist."}, status=status.HTTP_200_OK)
+            return Response({"detail": "Temp does not exist."}, status=status.HTTP_200_OK)
         return self.queryset.filter(author=user).delete(id=data['id'])
 
 
 class TempFileUpload(generics.CreateAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     parser_classes = (MultiPartParser,)
     serializer_class = TempFileSerializer
 
@@ -125,15 +125,16 @@ class TempFileUpload(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         file_obj = self.request.FILES['files[]']
 
-        author = self.is_author()
+        # author = self.is_author()
+        #
+        # if author is not None:
+        #     if not author.is_active:
+        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
+        # else:
+        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
+        user = User.objects.filter(pk=self.request.user.id).get()
 
-        if author is not None:
-            if not author.is_active:
-                raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        else:
-            raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
-
-        serializer = TempFileSerializer(TempFile.objects.create(author=self.request.user, file=file_obj))
+        serializer = TempFileSerializer(TempFile.objects.create(author=user, file=file_obj))
         if serializer:
             return Response({"files[0]":
                 {
@@ -148,6 +149,7 @@ class TempFileUpload(generics.CreateAPIView):
 
 class TempListView(generics.ListCreateAPIView):
     queryset = Temp.objects.all()
+    permission_classes = (IsAuthenticated,)
     serializer_class = TempSerializer
 
     # 임시저장된 문서를 보여주는 리스트 뷰

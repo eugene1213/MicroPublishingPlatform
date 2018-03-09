@@ -80,13 +80,10 @@ function popBalloon(data) {
 function follow(author_id) {
 
     $.ajax({
-        url: "http://127.0.0.1:8000/api/member/follow/",
+        url: "/api/member/follow/",
         async: false,
         type: 'POST',
         dataType: 'json',
-        headers: {
-            'Authorization' : 'jwt eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImV1Z2VuZTJAb2N0b2NvbHVtbi5jb20iLCJleHAiOjE1MjAyMjUyMzcsIm9yaWdfaWF0IjoxNTE5NjIwNDM3fQ.dB-EHzQg3h1CyyTDIJPkyrn0ydNgdACvbQJvYxYxENk'
-        },
         data: {
             user_id: author_id
         },
