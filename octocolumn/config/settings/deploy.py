@@ -104,7 +104,6 @@ print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 
-
 ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
 LOGGING = {
     'version': 1,
