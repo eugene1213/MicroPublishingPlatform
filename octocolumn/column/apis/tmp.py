@@ -149,7 +149,7 @@ class TempFileUpload(generics.CreateAPIView):
 
 class TempListView(generics.ListCreateAPIView):
     queryset = Temp.objects.all()
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     serializer_class = TempSerializer
 
     # 임시저장된 문서를 보여주는 리스트 뷰
