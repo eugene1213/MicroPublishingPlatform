@@ -6,17 +6,27 @@ from ..models import Comment
 
 __all__ = (
     'CommentSerializer',
+    'CommentChildSerializer',
+    'CommentDetailSerializer'
 )
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(ModelSerializer):
+
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0
+
     reply_count = SerializerMethodField()
+    username = serializers.CharField(source='author.nickname')
 
     class Meta:
         model = Comment
         fields = (
+            'pk',
             'post',
-            'author',
+            'username',
             'content',
             'created_date',
             'reply_count',
@@ -27,17 +37,41 @@ class CommentSerializer(serializers.ModelSerializer):
             'created_date',
         )
 
-        def get_reply_count(self, obj):
-            if obj.is_parent:
-                return obj.children().count()
-            return 0
-
 
 class CommentChildSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        fields = [
-            'id',
+        fields = (
+            'pk',
             'content',
+            'created_date',
+    )
+
+
+class CommentDetailSerializer(ModelSerializer):
+
+    def get_replies(self, obj):
+        if obj.is_parent:
+            return CommentChildSerializer(obj.children(), many=True).data
+        return None
+
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0
+
+    reply_count = SerializerMethodField()
+    replies = SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = [
+            'pk',
+            'content_type',
+            'object_id',
+            'content',
+            'reply_count',
+            'replies',
             'timestamp',
         ]
+

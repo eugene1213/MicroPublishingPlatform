@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, exceptions, generics
 from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -19,18 +20,42 @@ class CommentCreateView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CommentSerializer
 
+    def parent(self, parent):
+        if parent =='':
+            return None
+        return parent
+
     def post(self, request):
-        post_id = self.request.data['post_id']
-        content = self.request.data['content']
-        post = Post.objects.filter(pk=post_id).get()
-        user = self.request.user
+        data = self.request.data
 
-        comment, result = Comment.objects.create(author=user, content=content, post=post)
+        post_id = data['post_id']
+        content = data['content']
+        try:
+            parent = self.parent(data['comment_id'])
 
-        if result:
-            return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
-        else:
-            return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
+            post = Post.objects.filter(pk=post_id).get()
+            user = self.request.user
+            parent_comment = Comment.objects.filter(pk=parent, post=post).get()
+            comment = Comment.objects.create(author=user, content=content, post=post)
+
+            if comment:
+                if comment.is_parent:
+                    comment.parent = parent_comment
+                    comment.save()
+                    return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+                raise exceptions.ValidationError({'detail': 'this param is wht'}, 400)
+            else:
+                return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            post = Post.objects.filter(pk=post_id).get()
+            user = self.request.user
+            comment = Comment.objects.create(author=user, content=content, post=post, parent=None)
+
+            if comment:
+                return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
 
 
 class CommentListView(generics.ListAPIView):
@@ -40,17 +65,21 @@ class CommentListView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
-        post = Post.objects.filter(pk=param).get()
-        queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()
 
-        page = self.paginate_queryset(queryset)
-        serializer = CommentSerializer(page, many=True)
+        try:
+            post = Post.objects.filter(pk=param).get()
+            queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()
 
-        if page is not None:
+            page = self.paginate_queryset(queryset)
             serializer = CommentSerializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
 
-        return Response(serializer.data)
+            if page is not None:
+                serializer = CommentSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')

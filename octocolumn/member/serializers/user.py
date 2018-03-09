@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'first_name',
             'username',
+            'nickname',
             'point',
             'is_active',
         )
@@ -27,8 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
 class SignUpSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(write_only=True)
-    first_name = serializers.CharField(write_only=True)
+    nickname = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
@@ -37,8 +37,7 @@ class SignUpSerializer(serializers.ModelSerializer):
             'username',
             'password1',
             'password2',
-            'first_name',
-            'last_name'
+            'nickname',
         )
 
     def validate(self, data):
@@ -50,8 +49,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password1'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            nickname=validated_data['nickname'],
             user_type='d'
             # img_profile=validated_data.get('img_profile')
         )

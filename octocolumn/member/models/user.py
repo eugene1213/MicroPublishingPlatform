@@ -15,22 +15,23 @@ __all__ = (
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, first_name, last_name, user_type, social_id=None, password=None):
+    def create_user(self, username, nickname, password=None):
         user = self.model(
             username=username,
-            first_name=first_name,
-            last_name=last_name,
+            nickname=nickname
         )
+        user.user_type = 'd'
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, username, last_name, first_name, password=None, *args,**kwargs):
+    def create_superuser(self, username, nickname, password=None, *args,**kwargs):
         user = self.model(
             username=username,
-            last_name=last_name,
-            first_name=first_name,
+            nickname=nickname,
+
         )
+        user.user_type = 'd'
         user.set_password(password)
         user.is_staff = True
         user.is_superuser = True
@@ -97,8 +98,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.EmailField(unique=True)
     social_id = models.CharField(null=True, max_length=255)
     point = models.IntegerField(default=0)
-    last_name = models.CharField(max_length=255)
-    first_name = models.CharField(max_length=255)
+    nickname = models.CharField(max_length=255, null=True)
+    full_name = models.CharField(max_length=255, null=True)
+    last_name = models.CharField(max_length=255, null=True)
+    first_name = models.CharField(max_length=255, null=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     waiting = models.PositiveIntegerField(default=0)
