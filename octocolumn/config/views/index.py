@@ -35,3 +35,10 @@ def read(request, post_id):
             response = render_to_response("view/read.html", {"login": True})
             return response
     return render_to_response('view/main.html')
+
+def profile(request):
+    if request.COOKIES:
+        if request.COOKIES['token']:
+            response = render_to_response("view/profile.html", {"login": True})
+            return response
+    return render_to_response('view/main.html')
