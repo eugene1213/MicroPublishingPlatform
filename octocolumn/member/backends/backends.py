@@ -3,16 +3,16 @@ from member.models import User
 __all__=(
     'FacebookBackend',
     'GoogleBackend',
-    'TwitterBackend',
+    'KakaoBackend',
     'SecondPasswordBackend'
 )
 
 
 class FacebookBackend:
-    def authenticate(facebook_user_id):
+    def authenticate(self, user_id):
         print(f'fb_{facebook_user_id}')
         try:
-            return User.objects.get(social_id=f'fb_{facebook_user_id}')
+            return User.objects.get(social_id=f'fb_{user_id}')
         except User.DoesNotExist:
             return None
 
@@ -24,9 +24,9 @@ class FacebookBackend:
 
 
 class GoogleBackend:
-    def authenticate(google_user_id):
+    def authenticate(self, user_id):
         try:
-            return User.objects.get(username=f'g_{google_user_id}')
+            return User.objects.get(social_id=f'g_{user_id}')
         except User.DoesNotExist:
             return None
 
@@ -37,10 +37,10 @@ class GoogleBackend:
             return None
 
 
-class TwitterBackend:
-    def authenticate(self, request, twitter_user_id):
+class KakaoBackend:
+    def authenticate(user_id):
         try:
-            return User.objects.get(username=f't_{twitter_user_id}')
+            return User.objects.get(social_id=f'k_{user_id}')
         except User.DoesNotExist:
             return None
 

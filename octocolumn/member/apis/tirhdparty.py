@@ -1,20 +1,24 @@
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
 from google.auth.transport import requests
 from google.oauth2 import id_token
+from rest_framework import status, exceptions
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from typing import NamedTuple
 from rest_framework.response import Response
+from rest_framework_jwt.settings import api_settings
 
 from config.settings.base import CLIENT_ID
-from member.backends import GoogleBackend
+from member.backends import GoogleBackend, KakaoBackend
 from member.models import User
 from member.serializers import UserSerializer
 from utils.jwt import jwt_token_generator
 
 __all__ =(
     'GoogleLogin',
+    'KakaoLogin'
 )
 
 
@@ -69,10 +73,67 @@ class GoogleLogin(APIView):
                 last_name=debug_token_info.family_name,
                 social_id=f'g_{user_id}',
             )
-
+        else:
+            user =User.objects.filter(social_id=f'g_{user_id}')
 
         data = {
             'user': UserSerializer(user).data,
             'token': jwt_token_generator(user)
         }
-        return Response(data)
+
+        response = Response(data, status=status.HTTP_200_OK)
+        if api_settings.JWT_AUTH_COOKIE:
+            response.set_cookie(api_settings.JWT_AUTH_COOKIE,
+                                response.data['token'],
+                                max_age=21600,
+                                httponly=True)
+        return response
+
+
+class KakaoLogin(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        import requests
+        token = self.kwargs.get('token')
+
+        def get_debug_token_info(token):
+            headers = {"Authorization": "Bearer "+token}
+            r = requests.post(url='https://kapi.kakao.com/v1/user/me',
+                              headers=headers)
+            # print(json.dumps(list(r)))
+            return r.json()
+
+        debug_token_info = get_debug_token_info(token)
+
+        if debug_token_info.get('code'):
+            raise exceptions.ValidationError({"detail": "token expired"})
+
+        user_id = debug_token_info['id']
+
+        user = KakaoBackend.authenticate(user_id=user_id)
+
+        if not user:
+            user = User.objects.create_kakao_user(
+                username=debug_token_info['kaccount_email'],
+                nickname=debug_token_info['properties']['nickname'],
+                social_id=f'k_{user_id}',
+            )
+        else:
+            user = User.objects.filter(social_id=f'k_{user_id}').get()
+
+        data = {
+            'user': UserSerializer(user).data,
+            'token': jwt_token_generator(user)
+        }
+
+        response = Response(data, status=status.HTTP_200_OK)
+        if api_settings.JWT_AUTH_COOKIE:
+            response.set_cookie(api_settings.JWT_AUTH_COOKIE,
+                                response.data['token'],
+                                max_age=21600,
+                                httponly=True)
+
+        return HttpResponseRedirect(redirect_to='/')
+
+

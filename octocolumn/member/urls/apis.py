@@ -3,7 +3,8 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
-    GoogleLogin, UpdatePassword, Follower, UserInfo
+    GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload
+
 
 urlpatterns = [
     # api:member:login
@@ -21,7 +22,12 @@ urlpatterns = [
 
     url(r'^facebook-login/', FacebookLogin.as_view(), name='facebook'),
     url(r'^google-login/', GoogleLogin.as_view(), name='google'),
-    # url(r'^facebook-login/', apis.FacebookLogin.as_view()),
+    url(r'^kakao-login/(?P<token>[\w\-]+)$', KakaoLogin.as_view(), name='kakao'),
+
+
+    # 프로필 관련
+    url(r'^profile-image/', ProfileImageUpload.as_view(), name='facebook'),
+    url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='facebook'),
 
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='facebook'),

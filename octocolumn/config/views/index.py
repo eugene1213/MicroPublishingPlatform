@@ -19,7 +19,6 @@ def index(request):
         return render_to_response('view/main.html',)
     return render_to_response('view/main.html',)
 
-
 def write(request):
     if request.COOKIES:
         if request.COOKIES['token']:
@@ -35,3 +34,6 @@ def read(request, post_id):
             response = render_to_response("view/read.html", {"login": True})
             return response
     return render_to_response('view/main.html')
+
+def kakao(request):
+    return render_to_response('view/kakao_login.html')
