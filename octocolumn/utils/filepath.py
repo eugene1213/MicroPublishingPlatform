@@ -14,6 +14,16 @@ def set_filename_format(now, instance, filename):
     )
 
 
+def user_set_filename_format(now, instance, filename):
+    """ file format setting e.g) {username}-{date}-{microsecond}{extension} hjh-2016-07-12-158859.png """
+    return "{username}-{date}-{microsecond}{extension}".format(
+        username=instance.user.pk,
+        date=str(now.date()),
+        microsecond=now.microsecond,
+        extension=os.path.splitext(filename)[1],
+    )
+
+
 #저장 경로 디렉토리 설정
 def temp_user_directory_path(instance, filename):
     """ image upload directory setting e.g)
@@ -70,11 +80,11 @@ def profile_image_user_directory_path(instance, filename):
     print()
     now = timezone.now()
     path = "profile/profile/{username}/{year}/{month}/{day}/{filename}".format(
-        username=instance.author.pk,
+        username=instance.user.pk,
         year=now.year,
         month=now.month,
         day=now.day,
-        filename=set_filename_format(now, instance,
+        filename=user_set_filename_format(now, instance,
                                      filename), )
     return path
 
@@ -86,10 +96,10 @@ def profile_cover_image_user_directory_path(instance, filename):
     print()
     now = timezone.now()
     path = "profile/cover/{username}/{year}/{month}/{day}/{filename}".format(
-        username=instance.author.pk,
+        username=instance.user.pk,
         year=now.year,
         month=now.month,
         day=now.day,
-        filename=set_filename_format(now, instance,
+        filename=user_set_filename_format(now, instance,
                                      filename), )
     return path

@@ -25,8 +25,10 @@ __all__ =(
 class GoogleLogin(APIView):
     permission_classes = (AllowAny,)
 
-    def post(self, request):
-        data = self.request.data
+    def get(self, request, *args, **kwargs):
+        token = self.kwargs.get('token')
+        print(token
+              )
 
         class DebugTokenInfo(NamedTuple):
             aud: str
@@ -49,7 +51,7 @@ class GoogleLogin(APIView):
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             return DebugTokenInfo(**idinfo)
 
-        debug_token_info = get_debug_token_info(request.data['access_token'])
+        debug_token_info = get_debug_token_info(token)
 
         if debug_token_info.iss not in ['accounts.google.com', 'https://accounts.google.com']:
             raise APIException('페이스북 토큰의 사용자와 전달받은 facebook_user_id가 일치하지 않음')
@@ -107,7 +109,9 @@ class KakaoLogin(APIView):
         debug_token_info = get_debug_token_info(token)
 
         if debug_token_info.get('code'):
-            raise exceptions.ValidationError({"detail": "token expired"})
+
+            return HttpResponseRedirect(redirect_to='/').delete_cookie()
+
 
         user_id = debug_token_info['id']
 

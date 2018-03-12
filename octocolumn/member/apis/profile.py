@@ -59,7 +59,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
         cover_file_obj = self.base64_content(self.request.data['img'])
 
         serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
-                                                                                  cover_file_obj=cover_file_obj))
+                                                                                  cover_image=cover_file_obj))
         if serializer:
             return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
         raise exceptions.APIException({"detail": "Upload Failed"}, 400)
