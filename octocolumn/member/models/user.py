@@ -40,39 +40,38 @@ class UserManager(BaseUserManager):
 
     #
     def create_facebook_user(self, user_info):
-        user = self.mdoel(
+        user = self.model(
             username=user_info['id'],
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],
-            user_type=User.USER_TYPE_FACEBOOK,
             social_id=user_info['social_id']
         )
+        user.user_type = 'f'
         user.set_unusable_password()
         user.is_active = True
         user.save()
         return user
 
     def create_google_user(self, user_info):
-        user = self.mdoel(
-            username=user_info['id'],
+        user = self.model(
+            username=user_info['username'],
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],
-            user_type=User.USER_TYPE_GOOGLE,
             social_id=user_info['social_id']
         )
+        user.user_type = 'g'
         user.set_unusable_password()
         user.is_active = True
         user.save()
         return user
 
-    def create_twitter_user(self, user_info):
-        user = self.mdoel(
-            username=user_info['id'],
-            first_name=user_info.get('first_name', ''),
-            last_name=user_info.get('last_name', ''),
-            user_type=User.USER_TYPE_TWITTER,
-            social_id=user_info['social_id']
+    def create_kakao_user(self, username,nickname,social_id):
+        user = self.model(
+            username=username,
+            nickname=nickname,
+            social_id=social_id
         )
+        user.user_type = 'k'
         user.set_unusable_password()
         user.is_active = True
         user.save()
@@ -83,12 +82,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     USER_TYPE_FACEBOOK = 'fb'
     USER_TYPE_DJANGO = 'd'
     USER_TYPE_GOOGLE = 'g'
-    USER_TYPE_TWITTER = 't'
+    USER_TYPE_KAKAO = 'k'
     CHOICES_USER_TYPE = (
         (USER_TYPE_FACEBOOK, 'Facebook'),
         (USER_TYPE_DJANGO, 'Django'),
         (USER_TYPE_GOOGLE, 'Google'),
-        (USER_TYPE_TWITTER, 'Twitter')
+        (USER_TYPE_KAKAO, 'Kakao')
     )
     user_type = models.CharField(
         max_length=50,
@@ -214,7 +213,7 @@ class BuyList(models.Model):
         related_name='buylist_user_relation',
         null=True
     )
-    post = models.ForeignKey('column.Post',null=True)
+    post = models.ForeignKey('column.Post', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, exceptions, generics
-from rest_framework.generics import get_object_or_404, ListAPIView
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,7 +21,7 @@ class CommentCreateView(APIView):
     serializer_class = CommentSerializer
 
     def parent(self, parent):
-        if parent =='':
+        if parent == '':
             return None
         return parent
 
@@ -64,7 +64,7 @@ class CommentListView(generics.ListAPIView):
     pagination_class = CommentPagination
 
     def list(self, request, *args, **kwargs):
-        param = self.kwargs.get('pk')
+        param = self.kwargs.get('post_pk')
 
         try:
             post = Post.objects.filter(pk=param).get()
@@ -82,7 +82,7 @@ class CommentListView(generics.ListAPIView):
             raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
 
     def get(self, request, *args, **kwargs):
-        param = self.kwargs.get('pk')
+        param = self.kwargs.get('post_pk')
         if param == '':
             raise exceptions.ValidationError({'detail': 'this param is wht'}, 400)
 
@@ -92,12 +92,14 @@ class CommentListView(generics.ListAPIView):
 class CommentLikeToggleView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
-        data = self.request.data
-        comment_instance = get_object_or_404(Comment, pk=data['comment_id'])
-        comment_like, comment_like_created = comment_instance.commentlike_set.get_or_create(
-            user=request.user
-        )
-        if not comment_like_created:
-            comment_like.delete()
-        return Response({'created': comment_like_created})
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        param = self.kwargs.get('comment_pk')
+        try:
+            comment_instance = Comment.objects.filter(pk=param).get()
+            result = Comment.like_toggle(user=user, comment=comment_instance)
+            if result:
+                return Response({'detail': 'created'})
+            return Response({'created': 'deleted'})
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})

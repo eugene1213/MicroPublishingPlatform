@@ -14,6 +14,7 @@ WSGI_APPLICATION = 'config.wsgi.deploy.application'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -36,7 +37,10 @@ INSTALLED_APPS = [
     'django_extensions',
     'storages',
 
+    # 장고 접속 에이전트 체크 라이브러리
+    'django_user_agents',
     'django_s3_storage',
+
     'ipware',
 
     'rest_framework',

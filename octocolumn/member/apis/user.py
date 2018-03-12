@@ -153,13 +153,23 @@ class FacebookLogin(APIView):
                 social_id=f'fb_{request.data["facebook_user_id"]}',
                 )
 
+        else:
+            pass
+
         # 유저 시리얼라이즈 결과를 Response
         # token도 추가
         data = {
             'user': UserSerializer(user).data,
             'token': jwt_token_generator(user),
         }
-        return Response(data)
+
+        response = Response(data, status=status.HTTP_200_OK)
+        if api_settings.JWT_AUTH_COOKIE:
+            response.set_cookie(api_settings.JWT_AUTH_COOKIE,
+                                response.data['token'],
+                                max_age=21600,
+                                httponly=True)
+        return response
 
 
 class TokenUserInfoAPIView(APIView):

@@ -131,17 +131,18 @@ function uploadProfileImg(whichImg) {
 
     if(whichImg == "cover") {
         img = $("#coverImg").attr("src");
+        url = "/api/member/usercover-image/";
     } else if(whichImg == "profile") {
         img = $("#profileImg").attr("src");
+        url = "/api/member/profile-image/";
     }
     $.ajax({
-        url: "/userProfileImg/",
+        url: url,
         async: false,
         type: 'POST',
         dataType: 'json',
-        data: {
-            img: img
-        },
+        contentType: "application/json",
+        data: JSON.stringify(img),
         success: function(json) {
             console.log("이미지 업데이트 성공");
         },
