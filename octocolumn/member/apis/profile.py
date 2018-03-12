@@ -2,7 +2,7 @@ import base64
 
 from django.core.files.base import ContentFile
 from rest_framework import generics, status, exceptions
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -17,7 +17,7 @@ __all__ = (
 
 class ProfileImageUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
-    parser_classes = (MultiPartParser,)
+    parser_classes = (JSONParser,)
     serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
@@ -31,7 +31,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
-        profile_file_obj = self.base64_content(self.request.data['img'])
+        profile_file_obj = self.base64_content(self.request.data)
 
         serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
                                                                         profile_image=profile_file_obj))
@@ -43,7 +43,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 
 class UserCoverImageUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
-    parser_classes = (MultiPartParser,)
+    parser_classes = (JSONParser,)
     serializer_class = CoverImageSerializer
 
     # base64 파일 파일 형태로
@@ -56,7 +56,8 @@ class UserCoverImageUpload(generics.CreateAPIView):
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     def post(self, request,*args,**kwargs):
-        cover_file_obj = self.base64_content(self.request.data['img'])
+        print(request.data)
+        cover_file_obj = self.base64_content(self.request.data)
 
         serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
                                                                                   cover_image=cover_file_obj))
