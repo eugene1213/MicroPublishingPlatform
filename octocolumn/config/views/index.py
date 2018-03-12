@@ -36,4 +36,7 @@ def read(request, post_id):
     return render_to_response('view/main.html')
 
 def kakao(request):
-    return render_to_response('view/kakao_login.html')
+    return render_to_response('view/login/kakao_login.html')
+
+def google(reqeust):
+    return render_to_response('view/login/google_login.html')

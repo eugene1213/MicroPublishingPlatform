@@ -31,7 +31,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
-        profile_file_obj = self.base64_content(self.request.data['profile'])
+        profile_file_obj = self.base64_content(self.request.data['img'])
 
         serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
                                                                         profile_image=profile_file_obj))
@@ -56,10 +56,10 @@ class UserCoverImageUpload(generics.CreateAPIView):
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     def post(self, request,*args,**kwargs):
-        cover_file_obj = self.base64_content(self.request.data['cover'])
+        cover_file_obj = self.base64_content(self.request.data['img'])
 
         serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
-                                                                                  cover_file_obj=cover_file_obj))
+                                                                                  cover_image=cover_file_obj))
         if serializer:
             return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
         raise exceptions.APIException({"detail": "Upload Failed"}, 400)

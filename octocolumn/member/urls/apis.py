@@ -21,8 +21,8 @@ urlpatterns = [
 
 
     url(r'^facebook-login/', FacebookLogin.as_view(), name='facebook'),
-    url(r'^google-login/', GoogleLogin.as_view(), name='google'),
-    url(r'^kakao-login/(?P<token>[\w\-]+)$', KakaoLogin.as_view(), name='kakao'),
+    url(r'^google-login/(?P<token>.*)$', GoogleLogin.as_view(), name='google'),
+    url(r'^kakao-login/(?P<token>.*)$', KakaoLogin.as_view(), name='kakao'),
 
 
     # 프로필 관련
