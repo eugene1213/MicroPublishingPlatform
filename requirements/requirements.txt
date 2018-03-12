@@ -40,3 +40,4 @@ google-auth-oauthlib
 django-cors-headers==2.1.0
 cryptography
 django-ipware
+django-user-agents
