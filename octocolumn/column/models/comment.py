@@ -86,9 +86,9 @@ class Comment(models.Model):
 
     @property
     def is_parent(self):
-        if self.parent is not None:
-            return False
-        return True
+        if Comment.objects.filter(parent=Comment.objects.filter(pk=self.pk).all()) is not None:
+            return True
+        return False
 
 
 class CommentLike(models.Model):

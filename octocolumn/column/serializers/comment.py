@@ -12,10 +12,16 @@ __all__ = (
 
 
 class CommentSerializer(ModelSerializer):
+    def child_all_count(self, data):
+        sum = 0
+        for i in data:
+            sum += i.children().count()
+            return sum
 
     def get_reply_count(self, obj):
         if obj.is_parent:
-            return obj.children().count() + self.get_reply_count(obj.children())
+            return obj.children().count() + self.child_all_count(obj.children())
+            # return obj.children().count()
         return 0
 
     reply_count = SerializerMethodField()
@@ -55,9 +61,16 @@ class CommentDetailSerializer(ModelSerializer):
             return CommentChildSerializer(obj.children(), many=True).data
         return None
 
+    def child_all_count(self, data):
+        sum = 0
+        for i in data:
+            sum += i.children().count()
+            return sum
+
     def get_reply_count(self, obj):
         if obj.is_parent:
-            return obj.children().count()
+            return obj.children().count() + self.child_all_count(obj.children())
+            # return obj.children().count()
         return 0
 
     reply_count = SerializerMethodField()
@@ -72,6 +85,6 @@ class CommentDetailSerializer(ModelSerializer):
             'content',
             'reply_count',
             'replies',
-            'timestamp',
+            'created_date',
         ]
 

@@ -21,7 +21,7 @@ class CommentCreateView(APIView):
     serializer_class = CommentSerializer
 
     def parent(self, parent):
-        if parent =='':
+        if parent == '':
             return None
         return parent
 

@@ -4,7 +4,6 @@ import re
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from member.models import User
 
 
 class PostPagination(PageNumberPagination):
