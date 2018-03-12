@@ -214,6 +214,7 @@ class PostListView(APIView):
                         "username": user.last_name + " " + user.first_name,
                         # "follow_status": status,
                         "follower_count": follower_count,
+                        "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
                         "profile_img": "",
                         "cover_img": ""

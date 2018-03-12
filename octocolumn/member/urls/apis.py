@@ -24,7 +24,7 @@ urlpatterns = [
     # url(r'^facebook-login/', apis.FacebookLogin.as_view()),
 
     # follower
-    url(r'^follow/', Follower.as_view(), name='facebook'),
+    url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='facebook'),
 
     # api:author 신청
     url(r'^author-apply', apis.AuthorAplly.as_view(), name='apply'),

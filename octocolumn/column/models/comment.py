@@ -1,14 +1,11 @@
-import re
-from audioop import reverse
 
 from django.db import models
 
 from member.models import User
-from .others import Tag
 
 __all__ = (
     'Comment',
-    'CommentLike',
+    'CommentLike'
 )
 
 
@@ -26,10 +23,11 @@ class Comment(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True)
     # html_content = models.TextField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
-    like_users = models.ManyToManyField(
+    like_user = models.ManyToManyField(
         'member.User',
         through='CommentLike',
         related_name='like_comments',
+        symmetrical=False
     )
 
     objects = CommentManager()
@@ -67,15 +65,15 @@ class Comment(models.Model):
     #     self.html_content = ori_content
     #     super().save(update_fields=['html_content'])
 
-    def comment_like_toggle(self, user):
+    def like_toggle(user, comment):
         # 1. 주어진 user가 User객체인지 확인
         #    아니면 raise ValueError()
         # 2. 주어진 user를 follow하고 있으면 해제
         #    안 하고 있으면 follow함
         if not isinstance(user, User):
-            raise ValueError('"user" argument must be User instance!')
+            raise ValueError('"comment" argument must be User instance!')
 
-        comment_like, relation_created = self.like_user_relation.get_or_create(user=user)
+        comment_like, relation_created = CommentLike.objects.get_or_create(user=user, comment=comment)
         if relation_created:
             return True
         comment_like.delete()
@@ -94,13 +92,17 @@ class Comment(models.Model):
 class CommentLike(models.Model):
     comment = models.ForeignKey(
         'Comment',
+        on_delete=models.CASCADE,
         null=True,
+        related_name='like_comment_relation',
     )
     user = models.ForeignKey(
         'member.User',
-         null=True,
-         related_name='like_user_relation',
-                             )
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='like_user_relation',
+
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

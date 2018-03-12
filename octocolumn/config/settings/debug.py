@@ -34,6 +34,7 @@ ALLOWED_HOSTS = config_secret_debug['django']['allowed_hosts']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+
+    # 장고 접속 에이전트 체크 라이브러리
+    'django_user_agents',
 
     'corsheaders',
 

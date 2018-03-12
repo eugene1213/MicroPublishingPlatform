@@ -14,17 +14,22 @@ __all__ = (
 class CommentSerializer(ModelSerializer):
     def child_all_count(self, data):
         sum = 0
-        for i in data:
-            sum += i.children().count()
-            return sum
+        if data != None:
+            for i in data:
+                sum += i.children().count()
+                return sum
+        return 0
 
     def get_reply_count(self, obj):
         if obj.is_parent:
             return obj.children().count() + self.child_all_count(obj.children())
-            # return obj.children().count()
         return 0
 
+    def get_like_url(self, obj):
+        return "/api/column/" + str(obj.pk) + "/comment-like/"
+
     reply_count = SerializerMethodField()
+    like_url = SerializerMethodField()
     username = serializers.CharField(source='author.nickname')
 
     class Meta:
@@ -37,6 +42,7 @@ class CommentSerializer(ModelSerializer):
             'created_date',
             'reply_count',
             'parent_id',
+            'like_url'
 
         )
         read_only_fields = (
