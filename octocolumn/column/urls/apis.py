@@ -13,7 +13,10 @@ urlpatterns = [
     url(r'^post-buy/$', PostBuy.as_view(), name='post-like'),
     # 포스트 읽기
     url(r'^post-view/(?P<pk>\d+)$', PostReadView.as_view(), name='post-view'),
-    url(r'^tempView/(?P<pk>\d+)$', TempView.as_view(), name='post-view'),
+    url(r'^tempView/', include([
+            url(r'^$', TempView.as_view(), name="post-list"),
+            url(r'^(?P<page>\w+)$', TempView.as_view(), name="post-list-page")
+    ]), name='post-view'),
 
     # 포스트 프리뷰
     url(r'^post-preview/$', PostPreReadView.as_view(), name='post-view'),

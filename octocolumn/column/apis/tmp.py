@@ -20,12 +20,13 @@ __all__ = (
 
 class TempView(APIView):
     permission_classes = (IsAuthenticated,)
+
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
-        user =self.request.user
+        user = self.request.user
         if param:
             try:
-                temp = Temp.objects.filter(user=user, pk=param).get()
+                temp = Temp.objects.filter(author=user, pk=param).get()
                 serializer = TempSerializer(temp)
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -34,10 +35,13 @@ class TempView(APIView):
                 raise exceptions.ValidationError({"detail":"Do not have temp"})
         else:
             try:
-                Temp.objects.filter(user=user).order_by('-modified_date')
-                return Response(True, 200)
+                temp = Temp.objects.filter(author=user).order_by('-modified_date')[:1].get()
+                serializer = TempSerializer(temp)
+                if serializer:
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                raise exceptions.ValidationError({"detail": "Abnormal connnectd"})
             except ObjectDoesNotExist:
-                return Response(False, 200)
+                return Response('', 200)
 
 
 class TempCreateView(generics.GenericAPIView,

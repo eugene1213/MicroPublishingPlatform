@@ -71,8 +71,6 @@ class PostListSerializer(serializers.ModelSerializer):
 
 
 class TempSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    title =serializers.CharField(allow_blank=True,max_length=255),
 
     class Meta:
         model = Temp
@@ -80,7 +78,8 @@ class TempSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'main_content',
-            'author_id'
+            'modified_date',
+            'author'
 
         )
 
