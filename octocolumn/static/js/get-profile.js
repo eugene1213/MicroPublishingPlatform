@@ -108,17 +108,35 @@ function get_profile() {
         }
     });
 }
-function updateUserInfo(userInfo) {             // 수정된 자기소개를 업로드한다.
+function getUserInfo(userInfo) {
 
     $.ajax({
-        url: "/userInfo/",
+        url: "/api/member/profileIntro/",
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        success: function(json) {
+
+            var userIntro = json.userIntro;
+            $(".profile_introduce > span").text();
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+function updateUserIntro(userIntro) {             // 수정된 자기소개를 업로드한다.
+
+    $.ajax({
+        url: "/api/member//",
         async: false,
         type: 'POST',
         dataType: 'json',
         data: {
-            userInfo: userInfo
+            userIntro: userIntro
         },
         success: function(json) {
+
             console.log("자기소개 업데이트 성공");
         },
         error: function(error) {
