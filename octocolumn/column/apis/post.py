@@ -80,6 +80,10 @@ class PostCreateView(generics.GenericAPIView,
     def major_point(self):
         return UsePoint.objects.filter(type='major_user').get()
 
+    def first_point(self):
+        return UsePoint.objects.filter(type='first_user').get()
+
+
 
     # base64 파일 파일 형태로
     def base64_content(self, image):
@@ -143,6 +147,7 @@ class PostCreateView(generics.GenericAPIView,
 
                 # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
+                user_queryset.waiting = 0
                 user_queryset.save()
 
                 self.add_point_history(point=self.major_point().point, history=temp.title)
@@ -156,7 +161,50 @@ class PostCreateView(generics.GenericAPIView,
                 raise exceptions.NotAcceptable({"detail": "This Account is Deactive "}, 401)
 
         else:
-            raise exceptions.NotAcceptable({"detail": "This Account is not author"}, 401)
+            # 임시저장 파일이 없을 경우
+            if data['temp_id'] == '':
+                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
+            try:
+                temp = Temp.objects.filter(id=data['temp_id']).get()
+            except ObjectDoesNotExist:
+                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
+
+            # 포인트가 모자르다면 에러발생
+            # 정확한 정보를 위해 db의 유저 정보를 가져온다
+            user_queryset = User.objects.filter(id=self.request.user.id).get()
+
+            # if self.is_post(data['temp_id']):
+            #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
+
+            serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
+                                                            main_content=temp.main_content,
+                                                            price=data['price'],
+                                                            preview_image=preview_file_obj,
+                                                            cover_image=cover_file_obj
+                                                            ))
+            # 태그 추가
+            if data['tag'] != '':
+                if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+                    raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+
+            # 템프파일 삭제
+            try:
+                Temp.objects.filter(id=data['temp_id']).delete()
+            except ObjectDoesNotExist:
+                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
+
+            # 유저 포인트 업데이트
+            user_queryset.point -= self.first_point().point
+            user_queryset.waiting = 0
+            user_queryset.save()
+
+            self.add_point_history(point=self.first_point().point, history=temp.title)
+            # 태그를 추가하고 태그 추가 실패
+
+            if serializer:
+                return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+            else:
+                raise exceptions.ValidationError({'detail': 'Already added'}, 400)
 
 
 class PostListView(APIView):
@@ -177,6 +225,13 @@ class PostListView(APIView):
             return tag_serializer.data
         return None
 
+    def image(self, user):
+        try:
+            img = ProfileImage.objects.filter(user=user).get()
+            return ProfileImageSerializer(img)
+        except ObjectDoesNotExist:
+            return None
+
     def get(self, request, *args, **kwargs):
         post = Post.objects.order_by('-created_date')[:5]
 
@@ -185,16 +240,12 @@ class PostListView(APIView):
             content = i.main_content
             rm_content = self.remove_tag(content)[0:1000]
             user = User.objects.filter(pk=i.author_id).get()
-            # profile_img = ProfileImage.objects.filter(id=i.author_id).get()
+
             serializer = PostSerializer(i)
             time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
             time2 = datetime.strptime(serializer.data['created_date'].split('T')[1].split('.')[0], '%H:%M:%S')
             text = self.remove_tag(content)
-            to_user = User.objects.filter(pk=serializer.data['author']).get()
-            # from_user = User.objects.filter(pk=self.request.user.id).get()
-            # from_user.save()
-            follower_count = to_user.following_users.count()
-            # status = from_user.following_user.filter(to_user=serializer.data['author'])
+            follower_count = user.following_users.count()
             tag = self.tag(i)
 
             data = {
@@ -215,8 +266,7 @@ class PostListView(APIView):
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
-                        "profile_img": "",
-                        "cover_img": ""
+                        "img": self.image(user)
 
                     }
                 }

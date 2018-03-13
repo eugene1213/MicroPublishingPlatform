@@ -101,7 +101,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255, null=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    waiting = models.PositiveIntegerField(default=0)
+    # 나를 팔로우 하고있는 숫자를 카운트
+    following_users_count = models.IntegerField(default=0)
+    # 나를 기다리고 있는 숫자를 카운트
+    waiting_count = models.IntegerField(default=0)
+    # 내가 팔로우한 숫자를 카운트
+    follower_users_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # like_posts = models.ManyToManyField(
@@ -125,6 +130,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         symmetrical=False,
         through='Relation',
         related_name='followers',
+    )
+    waiting_user = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        through='WaitingRelation',
+        related_name='waiting',
+
     )
     objects = UserManager()
 
@@ -159,6 +171,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         relation.delete()
         return False
 
+    def waiting_toggle(self,user):
+        if not isinstance(user, User):
+            raise ValueError('"user" argument must be User instance!')
+
+        relation, relation_created = self.waiting_from_user_relations.get_or_create(send_user=user)
+        if relation_created:
+            return True
+        relation.delete()
+        return False
+
         # if user in self.following_users.all():
         #     Relation.objects.filter(
         #         from_user=self,
@@ -174,6 +196,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         #     self.following_user_relations.create(to_user=user)
 
 
+# 팔로우 다대다
 class Relation(models.Model):
     # User의 follow목록을 가질 수 있도록
     # MTM에 대한 중개모델을 구성
@@ -199,6 +222,29 @@ class Relation(models.Model):
 class RelationProxy(Relation):
     class meta:
         proxy = True
+
+
+# 기다림
+class WaitingRelation(models.Model):
+    # User의 follow목록을 가질 수 있도록
+    # MTM에 대한 중개모델을 구성
+    # from_user, to_user, created_at으로 3개의 필드를 사용
+    receive_user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='waiting_from_user_relations',
+    )
+    send_user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='waiting_send_relations',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Relation (' \
+               f'from: {self.receive_user.username}, ' \
+               f'to: {self.send_user.username})'
 
 
 class BuyList(models.Model):

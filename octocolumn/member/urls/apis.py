@@ -4,7 +4,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
-    ProfileIntroUpdate
+    ProfileIntroUpdate, Waiting
 
 urlpatterns = [
     # api:member:login
@@ -32,7 +32,10 @@ urlpatterns = [
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),
 
     # follower
-    url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='facebook'),
+    url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
+    url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
+
+    # 기다림
 
     # api:author 신청
     url(r'^author-apply', apis.AuthorAplly.as_view(), name='apply'),
