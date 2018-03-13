@@ -1,9 +1,10 @@
 $(document).ready(function(){
 
     //get_profile();
-    getUserInfo();
+    getProfileIntro();
     historyBarHeight();
 
+/* start 커버, 프로필 이미지 처리 */
     $("#coverImgInput").change(function() {
         readURL(this,"#coverImg");
         
@@ -51,6 +52,8 @@ $(document).ready(function(){
                 this.value='';
         }
     }
+/* end 커버, 프로필 이미지 처리 */
+
 
     $(".pro_intro_btn").click(function(){
 
@@ -62,7 +65,7 @@ $(document).ready(function(){
         $(".profile_introduce").prop("contenteditable","false");
         $(".pro_intro_btn").show();
 
-        var userIntro = $(".profile_introduce").text();
+        var userIntro = $("#profileIntro").text();
         updateUserIntro(userIntro);
     });
 });
@@ -76,27 +79,30 @@ function historyBarHeight() {
 function get_profile() {
 
     $.ajax({
-        url: "/profile/",
+        url: "/api/member/getProfileInfo/",
         async: false,
         type: 'POST',
         dataType: 'json',
         success: function(json) {
+            console.log(json);
 
-            cover_img = json.cover_img;
-            profile_img = json.profile_img;
-            username = json.username;
-            user_info = json.user_info;
-            waiting = json.waiting;
-            stamp = json.stamp;
-            following = json.following;
-            follower = json.follower;
-            posts = json.posts;
-            
+            var cover_img = json.cover_img;
+            var profile_img = json.profile_img;
+            var username = json.username;
+            var user_info = json.user_info;
+            var waiting = json.waiting;
+            // var stamp = json.stamp;
+            var userIntro = json.intro;
+            var following = json.following;
+            var follower = json.follower;
+            var posts = json.posts;
+
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
             $(".content_title1 > span").text(username);
             $(".profile_introduce").text(user_info);
             $(".profile_con_icon").text(waiting);
+            $("#profileIntro").text(userIntro);
             $("#following").text(following);
             $("#follower").text(follower);
             $("#posts").text(posts);
@@ -108,19 +114,17 @@ function get_profile() {
         }
     });
 }
-function getUserInfo() {
+function getProfileIntro() {                    // 자기소개 받아온다.
     console.log("1asoifjas;lnfbasjfklj");
     $.ajax({
-        url: "/api/member/profileInfo/",
+        url: "/api/member/getProfileInfo/",
         async: false,
         type: 'POST',
         dataType: 'json',
         success: function(json) {
-            console.log("1asoifjas;lnfbasjfklj");
-            console.log("1"+json);
 
-            var userIntro = json.Intro;
-            $(".profile_introduce > span").text(userIntro);
+            var userIntro = json.intro;
+            $("#profileIntro").text(userIntro);
         },
         error: function(error) {
             console.log(error);

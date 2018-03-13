@@ -10,7 +10,6 @@ function info2header() {
         dataType: 'json',
         success: function(json) {
 
-            console.log(json);
             var username = json.user.nickname;
             var profile_image = json.profileImg.profile_image;
             var point = json.user.point;
