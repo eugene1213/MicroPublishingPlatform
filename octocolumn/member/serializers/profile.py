@@ -1,8 +1,9 @@
-from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import serializers, exceptions
 from rest_framework.fields import SerializerMethodField
 
 from column.models import Post
-from member.models import ProfileImage, Profile, User
+from member.models import ProfileImage, Profile
 from member.models.user import Relation
 
 __all__ = (
@@ -24,10 +25,21 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_waiting(self, obj):
         return obj.user.waiting
 
+    def get_image(self, obj):
+        try:
+            image = ProfileImage.objects.filter(user=obj.user).get()
+            serializer = ProfileImageSerializer(image)
+            if serializer:
+                return serializer.data
+            raise exceptions.ValidationError({"detail":"excepted error"})
+        except ObjectDoesNotExist:
+            return None
+
     post_count = SerializerMethodField()
     follower = SerializerMethodField()
     following = SerializerMethodField()
     waiting = SerializerMethodField()
+    image = SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -41,7 +53,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'follower',
             'following',
             'post_count',
-            'waiting'
+            'waiting',
+            'image'
         )
 
 
