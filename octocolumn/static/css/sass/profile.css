@@ -347,6 +347,8 @@
   margin-top: 20px;
   min-height: 442px;
   padding-bottom: 30px; }
+  .profile .profile_content .profile_introduce #profileIntro {
+    min-height: 402px; }
 
 .profile .profile_content .profile_introduce .pro_intro_tit {
   width: 80px;
