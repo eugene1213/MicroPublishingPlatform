@@ -1,5 +1,4 @@
 import base64
-import hashlib
 import re
 
 from datetime import datetime
@@ -147,7 +146,7 @@ class PostCreateView(generics.GenericAPIView,
 
                 # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
-                user_queryset.waiting = 0
+                user_queryset.waiting_count = 0
                 user_queryset.save()
 
                 self.add_point_history(point=self.major_point().point, history=temp.title)
@@ -195,7 +194,7 @@ class PostCreateView(generics.GenericAPIView,
 
             # 유저 포인트 업데이트
             user_queryset.point -= self.first_point().point
-            user_queryset.waiting = 0
+            user_queryset.waiting_count = 0
             user_queryset.save()
 
             self.add_point_history(point=self.first_point().point, history=temp.title)

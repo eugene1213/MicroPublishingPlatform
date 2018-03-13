@@ -4,7 +4,7 @@ from rest_framework.fields import SerializerMethodField
 
 from column.models import Post
 from member.models import ProfileImage, Profile
-from member.models.user import Relation
+
 
 __all__ = (
     'ProfileSerializer',

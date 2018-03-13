@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 
 from column.models import Temp
 from column.models import TempFile
@@ -32,7 +35,7 @@ class PostSerializer(serializers.ModelSerializer):
             'price',
             'comments',
             'cover_image',
-            'preview_image'
+            'preview_image',
         )
         read_only_fields = (
             'author',

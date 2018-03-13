@@ -145,7 +145,7 @@ class PublishPost(APIView):
             post = Post.objects.filter(author=user).order_by('-created_date').all()
             serializer = PostSerializer(post, many=True)
             if serializer:
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response({"join_date": user.created_at,"post":serializer.data}, status=status.HTTP_200_OK)
             raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
 
         except ObjectDoesNotExist:
