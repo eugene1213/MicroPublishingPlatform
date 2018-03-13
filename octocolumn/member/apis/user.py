@@ -1,6 +1,6 @@
-from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 import requests
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate
 from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
@@ -16,7 +16,7 @@ from rest_framework_jwt.settings import api_settings
 from config import settings
 from member.backends import FacebookBackend
 from member.models import User, ConnectedLog, ProfileImage
-from member.serializers import UserSerializer, SignUpSerializer
+from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
 from utils.jwt import jwt_token_generator
 
@@ -225,18 +225,17 @@ class VerifyToken(APIView):
 class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
-    # def profile_image(self):
-        #
-        # if len(ProfileImage.objects.filter(user=self.request.user)) != 0:
-        #     return ProfileImage.objects.filter(user=self.request.user).profile_image
-        # return None
-
-    def post(self,request):
+    def post(self, request):
         serializer = UserSerializer(self.request.user)
-        # profile_image = self.profile_image()
+        try:
+            profile_image = ProfileImage.objects.filter(user=self.request.user).get()
+            profile_serializer = ProfileImageSerializer(profile_image)
+            if serializer:
+                return Response({"user": serializer.data,
+                                 "profileImg": profile_serializer},
+                                status=status.HTTP_200_OK)
+            return Response({"detail": "NO User"})
 
-        if serializer:
-            return Response({"user": serializer.data,
-                             "profileImg": ''},
-                            status=status.HTTP_200_OK)
-        return Response({"detail": "NO User"})
+        except ObjectDoesNotExist:
+            return Response({"user": serializer.data}, status=status.HTTP_200_OK)
+

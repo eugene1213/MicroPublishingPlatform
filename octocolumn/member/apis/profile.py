@@ -2,12 +2,12 @@ import base64
 
 from django.core.files.base import ContentFile
 from rest_framework import generics, status, exceptions
-from rest_framework.parsers import MultiPartParser, JSONParser
+from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from member.models import ProfileImage
-from member.serializers import ProfileImageSerializer, CoverImageSerializer
+from member.serializers import ProfileImageSerializer
 
 __all__ = (
     'ProfileImageUpload',
@@ -44,7 +44,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 class UserCoverImageUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     parser_classes = (JSONParser,)
-    serializer_class = CoverImageSerializer
+    serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
     def base64_content(self, image):
