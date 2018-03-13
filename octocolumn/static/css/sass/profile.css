@@ -479,6 +479,8 @@
   margin-top: 4px;
   font-weight: 300;
   border-radius: 10px; }
+  .profile .profile_content .profile_history .history_bar .history_date1 > span {
+    color: #ffffff; }
 
 .profile .profile_content .profile_history .history_bar .history_date1 .date_box {
   width: 112px;
@@ -552,6 +554,8 @@
   left: -26px;
   font-weight: 300;
   border-radius: 10px; }
+  .profile .profile_content .profile_history .history_bar .history_date2 > span {
+    color: #ffffff; }
 
 .profile .profile_content .profile_history .history_bar .history_date2 .date_box {
   width: 120px;
@@ -598,6 +602,8 @@
   left: -26px;
   font-weight: 300;
   border-radius: 10px; }
+  .profile .profile_content .profile_history .history_bar .history_date3 > span {
+    color: #ffffff; }
 
 .profile .profile_content .profile_history .history_bar .history_date3 .date_box {
   width: 120px;

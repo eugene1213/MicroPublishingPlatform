@@ -95,6 +95,7 @@ input, button {
     min-height: 2000px;
     display: none; }
     .container .preview-wrap .preview {
+      position: relative;
       margin: auto;
       margin-top: 154px;
       margin-bottom: 154px;
@@ -106,14 +107,13 @@ input, button {
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5); }
       .container .preview-wrap .preview .btn-cancel-wrap {
         cursor: pointer;
-        position: fixed;
-        right: 198px;
-        top: 154px;
+        position: absolute;
+        right: -56px;
+        top: -8px;
         width: 32px;
         height: 32px; }
         .container .preview-wrap .preview .btn-cancel-wrap .btn-cancel {
-          margin-top: 6px;
-          margin-left: 9px;
+          position: fixed;
           transform: rotate(45deg); }
           .container .preview-wrap .preview .btn-cancel-wrap .btn-cancel:before {
             display: block;
