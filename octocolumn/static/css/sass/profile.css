@@ -579,6 +579,9 @@
   height: 72px;
   background: url(http://via.placeholder.com/104x72);
   margin-top: 2px; }
+  .profile .profile_content .profile_history .history_bar .history_date2 .date_box .date_img img {
+    width: 112px;
+    height: 72px; }
 
 .bordertip_left {
   position: absolute;
@@ -639,6 +642,9 @@
   height: 72px;
   background: url(http://via.placeholder.com/104x72);
   margin-top: 2px; }
+  .profile .profile_content .profile_history .history_bar .history_date3 .date_box .date_img img {
+    width: 112px;
+    height: 72px; }
 
 .bordertip_right2 {
   position: absolute;
