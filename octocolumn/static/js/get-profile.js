@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    //get_profile();
+    get_profile();
     getProfileIntro();
     historyBarHeight();
 
@@ -57,12 +57,13 @@ $(document).ready(function(){
 
     $(".pro_intro_btn").click(function(){
 
-        $(".profile_introduce").prop("contenteditable","true");
+        $("#profileIntro").prop("contenteditable","true");
+        $("#profileIntro").text().length
         $(".pro_intro_btn").hide();
     });
-    $(".profile_introduce").focusout(function(){
+    $("#profileIntro").focusout(function(){
 
-        $(".profile_introduce").prop("contenteditable","false");
+        $("#profileIntro").prop("contenteditable","false");
         $(".pro_intro_btn").show();
 
         var userIntro = $("#profileIntro").text();
@@ -86,10 +87,9 @@ function get_profile() {
         success: function(json) {
             console.log(json);
 
-            var cover_img = json.cover_img;
-            var profile_img = json.profile_img;
+            var cover_img = json.image.cover_image;
+            var profile_img = json.image.profile_image;
             var username = json.username;
-            var user_info = json.user_info;
             var waiting = json.waiting;
             // var stamp = json.stamp;
             var userIntro = json.intro;
@@ -100,7 +100,6 @@ function get_profile() {
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
             $(".content_title1 > span").text(username);
-            $(".profile_introduce").text(user_info);
             $(".profile_con_icon").text(waiting);
             $("#profileIntro").text(userIntro);
             $("#following").text(following);
@@ -115,7 +114,7 @@ function get_profile() {
     });
 }
 function getProfileIntro() {                    // 자기소개 받아온다.
-    console.log("1asoifjas;lnfbasjfklj");
+
     $.ajax({
         url: "/api/member/getProfileInfo/",
         async: false,
