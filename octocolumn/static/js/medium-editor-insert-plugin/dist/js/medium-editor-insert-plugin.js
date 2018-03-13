@@ -1932,7 +1932,7 @@ this["MediumInsert"]["Templates"]["src/js/templates/images-toolbar.hbs"] = Handl
      */
 
     Images.prototype.uploadDone = function (e, data) {
-        $.proxy(this, 'showImage', data.result.files[0].url, data)();
+        $.proxy(this, 'showImage', data.result.files[0].file.url, data)();
         this.core.clean();
         this.sorting();
     };

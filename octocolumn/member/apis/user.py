@@ -232,7 +232,7 @@ class UserInfo(APIView):
             profile_serializer = ProfileImageSerializer(profile_image)
             if serializer:
                 return Response({"user": serializer.data,
-                                 "profileImg": profile_serializer},
+                                 "profileImg": profile_serializer.data},
                                 status=status.HTTP_200_OK)
             return Response({"detail": "NO User"})
 
