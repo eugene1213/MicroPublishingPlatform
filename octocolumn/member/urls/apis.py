@@ -26,8 +26,8 @@ urlpatterns = [
 
 
     # 프로필 관련
-    url(r'^profileInfo/', ProfileInfo.as_view(), name='profile'),
-    url(r'^profileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
+    url(r'^getProfileInfo/', ProfileInfo.as_view(), name='profile'),
+    url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
     url(r'^profile-image/', ProfileImageUpload.as_view(), name='profile_image'),
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),
 
