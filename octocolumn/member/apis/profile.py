@@ -50,7 +50,7 @@ class ProfileIntroUpdate(APIView):
             serializer = ProfileSerializer(profile)
 
             if serializer:
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response('', status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
         except ObjectDoesNotExist:
@@ -58,7 +58,7 @@ class ProfileIntroUpdate(APIView):
             serializer = ProfileSerializer(update)
 
             if serializer:
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response('', status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
@@ -118,14 +118,14 @@ class UserCoverImageUpload(generics.CreateAPIView):
         try:
             ProfileImage.objects.filter(user=user).get()
             serializer = ProfileImageSerializer(ProfileImage.objects.update(user=user,
-                                                                                      cover_image=cover_file_obj))
+                                                                            cover_image=cover_file_obj))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
         except ObjectDoesNotExist:
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
-                                                                                      cover_image=cover_file_obj))
+                                                                            cover_image=cover_file_obj))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
