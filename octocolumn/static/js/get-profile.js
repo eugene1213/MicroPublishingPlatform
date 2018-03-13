@@ -3,6 +3,7 @@ $(document).ready(function(){
     get_profile();
     getProfileIntro();
     historyBarHeight();
+    get_my_posts();
 
 /* start 커버, 프로필 이미지 처리 */
     $("#coverImgInput").change(function() {
@@ -58,7 +59,10 @@ $(document).ready(function(){
     $(".pro_intro_btn").click(function(){
 
         $("#profileIntro").prop("contenteditable","true");
-        $("#profileIntro").text().length
+        //$("#profileIntro").text().length
+        $(".pro_intro_btn").hide();
+
+        setCaretAtEnd("#profileIntro");
         $(".pro_intro_btn").hide();
     });
     $("#profileIntro").focusout(function(){
@@ -95,7 +99,7 @@ function get_profile() {
             var userIntro = json.intro;
             var following = json.following;
             var follower = json.follower;
-            var posts = json.posts;
+            var posts = json.post_count;
 
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
@@ -188,3 +192,28 @@ function readURL(input,id) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function setCaretAtEnd(elem) {
+    var elemLen = $(elem).text().length;
+    if(elemLen == 0){
+     $(elem).focus();
+     return;
+    }
+    // For IE Only
+    if (document.selection) {
+        console.log(document.selection);
+        // Set focus
+        $(elem).focus();
+        // Use IE Ranges
+        var oSel = document.selection.createRange();
+        // Reset position to 0 & then set at end
+        oSel.moveStart('character', -elemLen);
+        oSel.moveStart('character', elemLen);
+        oSel.moveEnd('character', 0);
+        oSel.select();
+    }
+    else if (document.selection == undefined || elem.selectionStart || elem.selectionStart == '0') {
+        // Firefox/Chrome
+        $(elem).focus().text($(elem).text());
+    } // if
+} // SetCaretAtEnd()

@@ -466,7 +466,7 @@
 
 .profile .profile_content .profile_history .history_bar{
     width: 2px;
-    height: 430px;
+	min-height: 430px;
 	background-color: #2A292A;
 	margin: 0 auto;
     display: flex;
