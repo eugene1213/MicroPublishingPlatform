@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     //get_profile();
-
+    getUserInfo();
     historyBarHeight();
 
     $("#coverImgInput").change(function() {
@@ -62,8 +62,8 @@ $(document).ready(function(){
         $(".profile_introduce").prop("contenteditable","false");
         $(".pro_intro_btn").show();
 
-        var userInfo = $(".profile_introduce").text();
-        //updateUserInfo(userInfo);
+        var userIntro = $(".profile_introduce").text();
+        updateUserIntro(userIntro);
     });
 });
 
@@ -108,17 +108,37 @@ function get_profile() {
         }
     });
 }
-function updateUserInfo(userInfo) {             // 수정된 자기소개를 업로드한다.
+function getUserInfo() {
+    console.log("1asoifjas;lnfbasjfklj");
+    $.ajax({
+        url: "/api/member/profileInfo/",
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        success: function(json) {
+            console.log("1asoifjas;lnfbasjfklj");
+            console.log("1"+json);
+
+            var userIntro = json.Intro;
+            $(".profile_introduce > span").text(userIntro);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+function updateUserIntro(userIntro) {             // 수정된 자기소개를 업로드한다.
 
     $.ajax({
-        url: "/userInfo/",
+        url: "/api/member/updateProfileIntro/",
         async: false,
         type: 'POST',
         dataType: 'json',
         data: {
-            userInfo: userInfo
+            userIntro: userIntro
         },
         success: function(json) {
+
             console.log("자기소개 업데이트 성공");
         },
         error: function(error) {

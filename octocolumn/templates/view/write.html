@@ -6,33 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sass/write.css' %}">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
+    <link rel="stylesheet" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
     <link rel="stylesheet" href="{% static 'css/themes/default.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sass/write.css' %}">
-    <link rel="stylesheet" href="{% static 'css/common2.css' %}">
-    <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <!-- JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.iframe-transport.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.fileupload.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
     <script type="text/javascript" src="{% static 'js/medium-editor/dist/js/medium-editor.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/handlebars-v4.0.11.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.fileupload.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.iframe-transport.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/create-preview.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/cover-image.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/saveTmp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/create-preview.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cover-image.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/post.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 </head>
     <body>
         {% if login %}

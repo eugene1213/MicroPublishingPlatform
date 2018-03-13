@@ -1,3 +1,6 @@
+$(document).ready(function(){
+    info2header();
+});
 function info2header() {
 
     $.ajax({
@@ -7,12 +10,13 @@ function info2header() {
         dataType: 'json',
         success: function(json) {
 
-            var username = json.username;
-            var profile_image = json.profile_image;
-            var point = json.point;
+            console.log(json);
+            var username = json.user.nickname;
+            var profile_image = json.profileImg.profile_image;
+            var point = json.user.point;
 
-            $(".btn-right-wrap > btn-user > span").text(username);
-            $(".btn-right-wrap > btn-user > img").text(profile_image);
+            $(".btn-right-wrap > .btn-user > span").text(username);
+            $(".btn-right-wrap > .btn-user > img").attr("src", profile_image);
             $(".btn-point > .point").text(point + "p");
         },
         error: function(error) {
