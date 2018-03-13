@@ -1,7 +1,21 @@
-function get_my_posts(){    //프로필 페이지에서 자신이 쓴 글들을 보여준다.
+function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글들을 보여준다.
 
+    var url = '';
+
+    if(which == "post"){
+
+        url = "/api/member/getMyPost/";
+        date_div_right_2 = "</span><div class=\"date_box\" onclick=\"window.location.href=\'\/read\/";                         // 작성일 오른쪽 태그 + 이미지 소스 왼쪽 태그
+        date_div_right_3 = "\'\"><div class=\"date_img\"><img src=\""
+
+    }else if(which == "temp") {
+
+        url = "/api/member/getMyTemp/";
+        date_div_right_2 = "</span><div class=\"date_box\" onclick=\"window.location.href=\'\/write\/";                         // 작성일 오른쪽 태그 + 이미지 소스 왼쪽 태그
+        date_div_right_3 = "\'\"><div class=\"date_img\"><img src=\""
+    }
     $.ajax({
-        url: "/api/member/getMyPost/",
+        url: url,
         async: false,
         type: 'POST',
         dataType: 'json',

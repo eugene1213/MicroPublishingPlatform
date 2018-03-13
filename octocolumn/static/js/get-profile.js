@@ -3,7 +3,34 @@ $(document).ready(function(){
     get_profile();
     getProfileIntro();
     historyBarHeight();
-    get_my_posts();
+    get_my_posts("post");
+
+    $(".pro_his_tit1").addClass("on");
+
+    $(".pro_his_tit2").click(function(){
+
+        if($(".pro_his_tit1").hasClass("on")){
+            $(".history_date2").remove();
+            $(".history_date3").remove();
+            get_my_posts("temp");
+        }
+        $(".pro_his_tit1").removeClass("on");
+        $(".pro_his_tit2").addClass("on");
+        
+    });
+    $(".pro_his_tit1").click(function(){
+        
+        if($(".pro_his_tit2").hasClass("on")){
+            $(".history_date2").remove();
+            $(".history_date3").remove();
+            get_my_posts("post");
+        }
+        $(".pro_his_tit2").removeClass("on");
+        $(".pro_his_tit1").addClass("on");
+
+        
+    });
+
 
 /* start 커버, 프로필 이미지 처리 */
     $("#coverImgInput").change(function() {
