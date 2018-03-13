@@ -27,9 +27,8 @@ class Profile(models.Model):
         null=True
     )
     phone = models.CharField(max_length=100, null=True)
-    intro = models.TextField()
+    intro = models.TextField(null=True)
     jobs = models.CharField(max_length=255, null=True)
-    interview = models.CharField(max_length=255, null=True)
     region = models.CharField(max_length=255,null=True)
 
 
