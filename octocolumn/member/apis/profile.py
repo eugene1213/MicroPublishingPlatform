@@ -1,18 +1,37 @@
 import base64
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import generics, status, exceptions
-from rest_framework.parsers import MultiPartParser, JSONParser
+from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from member.models import ProfileImage
-from member.serializers import ProfileImageSerializer, CoverImageSerializer
+from member.models import ProfileImage, Profile
+from member.serializers import ProfileImageSerializer, ProfileSerializer
 
 __all__ = (
     'ProfileImageUpload',
-    'UserCoverImageUpload'
+    'UserCoverImageUpload',
+    'ProfileInfo'
 )
+
+
+class ProfileInfo(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+        try:
+            profile = Profile.objects.filter(user=user).get()
+            serializer = ProfileSerializer(profile)
+
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({"detail":"Abnormal connected"})
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "You have not entered yet."})
 
 
 class ProfileImageUpload(generics.CreateAPIView):
@@ -44,7 +63,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 class UserCoverImageUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     parser_classes = (JSONParser,)
-    serializer_class = CoverImageSerializer
+    serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
     def base64_content(self, image):

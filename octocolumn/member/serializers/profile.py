@@ -1,11 +1,24 @@
 from rest_framework import serializers
 
-from member.models import ProfileImage
+from member.models import ProfileImage, Profile
 
-__all__ =(
+__all__ = (
+    'ProfileSerializer',
     'ProfileImageSerializer',
-    'CoverImageSerializer'
 )
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = (
+            'birth',
+            'sex',
+            'phone',
+            'intro',
+            'jobs',
+            'intro'
+        )
 
 
 class ProfileImageSerializer(serializers.ModelSerializer):
@@ -13,16 +26,6 @@ class ProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileImage
         fields = (
-            'pk',
-            'profile_image'
-        )
-
-
-class CoverImageSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ProfileImage
-        fields = (
-            'pk',
+            'profile_image',
             'cover_image'
         )
