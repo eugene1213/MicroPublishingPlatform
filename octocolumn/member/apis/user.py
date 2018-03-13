@@ -33,9 +33,10 @@ __all__ = (
 class Login(APIView):
     permission_classes = (AllowAny,)
 
-    def saved_login_log(self):
+    def saved_login_log(self, user):
         log = ConnectedLog()
-        log.user = self.request.user
+        log.user = user
+        log.type = 'login'
         log.ip_address = get_ip(self.request)
         log.user_agent = self.request.META['HTTP_USER_AGENT']
         return log.save()
@@ -61,7 +62,7 @@ class Login(APIView):
                                         response.data['token'],
                                         max_age=21600,
                                         httponly=True)
-                # self.saved_login_log()
+                self.saved_login_log(user)
                 return response
             data = {
                 "detail": "This Account is not Activate"
@@ -78,10 +79,19 @@ class Login(APIView):
 class Logout(APIView):
     permission_classes = (IsAuthenticated,)
 
+    def saved_logout_log(self, user):
+        log = ConnectedLog()
+        log.user = user
+        log.type = 'logout'
+        log.ip_address = get_ip(self.request)
+        log.user_agent = self.request.META['HTTP_USER_AGENT']
+        return log.save()
+
     def post(self, request):
         response = Response({"detail": "Successfully logged out."},
                         status= status.HTTP_200_OK)
 
+        self.saved_logout_log(self.request.user)
         response.delete_cookie('token')
         return response
 
