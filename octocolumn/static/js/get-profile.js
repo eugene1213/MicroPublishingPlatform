@@ -3,6 +3,7 @@ $(document).ready(function(){
     get_profile();
     getProfileIntro();
     historyBarHeight();
+    get_my_posts();
 
 /* start 커버, 프로필 이미지 처리 */
     $("#coverImgInput").change(function() {
