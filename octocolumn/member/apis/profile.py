@@ -8,6 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from column.models import Post, Temp
+from column.serializers import PostSerializer, TempSerializer
 from member.models import ProfileImage, Profile
 from member.serializers import ProfileImageSerializer, ProfileSerializer
 
@@ -15,7 +17,9 @@ __all__ = (
     'ProfileImageUpload',
     'UserCoverImageUpload',
     'ProfileInfo',
-    'ProfileIntroUpdate'
+    'ProfileIntroUpdate',
+    'PublishPost',
+    'MyTemp'
 )
 
 
@@ -129,5 +133,39 @@ class UserCoverImageUpload(generics.CreateAPIView):
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+
+
+class PublishPost(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+
+        try:
+            post = Post.objects.filter(author=user).order_by('-created_date').all()
+            serializer = PostSerializer(post, many=True)
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
+
+        except ObjectDoesNotExist:
+            return None
+
+
+class MyTemp(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+
+        try:
+            post = Temp.objects.filter(author=user).order_by('-created_date').all()
+            serializer = TempSerializer(post, many=True)
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
+
+        except ObjectDoesNotExist:
+            return None
 
 
