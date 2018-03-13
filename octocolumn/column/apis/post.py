@@ -265,7 +265,7 @@ class PostListView(APIView):
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
-                        "img": self.image(user)
+                        "img": self.image(user).data
 
                     }
                 }
