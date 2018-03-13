@@ -237,5 +237,9 @@ class UserInfo(APIView):
             return Response({"detail": "NO User"})
 
         except ObjectDoesNotExist:
-            return Response({"user": serializer.data}, status=status.HTTP_200_OK)
+            return Response({"user": serializer.data,
+                             "profileImg":{
+                                 "profile_image": None,
+                                 "cover_image": None
+                             }}, status=status.HTTP_200_OK)
 

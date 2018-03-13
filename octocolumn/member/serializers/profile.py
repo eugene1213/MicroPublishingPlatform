@@ -12,7 +12,6 @@ class ProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileImage
         fields = (
-            'pk',
             'profile_image',
             'cover_image'
         )
