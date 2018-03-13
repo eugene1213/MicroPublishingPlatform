@@ -86,10 +86,11 @@ class ProfileImageUpload(generics.CreateAPIView):
         profile_file_obj = self.base64_content(self.request.data)
 
         try:
-            ProfileImage.objects.filter(user=user).get()
+            profile_image = ProfileImage.objects.filter(user=user).get()
+            profile_image.profile_image = profile_file_obj
+            profile_image.save()
 
-            serializer = ProfileImageSerializer(ProfileImage.objects.update(user=user,
-                                                                            profile_image=profile_file_obj))
+            serializer = ProfileImageSerializer(profile_image)
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
@@ -120,9 +121,10 @@ class UserCoverImageUpload(generics.CreateAPIView):
         user = self.request.user
         cover_file_obj = self.base64_content(self.request.data)
         try:
-            ProfileImage.objects.filter(user=user).get()
-            serializer = ProfileImageSerializer(ProfileImage.objects.update(user=user,
-                                                                            cover_image=cover_file_obj))
+            profile_image = ProfileImage.objects.filter(user=user).get()
+            profile_image.cover_image = cover_file_obj
+            profile_image.save()
+            serializer = ProfileImageSerializer(profile_image)
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
@@ -145,7 +147,7 @@ class PublishPost(APIView):
             post = Post.objects.filter(author=user).order_by('created_date').all()
             serializer = PostSerializer(post, many=True)
             if serializer:
-                return Response({"join_date": user.created_at, "post":serializer.data}, status=status.HTTP_200_OK)
+                return Response({"join_date": user.created_at, "post": serializer.data}, status=status.HTTP_200_OK)
             raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
 
         except ObjectDoesNotExist:
