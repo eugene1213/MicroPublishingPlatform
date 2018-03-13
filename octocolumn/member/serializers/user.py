@@ -73,6 +73,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         return data
 
 
+
 class ChangePasswordSerializer(serializers.Serializer):
     """
     Serializer for password change endpoint.

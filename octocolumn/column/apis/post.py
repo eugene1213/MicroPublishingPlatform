@@ -191,7 +191,6 @@ class PostListView(APIView):
             time2 = datetime.strptime(serializer.data['created_date'].split('T')[1].split('.')[0], '%H:%M:%S')
             text = self.remove_tag(content)
             to_user = User.objects.filter(pk=serializer.data['author']).get()
-            to_user.save()
             # from_user = User.objects.filter(pk=self.request.user.id).get()
             # from_user.save()
             follower_count = to_user.following_users.count()
