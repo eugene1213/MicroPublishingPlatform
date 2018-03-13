@@ -1,10 +1,8 @@
-from pprint import pprint
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import (
     PermissionsMixin)
 from django.db import models
-from rest_framework.authtoken.models import Token
 
 
 __all__ = (
@@ -204,9 +202,9 @@ class RelationProxy(Relation):
 
 
 class BuyList(models.Model):
-    # User의 follow목록을 가질 수 있도록
+    # User의 buy_list 가질 수 있도록
     # MTM에 대한 중개모델을 구성
-    # user, buy_list, created_at으로 3개의 필드를 사용
+    # user, post, created_at으로 3개의 필드를 사용
     user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
@@ -219,7 +217,7 @@ class BuyList(models.Model):
     def __str__(self):
         return f'BuyList (' \
                f'from: {self.user.username}, ' \
-               f'to: {self.post})'
+               f'to: {self.post.title})'
 
 
 

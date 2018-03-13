@@ -50,14 +50,23 @@ class ProfileImageUpload(generics.CreateAPIView):
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
+        user = self.request.user
         profile_file_obj = self.base64_content(self.request.data)
 
-        serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
-                                                                        profile_image=profile_file_obj))
+        try:
+            ProfileImage.objects.filter(user=user).get()
+            serializer = ProfileImageSerializer(ProfileImage.objects.update(user=user,
+                                                                            profile_image=profile_file_obj))
+            if serializer:
+                return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
+            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
-        if serializer:
-            return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-        raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+        except ObjectDoesNotExist:
+            serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
+                                                                            profile_image=profile_file_obj))
+            if serializer:
+                return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
+            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
 
 class UserCoverImageUpload(generics.CreateAPIView):
@@ -75,12 +84,21 @@ class UserCoverImageUpload(generics.CreateAPIView):
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     def post(self, request,*args,**kwargs):
-        print(request.data)
+        user = self.request.user
         cover_file_obj = self.base64_content(self.request.data)
+        try:
+            ProfileImage.objects.filter(user=user).get()
+            serializer = ProfileImageSerializer(ProfileImage.objects.update(user=user,
+                                                                                      cover_image=cover_file_obj))
+            if serializer:
+                return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
+            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
-        serializer = ProfileImageSerializer(ProfileImage.objects.update_or_create(user=self.request.user,
-                                                                                  cover_image=cover_file_obj))
-        if serializer:
-            return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-        raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+        except ObjectDoesNotExist:
+            serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
+                                                                                      cover_image=cover_file_obj))
+            if serializer:
+                return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
+            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+
 
