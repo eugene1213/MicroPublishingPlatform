@@ -14,7 +14,8 @@ from member.serializers import ProfileImageSerializer, ProfileSerializer
 __all__ = (
     'ProfileImageUpload',
     'UserCoverImageUpload',
-    'ProfileInfo'
+    'ProfileInfo',
+    'ProfileIntroUpdate'
 )
 
 
@@ -29,9 +30,36 @@ class ProfileInfo(APIView):
 
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({"detail":"Abnormal connected"})
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
             raise exceptions.ValidationError({"detail": "You have not entered yet."})
+
+
+class ProfileIntroUpdate(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+        data = self.request.data
+
+        try:
+            profile = Profile.objects.filter(user=user).get()
+
+            profile.intro = data['userIntro']
+            profile.save()
+            serializer = ProfileSerializer(profile)
+
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
+        except ObjectDoesNotExist:
+            update = Profile.objects.create(user=user, intro=data['userIntro'])
+            serializer = ProfileSerializer(update)
+
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
 class ProfileImageUpload(generics.CreateAPIView):
@@ -55,6 +83,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 
         try:
             ProfileImage.objects.filter(user=user).get()
+
             serializer = ProfileImageSerializer(ProfileImage.objects.update(user=user,
                                                                             profile_image=profile_file_obj))
             if serializer:
