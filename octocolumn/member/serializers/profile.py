@@ -13,17 +13,17 @@ __all__ = (
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    def get_follower(self, obj):
-        return obj.user.following_users.count()
-
     def get_following(self, obj):
-        return Relation.objects.filter(from_user=obj.user).count()
+        return obj.user.following_users_count
+
+    def get_follower(self, obj):
+        return obj.user.follower_users_count
 
     def get_post_count(self, obj):
         return Post.objects.filter(author=obj.user).count()
 
     def get_waiting(self, obj):
-        return obj.user.waiting
+        return obj.user.waiting_count
 
     def get_image(self, obj):
         try:
