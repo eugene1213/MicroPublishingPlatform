@@ -39,6 +39,9 @@ def profile(request):
         return response
     return render_to_response('view/main.html')
 
+def facebook(request):
+    return render_to_response('view/login/facebook_login.html')
+
 
 def kakao(request):
     return render_to_response('view/login/kakao_login.html')
