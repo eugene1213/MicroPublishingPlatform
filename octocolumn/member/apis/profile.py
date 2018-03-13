@@ -161,8 +161,8 @@ class MyTemp(APIView):
         user = self.request.user
 
         try:
-            post = Temp.objects.filter(author=user).order_by('created_date').all()
-            serializer = TempSerializer(post, many=True)
+            temp = Temp.objects.filter(author=user).order_by('-modified_date').all()
+            serializer = TempSerializer(temp, many=True)
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.APIException({"detail": "Abnormal connected"}, 400)

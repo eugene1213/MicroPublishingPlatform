@@ -3,6 +3,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import mixins, generics, status, exceptions
 from rest_framework.parsers import  MultiPartParser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
@@ -12,8 +13,35 @@ from member.models import Author as AuthorModel, User
 __all__ = (
     'TempCreateView',
     'TempListView',
-    'TempFileUpload'
+    'TempFileUpload',
+    'TempView'
 )
+
+
+class TempView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        param = self.kwargs.get('pk')
+        user = self.request.user
+        if param:
+            try:
+                temp = Temp.objects.filter(author=user, pk=param).get()
+                serializer = TempSerializer(temp)
+                if serializer:
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                raise exceptions.ValidationError({"detail":"Abnormal connnectd"})
+            except ObjectDoesNotExist:
+                raise exceptions.ValidationError({"detail":"Do not have temp"})
+        else:
+            try:
+                temp = Temp.objects.filter(author=user).order_by('-modified_date')[:1].get()
+                serializer = TempSerializer(temp)
+                if serializer:
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                raise exceptions.ValidationError({"detail": "Abnormal connnectd"})
+            except ObjectDoesNotExist:
+                return Response('', 200)
 
 
 class TempCreateView(generics.GenericAPIView,
