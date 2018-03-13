@@ -1,4 +1,3 @@
-import os
 from django.db import models
 
 # 저장 경로 파일 이름 설정
@@ -19,7 +18,7 @@ class Profile(models.Model):
         (SEX_TYPE_MALE, 'm'),
         (SEX_TYPE_FEMALE, 'f'),
     )
-    user = models.ForeignKey('User', null=True)
+    user = models.ForeignKey('member.User', null=True)
     birth = models.DateField(null=True)
     sex = models.CharField(
         max_length=1,

@@ -50,7 +50,6 @@ class SignUpSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             password=validated_data['password1'],
             nickname=validated_data['nickname'],
-            user_type='d'
             # img_profile=validated_data.get('img_profile')
         )
 

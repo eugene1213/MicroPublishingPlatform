@@ -15,7 +15,7 @@ from rest_framework_jwt.settings import api_settings
 
 from config import settings
 from member.backends import FacebookBackend
-from member.models import User, ConnectedLog, ProfileImage
+from member.models import User, ProfileImage, ConnectedLog
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
 from utils.jwt import jwt_token_generator
@@ -230,9 +230,10 @@ class UserInfo(APIView):
         try:
             profile_image = ProfileImage.objects.filter(user=self.request.user).get()
             profile_serializer = ProfileImageSerializer(profile_image)
+
             if serializer:
                 return Response({"user": serializer.data,
-                                 "profileImg": profile_serializer},
+                                 "profileImg": profile_serializer.data},
                                 status=status.HTTP_200_OK)
             return Response({"detail": "NO User"})
 
