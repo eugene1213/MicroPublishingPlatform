@@ -35,7 +35,7 @@ class TempView(APIView):
                 raise exceptions.ValidationError({"detail": "Do not have temp"})
         else:
             try:
-                temp = Temp.objects.filter(author=user).order_by('-modified_date')[:1].get()
+                temp = Temp.objects.filter(author=user).order_by('-created_date')[:1].get()
                 serializer = TempSerializer(temp)
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
