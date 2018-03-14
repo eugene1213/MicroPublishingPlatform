@@ -348,7 +348,8 @@
   min-height: 442px;
   padding-bottom: 30px; }
   .profile .profile_content .profile_introduce #profileIntro {
-    min-height: 402px; }
+    min-height: 402px;
+    word-wrap: break-word; }
 
 .profile .profile_content .profile_introduce .pro_intro_tit {
   width: 80px;
@@ -375,12 +376,133 @@
   background-size: 100%;
   cursor: pointer; }
 
+.profile-userInfo {
+  width: 608px;
+  height: 462px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  float: left;
+  margin-left: 30px;
+  display: none; }
+  .profile-userInfo .profile-title-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 80px;
+    height: 376px;
+    margin-top: -44px; }
+    .profile-userInfo .profile-title-wrap .infoTitle {
+      width: 80px; }
+  .profile-userInfo .profile-info-wrap .table-wrap {
+    width: 520px;
+    height: 108px;
+    margin-top: 18px;
+    padding-top: 8px;
+    border-top: 1px solid #000000; }
+    .profile-userInfo .profile-info-wrap .table-wrap tr {
+      display: inline-block;
+      width: 456px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #000000;
+      font-size: 12px;
+      margin-left: 63px; }
+    .profile-userInfo .profile-info-wrap .table-wrap td {
+      width: 176px;
+      padding-left: 8px; }
+      .profile-userInfo .profile-info-wrap .table-wrap td:nth-last-child(2) {
+        width: 368px; }
+      .profile-userInfo .profile-info-wrap .table-wrap td:nth-last-child(1) {
+        width: 16px;
+        background-size: 15px;
+        background-image: url(/static/images/icons/profile/write.png); }
+
+.profile-point-history {
+  width: 608px;
+  border-radius: 10px;
+  position: relative;
+  float: left;
+  margin-left: 30px;
+  margin-top: 20px;
+  display: none; }
+  .profile-point-history .items-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; }
+    .profile-point-history .items-wrap .have-point {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 288px;
+      border-bottom: 1px solid #000000;
+      padding: 4px; }
+      .profile-point-history .items-wrap .have-point .point-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 134px; }
+        .profile-point-history .items-wrap .have-point .point-wrap #cupon-amount {
+          padding-left: 32px; }
+        .profile-point-history .items-wrap .have-point .point-wrap .btn-exchange {
+          width: 48px;
+          height: 16px;
+          border-radius: 4px;
+          background-color: #004b8d;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+          color: #ffffff;
+          text-align: center;
+          font-size: 10px;
+          font-weight: 300;
+          padding-top: 3px;
+          margin-left: 8px; }
+  .profile-point-history .point-history-wrap {
+    margin-top: 50px;
+    font-size: 10px;
+    font-weight: 300;
+    width: 608px; }
+    .profile-point-history .point-history-wrap th {
+      padding-bottom: 16px;
+      font-size: 16px;
+      font-weight: 300;
+      text-align: left; }
+    .profile-point-history .point-history-wrap td {
+      border-bottom: 1px solid #000000;
+      padding-bottom: 4px;
+      padding-top: 4px;
+      text-overflow: ellipsis; }
+      .profile-point-history .point-history-wrap td:last-child {
+        width: 287px;
+        color: #004b8d; }
+    .profile-point-history .point-history-wrap th, .profile-point-history .point-history-wrap td {
+      max-width: 160px; }
+
+.profile-relationship {
+  width: 608px;
+  height: 900px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  position: relative;
+  float: left;
+  margin-left: 30px;
+  margin-top: 20px; }
+  .profile-relationship .relationship-tab-wrap {
+    width: 288px;
+    float: left;
+    border-bottom: 1px solid #000000;
+    font-size: 12px;
+    margin-bottom: 36px; }
+    .profile-relationship .relationship-tab-wrap .tab {
+      float: left;
+      width: 76px;
+      padding-bottom: 4px; }
+
 .profile .profile_content .profile_history {
+  display: none;
   width: 608px;
   border: 1px solid #000000;
   border-radius: 10px;
   position: relative;
-  display: block;
   float: left;
   margin-left: 30px;
   margin-top: 20px; }
@@ -396,7 +518,8 @@
   font-size: 16px;
   background: #fff;
   font-weight: 400;
-  text-align: center; }
+  text-align: center;
+  cursor: pointer; }
 
 .profile .profile_content .profile_history .pro_his_tit2 {
   width: 56px;
@@ -405,7 +528,7 @@
   position: absolute;
   top: -15px;
   left: 160px;
-  color: #000000;
+  color: #054E8F;
   font-size: 16px;
   background: #fff;
   font-weight: 300;

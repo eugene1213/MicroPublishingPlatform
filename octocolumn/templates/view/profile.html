@@ -86,7 +86,7 @@
 				</div>
 				<div class="profile_con_icon">0</div>
 				<div class="profile_con_stamp">
-					<div class="stamp_tit">스탬프</div>
+					<!-- <div class="stamp_tit">스탬프</div>
 					<div class="stamp_img">
 						<div class="stamp_icon1"></div>
 						<div class="stamp_icon1"></div>
@@ -96,7 +96,7 @@
 						<div class="stamp_icon2"></div>
 						<div class="stamp_icon2"></div>
 						<div class="stamp_icon2"></div>
-					</div>
+					</div> -->
 				</div>
 				<div class="profile_con_following">
 					<div class="following_tit">Following</div>
@@ -119,6 +119,138 @@
 					<div class="pro_intro_btn"></div>
 					<div id="profileIntro" contenteditable="false" placeholder="자기소개 입력란">In the tumultuous business of cutting-in and attending to a whale, there is much running backwards and forwards among the crew. Now hands are wanted here, and then again hands are wanted there. There is no staying in any one place; for at one and the same time everything has to be done everywhere. It is much the same with him who endeavors the description of the scene. We must now retrace our way a little.</div>
 				</div>
+				<div class="profile-userInfo">
+					<div class="profile-title-wrap">
+						<div class="infoTitle">기본 정보</div>
+						<div class="infoTitle">연락처 정보</div>
+						<div class="infoTitle">개인 정보</div>
+					</div>
+					<div class="profile-info-wrap">
+						<div class="table-wrap">
+							<table class="base-table">
+								<tr>
+									<td>태어난 년도</td>
+									<td>1989년</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>생일</td>
+									<td>9월30일</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>성별</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>나이</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+						<div class="table-wrap">
+							<table class="contact-table">
+								<tr>
+									<td>휴대폰</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>지역</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>이메일</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+						<div class="table-wrap">
+							<table class="private-table">
+								<tr>
+									<td>직업</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>웹사이트</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>facebook</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>instargam</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>twitter</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>관심분야</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="profile-point-history">
+					<div class="items-wrap">
+						<div class="have-point">
+							<span class="point-text">보유 포인트</span>
+							<div class="point-wrap">
+								<span id="point-amount">1000</span>
+								<span>point</span>
+								<div class="btn-exchange">환전</div>
+							</div>
+						</div>
+						<div class="have-point">
+							<span class="point-text">보유 쿠폰</span>
+							<div class="point-wrap">
+								<span id="cupon-amount">3장</span>
+								<div class="btn-exchange">확인</div>
+							</div>
+						</div>
+					</div>
+					<table class="point-history-wrap">
+						<tr>
+							<th>시간</th>
+							<th>포인트</th>
+							<th>내용</th>
+						</tr>
+						<tr>
+							<td>2017년 10월 8일 16:23</td>
+							<td>5 point</td>
+							<td>Can these bones live? <span id="stat">댓글 작성</span></td>
+						</tr>
+						<tr>
+							<td>2017년 10월 9일 17:11</td>
+							<td>100 point</td>
+							<td>편의점 인간 후기, 정말로 업이 나를 완성시킬 수 있을까? <span id="stat">구매</span></td>
+						</tr>
+					</table>
+				</div>
+				<div class="profile-relationship">
+					<div class="relationship-tab-wrap">
+						<div class="tab">Following</div>
+						<div class="tab">Follower</div>
+						<div class="tab">Blocked</div>
+					</div>
+					{% for i in following %}
+						{% include 'view/user-card.html' %}
+					{% end for %}
+				</div>
 				<div class="profile_history">
 					<div class="pro_his_tit1">출판</div>
 					<div class="pro_his_tit2">작성 중</div>
@@ -133,7 +265,6 @@
 							</div>
 							<div class="bordertip_right2"></div>
 						</div>
-
 						<!-- <div class="history_date2">
 							<span>07.11</span>
 							<div class="date_box">

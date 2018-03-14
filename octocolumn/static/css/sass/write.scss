@@ -358,7 +358,63 @@ input, button {
             }
         }
     }
+    
 }
+.modal-extend-wrap {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 1500px;
+    background-color: rgba(42, 41, 42, 0.5);
+    display: none;
+
+    .modal-extend {
+        position: relative;
+        margin: auto;
+        top: 0;
+        margin-top: 224px;
+        padding: 32px 8px 15px 8px;
+        width: 304px;
+        height: 192px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        background-color: #ffffff;
+    
+        .modal-ask-text {
+            display: block;
+            width: 222px;
+            height: 72px;
+            margin: auto;
+            margin-bottom: 32px;
+            font-weight: 300;
+            font-size: 16px;
+            text-align: center;
+
+            & > span {
+                display: block;
+            }
+        }
+        .btn-yes, .btn-no {
+            float: left;
+            width: 128px;
+            height: 40px;
+            padding-top: 6px;
+            font-size: 16px;
+            font-weight: 400;
+            text-align: center;
+            color: #ffffff;
+            border-radius: 8px;
+        }
+        .btn-yes {
+            margin-right: 32px;
+            background-color: #004b8d;
+        }
+        .btn-no {
+            background-color: #cc1c3b;
+        }
+    }
+}
+
 .toggle-wrap {
 
     display: flex;

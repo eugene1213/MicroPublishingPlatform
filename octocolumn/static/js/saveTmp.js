@@ -1,7 +1,22 @@
 //타이핑을 멈추고 5초간 입력이 없으면 작성중인 내용 임시저장
 $(document).ready(function(){
-    
+
     localStorage.setItem("temp_id", '');
+
+    loadTemp();
+
+    $(".modal-extend > .btn-yes").click(function(){
+        $(".editable > p").remove();
+        $(".editable > div").remove();
+        viewTemp( loadTemp() );
+        
+        $(".modal-extend-wrap").hide();
+    });
+    $(".modal-extend > .btn-no").click(function(){
+        $(".modal-extend-wrap").hide();
+    });
+    
+
     title2header("write");
     saveHandler();
 
