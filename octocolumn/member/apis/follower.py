@@ -80,6 +80,8 @@ class GetUserCard(ListAPIView):
 
                 for i in follower:
                     try:
+                        print(count)
+
                         profile = Profile.objects.filter(user=i.to_user).get()
                         profile_serializer = ProfileSerializer(profile)
 
