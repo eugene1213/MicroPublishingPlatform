@@ -72,8 +72,37 @@ class GetUserCard(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         count = self.kwargs.get('count')
-        try:
-            follower = Relation.objects.filter(from_user=user)[int(count):int(count)+4].all()
+        if count:
+            try:
+                follower = Relation.objects.filter(from_user=user)[int(count):int(count)+4].all()
+
+                list = []
+
+                for i in follower:
+                    try:
+                        profile = Profile.objects.filter(user=i.to_user).get()
+                        profile_serializer = ProfileSerializer(profile)
+
+                        data = {
+                                "pk":i.to_user.pk,
+                                "follower": i.to_user.follower_users_count,
+                                "nickname": i.to_user.nickname,
+                                "intro": profile_serializer.data['intro'],
+                                "profile_img": profile_serializer.data['image']['profile_image'],
+                                "cover_img": profile_serializer.data['image']['cover_image']
+
+                        }
+                        list.append(data)
+
+                        return Response(list, status=status.HTTP_200_OK)
+                    except ObjectDoesNotExist:
+                        raise exceptions.ValidationError({"detail": "must Register Profile"})
+
+            except ObjectDoesNotExist:
+                print('어디')
+                return Response({}, status=status.HTTP_200_OK)
+        else:
+            follower = Relation.objects.filter(from_user=user)[0:4].all()
 
             list = []
 
@@ -83,7 +112,7 @@ class GetUserCard(ListAPIView):
                     profile_serializer = ProfileSerializer(profile)
 
                     data = {
-                        "user":{
+                        "user": {
                             "follower": i.to_user.follower_users_count,
                             "nickname": i.to_user.nickname,
                             "intro": profile_serializer.data['intro'],
@@ -97,10 +126,6 @@ class GetUserCard(ListAPIView):
                     return Response(list, status=status.HTTP_200_OK)
                 except ObjectDoesNotExist:
                     raise exceptions.ValidationError({"detail": "must Register Profile"})
-
-        except ObjectDoesNotExist:
-            print('어디')
-            return Response({}, status=status.HTTP_200_OK)
 
 
 

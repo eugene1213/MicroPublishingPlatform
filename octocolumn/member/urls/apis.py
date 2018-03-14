@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain_jwt_token
 
 from member import apis
@@ -37,7 +37,10 @@ urlpatterns = [
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
     url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
-    url(r'^getUserCard/(?P<count>\d+)$', GetUserCard.as_view(), name='getUserCard'),
+    url(r'^getUserCard/', include([
+            url(r'^$', GetUserCard.as_view(), name="post-list"),
+            url(r'^(?P<page>\w+)$', GetUserCard.as_view(), name="post-list-page")
+    ]), name='getUserCard'),
 
     # 기다림
 
