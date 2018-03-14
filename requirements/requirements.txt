@@ -41,3 +41,5 @@ django-cors-headers==2.1.0
 cryptography
 django-ipware
 django-user-agents
+azure
+wal-e==1.1.0b1

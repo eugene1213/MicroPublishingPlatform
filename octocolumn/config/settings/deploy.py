@@ -39,7 +39,8 @@ INSTALLED_APPS = [
 
     # 장고 접속 에이전트 체크 라이브러리
     'django_user_agents',
-    'django_s3_storage',
+    # 'django_s3_storage',
+    'azure',
 
     'ipware',
 
@@ -53,33 +54,53 @@ INSTALLED_APPS = [
 ]
 
 # AWS settings
-AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
-AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
-AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['s3_bucket_name']
-AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
-AWS_QUERYSTRING_AUTH = False
+# AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
+# AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
+# AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['s3_bucket_name']
+# AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
+# AWS_QUERYSTRING_AUTH = False
+#
+# S3_USE_SIGV4 = True
+#
+# AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_S3_REGION_NAME
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-S3_USE_SIGV4 = True
+# Azure settings
+AZURE_STORAGE_ACCOUNT = config_secret_deploy['azure']['account']
+AZURE_STORAGE_KEY = config_secret_deploy['azure']['account_key']
 
-AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_S3_REGION_NAME
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
-# Static Setting
-STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
+## AZURE Static Setting
+STATICFILES_STORAGE = 'config.s3storages.AzureStaticStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
-        custom_domain=AWS_S3_CUSTOM_DOMAIN,
-        staticfiles_location=STATICFILES_LOCATION,
-    )
-
-
-# Media Setting
-DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
-MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
-    custom_domain=AWS_S3_CUSTOM_DOMAIN,
-    mediafiles_location=MEDIAFILES_LOCATION,
+STATIC_URL = 'http://{account}.blob.core.windows.net/{staticfiles_location}/'.format(
+                account=AZURE_STORAGE_ACCOUNT,
+                staticfiles_location=STATICFILES_LOCATION
 )
+
+
+## AWS Static Settings
+# STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
+# STATICFILES_LOCATION = 'static'
+# STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+#         custom_domain=AWS_S3_CUSTOM_DOMAIN,
+#         staticfiles_location=STATICFILES_LOCATION,
+#     )
+
+## AZURE Media settigns
+DEFAULT_FILE_STORAGE = 'config.s3storages.AzureMediaStorage'
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = 'http://{account}.blob.core.windows.net/{mediafiles_location}/'.format(
+                account=AZURE_STORAGE_ACCOUNT,
+                mediafiles_location=STATICFILES_LOCATION
+)
+
+## AWS Media Setting
+# DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
+# MEDIAFILES_LOCATION = 'media'
+# MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
+#     custom_domain=AWS_S3_CUSTOM_DOMAIN,
+#     mediafiles_location=MEDIAFILES_LOCATION,
+# )
 
 
 # Database
