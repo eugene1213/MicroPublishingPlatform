@@ -119,7 +119,7 @@ class GetUserCard(ListAPIView):
                 return Response({}, status=status.HTTP_200_OK)
 
         else:
-            follower = Relation.objects.filter(from_user=user)[0:4].all()
+            follower = Relation.objects.filter(from_user=user)[0:4].get()
 
             list = []
 

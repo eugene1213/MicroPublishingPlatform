@@ -122,6 +122,7 @@ function get_profile() {
         dataType: 'json',
         success: function(json) {
 
+            console.log(json);
             var cover_img = json.image.cover_image;
             var profile_img = json.image.profile_image;
             var username = json.username;
