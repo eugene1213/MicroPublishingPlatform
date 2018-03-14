@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
     url(r'^getUserCard/', include([
             url(r'^$', GetUserCard.as_view(), name="post-list"),
-            url(r'^(?P<page>\w+)$', GetUserCard.as_view(), name="post-list-page")
+            url(r'^(?P<count>\w+)$', GetUserCard.as_view(), name="post-list-page")
     ]), name='getUserCard'),
 
     # 기다림
