@@ -78,7 +78,7 @@ class TempSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'main_content',
-            'modified_date',
+            'created_date',
             'author'
 
         )

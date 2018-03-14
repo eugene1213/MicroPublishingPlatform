@@ -12,14 +12,14 @@ class Temp(models.Model):
     author = models.ForeignKey('member.User', null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     main_content = models.TextField()
-    modified_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{} : {} : {} : {}'.format(
             self.author,
             self.title,
             self.main_content,
-            self.modified_date
+            self.created_date
         )
 
 
