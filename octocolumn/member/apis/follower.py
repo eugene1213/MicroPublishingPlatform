@@ -73,16 +73,20 @@ class GetUserCard(ListAPIView):
         user = self.request.user
         count = self.kwargs.get('count')
         if count:
-            try:
-                follower = Relation.objects.filter(from_user=user)[int(count):int(count)+4].get()
+
+            follower = Relation.objects.filter(from_user=user)[int(count):int(count)+4]
+            if follower.count() != 0:
+
+                # follower = Relation.objects.filter(from_user=user).get()
                 list = []
                 for i in follower:
+                    print(type(i.to_user))
                     try:
                         profile = Profile.objects.filter(user=i.to_user).get()
                         profile_serializer = ProfileSerializer(profile)
 
                         data = {
-                                "pk": i.to_user,
+                                "pk": i.to_user.id,
                                 "follower": i.to_user.follower_users_count,
                                 "nickname": i.to_user.nickname,
                                 "intro": profile_serializer.data['intro'],
@@ -95,25 +99,39 @@ class GetUserCard(ListAPIView):
 
                         return Response(list, status=status.HTTP_200_OK)
                     except ObjectDoesNotExist:
+                            try:
+                                profile_image = ProfileImage.objects.filter(user=i.to_user).get()
 
-                            profile_image = ProfileImage.objects.filter(user=user).get()
-                            serializer = ProfileImageSerializer(profile_image)
+                                serializer = ProfileImageSerializer(profile_image)
 
-                            if serializer:
-                                data = {
-                                    "pk": i.to_user,
-                                    "follower": i.to_user.follower_users_count,
-                                    "nickname": i.to_user.nickname,
-                                    "intro": '-',
-                                    "profile_img": serializer.data['profile_image'],
-                                    "cover_img": serializer.data['cover_image']
+                                if serializer:
+                                    data = {
+                                        "pk": i.to_user.id,
+                                        "follower": i.to_user.follower_users_count,
+                                        "nickname": i.to_user.nickname,
+                                        "intro": '-',
+                                        "profile_img": serializer.data['profile_image'],
+                                        "cover_img": serializer.data['cover_image']
 
-                                }
-                                list.append(data)
-                                return Response(list, status=status.HTTP_200_OK)
-                            raise exceptions.ValidationError('Abnormal connected')
+                                    }
+                                    list.append(data)
+                                    return Response(list, status=status.HTTP_200_OK)
+                                raise exceptions.ValidationError('Abnormal connected')
+                            except ObjectDoesNotExist:
 
-            except ObjectDoesNotExist:
+                                    data = {
+                                        "pk": i.to_user.id,
+                                        "follower": i.to_user.follower_users_count,
+                                        "nickname": i.to_user.nickname,
+                                        "intro": '-',
+                                        "profile_img": '/static/images/example/2.jpeg',
+                                        "cover_img": '/static/images/example/3.jpeg'
+
+                                    }
+                                    list.append(data)
+                                    return Response(list, status=status.HTTP_200_OK)
+
+            else:
                 return Response({}, status=status.HTTP_200_OK)
 
         else:
