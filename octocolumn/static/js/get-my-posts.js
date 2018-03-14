@@ -23,10 +23,7 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
 
             console.log(json);
             var posts = json.post;
-            if(json.post != 'undefined'){
-                
-                var posts_num = json.post.length;
-            }
+            var posts_num = json.post.length;
 
             /* 오른쪽에 배치 될 태그 */
             date_div_right_1 = "<div class=\"history_date2\"><span>";                               // 작성일 왼쪽 태그
