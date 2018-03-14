@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import mixins, generics, status, exceptions
@@ -24,6 +25,7 @@ class TempView(APIView):
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         user = self.request.user
+
         if param:
             try:
                 temp = Temp.objects.filter(author=user, pk=param).get()
@@ -101,7 +103,9 @@ class TempCreateView(generics.GenericAPIView,
         if data['temp_id'] is not '':
             Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(
                 title=data['title'],
-                main_content=data['main_content'])
+                main_content=data['main_content'],
+                createde_date=datetime.now()
+            )
 
             return Response({"temp": {
                 "temp_id": data['temp_id']
