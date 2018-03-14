@@ -21,9 +21,12 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
         dataType: 'json',
         success: function(json) {
 
-            join_date = json.join_date;
-            posts = json.post;
-            posts_num = json.post.length;
+            console.log(json);
+            var posts = json.post;
+            if(json.post != 'undefined'){
+                
+                var posts_num = json.post.length;
+            }
 
             /* 오른쪽에 배치 될 태그 */
             date_div_right_1 = "<div class=\"history_date2\"><span>";                               // 작성일 왼쪽 태그
@@ -38,10 +41,15 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
             date_div_left_4 = "\" alt=\"\"></div><span>";
             date_div_left_5 = "</span></div><div class=\"bordertip_right\"></div></div>";
 
-            join_date = join_date.split("T")[0];
-            join_date = join_date.split("-")[1] + "." + join_date.split("-")[2];
+            
 
-            $(".history_date1 > span").text(join_date);
+            if(which == 'post'){
+                var join_date = json.join_date.split("T")[0];
+                    join_date = join_date.split("-")[1] + "." + join_date.split("-")[2];
+
+                $(".history_date1 > span").text(join_date);
+            }
+            
             var n = 0;
             for( post in posts ) {
 
