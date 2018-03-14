@@ -2,7 +2,8 @@
 	width: 944px;
 	height: 497px;
 	display: block;
-	background: url(http://via.placeholder.com/944x497);
+	background: url(/static/images/example/3.jpeg);
+	background-size: 100%;
 	margin: 0 auto;
 	padding: 24px;
 	box-sizing: border-box;

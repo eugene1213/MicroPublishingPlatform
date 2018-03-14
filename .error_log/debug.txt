@@ -1691,3 +1691,17 @@ member.models.user.DoesNotExist: User matching query does not exist.
 [09/Mar/2018 11:51:37] INFO [django.server:124] "GET /write/ HTTP/1.1" 200 27515
 [09/Mar/2018 11:51:38] INFO [django.server:124] "POST /api/column/isauthor/ HTTP/1.1" 200 15
 [09/Mar/2018 11:51:38] INFO [django.server:124] "POST /api/member/userInfo/ HTTP/1.1" 200 142
+[14/Mar/2018 15:19:43] INFO [django.server:124] "GET / HTTP/1.1" 200 38704
+[14/Mar/2018 15:19:45] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
+[14/Mar/2018 15:19:45] WARNING [django.request:152] Not Found: /favicon.ico
+[14/Mar/2018 15:19:45] WARNING [django.server:124] "GET /favicon.ico HTTP/1.1" 404 85
+[14/Mar/2018 15:27:48] INFO [django.server:124] "GET / HTTP/1.1" 200 38649
+[14/Mar/2018 15:27:50] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
+[14/Mar/2018 15:27:51] INFO [django.server:124] "GET / HTTP/1.1" 200 38649
+[14/Mar/2018 15:27:52] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
+[14/Mar/2018 15:36:34] INFO [django.server:124] "GET / HTTP/1.1" 200 38649
+[14/Mar/2018 15:36:36] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
+[14/Mar/2018 15:36:38] INFO [django.server:124] "GET / HTTP/1.1" 200 38649
+[14/Mar/2018 15:36:39] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
+[14/Mar/2018 15:38:52] INFO [django.server:124] "GET / HTTP/1.1" 200 38649
+[14/Mar/2018 15:38:53] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2

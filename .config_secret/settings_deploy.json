@@ -4,11 +4,11 @@
     "allowed_hosts":"*",
     "databases":{
       "engine":"django.db.backends.postgresql_psycopg2",
-      "name":"octo",
-      "user":"devocto",
+      "name":"postgres",
+      "user":"develop@devocto",
       "password":"!devocto1234",
-      "host":"octocolumn.cgkhz06rcrfm.ap-northeast-2.rds.amazonaws.com",
-      "port":"5432"
+      "host":"devocto.postgres.database.azure.com",
+      "port":""
 
     },
     "email":{
@@ -22,6 +22,11 @@
     "secret_access_key":"CNNAj+sdaDfl3MMOHIinSwPLI1Mb2TEsPFaxH6no",
     "s3_region_name":"ap-northeast-2",
     "s3_bucket_name":"devtestserver"
+  },
+  "azure":{
+    "account":"devocto",
+    "account_key":"8/bQE7j+UP3eE04x9NaBzrS6zcRUUNTopjqdvDIWj3TXMHivhTy8O11JuIQjBOpiPe5AR53T+E9CcE4vnozjEw==",
+    "container":"devocto"
   },
   "accounts":{
     "facebook":{
