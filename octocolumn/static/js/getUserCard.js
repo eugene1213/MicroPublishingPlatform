@@ -1,6 +1,11 @@
 function getUserCard(){
 
-    var count = $(".flip").length;
+    var count = 0;
+    
+    if($(".flip").length != 0){
+        
+        count = $(".flip").length;
+    }
     $.ajax({
         url: "/api/member/getUserCard/" + count,
         async: false,

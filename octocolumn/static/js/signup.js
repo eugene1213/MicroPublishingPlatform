@@ -6,13 +6,15 @@ function signup_api(){
     var password1 = $("#password1-signup").val().trim();
     var password2 = $("#password2-signup").val().trim();
 
+    console.log(nickName);
+
     $.ajax({
         url: "/api/member/signup/",
         async: false,
         type: 'POST',
         dataType: 'json',
         data: {
-            nick_name: nickName,
+            nickname: nickName,
             username : email,
             password1 : password1,
             password2 : password2

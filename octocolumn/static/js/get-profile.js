@@ -6,7 +6,6 @@ $(document).ready(function(){
     get_my_posts("post");
     
     $(".profile_tab3").click(function(){
-        
         $(".flip").remove();
         getUserCard();
     });
