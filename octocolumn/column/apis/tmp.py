@@ -32,7 +32,7 @@ class TempView(APIView):
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 raise exceptions.ValidationError({"detail":"Abnormal connnectd"})
             except ObjectDoesNotExist:
-                raise exceptions.ValidationError({"detail":"Do not have temp"})
+                raise exceptions.ValidationError({"detail": "Do not have temp"})
         else:
             try:
                 temp = Temp.objects.filter(author=user).order_by('-modified_date')[:1].get()
