@@ -4,7 +4,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
-    ProfileIntroUpdate, Waiting, PublishPost, MyTemp
+    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard
 
 urlpatterns = [
     # api:member:login
@@ -37,6 +37,7 @@ urlpatterns = [
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
     url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
+    url(r'^getUserCard/(?P<count>\d+)$', GetUserCard.as_view(), name='getUserCard'),
 
     # 기다림
 

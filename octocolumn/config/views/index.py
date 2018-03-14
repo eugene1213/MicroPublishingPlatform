@@ -5,6 +5,7 @@ from django.template import RequestContext
 
 from column.models import Post
 from member.models import BuyList
+from member.models.user import Relation
 
 __all__ = (
     'index',
@@ -38,6 +39,7 @@ def profile(request):
         return response
     return render_to_response('view/main.html')
 
+
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')
 
@@ -48,3 +50,5 @@ def kakao(request):
 
 def google(reqeust):
     return render_to_response('view/login/google_login.html')
+
+
