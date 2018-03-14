@@ -3,7 +3,7 @@ function getUserCard(){
     var count = 0;
     
     if($(".flip").length != 0){
-        
+
         count = $(".flip").length;
     }
     $.ajax({
@@ -16,11 +16,11 @@ function getUserCard(){
             console.log(jsons);
             for( json in jsons) {
 
-                var cover_img = json.user.cover_img;
-                var profile_img = json.user.profile_img;
-                var nickname = json.user.nickname;
-                var followers = json.user.followers;
-                var intro = json.user.intro;
+                var cover_img = json.cover_img;
+                var profile_img = json.profile_img;
+                var nickname = json.nickname;
+                var followers = json.followers;
+                var intro = json.intro;
 
                 var str =  '<div class="flip"> \n\
                                 <div class="arrow_box_1"> \n\
