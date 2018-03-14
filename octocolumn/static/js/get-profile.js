@@ -4,6 +4,12 @@ $(document).ready(function(){
     getProfileIntro();
     historyBarHeight();
     get_my_posts("post");
+    
+    $(".profile_tab3").click(function(){
+        
+        $(".flip").remove();
+        getUserCard();
+    });
 
     $(".pro_his_tit1").addClass("on");
 

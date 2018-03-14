@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/profile.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/flip-card.css' %}">
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
@@ -247,9 +248,6 @@
 						<div class="tab">Follower</div>
 						<div class="tab">Blocked</div>
 					</div>
-					{% for i in following %}
-						{% include 'view/user-card.html' %}
-					{% end for %}
 				</div>
 				<div class="profile_history">
 					<div class="pro_his_tit1">출판</div>
