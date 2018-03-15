@@ -32,12 +32,20 @@ class Follower(APIView):
                 user.follower_users_count += 1
                 user.save()
                 from_user.save()
-                return Response({'detail': 'created'})
+                return Response({'detail': 'created',
+                                 "author":{
+                                     "follow_status": True
+                                 }
+                                 })
             from_user.following_users_count -= 1
             user.follower_users_count -= 1
             user.save()
             from_user.save()
-            return Response({'detail': 'deleted'})
+            return Response({'detail': 'deleted',
+                             "author": {
+                                 "follow_status": False
+                             }
+                             })
 
         except ObjectDoesNotExist:
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
