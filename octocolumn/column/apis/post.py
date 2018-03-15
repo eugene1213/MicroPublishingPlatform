@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from column.models import Temp, SearchTag
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
+from member.models.user import Relation
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from ..models import Post
@@ -244,7 +245,7 @@ class PostListView(APIView):
             time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
             time2 = datetime.strptime(serializer.data['created_date'].split('T')[1].split('.')[0], '%H:%M:%S')
             text = self.remove_tag(content)
-            follower_count = user.following_users.count()
+            follower_count = Relation.ojbects.filter(to_user=user).count()
             tag = self.tag(i)
 
             data = {
