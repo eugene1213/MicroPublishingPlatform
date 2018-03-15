@@ -41,12 +41,13 @@ urlpatterns = [
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
     url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
     url(r'^getUserFollowerCard/', include([
-            url(r'^$', GetUserFollowerCard.as_view(), name="post-list"),
-            url(r'^(?P<count>\w+)$', GetUserFollowerCard.as_view(), name="post-list-page")
-        url(r'^getUserFollowingCard/', include([
-            url(r'^$', GetUserFollowingCard.as_view(), name="post-list"),
-            url(r'^(?P<count>\w+)$', GetUserFollowingCard.as_view(), name="post-list-page")
-    ]), name='getUserCard'),
+            url(r'^$', GetUserFollowerCard.as_view(), name="follower"),
+            url(r'^(?P<count>\w+)$', GetUserFollowerCard.as_view(), name="follower")])),
+    url(r'^getUserFollowingCard/', include([
+        url(r'^$', GetUserFollowingCard.as_view(), name="follower"),
+        url(r'^(?P<count>\w+)$', GetUserFollowingCard.as_view(), name="follower")])),
+
+
 
     # 기다림
 
