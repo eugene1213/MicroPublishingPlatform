@@ -303,15 +303,15 @@ function modifyProfile() {
     if (birthYear) var birthYear = $("#birthYear").text().replace("년","");
     if (birthMonth) var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
     if (birthDay) var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
-    if (gender) var gender = $("#gender").text();
+    var gender = $("#gender").text();
     if (age) var age = $("#age").text();
-    if (hpNumber) var hpNumber = $("#hpNumber").text();
-    if (job) var job = $("#job").text();
+    var hpNumber = $("#hpNumber").text();
+    var job = $("#job").text();
     if (website) var website = $("#website").text();
-    if (fb) var fb = $("#fb").text();
-    if (ins) var ins = $("#ins").text();
-    if (tw) var tw = $("#tw").text();
-    if (subject) var subject = $("#subject").text();
+    var fb = $("#fb").text();
+    var ins = $("#ins").text();
+    var tw = $("#tw").text();
+    var subject = $("#subject").text();
 
     $.ajax({
         url: "/api/member/updateProfile/",

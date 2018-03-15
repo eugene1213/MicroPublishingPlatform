@@ -17,7 +17,7 @@ class Profile(models.Model):
     year = models.IntegerField(null=True)
     month = models.IntegerField(null=True)
     day = models.IntegerField
-    sex = models.CharField()
+    sex = models.CharField(max_length=255, null=True)
     phone = models.CharField(max_length=100, null=True)
     intro = models.TextField(null=True)
     age = models.IntegerField(null=True)
