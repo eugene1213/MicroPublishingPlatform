@@ -175,6 +175,13 @@ class GetUserFollowingCard(ListAPIView):
 class GetUserFollowerCard(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
+    def follower_status(self, user):
+        try:
+            Relation.objects.filter(to_user=self.request.user, from_user=user).get()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def get(self, request, *args, **kwargs):
         user = self.request.user
         count = self.kwargs.get('count')
@@ -195,6 +202,7 @@ class GetUserFollowerCard(ListAPIView):
                                 "pk": i.from_user.id,
                                 "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                 "nickname": i.from_user.nickname,
+                                "follow_status":self.follower_status(i.from_user),
                                 "intro": profile_serializer.data['intro'],
                                 "profile_img": profile_serializer.data['image']['profile_image'],
                                 "cover_img": profile_serializer.data['image']['cover_image']
@@ -215,6 +223,7 @@ class GetUserFollowerCard(ListAPIView):
                                         "pk": i.from_user.id,
                                         "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                         "nickname": i.from_user.nickname,
+                                        "follow_status": self.follower_status(i.from_user),
                                         "intro": '-',
                                         "profile_img": serializer.data['profile_image'],
                                         "cover_img": serializer.data['cover_image']
@@ -229,6 +238,7 @@ class GetUserFollowerCard(ListAPIView):
                                         "pk": i.from_user.id,
                                         "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                         "nickname": i.from_user.nickname,
+                                        "follow_status": self.follower_status(i.from_user),
                                         "intro": '-',
                                         "profile_img": '/static/images/example/2.jpeg',
                                         "cover_img": '/static/images/example/1.jpeg'
@@ -254,6 +264,7 @@ class GetUserFollowerCard(ListAPIView):
                             "follower": Relation.objects.filter(from_user=i.from_user).count(),
                             "nickname": i.from_user.nickname,
                             "intro": profile_serializer.data['intro'],
+                            "follow_status": self.follower_status(i.from_user),
                             "profile_img": profile_serializer.data['image']['profile_image'],
                             "cover_img": profile_serializer.data['image']['cover_image']
 
