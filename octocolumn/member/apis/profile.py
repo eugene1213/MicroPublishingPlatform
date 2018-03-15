@@ -89,11 +89,12 @@ class ProfileUpdate(APIView):
             profile = Profile.objects.filter(user=user).get()
 
             profile.year = data['birthYear']
-            profile.mount = data['birthMonthDate']
+            profile.month = data['birthMonth']
             profile.day = data['birthDay']
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.age = data['age']
+            print(data['age'])
             profile.job = data['job']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
@@ -104,7 +105,7 @@ class ProfileUpdate(APIView):
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             if Profile.objects.create(
-                    user=user, year=data['bithYear'], month=data['bithMonthDate'], sex=data['sex'],
+                    user=user, year=data['bithYear'], month=data['bithMonth'], day=data['bithDay'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
                                       twitter=data['tw'], subjects=data['subject']):
                 return Response(status=status.HTTP_200_OK)

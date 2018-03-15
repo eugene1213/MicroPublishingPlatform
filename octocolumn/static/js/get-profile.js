@@ -19,7 +19,8 @@ $(document).ready(function(){
         $(".active").removeClass("active");
         $(this).addClass("active");
 
-                                                    // 포인트내역 탭 클릭 시 보여줄 팔로잉 목록 호출
+        $(".point-history-wrap tr").not("#tr-header").remove();
+        getPointHistory();                          // 포인트내역 탭 클릭 시 보여줄 팔로잉 목록 호출
 
         $(".profile-point-history").show();
         $(".currentView").removeClass("currentView");
@@ -63,7 +64,7 @@ $(document).ready(function(){
         $(".active").removeClass("active");
         $(this).addClass("active");
 
-                                                    // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
+                                                    // 계정정보 탭 클릭 시 보여줄 팔로잉 목록 호출
 
         $(".profile-userInfo").css("display","flex");
         $(".currentView").removeClass("currentView");
@@ -160,23 +161,71 @@ $(document).ready(function(){
     }
 /* end 커버, 프로필 이미지 처리 */
 
-/* 자기소개 수정 및 업로드 */
+/* start 자기소개 수정 및 업로드 */
     $(".pro_intro_btn").click(function(){
 
         $("#profileIntro").prop("contenteditable","true");
         //$("#profileIntro").text().length
         $(".pro_intro_btn").hide();
+        $("#profileIntro").focus();
 
-        setCaretAtEnd("#profileIntro");
-        $(".pro_intro_btn").hide();
+        $('div[contenteditable="true"]').keypress(function(event) {
+            
+            if (event.which != 13)
+                return true;
+        
+            var docFragment = document.createDocumentFragment();
+        
+            //add a new line
+            var newEle = document.createTextNode('\n');
+            docFragment.appendChild(newEle);
+        
+            //add the br, or p, or something else
+            newEle = document.createElement('br');
+            docFragment.appendChild(newEle);
+        
+            //make the br replace selection
+            var range = window.getSelection().getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(docFragment);
+        
+            //create a new range
+            range = document.createRange();
+            range.setStartAfter(newEle);
+            range.collapse(true);
+        
+            //make the cursor there
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        
+            return false;
+        });
     });
     $("#profileIntro").focusout(function(){
 
         $("#profileIntro").prop("contenteditable","false");
         $(".pro_intro_btn").show();
 
-        var userIntro = $("#profileIntro").text();
+        var userIntro = $("#profileIntro").html();
         updateUserIntro(userIntro);
+    });
+/* end 자기소개 수정 및 업로드 */
+    $(".btn-modify").click(function(){
+        
+        $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
+        $(".btn-modify > img").attr("src","/static/images/icons/profile/save.svg");
+        $(".btn-modify").addClass("btn-save");
+    
+        $('td[contenteditable="true"]').keypress(function(event) {
+            
+            if (event.which == 13)
+                return false;
+        });
+        $(".btn-save").click(function(){
+
+            modifyProfile();
+        });
     });
 });
 
@@ -200,15 +249,47 @@ function get_profile() {
             var following = json.following;
             var follower = json.follower;
             var posts = json.post_count;
+            var birthYear = json.birthYear;
+            var birthMonthDate = json.birthMonth;
+            var gender = json.sex;
+            var age = json.age;
 
+            var hpNumber = json.age;
+            var location = json.age;
+            var email = json.email;
+
+            var job = json.job;
+            var website = json.website;
+            var fb = json.facebook;
+            var ins = json.instargram;
+            var tw = json.twitter;
+            var subject = json.subject;
+            
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
             $(".content_title1 > span").text(username);
             $(".profile_con_icon").text(waiting);
-            $("#profileIntro").text(userIntro);
+            $("#profileIntro").html(userIntro);
             $("#following").text(following);
             $("#follower").text(follower);
             $("#posts").text(posts);
+
+
+            $(".base-table :contains(태어난 년도) + td").text(birthYear);
+            $(".base-table :contains(생일) + td").text(birthMonthDate);
+            $(".base-table :contains(성별) + td").text(gender);
+            if(age > 0) $(".base-table :contains(나이) + td").text(age);
+
+            $(".base-table :contains(휴대폰) + td").text(hpNumber);
+            $(".base-table :contains(지역) + td").text(location);
+            $(".base-table :contains(이메일) + td").text(email);
+
+            $(".base-table :contains(직업) + td").text(job);
+            $(".base-table :contains(웹사이트) + td").text(website);
+            $(".base-table :contains(facebook) + td").text(fb);
+            $(".base-table :contains(instagram) + td").text(ins);
+            $(".base-table :contains(twitter) + td").text(tw);
+            $(".base-table :contains(관심분야) + td").text(subject);
 
             historyBarHeight();
         },
@@ -217,7 +298,51 @@ function get_profile() {
         }
     });
 }
+function modifyProfile() {
 
+    if (birthYear) var birthYear = $("#birthYear").text().replace("년","");
+    if (birthMonth) var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
+    if (birthDay) var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
+    if (gender) var gender = $("#gender").text();
+    if (age) var age = $("#age").text();
+    if (hpNumber) var hpNumber = $("#hpNumber").text();
+    if (job) var job = $("#job").text();
+    if (website) var website = $("#website").text();
+    if (fb) var fb = $("#fb").text();
+    if (ins) var ins = $("#ins").text();
+    if (tw) var tw = $("#tw").text();
+    if (subject) var subject = $("#subject").text();
+
+    $.ajax({
+        url: "/api/member/updateProfile/",
+        async: false,
+        type: 'POST',
+        data: {
+            birthYear: birthYear*1,           // 태어난 년도
+            birthMonth: birthMonth*1,         // 생월
+            birthDay: birthDay*1,             // 생일
+            sex: gender,                      // 성별
+            age: age*1,                       // 나이
+            hpNumber: hpNumber,               // 폰번호
+            job: job,                         // 직업
+            website: website,                 // 웹사이트
+            fb: fb,                           // 페북
+            ins: ins,                         // 인스타
+            tw: tw,                           // 트윗
+            subject: subject                  // 관심분야
+        },
+        dataType: 'json',
+        success: function(json) {
+
+            $(".btn-modify > img").attr("src","/static/images/icons/profile/write.png");
+            $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
+            $(".btn-save").removeClass("btn-save");
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
 /* 수정된 자기소개를 업로드한다. */
 function updateUserIntro(userIntro) {             
 
@@ -309,15 +434,44 @@ function getPointHistory() {
     $.ajax({
         url: "/api/member/getPointHistory/",
         async: false,
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
-        success: function(json) {
+        success: function(jsons) {
             
-            var date = json.date;
-            var point = json.point;
-            var detail = json.detail;
+            console.log(jsons);
+            if(jsons.results.length == 0){
+                $("th").remove();
+            }
 
-            $(".")
+            var havePoint = jsons.point;
+
+            for(i in jsons.results){
+                
+                var point = jsons.results[i].point;
+                var detail = jsons.results[i].history;
+                var type = jsons.results[i].point_use_type;
+                var date = jsons.results[i].created_at;
+                var plus_minus = jsons.results[i].plus_minus;
+
+                    date = date.split("T");
+
+                    yyyy = date[0].split("-")[0];
+                    mm   = date[0].split("-")[1];
+                    dd   = date[0].split("-")[2];
+
+                    HH   = date[1].split(":")[0];
+                    MM   = date[1].split(":")[1];
+
+
+                var str =   "<tr> \
+                                <td>" + yyyy + "년 " + mm*1 + "월 " + dd*1 + "일 " + HH + ":" + MM + "</td> \
+                                <td>" + point*plus_minus + "point</td> \
+                                <td>" + detail + " <span id=\"stat\">" + type + "</span></td> \
+                            </tr>";
+                
+                $(".point-history-wrap").append(str);
+            }
+            $("#point-amount").text(havePoint);
         },
         error: function(error) {
             console.log(error);
