@@ -90,6 +90,7 @@ class ProfileUpdate(APIView):
 
             profile.year = data['bithYear']
             profile.monnt = data['bithMonthDate']
+            profile.day = data['bithDay']
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.age = data['age']
