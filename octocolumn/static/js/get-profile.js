@@ -33,17 +33,20 @@ $(document).ready(function(){
         $(".active").removeClass("active");
         $(this).addClass("active");
 
-        getUserCard();                              // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
+        getUserCard("Following");                              // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
 
         $(".profile-relationship").show();
         $(".currentView").removeClass("currentView");
         $(".profile-relationship").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
 
-        $(window).scroll(function() { 
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                getUserCard();
-            } 
+        $('.tab:contains(Following)').click(function(){
+            $(".flip").remove();
+            getUserCard("Following");
+        });
+        $('.tab:contains(Follower)').click(function(){
+            $(".flip").remove();
+            getUserCard("Follower");
         });
     });
     $(".profile_tab4").click(function(){

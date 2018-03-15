@@ -1,4 +1,5 @@
-function getUserCard(){
+function getUserCard(followDirection){
+    //followDirection => 'Following' or 'Follower'
 
     var count = 0;
     
@@ -9,7 +10,7 @@ function getUserCard(){
     }
     console.log(count);
     $.ajax({
-        url: "/api/member/getUserFollowingCard/" + count,
+        url: "/api/member/getUser" + followDirection + "Card/" + count,
         async: false,
         type: 'GET',
         dataType: 'json',
@@ -22,6 +23,9 @@ function getUserCard(){
                 var nickname = jsons[json].nickname;
                 var followers = jsons[json].follower;
                 var intro = jsons[json].intro;
+                var follow_status = jsons[json].follow_status;
+                var status = 'Follow';
+                if(follow_status) status += 'ing';
 
                 var str =  '<div class="flip"> \
                                 <div class="arrow_box_1"> \
@@ -37,7 +41,7 @@ function getUserCard(){
                                         </div> \
                                     </div> \
                                     <div class="btn-follow"> \
-                                        Following \
+                                        '+ status + ' \
                                     </div> \
                                     <div class="card_profile_name"> \
                                         '+ nickname +' \
@@ -69,6 +73,12 @@ function getUserCard(){
                 $(".profile-relationship").append(str);
                 $(".profile-relationship").append(str);
                 $(".profile-relationship").append(str);
+
+                $(window).scroll(function() { 
+                    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                        getUserCard(followDirection);
+                    } 
+                });
             }
         },
         error: function(error) {
