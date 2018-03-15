@@ -12,7 +12,8 @@ from member.serializers import ProfileImageSerializer, ProfileSerializer
 __all__ = (
     'Follower',
     'Waiting',
-    'GetUserCard'
+    'GetUserFollowingCard',
+    'GetUserFollowerCard'
 )
 
 
@@ -75,7 +76,103 @@ class Waiting(APIView):
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
-class GetUserCard(ListAPIView):
+class GetUserFollowingCard(ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        count = self.kwargs.get('count')
+        if count:
+
+            follower = Relation.objects.filter(to_user=user)[int(count):int(count)+4]
+            if follower.count() != 0:
+
+                # follower = Relation.objects.filter(from_user=user).get()
+                list = []
+                for i in follower:
+                    try:
+
+                        profile = Profile.objects.filter(user=i.to_user).get()
+                        profile_serializer = ProfileSerializer(profile)
+
+                        data = {
+                                "pk": i.to_user.id,
+                                "follower": i.to_user.follower_users_count,
+                                "nickname": i.to_user.nickname,
+                                "intro": profile_serializer.data['intro'],
+                                "profile_img": profile_serializer.data['image']['profile_image'],
+                                "cover_img": profile_serializer.data['image']['cover_image']
+
+                        }
+
+                        list.append(data)
+
+                        return Response(list, status=status.HTTP_200_OK)
+                    except ObjectDoesNotExist:
+                            try:
+                                profile_image = ProfileImage.objects.filter(user=i.to_user).get()
+
+                                serializer = ProfileImageSerializer(profile_image)
+
+                                if serializer:
+                                    data = {
+                                        "pk": i.to_user.id,
+                                        "follower": i.to_user.follower_users_count,
+                                        "nickname": i.to_user.nickname,
+                                        "intro": '-',
+                                        "profile_img": serializer.data['profile_image'],
+                                        "cover_img": serializer.data['cover_image']
+
+                                    }
+                                    list.append(data)
+                                    return Response(list, status=status.HTTP_200_OK)
+                                raise exceptions.ValidationError('Abnormal connected')
+                            except ObjectDoesNotExist:
+
+                                    data = {
+                                        "pk": i.to_user.id,
+                                        "follower": i.to_user.follower_users_count,
+                                        "nickname": i.to_user.nickname,
+                                        "intro": '-',
+                                        "profile_img": '/static/images/example/2.jpeg',
+                                        "cover_img": '/static/images/example/1.jpeg'
+
+                                    }
+                                    list.append(data)
+                                    return Response(list, status=status.HTTP_200_OK)
+
+            else:
+                return Response({}, status=status.HTTP_200_OK)
+
+        else:
+            follower = Relation.objects.filter(to_user=user)[0:4].get()
+
+            list = []
+
+            for i in follower:
+                try:
+                    profile = Profile.objects.filter(user=i.to_user).get()
+                    profile_serializer = ProfileSerializer(profile)
+
+                    data = {
+                            "follower": i.to_user.follower_users_count,
+                            "nickname": i.to_user.nickname,
+                            "intro": profile_serializer.data['intro'],
+                            "profile_img": profile_serializer.data['image']['profile_image'],
+                            "cover_img": profile_serializer.data['image']['cover_image']
+
+
+                    }
+                    list.append(data)
+
+                    return Response(list, status=status.HTTP_200_OK)
+                except ObjectDoesNotExist:
+                    raise exceptions.ValidationError({"detail": "must Register Profile"})
+
+            return Response({},200)
+
+
+class GetUserFollowerCard(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
@@ -89,9 +186,7 @@ class GetUserCard(ListAPIView):
                 # follower = Relation.objects.filter(from_user=user).get()
                 list = []
                 for i in follower:
-                    print(type(i.to_user))
                     try:
-                        print(count)
 
                         profile = Profile.objects.filter(user=i.to_user).get()
                         profile_serializer = ProfileSerializer(profile)
