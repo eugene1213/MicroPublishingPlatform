@@ -38,24 +38,24 @@ COPY        .files/favicon.ico /srv/app/favicon.ico
 
 
 # collectstatic 실행
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
-## manage.py
-##WORKDIR     /srv/app/octocolumn
-#
-##RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+# manage.py
+#WORKDIR     /srv/app/octocolumn
+
+#RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
 
 # Azure
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends openssh-server \
-    && echo "root:Docker!" | chpasswd
-
-COPY sshd_config /etc/ssh/
-
-EXPOSE 2222 80
-
-RUN service ssh start
+#RUN apt-get update \
+#    && apt-get install -y --no-install-recommends openssh-server \
+#    && echo "root:Docker!" | chpasswd
+#
+#COPY sshd_config /etc/ssh/
+#
+#EXPOSE 2222 80
+#
+#RUN service ssh start
 ##
 
 RUN         cp /srv/app/.config/supervisor/* \
