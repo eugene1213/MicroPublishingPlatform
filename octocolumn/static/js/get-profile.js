@@ -321,6 +321,7 @@ function getPointHistory() {
                 var detail = jsons.results[i].history;
                 var type = jsons.results[i].point_use_type;
                 var date = jsons.results[i].created_at;
+                var plus_minus = jsons.results[i].plus_minus;
 
                     date = date.split("T");
 
@@ -334,7 +335,7 @@ function getPointHistory() {
 
                 var str =   "<tr> \
                                 <td>" + yyyy + "년 " + mm*1 + "월 " + dd*1 + "일 " + HH + ":" + MM + "</td> \
-                                <td>" + point + "point</td> \
+                                <td>" + point*plus_minus + "point</td> \
                                 <td>" + detail + "<span id=\"stat\">" + type + "</span></td> \
                             </tr>";
 
