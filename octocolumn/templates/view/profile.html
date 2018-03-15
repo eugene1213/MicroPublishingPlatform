@@ -118,9 +118,13 @@
 				<div class="profile_introduce">
 					<div class="pro_intro_tit">자기소개</div>
 					<div class="pro_intro_btn"></div>
-					<div id="profileIntro" contenteditable="false" placeholder="자기소개 입력란">In the tumultuous business of cutting-in and attending to a whale, there is much running backwards and forwards among the crew. Now hands are wanted here, and then again hands are wanted there. There is no staying in any one place; for at one and the same time everything has to be done everywhere. It is much the same with him who endeavors the description of the scene. We must now retrace our way a little.</div>
+					<div id="profileIntro" contenteditable="false">자기소개란을 준비했습니다.<br />
+							다른 사람들이 당신에 대해서 알 수 있도록 도와줄 겁니다.</div>
 				</div>
 				<div class="profile-userInfo profile-infomations">
+					<div class="btn-modify">
+						<img src="/static/images/icons/profile/write.png" alt="수정버튼">
+					</div>
 					<div class="profile-title-wrap">
 						<div class="infoTitle">기본 정보</div>
 						<div class="infoTitle">연락처 정보</div>
@@ -131,22 +135,22 @@
 							<table class="base-table">
 								<tr>
 									<td>태어난 년도</td>
-									<td>1989년</td>
+									<td contenteditable="false" id="birthYear">1989년</td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>생일</td>
-									<td>9월30일</td>
+									<td contenteditable="false" id="birthMonthDate">9월30일</td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>성별</td>
-									<td></td>
+									<td contenteditable="false" id="gender"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>나이</td>
-									<td></td>
+									<td contenteditable="false" id="age"></td>
 									<td></td>
 								</tr>
 							</table>
@@ -155,17 +159,17 @@
 							<table class="contact-table">
 								<tr>
 									<td>휴대폰</td>
-									<td></td>
+									<td contenteditable="false" id="hpNumber"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>지역</td>
-									<td></td>
+									<td contenteditable="false" id="location"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td></td>
+									<td id="email"></td>
 									<td></td>
 								</tr>
 							</table>
@@ -174,32 +178,32 @@
 							<table class="private-table">
 								<tr>
 									<td>직업</td>
-									<td></td>
+									<td contenteditable="false" id="job"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>웹사이트</td>
-									<td></td>
+									<td contenteditable="false" id="website"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>facebook</td>
-									<td></td>
+									<td contenteditable="false" id="fb"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>instargam</td>
-									<td></td>
+									<td contenteditable="false" id="ins"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>twitter</td>
-									<td></td>
+									<td contenteditable="false" id="tw"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>관심분야</td>
-									<td></td>
+									<td contenteditable="false" id="subject"></td>
 									<td></td>
 								</tr>
 							</table>
@@ -246,7 +250,7 @@
 
 				</div>
 				<div class="profile-privateInfo profile-infomations">
-					
+
 				</div>
 				<div class="profile_history profile-infomations">
 					<div class="pro_his_tit1">출판</div>

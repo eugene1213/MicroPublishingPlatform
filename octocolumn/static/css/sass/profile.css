@@ -386,6 +386,13 @@
   flex-direction: row;
   float: left;
   margin-left: 30px; }
+  .profile-userInfo .btn-modify {
+    position: absolute;
+    right: 8px;
+    top: -13px;
+    cursor: pointer; }
+    .profile-userInfo .btn-modify > img {
+      width: 21px; }
   .profile-userInfo .profile-title-wrap {
     display: flex;
     flex-direction: column;
@@ -412,12 +419,13 @@
     .profile-userInfo .profile-info-wrap .table-wrap td {
       width: 176px;
       padding-left: 8px; }
+      .profile-userInfo .profile-info-wrap .table-wrap td:nth-last-child(3) {
+        min-width: 152px; }
       .profile-userInfo .profile-info-wrap .table-wrap td:nth-last-child(2) {
         width: 368px; }
       .profile-userInfo .profile-info-wrap .table-wrap td:nth-last-child(1) {
         width: 16px;
-        background-size: 15px;
-        background-image: url(/static/images/icons/profile/write.png); }
+        background-size: 15px; }
 
 .profile-point-history {
   width: 608px;

@@ -435,6 +435,17 @@
 	float: left;
 	margin-left: 30px;
 
+	.btn-modify {
+		position: absolute;
+		right: 8px;
+		top: -13px;
+		cursor: pointer;
+
+		& > img {
+			width: 21px;
+		}
+	}
+
 	.profile-title-wrap {
 		display: flex;
 		flex-direction: column;
@@ -470,13 +481,15 @@
 				width: 176px;
 				padding-left: 8px;
 
+				&:nth-last-child(3) {
+					min-width: 152px;
+				}
 				&:nth-last-child(2) {
 					width: 368px;
 				}
 				&:nth-last-child(1) {
 					width: 16px;
 					background-size: 15px;
-					background-image: url(/static/images/icons/profile/write.png);
 				}
 			}
 		}
