@@ -314,7 +314,9 @@ function getPointHistory() {
         dataType: 'json',
         success: function(jsons) {
             
-            console.log(jsons);
+            if(jsons.results.length == 0){
+                $("th").remove();
+            }
             for(i in jsons.results){
                 
                 var point = jsons.results[i].point;
@@ -336,7 +338,7 @@ function getPointHistory() {
                 var str =   "<tr> \
                                 <td>" + yyyy + "년 " + mm*1 + "월 " + dd*1 + "일 " + HH + ":" + MM + "</td> \
                                 <td>" + point*plus_minus + "point</td> \
-                                <td>" + detail + "<span id=\"stat\">" + type + "</span></td> \
+                                <td>" + detail + " <span id=\"stat\">" + type + "</span></td> \
                             </tr>";
 
                 $(".point-history-wrap").append(str);
