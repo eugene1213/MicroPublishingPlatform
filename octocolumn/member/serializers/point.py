@@ -18,7 +18,7 @@ class PointHistorySerializer(serializers.ModelSerializer):
         if obj.point_use_type == '업적':
             return 1
         if obj.point_use_type == '환전':
-            return 1
+            return -1
 
     post = PostSerializer()
     plus_minus = SerializerMethodField()
