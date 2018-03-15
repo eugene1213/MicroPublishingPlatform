@@ -4,7 +4,8 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
-    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard, ProfileUpdate
+    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard, ProfileUpdate, GetUserFollowerCard, \
+    GetUserFollowingCard
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -39,9 +40,12 @@ urlpatterns = [
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
     url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
-    url(r'^getUserCard/', include([
-            url(r'^$', GetUserCard.as_view(), name="post-list"),
-            url(r'^(?P<count>\w+)$', GetUserCard.as_view(), name="post-list-page")
+    url(r'^getUserFollowerCard/', include([
+            url(r'^$', GetUserFollowerCard.as_view(), name="post-list"),
+            url(r'^(?P<count>\w+)$', GetUserFollowerCard.as_view(), name="post-list-page")
+        url(r'^getUserFollowingCard/', include([
+            url(r'^$', GetUserFollowingCard.as_view(), name="post-list"),
+            url(r'^(?P<count>\w+)$', GetUserFollowingCard.as_view(), name="post-list-page")
     ]), name='getUserCard'),
 
     # 기다림
