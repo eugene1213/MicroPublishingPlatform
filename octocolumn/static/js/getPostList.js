@@ -56,10 +56,8 @@ function getData(){
 
                 $("#card_"+i+" .profile_name").text(json[i-1].post.author.username);                    // 작가이름
                 $("#card_"+i+" .profile_readtime").text(readTime+" min read");                          // read time
-                //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가 
-                
+                //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가    
             }
-            console.log("통신성공");
         },
         error: function(error) {
             console.log(error);
