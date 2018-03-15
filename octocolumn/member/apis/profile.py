@@ -82,7 +82,6 @@ class ProfileIntroUpdate(APIView):
 class ProfileUpdate(APIView):
     permission_classes = (IsAuthenticated, )
 
-
     def post(self, request):
         user = self.request.user
         data = self.request.data
