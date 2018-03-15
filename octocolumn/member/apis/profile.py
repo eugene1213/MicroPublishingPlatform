@@ -36,8 +36,9 @@ class ProfileInfo(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
+
             return Response({"nickname": user.nickname,
-                             "waiting": user.waiting_user,
+                             "waiting": user.waiting_count,
                              "post_count": Post.objects.filter(author=user).count(),
                              "intro": "-",
                              "following": user.following_users_count,
@@ -46,7 +47,8 @@ class ProfileInfo(APIView):
                                  "profile_image": "/static/images/example/1.jpeg",
                                 "cover_image": "/static/images/examplle/2/jpeg"
                              }
-                             })
+                             }, status=status.HTTP_200_OK)
+
 
 class ProfileIntroUpdate(APIView):
     permission_classes = (IsAuthenticated,)
