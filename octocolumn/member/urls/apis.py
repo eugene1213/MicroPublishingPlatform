@@ -4,7 +4,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
-    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard
+    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard, ProfileUpdate
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^getMyTemp/', MyTemp.as_view(), name='getMyTemp'),
     url(r'^getProfileInfo/', ProfileInfo.as_view(), name='profile'),
     url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
+    url(r'^updateProfile/', ProfileUpdate.as_view(), name='profile'),
     url(r'^profile-image/', ProfileImageUpload.as_view(), name='profile_image'),
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),
     url(r'^getPointHistory/$', UserPointHistory.as_view(), name='point-history'),

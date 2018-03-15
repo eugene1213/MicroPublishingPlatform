@@ -19,7 +19,8 @@ class Profile(models.Model):
         (SEX_TYPE_FEMALE, 'f'),
     )
     user = models.ForeignKey('member.User', null=True)
-    birth = models.DateField(null=True)
+    year = models.IntegerField(null=True)
+    month = models.IntegerField(null=True)
     sex = models.CharField(
         max_length=1,
         choices=CHOICES_USER_TYPE,
@@ -27,8 +28,13 @@ class Profile(models.Model):
     )
     phone = models.CharField(max_length=100, null=True)
     intro = models.TextField(null=True)
+    age = models.IntegerField(null=True)
     jobs = models.CharField(max_length=255, null=True)
     region = models.CharField(max_length=255,null=True)
+    facebook = models.CharField(max_length=255,null=True)
+    instagram = models.CharField(max_length=255,null=True)
+    twitter = models.CharField(max_length=255,null=True)
+    subjects = models.CharField(max_length=255,null=True)
 
 
 class ProfileImage(models.Model):

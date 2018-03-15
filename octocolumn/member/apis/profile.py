@@ -19,7 +19,8 @@ __all__ = (
     'ProfileInfo',
     'ProfileIntroUpdate',
     'PublishPost',
-    'MyTemp'
+    'MyTemp',
+    'ProfileUpdate'
 )
 
 
@@ -75,6 +76,36 @@ class ProfileIntroUpdate(APIView):
             if serializer:
                 return Response('', status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
+
+class ProfileUpdate(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def post(self):
+        user = self.request.user
+        data = self.request.data
+        try:
+            profile = Profile.objects.filter(user=user).get()
+
+            profile.year = data['bithYear']
+            profile.monnt = data['bithMonthDate']
+            profile.sex = data['sex']
+            profile.phone = data['hpNumber']
+            profile.age = data['age']
+            profile.job = data['job']
+            profile.facebook = data['fb']
+            profile.instagram = data['ins']
+            profile.twitter = data['tw']
+            profile.subjects = data['subject']
+            profile.save()
+            return Response(status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            if Profile.objects.create(
+                    user=user, year=data['bithYear'], month=data['bithMonthDate'], sex=data['sex'],
+                    phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
+                                      twitter=data['tw'], subjects=data['subject']):
+                return Response(status=status.HTTP_200_OK)
+            return Response(status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileImageUpload(generics.CreateAPIView):
