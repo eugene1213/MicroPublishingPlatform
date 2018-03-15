@@ -301,7 +301,8 @@ function get_profile() {
 function modifyProfile() {
 
     if (birthYear) var birthYear = $("#birthYear").text().replace("년","");
-    if (birthMonthDate) var birthMonthDate = $("#birthMonthDate").text().replace("월","").replace("일","");
+    if (birthMonth) var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
+    if (birthDay) var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
     if (gender) var gender = $("#gender").text();
     if (age) var age = $("#age").text();
     if (hpNumber) var hpNumber = $("#hpNumber").text();
@@ -317,8 +318,9 @@ function modifyProfile() {
         async: false,
         type: 'POST',
         data: {
-            birthYear: birthYear*1,             // 태어난 년도
-            birthMonthDate: birthMonthDate*1,   // 생일
+            birthYear: birthYear*1,           // 태어난 년도
+            birthMonth: birthMonth*1,         // 생월
+            birthDay: birthDay*1,             // 생일
             sex: gender,                      // 성별
             age: age*1,                       // 나이
             hpNumber: hpNumber,               // 폰번호

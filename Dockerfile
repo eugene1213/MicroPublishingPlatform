@@ -51,16 +51,11 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends openssh-server \
     && echo "root:Docker!" | chpasswd
 
-COPY /etc/sshd_config /etc/ssh/
+COPY sshd_config /etc/ssh/
 
 EXPOSE 2222 80
 
-COPY startup /opt/startup
-
-RUN chmod 755 /opt/startup/init_container.sh
-
-ENTRYPOINT ["/opt/startup/init_container.sh"]
-
+RUN service ssh start
 ##
 
 RUN         cp /srv/app/.config/supervisor/* \

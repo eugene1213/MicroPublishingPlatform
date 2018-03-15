@@ -21,6 +21,7 @@ class Profile(models.Model):
     user = models.ForeignKey('member.User', null=True)
     year = models.IntegerField(null=True)
     month = models.IntegerField(null=True)
+    day = models.IntegerField
     sex = models.CharField(
         max_length=1,
         choices=CHOICES_USER_TYPE,
@@ -34,7 +35,7 @@ class Profile(models.Model):
     facebook = models.CharField(max_length=255,null=True)
     instagram = models.CharField(max_length=255,null=True)
     twitter = models.CharField(max_length=255,null=True)
-    subjects = models.CharField(max_length=255,null=True)
+    subjects = models.CharField(max_length=255, null=True)
 
 
 class ProfileImage(models.Model):

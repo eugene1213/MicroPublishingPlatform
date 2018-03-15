@@ -51,6 +51,7 @@ class ProfileInfo(APIView):
                              }
                              }, status=status.HTTP_200_OK)
 
+
 class ProfileIntroUpdate(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -81,14 +82,15 @@ class ProfileIntroUpdate(APIView):
 class ProfileUpdate(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def post(self,request):
+    def post(self, request):
         user = self.request.user
         data = self.request.data
         try:
             profile = Profile.objects.filter(user=user).get()
 
-            profile.year = data['bithYear']
-            profile.month = data['bithMonthDate']
+            profile.year = data['birthYear']
+            profile.month = data['birthMonth']
+            profile.day = data['birthDay']
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.age = data['age']
@@ -99,10 +101,11 @@ class ProfileUpdate(APIView):
             profile.twitter = data['tw']
             profile.subjects = data['subject']
             profile.save()
+            
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             if Profile.objects.create(
-                    user=user, year=data['bithYear'], month=data['bithMonthDate'], sex=data['sex'],
+                    user=user, year=data['bithYear'], month=data['bithMonth'], day=data['bithDay'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
                                       twitter=data['tw'], subjects=data['subject']):
                 return Response(status=status.HTTP_200_OK)
