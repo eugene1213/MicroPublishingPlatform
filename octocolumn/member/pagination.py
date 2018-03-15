@@ -26,6 +26,7 @@ class PointHistoryPagination(PageNumberPagination):
             previous_url = re.sub(p, 'http:', previous_i)
 
         ret = collections.OrderedDict()
+        ret["point"] = self.request.user.point
         ret["count"] = self.page.paginator.count
         ret["next"] = next_url
         ret["previous"] = previous_url
