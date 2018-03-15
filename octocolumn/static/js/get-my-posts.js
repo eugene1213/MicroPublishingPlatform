@@ -1,4 +1,13 @@
+/* 내 글 탭에서 히스토리바(가운데 선) 높이 지정 */
+function historyBarHeight() {
+    
+    var n = $(".history_date2").length + $(".history_date3").length // 말풍선 갯수
+    $(".history_bar").height(n * 120);
+}
+
 function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글들을 보여준다.
+
+    $(".history_date2, .history_date3").remove(); // 초기화
 
     var url = '';
 

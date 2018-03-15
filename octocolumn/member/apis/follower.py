@@ -82,6 +82,8 @@ class GetUserCard(ListAPIView):
                 for i in follower:
                     print(type(i.to_user))
                     try:
+                        print(count)
+
                         profile = Profile.objects.filter(user=i.to_user).get()
                         profile_serializer = ProfileSerializer(profile)
 
@@ -125,7 +127,7 @@ class GetUserCard(ListAPIView):
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
                                         "profile_img": '/static/images/example/2.jpeg',
-                                        "cover_img": '/static/images/example/3.jpeg'
+                                        "cover_img": '/static/images/example/1.jpeg'
 
                                     }
                                     list.append(data)
@@ -135,7 +137,7 @@ class GetUserCard(ListAPIView):
                 return Response({}, status=status.HTTP_200_OK)
 
         else:
-            follower = Relation.objects.filter(from_user=user)[0:4].all()
+            follower = Relation.objects.filter(from_user=user)[0:4].get()
 
             list = []
 
