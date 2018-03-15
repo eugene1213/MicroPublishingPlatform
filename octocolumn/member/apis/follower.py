@@ -37,7 +37,7 @@ class Follower(APIView):
             user.follower_users_count -= 1
             user.save()
             from_user.save()
-            return Response({'created': 'deleted'})
+            return Response({'detail': 'deleted'})
 
         except ObjectDoesNotExist:
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
