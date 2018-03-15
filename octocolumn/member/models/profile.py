@@ -12,21 +12,12 @@ __all__ =(
 
 
 class Profile(models.Model):
-    SEX_TYPE_MALE = 'm'
-    SEX_TYPE_FEMALE = 'f'
-    CHOICES_USER_TYPE = (
-        (SEX_TYPE_MALE, 'm'),
-        (SEX_TYPE_FEMALE, 'f'),
-    )
+
     user = models.ForeignKey('member.User', null=True)
     year = models.IntegerField(null=True)
     month = models.IntegerField(null=True)
     day = models.IntegerField
-    sex = models.CharField(
-        max_length=1,
-        choices=CHOICES_USER_TYPE,
-        null=True
-    )
+    sex = models.CharField()
     phone = models.CharField(max_length=100, null=True)
     intro = models.TextField(null=True)
     age = models.IntegerField(null=True)
