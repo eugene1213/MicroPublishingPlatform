@@ -39,4 +39,6 @@ django-cors-headers==2.1.0
 cryptography
 django-ipware
 django-user-agents
+django-redis-cache
+
 
