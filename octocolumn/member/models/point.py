@@ -11,6 +11,7 @@ class PointHistoryManager(models.Manager):
         instance = self.model(
             user=user,
             point_use_type=PointHistory.POINT_TYPE_CHARGE,
+            plus_minus=PointHistory.PLUS,
             point=point,
             history=history
         )
@@ -23,6 +24,7 @@ class PointHistoryManager(models.Manager):
         instance = self.model(
             user=user,
             point_use_type=PointHistory.POINT_TYPE_BUY,
+            plus_minus=PointHistory.MINUS,
             point=point,
             post=post,
             history=history
@@ -36,6 +38,7 @@ class PointHistoryManager(models.Manager):
         instance = self.model(
             user=user,
             point_use_type=PointHistory.POINT_TYPE_REWARD,
+            plus_minus=PointHistory.PLUS,
             point=point,
             history=history
         )
@@ -48,6 +51,7 @@ class PointHistoryManager(models.Manager):
         instance = self.model(
             user=user,
             point_use_type=PointHistory.POINT_TYPE_PUBLISH,
+            plus_minus=PointHistory.MINUS,
             point=point,
             post=post,
             history=history
@@ -60,7 +64,7 @@ class PointHistoryManager(models.Manager):
 
 class PointHistory(models.Model):
     POINT_TYPE_CHARGE = 'Charge'
-    POINT_TYPE_PUBLISH = 'publish'
+    POINT_TYPE_PUBLISH = 'Publish'
     POINT_TYPE_BUY = 'Buy'
     POINT_TYPE_REWARD = 'Reward'
     CHOICE_POINT_TYPE = (
@@ -69,13 +73,20 @@ class PointHistory(models.Model):
         (POINT_TYPE_REWARD, 'Reward'),
         (POINT_TYPE_PUBLISH, 'publish')
     )
+
+    PLUS = '1'
+    MINUS = '-1'
+    PlUS_MINUS_TYPE = (
+        (PLUS, 'Plus'),
+        (MINUS, 'Minus')
+    )
     user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
         null=True
                              )
     point_use_type = models.CharField(
-        max_length=1,
+        max_length=10,
         choices=CHOICE_POINT_TYPE,
         null=False,
         blank=False
@@ -83,6 +94,13 @@ class PointHistory(models.Model):
 
     point = models.IntegerField(default=0)
     history = models.CharField(max_length=255)
+    plus_minus = models.CharField(
+        max_length=3,
+        choices=PlUS_MINUS_TYPE,
+        default=PLUS,
+        null=False,
+        blank=False
+    )
     post = models.ForeignKey('column.Post', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     objects = PointHistoryManager()
