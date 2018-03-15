@@ -24,24 +24,25 @@ class Follower(APIView):
         user_pk = self.kwargs.get('user_pk')
 
         try:
-            from_user = User.objects.filter(pk=user_pk).get()
-            result = user.follow_toggle(from_user)
+            to_user = User.objects.filter(pk=user_pk).get()
+            result, relation = Relation.objects.get_or_create(to_user=to_user, from_user= self.request.user)
 
-            if result:
-                from_user.following_users_count += 1
-                user.follower_users_count += 1
+            if relation:
+                user.following_users_count += 1
+                to_user.follower_users_count += 1
                 user.save()
-                from_user.save()
+                to_user.save()
                 return Response({'detail': 'created',
                                  "author":{
                                      "follow_status": True,
-                                     "follower": from_user.following_users_count
+                                     "follower": to_user.following_users_count
                                  }
                                  })
-            from_user.following_users_count -= 1
+            to_user.following_users_count -= 1
             user.follower_users_count -= 1
             user.save()
-            from_user.save()
+            to_user.save()
+            result.delete()
             return Response({'detail': 'deleted',
                              "author": {
                                  "follow_status": False

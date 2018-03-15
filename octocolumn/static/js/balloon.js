@@ -75,8 +75,7 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
             }
         });
 
-        $(".btn-follow").click(function(){
-
+        $(".btn-follow").unbind("click").click(function(e){
             follow(i);
         });
     });

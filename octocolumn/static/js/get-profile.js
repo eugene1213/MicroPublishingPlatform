@@ -259,7 +259,7 @@ function get_profile() {
             var age = json.age;
 
             var hpNumber = json.phone;
-            var location = json.age;
+            var location = json.region;
             var email = json.email;
 
             var job = json.jobs;
@@ -309,6 +309,7 @@ function modifyProfile() {
     var gender = $("#gender").text();
     var age = $("#age").text();
     var hpNumber = $("#hpNumber").text();
+    var location = $("#location").text();   
     var job = $("#job").text();
     var website = $("#website").text();
     var fb = $("#fb").text();
@@ -327,6 +328,7 @@ function modifyProfile() {
             sex: gender,                      // 성별
             age: age*1,                       // 나이
             hpNumber: hpNumber,               // 폰번호
+            region: location,                 // 지역
             job: job,                         // 직업
             web: website,                     // 웹사이트
             fb: fb,                           // 페북
