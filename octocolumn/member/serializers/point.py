@@ -14,5 +14,6 @@ class PointHistorySerializer(serializers.ModelSerializer):
             'history',
             'post',
             'point_use_type',
+            'point_type',
             'created_at'
         )
