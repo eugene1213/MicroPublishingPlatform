@@ -97,7 +97,7 @@ class GetUserFollowingCard(ListAPIView):
 
                         data = {
                                 "pk": i.to_user.id,
-                                "follower": i.to_user.follower_users_count,
+                                "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                 "nickname": i.to_user.nickname,
                                 "intro": profile_serializer.data['intro'],
                                 "profile_img": profile_serializer.data['image']['profile_image'],
@@ -117,7 +117,7 @@ class GetUserFollowingCard(ListAPIView):
                                 if serializer:
                                     data = {
                                         "pk": i.to_user.id,
-                                        "follower": i.to_user.follower_users_count,
+                                        "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
                                         "profile_img": serializer.data['profile_image'],
@@ -131,7 +131,7 @@ class GetUserFollowingCard(ListAPIView):
 
                                     data = {
                                         "pk": i.to_user.id,
-                                        "follower": i.to_user.follower_users_count,
+                                        "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
                                         "profile_img": '/static/images/example/2.jpeg',
@@ -155,7 +155,7 @@ class GetUserFollowingCard(ListAPIView):
                     profile_serializer = ProfileSerializer(profile)
 
                     data = {
-                            "follower": i.to_user.follower_users_count,
+                            "follower": Relation.objects.filter(to_user=i.to_user).count(),
                             "nickname": i.to_user.nickname,
                             "intro": profile_serializer.data['intro'],
                             "profile_img": profile_serializer.data['image']['profile_image'],
@@ -193,7 +193,7 @@ class GetUserFollowerCard(ListAPIView):
 
                         data = {
                                 "pk": i.from_user.id,
-                                "follower": i.from_user.follower_users_count,
+                                "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                 "nickname": i.from_user.nickname,
                                 "intro": profile_serializer.data['intro'],
                                 "profile_img": profile_serializer.data['image']['profile_image'],
@@ -213,7 +213,7 @@ class GetUserFollowerCard(ListAPIView):
                                 if serializer:
                                     data = {
                                         "pk": i.from_user.id,
-                                        "follower": i.from_user.follower_users_count,
+                                        "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                         "nickname": i.from_user.nickname,
                                         "intro": '-',
                                         "profile_img": serializer.data['profile_image'],
@@ -227,7 +227,7 @@ class GetUserFollowerCard(ListAPIView):
 
                                     data = {
                                         "pk": i.from_user.id,
-                                        "follower": i.from_user.follower_users_count,
+                                        "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                         "nickname": i.from_user.nickname,
                                         "intro": '-',
                                         "profile_img": '/static/images/example/2.jpeg',
@@ -251,7 +251,7 @@ class GetUserFollowerCard(ListAPIView):
                     profile_serializer = ProfileSerializer(profile)
 
                     data = {
-                            "follower": i.from_user.follower_users_count,
+                            "follower": Relation.objects.filter(from_user=i.from_user).count(),
                             "nickname": i.from_user.nickname,
                             "intro": profile_serializer.data['intro'],
                             "profile_img": profile_serializer.data['image']['profile_image'],
