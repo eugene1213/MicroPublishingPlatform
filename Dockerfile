@@ -46,6 +46,22 @@ COPY        .files/favicon.ico /srv/app/favicon.ico
 #RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
 #RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
 
+# Azure
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd
+
+COPY /etc/sshd_config /etc/ssh/
+
+EXPOSE 2222 80
+
+COPY startup /opt/startup
+
+RUN chmod 755 /opt/startup/init_container.sh
+
+ENTRYPOINT ["/opt/startup/init_container.sh"]
+
+##
 
 RUN         cp /srv/app/.config/supervisor/* \
                 /etc/supervisor/conf.d/
