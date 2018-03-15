@@ -45,7 +45,7 @@ class ProfileInfo(APIView):
                              "follower": user.follower_users_count,
                              "image": {
                                  "profile_image": "/static/images/example/1.jpeg",
-                                "cover_image": "/static/images/examplle/2/jpeg"
+                                "cover_image": "/static/images/example/2/jpeg"
                              }
                              }, status=status.HTTP_200_OK)
 
