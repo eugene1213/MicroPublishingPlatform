@@ -25,7 +25,7 @@ class Follower(APIView):
 
         try:
             from_user = User.objects.filter(pk=user_pk).get()
-            result = from_user.follow_toggle(user)
+            result = user.follow_toggle(from_user)
 
             if result:
                 from_user.following_users_count += 1
