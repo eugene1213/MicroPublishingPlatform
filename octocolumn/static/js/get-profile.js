@@ -247,7 +247,8 @@ function get_profile() {
             var following = json.following;
             var follower = json.follower;
             var posts = json.post_count;
-            var birth = json.birth;
+            var birthYear = json.birthYear;
+            var birthMonthDate = json.birthMonth;
 
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
@@ -304,6 +305,7 @@ function modifyProfile() {
 
             $(".btn-modify > img").attr("src","/static/images/icons/profile/write.png");
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
+            $(".btn-save").removeClass("btn-save");
         },
         error: function(error) {
             console.log(error);
