@@ -4,11 +4,11 @@
     "allowed_hosts":"*",
     "databases":{
       "engine":"django.db.backends.postgresql_psycopg2",
-      "name":"postgres",
-      "user":"develop@devocto",
+      "name":"octo",
+      "user":"devocto",
       "password":"!devocto1234",
-      "host":"devocto.postgres.database.azure.com",
-      "port":""
+      "host":"octocolumn.cgkhz06rcrfm.ap-northeast-2.rds.amazonaws.com",
+      "port":"5432"
 
     },
     "email":{
