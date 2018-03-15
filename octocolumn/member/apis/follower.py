@@ -34,7 +34,8 @@ class Follower(APIView):
                 from_user.save()
                 return Response({'detail': 'created',
                                  "author":{
-                                     "follow_status": True
+                                     "follow_status": True,
+                                     "follower": from_user.following_users_count
                                  }
                                  })
             from_user.following_users_count -= 1

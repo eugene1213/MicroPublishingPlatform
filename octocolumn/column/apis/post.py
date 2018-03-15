@@ -232,6 +232,13 @@ class PostListView(APIView):
         except ObjectDoesNotExist:
             return None
 
+    def follower_status(self, user):
+        try:
+            Relation.objects.filter(to_user=user, from_user=self.request.user).get()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def get(self, request, *args, **kwargs):
         post = Post.objects.order_by('-created_date')[:5]
 
@@ -262,7 +269,7 @@ class PostListView(APIView):
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + " " + user.first_name,
-                        # "follow_status": status,
+                        "follow_status": self.follower_status(user),
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
