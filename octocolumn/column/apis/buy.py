@@ -24,14 +24,14 @@ class PostBuy(APIView):
 
     def post(self,request):
         data = self.request.data
+        user = self.request.user
         if not self.request.user.is_authenticated:
             raise exceptions.NotAuthenticated()
 
-        user_queryset = User.objects.filter(id=self.request.user.id).get()
         post_queryset = Post.objects.filter(id=data['post_id']).get()
 
         # 포인트가 적을시에 오류 발생
-        if post_queryset.price > user_queryset.point:
+        if post_queryset.price > user.point:
             raise exceptions.APIException({"detail": "There is not enough points."}, 400)
 
         # 구매한 기록이 있는지를 확인
@@ -41,12 +41,11 @@ class PostBuy(APIView):
 
             # 구매내역에 추가
             PointHistory.objects.buy(user=self.request.user, point=post_queryset.price,
-                                     history=post_queryset.title)
+                                     history=post_queryset.title,
+                                     post=post_queryset
+                                     )
 
             BuyList.objects.get_or_create(user=self.request.user, post=post_queryset)
-            # 유저 포인트 업데이트
-            user_queryset.point -= post_queryset.price
-            user_queryset.save()
 
             # 구매횟수 증가 업데이트
             post_queryset.buy_count += 1
