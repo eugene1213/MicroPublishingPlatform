@@ -36,8 +36,17 @@ class ProfileInfo(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "You have not entered yet."})
-
+            return Response({"nickname": user.nickname,
+                             "waiting": user.waiting_user,
+                             "post_count": Post.objects.filter(author=user).count(),
+                             "intro": "-",
+                             "following": user.following_users_count,
+                             "follower": user.follower_users_count,
+                             "image": {
+                                 "profile_image": "/static/images/example/1.jpeg",
+                                "cover_image": "/static/images/examplle/2/jpeg"
+                             }
+                             })
 
 class ProfileIntroUpdate(APIView):
     permission_classes = (IsAuthenticated,)
