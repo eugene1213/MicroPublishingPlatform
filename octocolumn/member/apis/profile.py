@@ -51,6 +51,7 @@ class ProfileInfo(APIView):
                              }
                              }, status=status.HTTP_200_OK)
 
+
 class ProfileIntroUpdate(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -98,6 +99,7 @@ class ProfileUpdate(APIView):
             profile.twitter = data['tw']
             profile.subjects = data['subject']
             profile.save()
+            
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             if Profile.objects.create(
