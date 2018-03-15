@@ -127,7 +127,7 @@ class GetUserCard(ListAPIView):
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
                                         "profile_img": '/static/images/example/2.jpeg',
-                                        "cover_img": '/static/images/example/3.jpeg'
+                                        "cover_img": '/static/images/example/1.jpeg'
 
                                     }
                                     list.append(data)

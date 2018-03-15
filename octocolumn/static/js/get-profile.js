@@ -1,13 +1,86 @@
 $(document).ready(function(){
 
-    get_profile();
-    getProfileIntro();
-    historyBarHeight();
-    get_my_posts("post");
-    
+    get_profile();                                  // profile 페이지 첫 로딩 시 데이터 받아옴
+
+    $(".profile_tab1").click(function(){
+        
+        $(".active").removeClass("active");
+        $(this).addClass("active");
+
+                                                    // 개인정보 탭 클릭 시 보여줄 팔로잉 목록 호출
+
+        $(".profile-userInfo").css("display","flex");
+        $(".currentView").removeClass("currentView");
+        $(".profile-userInfo").addClass("currentView");
+        $(".profile-infomations").not(".currentView").hide();
+    });
+    $(".profile_tab2").click(function(){
+        
+        $(".active").removeClass("active");
+        $(this).addClass("active");
+
+                                                    // 포인트내역 탭 클릭 시 보여줄 팔로잉 목록 호출
+
+        $(".profile-point-history").show();
+        $(".currentView").removeClass("currentView");
+        $(".profile-point-history").addClass("currentView");
+        $(".profile-infomations").not(".currentView").hide();
+    });
     $(".profile_tab3").click(function(){
+
         $(".flip").remove();
-        getUserCard();
+        $(".active").removeClass("active");
+        $(this).addClass("active");
+
+        getUserCard();                              // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
+
+        $(".profile-relationship").show();
+        $(".currentView").removeClass("currentView");
+        $(".profile-relationship").addClass("currentView");
+        $(".profile-infomations").not(".currentView").hide();
+
+        $(window).scroll(function() { 
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                getUserCard();
+            } 
+        });
+    });
+    $(".profile_tab4").click(function(){
+        
+        alert("준비중입니다.")
+        // $(".active").removeClass("active");
+        // $(this).addClass("active");
+
+                                                    // 업적 탭 클릭 시 보여줄 팔로잉 목록 호출
+
+        // $(".profile-userInfo").css("display","flex");
+        // $(".currentView").removeClass("currentView");
+        // $(".profile-userInfo").addClass("currentView");
+        // $(".profile-infomations").not(".currentView").hide();
+    });
+    $(".profile_tab5").click(function(){
+        
+        $(".active").removeClass("active");
+        $(this).addClass("active");
+
+                                                    // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
+
+        $(".profile-userInfo").css("display","flex");
+        $(".currentView").removeClass("currentView");
+        $(".profile-userInfo").addClass("currentView");
+        $(".profile-infomations").not(".currentView").hide();
+    });
+    $(".profile_tab6").click(function(){
+
+        $(".active").removeClass("active");
+        $(this).addClass("active");
+
+        get_my_posts("post");                       // 내 글 탭 클릭 시 보여줄 글 목록
+
+        $(".profile_history").show();
+        $(".currentView").removeClass("currentView");
+        $(".profile_history").addClass("currentView");
+        $(".profile-infomations").not(".currentView").hide();
     });
 
     $(".pro_his_tit1").addClass("on");
@@ -37,7 +110,7 @@ $(document).ready(function(){
     });
 
 
-/* start 커버, 프로필 이미지 처리 */
+/* start 커버, 프로필 이미지 업로드 처리 */
     $("#coverImgInput").change(function() {
         readURL(this,"#coverImg");
         
@@ -87,7 +160,7 @@ $(document).ready(function(){
     }
 /* end 커버, 프로필 이미지 처리 */
 
-
+/* 자기소개 수정 및 업로드 */
     $(".pro_intro_btn").click(function(){
 
         $("#profileIntro").prop("contenteditable","true");
@@ -107,12 +180,7 @@ $(document).ready(function(){
     });
 });
 
-
-function historyBarHeight() {
-
-    var n = $(".history_date2").length + $(".history_date3").length // 말풍선 갯수
-    $(".history_bar").height(n * 120);
-}
+/* 커버이미지, 프로필이미지, 이름, 기다림, 팔로워, 팔로잉, 출판 글 수 */
 function get_profile() {
 
     $.ajax({
@@ -149,24 +217,9 @@ function get_profile() {
         }
     });
 }
-function getProfileIntro() {                    // 자기소개 받아온다.
 
-    $.ajax({
-        url: "/api/member/getProfileInfo/",
-        async: false,
-        type: 'POST',
-        dataType: 'json',
-        success: function(json) {
-
-            var userIntro = json.intro;
-            $("#profileIntro").text(userIntro);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
-function updateUserIntro(userIntro) {             // 수정된 자기소개를 업로드한다.
+/* 수정된 자기소개를 업로드한다. */
+function updateUserIntro(userIntro) {             
 
     $.ajax({
         url: "/api/member/updateProfileIntro/",
@@ -185,7 +238,7 @@ function updateUserIntro(userIntro) {             // 수정된 자기소개를 �
         }
     });
 }
-
+/* 프로필 이미지 업로드 */
 function uploadProfileImg(whichImg) {
 
     if(whichImg == "cover") {
@@ -249,3 +302,25 @@ function setCaretAtEnd(elem) {
         $(elem).focus().text($(elem).text());
     } // if
 } // SetCaretAtEnd()
+
+/* 포인트 내역을 불러온다. */
+function getPointHistory() {
+
+    $.ajax({
+        url: "/api/member/getPointHistory/",
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        success: function(json) {
+            
+            var date = json.date;
+            var point = json.point;
+            var detail = json.detail;
+
+            $(".")
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}

@@ -2,10 +2,12 @@ function getUserCard(){
 
     var count = 0;
     
+    
     if($(".flip").length != 0){
 
         count = $(".flip").length;
     }
+    console.log(count);
     $.ajax({
         url: "/api/member/getUserCard/" + count,
         async: false,
@@ -13,58 +15,59 @@ function getUserCard(){
         dataType: 'json',
         success: function(jsons) {
             
-            console.log(jsons);
             for( json in jsons) {
 
-                var cover_img = json.cover_img;
-                var profile_img = json.profile_img;
-                var nickname = json.nickname;
-                var followers = json.followers;
-                var intro = json.intro;
+                var cover_img = jsons[json].cover_img;
+                var profile_img = jsons[json].profile_img;
+                var nickname = jsons[json].nickname;
+                var followers = jsons[json].follower;
+                var intro = jsons[json].intro;
 
-                var str =  '<div class="flip"> \n\
-                                <div class="arrow_box_1"> \n\
-                                    <div class="card_background_img" style="background-image:url('+ cover_img +')"> \n\
-                                        <img class="card_profile_img" src="'+ profile_img +'"> \n\
-                                    </div> \n\
-                                    <div class="wrap-followers"> \n\
-                                        <div class="followers"> \n\
-                                            Followers \n\
-                                        </div> \n\
-                                        <div class="num_of_followers"> \n\
-                                            '+ followers +'K \n\
-                                        </div> \n\
-                                    </div> \n\
-                                    <div class="btn-follow"> \n\
-                                        Follow \n\
-                                    </div> \n\
-                                    <div class="card_profile_name"> \n\
-                                        '+ nickname +' \n\
-                                    </div> \n\
-                                    <div class="card_profile_title"> \n\
-                                        <!--정치전문가--> \n\
-                                    </div> \n\
-                                    <div class="socialbar"> \n\
-                                        <a><img src="{% static \'images/icons/balloon/fb-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/isn-combined-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/t-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/bl-combined-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/inf-combined-shape-copy-2@3x.png\' %}" class="more-info"></a> \n\
-                                    </div> \n\
-                                </div> \n\
-                                <div class="arrow_box_2"> \n\
-                                    <div class="card_profile_info"> \n\
-                                        '+ intro +' \n\
-                                    </div> \n\
-                                    <div class="socialbar"> \n\
-                                        <a><img src="{% static \'images/icons/balloon/fb-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/isn-combined-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/t-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/bl-combined-shape-copy-2@3x.png\' %}"></a> \n\
-                                        <a><img src="{% static \'images/icons/balloon/inf-combined-shape-copy-2@3x.png\' %}" class="more-info2"></a> \n\
-                                    </div> \n\
-                                </div> \n\
-                            </div>'
+                var str =  '<div class="flip"> \
+                                <div class="arrow_box_1"> \
+                                    <div class="card_background_img" style="background-image:url('+ cover_img +')"> \
+                                        <img class="card_profile_img" src="'+ profile_img +'"> \
+                                    </div> \
+                                    <div class="wrap-followers"> \
+                                        <div class="followers"> \
+                                            Followers \
+                                        </div> \
+                                        <div class="num_of_followers"> \
+                                            '+ followers +' \
+                                        </div> \
+                                    </div> \
+                                    <div class="btn-follow"> \
+                                        Unfollow \
+                                    </div> \
+                                    <div class="card_profile_name"> \
+                                        '+ nickname +' \
+                                    </div> \
+                                    <div class="card_profile_title"> \
+                                    </div> \
+                                    <div class="socialbar"> \
+                                        <a><img src="/static/images/icons/balloon/fb-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/t-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info"></a> \
+                                    </div> \
+                                </div> \
+                                <div class="arrow_box_2"> \
+                                    <div class="card_profile_info"> \
+                                        '+ intro +' \
+                                    </div> \
+                                    <div class="socialbar"> \
+                                        <a><img src="/static/images/icons/balloon/fb-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/t-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a> \
+                                        <a><img src="/static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info2"></a> \
+                                    </div> \
+                                </div> \
+                            </div>';
+                $(".profile-relationship").append(str);
+                $(".profile-relationship").append(str);
+                $(".profile-relationship").append(str);
                 $(".profile-relationship").append(str);
             }
         },
@@ -73,15 +76,15 @@ function getUserCard(){
         }
     });
 
-    $(".more-info").click(function(){
-        
-        $( ".arrow_box_1" ).hide();
-        $( ".arrow_box_2" ).show();
+    $(".more-info").click(function(e){
+
+        $(e.target).parent().parent().parent().hide();
+        $(e.target).parent().parent().parent().parent().children(".arrow_box_2").show();
     });
 
-    $(".more-info2").click(function(){
+    $(".more-info2").click(function(e){
 
-        $( ".arrow_box_2" ).hide();
-        $( ".arrow_box_1" ).show();
+        $(e.target).parent().parent().parent().hide();
+        $(e.target).parent().parent().parent().parent().children(".arrow_box_1").show();
     });
 }

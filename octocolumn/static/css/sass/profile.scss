@@ -20,7 +20,10 @@
 }
 
 .profile_box .active{
-    z-index: 0;
+	z-index: 0;
+	color: #ffffff !important;
+	background-color: #000000 !important;
+	
 }
 
 .profile_box .profile_tab1{
@@ -118,7 +121,7 @@
 	height: 108px;
 	font-size: 12px;
 	font-weight: 300;
-	color: #ffffff;
+	color: #000000;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 	display: block;
 	position: absolute;
@@ -128,7 +131,7 @@
 	padding: 24px 4px;
 	text-align: center;
 	line-height: 20px;
-	background: #2A292A;
+	background: #ffffff;
 }
 
 
@@ -558,9 +561,6 @@
 }
 .profile-relationship {
 	width: 608px;
-	height: 900px;
-	border: 1px solid #000000;
-	border-radius: 10px;
 	position: relative;
 	float: left;
 	margin-left: 30px;
@@ -571,12 +571,14 @@
 		float: left;
 		border-bottom: 1px solid #000000;
 		font-size: 12px;
-		margin-bottom: 36px;
 
 		.tab {
 			float: left;
 			width: 76px;
 			padding-bottom: 4px;
+		}
+		& + .flip {
+			clear: both;
 		}
 	}
 }
