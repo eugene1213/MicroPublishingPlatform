@@ -82,15 +82,16 @@ class ProfileIntroUpdate(APIView):
 class ProfileUpdate(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def post(self):
+
+    def post(self, request):
         user = self.request.user
         data = self.request.data
         try:
             profile = Profile.objects.filter(user=user).get()
 
-            profile.year = data['bithYear']
-            profile.monnt = data['bithMonthDate']
-            profile.day = data['bithDay']
+            profile.year = data['birthYear']
+            profile.mount = data['birthMonthDate']
+            profile.day = data['birthDay']
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.age = data['age']
