@@ -18,7 +18,7 @@ $(document).ready(function(){
     
 });
 
-function popBalloon(data) {
+function popBalloon(data) { //getPostList.js 에서 호출한다.
 
     $(".profile_img").mouseenter(function(){
 
@@ -70,9 +70,9 @@ function popBalloon(data) {
             }
         });
 
-        $(".btn-follow").click(function(){
-
-            follow();
+        $(".btn-follow").click(function(e){
+            
+            follow(i);
         });
     });
 }
@@ -80,15 +80,16 @@ function popBalloon(data) {
 function follow(author_id) {
 
     $.ajax({
-        url: "/api/member/follow/",
+        url: "/api/member/"+author_id+"/follow/",
         async: false,
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
         data: {
             user_id: author_id
         },
         success: function(json) {
 
+            console.log(json);
             json.author.follow_status ? $(".btn-follow").text("Unfollow") : $(".btn-follow").text("Follow");
             
             $(".num_of_followers").text(json.author.follower_count);

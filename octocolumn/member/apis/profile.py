@@ -94,22 +94,21 @@ class ProfileUpdate(APIView):
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.age = data['age']
-
-            profile.job = data['job']
+            profile.web = data['web']
+            profile.jobs = data['job']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
             profile.twitter = data['tw']
             profile.subjects = data['subject']
             profile.save()
-            
-            return Response(status=status.HTTP_200_OK)
+            return Response('')
         except ObjectDoesNotExist:
             if Profile.objects.create(
                     user=user, year=data['bithYear'], month=data['bithMonth'], day=data['bithDay'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
                                       twitter=data['tw'], subjects=data['subject']):
                 return Response(status=status.HTTP_200_OK)
-            return Response(status.HTTP_400_BAD_REQUEST)
+            raise exceptions.ValidationError('Abnormal connectd')
 
 
 class ProfileImageUpload(generics.CreateAPIView):

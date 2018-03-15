@@ -55,6 +55,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'intro',
             'jobs',
             'subjects',
+            'web',
             'intro',
             'follower',
             'following',

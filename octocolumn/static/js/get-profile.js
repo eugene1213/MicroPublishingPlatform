@@ -213,19 +213,21 @@ $(document).ready(function(){
 /* end 자기소개 수정 및 업로드 */
     $(".btn-modify").click(function(){
         
-        $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
-        $(".btn-modify > img").attr("src","/static/images/icons/profile/save.svg");
-        $(".btn-modify").addClass("btn-save");
-    
-        $('td[contenteditable="true"]').keypress(function(event) {
+        if($(this).hasClass("btn-save")){
             
-            if (event.which == 13)
-                return false;
-        });
-        $(".btn-save").click(function(){
-
             modifyProfile();
-        });
+        }else{
+            
+            $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
+            $(".btn-modify > img").attr("src","/static/images/icons/profile/save.svg");
+            $(".btn-modify").addClass("btn-save");
+        
+            $('td[contenteditable="true"]').keypress(function(event) {
+                
+                if (event.which == 13)
+                    return false;
+            });
+        }
     });
 });
 
@@ -249,8 +251,10 @@ function get_profile() {
             var following = json.following;
             var follower = json.follower;
             var posts = json.post_count;
+
             var birthYear = json.birthYear;
-            var birthMonthDate = json.birthMonth;
+            var birthMonth = json.birthMonth;
+            var birthDay = json.birthDay;
             var gender = json.sex;
             var age = json.age;
 
@@ -259,7 +263,7 @@ function get_profile() {
             var email = json.email;
 
             var job = json.jobs;
-            var website = json.website;
+            var website = json.web;
             var fb = json.facebook;
             var ins = json.instagram;
             var tw = json.twitter;
@@ -274,22 +278,21 @@ function get_profile() {
             $("#follower").text(follower);
             $("#posts").text(posts);
 
+            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear);
+            if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
+            if(gender)          $(".base-table :contains(성별) + td").text(gender);
+            if(age > 0)         $(".base-table :contains(나이) + td").text(age);
 
-            $(".base-table :contains(태어난 년도) + td").text(birthYear);
-            $(".base-table :contains(생일) + td").text(birthMonthDate);
-            $(".base-table :contains(성별) + td").text(gender);
-            if(age > 0) $(".base-table :contains(나이) + td").text(age);
+            if(hpNumber)        $(".contact-table :contains(휴대폰) + td").text(hpNumber);
+            if(location)        $(".contact-table :contains(지역) + td").text(location);
+            if(email)           $(".contact-table :contains(이메일) + td").text(email);
 
-            $(".contact-table :contains(휴대폰) + td").text(hpNumber);
-            $(".contact-table :contains(지역) + td").text(location);
-            $(".contact-table :contains(이메일) + td").text(email);
-
-            $(".private-table :contains(직업) + td").text(job);
-            $(".private-table :contains(웹사이트) + td").text(website);
-            $(".private-table :contains(facebook) + td").text(fb);
-            $(".private-table :contains(instagram) + td").text(ins);
-            $(".private-table :contains(twitter) + td").text(tw);
-            $(".private-table :contains(관심분야) + td").text(subject);
+            if(job)             $(".private-table :contains(직업) + td").text(job);
+            if(website)         $(".private-table :contains(웹사이트) + td").text(website);
+            if(fb)              $(".private-table :contains(facebook) + td").text(fb);
+            if(ins)             $(".private-table :contains(instagram) + td").text(ins);
+            if(tw)              $(".private-table :contains(twitter) + td").text(tw);
+            if(subject)         $(".private-table :contains(관심분야) + td").text(subject);
 
             historyBarHeight();
         },
@@ -325,14 +328,14 @@ function modifyProfile() {
             age: age*1,                       // 나이
             hpNumber: hpNumber,               // 폰번호
             job: job,                         // 직업
-            website: website,                 // 웹사이트
+            web: website,                     // 웹사이트
             fb: fb,                           // 페북
             ins: ins,                         // 인스타
             tw: tw,                           // 트윗
             subject: subject                  // 관심분야
         },
         dataType: 'json',
-        success: function(json) {
+        success: function() {
 
             $(".btn-modify > img").attr("src","/static/images/icons/profile/write.png");
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
