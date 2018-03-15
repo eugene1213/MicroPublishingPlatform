@@ -7,14 +7,18 @@ from member.models import PointHistory
 
 class PointHistorySerializer(serializers.ModelSerializer):
     def get_plus_minus(self, obj):
-        if obj.point_use_type == 'Buy':
+        if obj.point_use_type == '구매':
             return -1
-        if obj.point_use_type == 'Charge':
+        if obj.point_use_type == '충전':
             return 1
-        if obj.point_use_type == 'Reward':
+        if obj.point_use_type == '리워드':
             return 1
-        if obj.point_use_type == 'Publish':
+        if obj.point_use_type == '출판':
             return -1
+        if obj.point_use_type == '업적':
+            return 1
+        if obj.point_use_type == '환전':
+            return 1
 
     post = PostSerializer()
     plus_minus = SerializerMethodField()

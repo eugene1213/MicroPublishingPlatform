@@ -63,15 +63,20 @@ class PointHistoryManager(models.Manager):
 
 
 class PointHistory(models.Model):
-    POINT_TYPE_CHARGE = 'Charge'
-    POINT_TYPE_PUBLISH = 'Publish'
-    POINT_TYPE_BUY = 'Buy'
-    POINT_TYPE_REWARD = 'Reward'
+    POINT_TYPE_CHARGE = '충전'
+    POINT_TYPE_WITHDRAW = '환전'
+    POINT_TYPE_PUBLISH = '출판'
+    POINT_TYPE_BUY = '구매'
+    POINT_TYPE_REWARD = '리워드'
+    POINT_TYPE_ACHIEVEMENT = '업적'
     CHOICE_POINT_TYPE = (
         (POINT_TYPE_CHARGE,'Charge'),
         (POINT_TYPE_BUY, 'Buy'),
         (POINT_TYPE_REWARD, 'Reward'),
-        (POINT_TYPE_PUBLISH, 'publish')
+        (POINT_TYPE_PUBLISH, 'Publish'),
+        (POINT_TYPE_ACHIEVEMENT, 'Achievement'),
+        (POINT_TYPE_WITHDRAW, 'WITHDRAW')
+
     )
 
     PLUS = '1'
