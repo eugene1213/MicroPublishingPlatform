@@ -1,4 +1,5 @@
 from django.contrib.auth.middleware import get_user
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -14,30 +15,47 @@ __all__ = (
 
 def index(request):
     if request.COOKIES:
-        response = render_to_response("view/main.html", {"login": True})
-        return response
+        try:
+            request.COOKIES.get('token')
+            response = render_to_response("view/main.html", {"login": True})
+            return response
+        except ObjectDoesNotExist:
+            return render_to_response('view/main.html', )
     return render_to_response('view/main.html',)
+
 
 def write(request):
     if request.COOKIES:
-        response = render_to_response("view/write.html", {"login": True})
-        return response
-    return render_to_response('view/main.html')
+        try:
+            request.COOKIES.get('token')
+            response = render_to_response("view/write.html", {"login": True})
+            return response
+        except ObjectDoesNotExist:
+            return render_to_response('view/main.html', )
+    return render_to_response('view/main.html', )
 
 
 def read(request, post_id):
 
     if request.COOKIES:
-        response = render_to_response("view/read.html", {"login": True})
-        return response
-    return render_to_response('view/main.html')
+        try:
+            request.COOKIES.get('token')
+            response = render_to_response("view/read.html", {"login": True})
+            return response
+        except ObjectDoesNotExist:
+            return render_to_response('view/main.html', )
+    return render_to_response('view/main.html', )
 
 
 def profile(request):
     if request.COOKIES:
-        response = render_to_response("view/profile.html", {"login": True})
-        return response
-    return render_to_response('view/main.html')
+        try:
+            request.COOKIES.get('token')
+            response = render_to_response("view/profile.html", {"login": True})
+            return response
+        except ObjectDoesNotExist:
+            return render_to_response('view/main.html', )
+    return render_to_response('view/main.html', )
 
 
 def facebook(request):
