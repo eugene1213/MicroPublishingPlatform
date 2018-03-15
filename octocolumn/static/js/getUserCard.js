@@ -9,7 +9,7 @@ function getUserCard(){
     }
     console.log(count);
     $.ajax({
-        url: "/api/member/getUserCard/" + count,
+        url: "/api/member/getUserFollowingCard/" + count,
         async: false,
         type: 'GET',
         dataType: 'json',

@@ -4,7 +4,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
-    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard, ProfileUpdate, GetUserFollowerCard, \
+    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard
 from member.apis.point import UserPointHistory
 
