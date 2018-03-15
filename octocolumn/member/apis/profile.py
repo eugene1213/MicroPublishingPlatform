@@ -94,8 +94,8 @@ class ProfileUpdate(APIView):
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.age = data['age']
-            print(data['age'])
-            profile.job = data['job']
+            profile.web = data['web']
+            profile.jobs = data['job']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
             profile.twitter = data['tw']

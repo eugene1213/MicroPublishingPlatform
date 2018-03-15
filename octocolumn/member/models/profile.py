@@ -21,6 +21,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=100, null=True, blank=True)
     intro = models.TextField(null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
+    web = models.CharField(max_length=255, null=True, blank=True)
     jobs = models.CharField(max_length=255, null=True, blank=True)
     region = models.CharField(max_length=255,null=True, blank=True)
     facebook = models.CharField(max_length=255,null=True, blank=True)
