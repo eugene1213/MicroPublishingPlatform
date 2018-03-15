@@ -201,6 +201,7 @@ function get_profile() {
             var following = json.following;
             var follower = json.follower;
             var posts = json.post_count;
+            var birth = json.birth;
 
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
@@ -210,6 +211,7 @@ function get_profile() {
             $("#following").text(following);
             $("#follower").text(follower);
             $("#posts").text(posts);
+            //$(".base-table .")
 
             historyBarHeight();
         },
@@ -314,11 +316,13 @@ function getPointHistory() {
         dataType: 'json',
         success: function(jsons) {
             
+            console.log(jsons);
             if(jsons.results.length == 0){
                 $("th").remove();
             }
             for(i in jsons.results){
                 
+                var havePoint = $(".btn-point .point").text();
                 var point = jsons.results[i].point;
                 var detail = jsons.results[i].history;
                 var type = jsons.results[i].point_use_type;
@@ -340,7 +344,7 @@ function getPointHistory() {
                                 <td>" + point*plus_minus + "point</td> \
                                 <td>" + detail + " <span id=\"stat\">" + type + "</span></td> \
                             </tr>";
-
+                $("#point-amount").text(havePoint);
                 $(".point-history-wrap").append(str);
             }
         },
