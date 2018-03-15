@@ -25,7 +25,12 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
         var parents_id = $(this).parents().parents().parents().attr("id");  //mouseenter 이벤트가 발생한 요소의 3번째 부모의 id
         var i = parents_id.substr(5,1);
         var followers = data[i-1].post.author.follower_count;
+        var follow_status = data[i-1].post.author.follow_status;
 
+        console.log(follow_status)
+        if(follow_status) {
+            $(".btn-follow").text("Unfollow");
+        }
         $(".num_of_followers").text(followers);
 
         if(!$(this).attr("id")){
