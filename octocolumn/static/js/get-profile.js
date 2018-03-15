@@ -19,7 +19,8 @@ $(document).ready(function(){
         $(".active").removeClass("active");
         $(this).addClass("active");
 
-                                                    // 포인트내역 탭 클릭 시 보여줄 팔로잉 목록 호출
+        $(".point-history-wrap tr").not("#tr-header").remove();
+        getPointHistory();                          // 포인트내역 탭 클릭 시 보여줄 팔로잉 목록 호출
 
         $(".profile-point-history").show();
         $(".currentView").removeClass("currentView");
@@ -309,15 +310,36 @@ function getPointHistory() {
     $.ajax({
         url: "/api/member/getPointHistory/",
         async: false,
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
-        success: function(json) {
+        success: function(jsons) {
             
-            var date = json.date;
-            var point = json.point;
-            var detail = json.detail;
+            console.log(jsons);
+            for(i in jsons.results){
+                
+                var point = jsons.results[i].point;
+                var detail = jsons.results[i].history;
+                var type = jsons.results[i].point_use_type;
+                var date = jsons.results[i].created_at;
 
-            $(".")
+                    date = date.split("T");
+
+                    yyyy = date[0].split("-")[0];
+                    mm   = date[0].split("-")[1];
+                    dd   = date[0].split("-")[2];
+
+                    HH   = date[1].split(":")[0];
+                    MM   = date[1].split(":")[1];
+
+
+                var str =   "<tr> \
+                                <td>" + yyyy + "년 " + mm*1 + "월 " + dd*1 + "일 " + HH + ":" + MM + "</td> \
+                                <td>" + point + "point</td> \
+                                <td>" + detail + "<span id=\"stat\">" + type + "</span></td> \
+                            </tr>";
+
+                $(".point-history-wrap").append(str);
+            }
         },
         error: function(error) {
             console.log(error);
