@@ -1,12 +1,5 @@
-from django.contrib.auth.middleware import get_user
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 
-from column.models import Post
-from member.models import BuyList
-from member.models.user import Relation
+from django.shortcuts import render_to_response
 
 __all__ = (
     'index',
