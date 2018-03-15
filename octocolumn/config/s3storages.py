@@ -1,5 +1,5 @@
 from django.conf import settings
-from storages.backends.azure_storage import AzureStorage
+# from storages.backends.azure_storage import AzureStorage
 from storages.backends.s3boto import S3BotoStorage
 
 
