@@ -29,7 +29,7 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
 
         console.log(follow_status)
         if(follow_status) {
-            $(".btn-follow").text("Unfollow");
+            $(".btn-follow").text("Following");
         }
         $(".num_of_followers").text(followers);
 
@@ -91,7 +91,7 @@ function follow(author_id) {
         success: function(json) {
 
             console.log(json.author.follow_status);
-            json.author.follow_status ? $(".btn-follow").text("Unfollow") : $(".btn-follow").text("Follow");
+            json.author.follow_status ? $(".btn-follow").text("Following") : $(".btn-follow").text("Follow");
             
             json.author.follow_status ? $(".num_of_followers").text($(".num_of_followers").text()*1+1) : $(".num_of_followers").text() >= 1 ? $(".num_of_followers").text($(".num_of_followers").text()*1-1) : 0;
         },

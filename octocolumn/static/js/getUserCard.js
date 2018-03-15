@@ -37,7 +37,7 @@ function getUserCard(){
                                         </div> \
                                     </div> \
                                     <div class="btn-follow"> \
-                                        Unfollow \
+                                        Following \
                                     </div> \
                                     <div class="card_profile_name"> \
                                         '+ nickname +' \
