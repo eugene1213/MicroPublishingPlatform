@@ -232,6 +232,13 @@ class PostListView(APIView):
         except ObjectDoesNotExist:
             return None
 
+    def follower_status(self, user):
+        try:
+            Relation.objects.filter(to_user=user, from_user=self.request.user).get()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def get(self, request, *args, **kwargs):
         post = Post.objects.order_by('-created_date')[:5]
 
@@ -245,7 +252,7 @@ class PostListView(APIView):
             time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
             time2 = datetime.strptime(serializer.data['created_date'].split('T')[1].split('.')[0], '%H:%M:%S')
             text = self.remove_tag(content)
-            follower_count = Relation.ojbects.filter(to_user=user).count()
+            follower_count = Relation.objects.filter(to_user=user).count()
             tag = self.tag(i)
 
             data = {
@@ -262,7 +269,7 @@ class PostListView(APIView):
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.last_name + " " + user.first_name,
-                        # "follow_status": status,
+                        "follow_status": self.follower_status(user),
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
