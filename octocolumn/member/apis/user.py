@@ -222,16 +222,6 @@ class UpdatePassword(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class RecoveryPassword(APIView):
-    def post(self):
-        pass
-
-
-class VerifyToken(APIView):
-    def get(self):
-        pass
-
-
 class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -253,4 +243,8 @@ class UserInfo(APIView):
                                  "profile_image": None,
                                  "cover_image": None
                              }}, status=status.HTTP_200_OK)
+
+
+
+
 

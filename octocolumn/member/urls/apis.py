@@ -5,6 +5,7 @@ from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, GetUserCard
+from member.apis.point import UserPointHistory
 
 urlpatterns = [
     # api:member:login
@@ -32,7 +33,7 @@ urlpatterns = [
     url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
     url(r'^profile-image/', ProfileImageUpload.as_view(), name='profile_image'),
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),
-
+    url(r'^getPointHistory/$', UserPointHistory.as_view(), name='point-history'),
 
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
