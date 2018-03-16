@@ -13,6 +13,10 @@ __all__ = (
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+
+    def get_nickname(self,obj):
+        return obj.user.nickname
+
     def get_following(self, obj):
         return obj.user.following_users_count
 
@@ -40,10 +44,12 @@ class ProfileSerializer(serializers.ModelSerializer):
     following = SerializerMethodField()
     waiting = SerializerMethodField()
     image = SerializerMethodField()
+    nickname = SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = (
+            'nickname',
             'year',
             'month',
             'sex',
