@@ -101,12 +101,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255, null=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    # 나를 팔로우 하고있는 숫자를 카운트
-    following_users_count = models.IntegerField(default=0)
-    # 나를 기다리고 있는 숫자를 카운트
-    waiting_count = models.IntegerField(default=0)
-    # 내가 팔로우한 숫자를 카운트
-    follower_users_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # like_posts = models.ManyToManyField(

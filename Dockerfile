@@ -27,7 +27,7 @@ RUN         ln -sf /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/
 RUN         mkdir -p /var/log/uwsgi/app
 
 # favicon
-COPY        .files/favicon.ico /srv/app/favicon.ico
+#COPY        octocolumn/static/images/favicon/favicon.ico /srv/app/favicon.ico
 
 ## front프로젝트 복사
 #WORKDIR     /srv

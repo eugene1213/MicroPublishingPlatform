@@ -4,7 +4,7 @@ from rest_framework.fields import SerializerMethodField
 
 from column.models import Post
 from member.models import ProfileImage, Profile
-
+from member.models.user import WaitingRelation
 
 __all__ = (
     'ProfileSerializer',
@@ -23,7 +23,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         return Post.objects.filter(author=obj.user).count()
 
     def get_waiting(self, obj):
-        return obj.user.waiting_count
+        return WaitingRelation.objcets.filter(to_user=obj.user).count()
 
     def get_image(self, obj):
         try:
