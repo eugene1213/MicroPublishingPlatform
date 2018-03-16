@@ -252,7 +252,7 @@ function get_profile() {
             console.log(json);
             var cover_img = json.image.cover_image;
             var profile_img = json.image.profile_image;
-            var username = json.username;
+            var username = json.nickname;
             var waiting = json.waiting;
             // var stamp = json.stamp;
             var userIntro = json.intro;
