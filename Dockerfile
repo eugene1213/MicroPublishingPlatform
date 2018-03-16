@@ -65,10 +65,10 @@ CMD         supervisord -n
 EXPOSE      80
 
 RUN apt-get update
-RUN apt-get install software-properties-common
-RUN add-apt-repository ppa:certbot/certbot
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:certbot/certbot
 RUN apt-get update
-RUN apt-get install python-certbot-nginx
+RUN apt-get install -y python-certbot-nginx
 
 RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos -d octocolumn.com
 
