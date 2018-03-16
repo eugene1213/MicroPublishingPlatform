@@ -27,7 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         return Post.objects.filter(author=obj.user).count()
 
     def get_waiting(self, obj):
-        return WaitingRelation.objcets.filter(to_user=obj.user).count()
+        return WaitingRelation.objects.filter(receive_user=obj.user).count()
 
     def get_image(self, obj):
         try:

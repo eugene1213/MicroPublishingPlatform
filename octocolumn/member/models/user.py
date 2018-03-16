@@ -161,7 +161,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         relation, relation_created = self.following_user_relations.get_or_create(to_user=user)
         if relation_created:
+            print(123)
             return True
+        print(88)
         relation.delete()
         return False
 

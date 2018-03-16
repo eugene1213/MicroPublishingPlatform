@@ -18,14 +18,19 @@ $(document).ready(function(){
     
 });
 
-function popBalloon(data) {
+function popBalloon(data) { //getPostList.js 에서 호출한다.
 
     $(".profile_img").mouseenter(function(){
 
         var parents_id = $(this).parents().parents().parents().attr("id");  //mouseenter 이벤트가 발생한 요소의 3번째 부모의 id
         var i = parents_id.substr(5,1);
         var followers = data[i-1].post.author.follower_count;
+        var follow_status = data[i-1].post.author.follow_status;
 
+        console.log(follow_status)
+        if(follow_status) {
+            $(".btn-follow").text("Following");
+        }
         $(".num_of_followers").text(followers);
 
         if(!$(this).attr("id")){
@@ -70,9 +75,8 @@ function popBalloon(data) {
             }
         });
 
-        $(".btn-follow").click(function(){
-
-            follow();
+        $(".btn-follow").unbind("click").click(function(e){
+            follow(i);
         });
     });
 }
@@ -80,18 +84,16 @@ function popBalloon(data) {
 function follow(author_id) {
 
     $.ajax({
-        url: "/api/member/follow/",
+        url: "/api/member/"+author_id+"/follow/",
         async: false,
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
-        data: {
-            user_id: author_id
-        },
         success: function(json) {
 
-            json.author.follow_status ? $(".btn-follow").text("Unfollow") : $(".btn-follow").text("Follow");
+            console.log(json.author.follow_status);
+            json.author.follow_status ? $(".btn-follow").text("Following") : $(".btn-follow").text("Follow");
             
-            $(".num_of_followers").text(json.author.follower_count);
+            json.author.follow_status ? $(".num_of_followers").text($(".num_of_followers").text()*1+1) : $(".num_of_followers").text() >= 1 ? $(".num_of_followers").text($(".num_of_followers").text()*1-1) : 0;
         },
         error: function(error) {
             console.log(error);
