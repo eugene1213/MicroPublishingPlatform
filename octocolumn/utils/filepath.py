@@ -14,13 +14,12 @@ def set_filename_format(now, instance, filename):
     )
 
 
-def user_set_filename_format(now, instance, size ,filename):
+def user_set_filename_format(now, instance ,filename):
     """ file format setting e.g) {username}-{date}-{microsecond}{extension} hjh-2016-07-12-158859.png """
-    return "{username}-{date}-{microsecond}-{size}-{extension}".format(
+    return "{username}-{date}-{microsecond}-{extension}".format(
         username=instance.user.pk,
         date=str(now.date()),
         microsecond=now.microsecond,
-        size=size,
         extension=os.path.splitext(filename)[1],
     )
 
@@ -83,11 +82,11 @@ def profile_image_user_directory_path(instance, filename):
         month=now.month,
         day=now.day,
         filename=user_set_filename_format(now, instance,
-                                     filename), )
+                                     filename))
     return path
 
 
-def profile_cover_image_user_directory_path(instance, filename, size):
+def profile_cover_image_user_directory_path(instance, filename):
     """ image upload directory setting e.g)
      images/{year}/{month}/{day}/{username}/{filename}
      images/2016/7/12/2016-07-12-158859.png """
@@ -98,5 +97,5 @@ def profile_cover_image_user_directory_path(instance, filename, size):
         month=now.month,
         day=now.day,
         filename=user_set_filename_format(now, instance,
-                                     filename, size), )
+                                     filename), )
     return path
