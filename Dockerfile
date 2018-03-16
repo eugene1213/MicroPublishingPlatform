@@ -64,6 +64,17 @@ RUN         cp /srv/app/.config/supervisor/* \
 CMD         supervisord -n
 EXPOSE      80
 
+RUN apt-get update
+RUN apt-get install software-properties-common
+RUN add-apt-repository ppa:certbot/certbot
+RUN apt-get update
+RUN apt-get install python-certbot-nginx
+
+RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos -d octocolumn.com
+
+RUN certbot renew
+
+RUN service nginx restart
 # 실행시
 # docker run --rm -it -p 9000:8000 eb /bin/zsh
 
