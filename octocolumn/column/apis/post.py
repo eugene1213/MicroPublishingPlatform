@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from column.models import Temp, SearchTag
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
-from member.models.user import Relation
+from member.models.user import Relation, WaitingRelation
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from ..models import Post
@@ -83,7 +83,11 @@ class PostCreateView(generics.GenericAPIView,
     def first_point(self):
         return UsePoint.objects.filter(type='first_user').get()
 
-
+    def waiting_init(self):
+        # 웨이팅 릴레이션 모두 삭제
+        if WaitingRelation.objects.filter(to_user=self.request.user).all().delete():
+            return True
+        return False
 
     # base64 파일 파일 형태로
     def base64_content(self, image):
@@ -147,9 +151,8 @@ class PostCreateView(generics.GenericAPIView,
 
                 # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
-                user_queryset.waiting_count = 0
                 user_queryset.save()
-
+                self.waiting_init()
                 self.add_point_history(point=self.major_point().point, history=temp.title)
                 # 태그를 추가하고 태그 추가 실패
 
@@ -195,8 +198,8 @@ class PostCreateView(generics.GenericAPIView,
 
             # 유저 포인트 업데이트
             user_queryset.point -= self.first_point().point
-            user_queryset.waiting_count = 0
             user_queryset.save()
+            self.waiting_init()
 
             self.add_point_history(point=self.first_point().point, history=temp.title)
             # 태그를 추가하고 태그 추가 실패

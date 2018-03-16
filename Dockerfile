@@ -27,7 +27,7 @@ RUN         ln -sf /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/
 RUN         mkdir -p /var/log/uwsgi/app
 
 # favicon
-COPY        .files/favicon.ico /srv/app/favicon.ico
+#COPY        octocolumn/static/images/favicon/favicon.ico /srv/app/favicon.ico
 
 ## front프로젝트 복사
 #WORKDIR     /srv
@@ -38,13 +38,13 @@ COPY        .files/favicon.ico /srv/app/favicon.ico
 
 
 # collectstatic 실행
-RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
 # manage.py
 #WORKDIR     /srv/app/octocolumn
 
 #RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
-RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
-RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
+#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py makemigrations --settings=config.settings.deploy --noinput
+#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py migrate --settings=config.settings.deploy --noinput
 
 # Azure
 #RUN apt-get update \

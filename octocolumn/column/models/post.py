@@ -71,8 +71,8 @@ class Post(models.Model):
 
 
 class PostLike(models.Model):
-    post = models.ForeignKey('column.Post')
-    user = models.ForeignKey('member.User')
+    post = models.ForeignKey('column.Post',null=True)
+    user = models.ForeignKey('member.User',null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

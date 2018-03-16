@@ -4,7 +4,7 @@ from rest_framework.fields import SerializerMethodField
 
 from column.models import Post
 from member.models import ProfileImage, Profile
-
+from member.models.user import WaitingRelation
 
 __all__ = (
     'ProfileSerializer',
@@ -13,6 +13,10 @@ __all__ = (
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+
+    def get_nickname(self,obj):
+        return obj.user.nickname
+
     def get_following(self, obj):
         return obj.user.following_users_count
 
@@ -23,7 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         return Post.objects.filter(author=obj.user).count()
 
     def get_waiting(self, obj):
-        return obj.user.waiting_count
+        return WaitingRelation.objcets.filter(to_user=obj.user).count()
 
     def get_image(self, obj):
         try:
@@ -40,10 +44,12 @@ class ProfileSerializer(serializers.ModelSerializer):
     following = SerializerMethodField()
     waiting = SerializerMethodField()
     image = SerializerMethodField()
+    nickname = SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = (
+            'nickname',
             'year',
             'month',
             'sex',

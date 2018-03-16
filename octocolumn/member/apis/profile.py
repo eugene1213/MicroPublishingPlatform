@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from column.models import Post, Temp
 from column.serializers import PostSerializer, TempSerializer
 from member.models import ProfileImage, Profile
+from member.models.user import WaitingRelation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
 
 __all__ = (
@@ -39,7 +40,7 @@ class ProfileInfo(APIView):
         except ObjectDoesNotExist:
 
             return Response({"nickname": user.nickname,
-                             "waiting": user.waiting_count,
+                             "waiting": WaitingRelation.objcets.filter(to_user=user).count(),
                              "post_count": Post.objects.filter(author=user).count(),
                              "point": user.point,
                              "intro": "-",
