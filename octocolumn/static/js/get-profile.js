@@ -33,18 +33,26 @@ $(document).ready(function(){
         $(".active").removeClass("active");
         $(this).addClass("active");
 
-        getUserCard();                              // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
+        getUserCard("Following");                              // 관계 탭 클릭 시 보여줄 팔로잉 목록 호출
 
         $(".profile-relationship").show();
         $(".currentView").removeClass("currentView");
         $(".profile-relationship").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
 
-        $(window).scroll(function() { 
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                getUserCard();
-            } 
+        $('.tab:contains(Following)').click(function(){
+            $(".flip").remove();
+            getUserCard("Following");
         });
+        $('.tab:contains(Follower)').click(function(){
+            $(".flip").remove();
+            getUserCard("Follower");
+        });
+        // $("#1:contains(Following)").click().bind(function(){
+        //     var user_id = $(e.target).attr("id");
+        //     console.log(1);
+        //     follow(user_id);
+        // });
     });
     $(".profile_tab4").click(function(){
         
@@ -109,8 +117,6 @@ $(document).ready(function(){
 
         
     });
-
-
 /* start 커버, 프로필 이미지 업로드 처리 */
     $("#coverImgInput").change(function() {
         readURL(this,"#coverImg");
@@ -213,19 +219,21 @@ $(document).ready(function(){
 /* end 자기소개 수정 및 업로드 */
     $(".btn-modify").click(function(){
         
-        $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
-        $(".btn-modify > img").attr("src","/static/images/icons/profile/save.svg");
-        $(".btn-modify").addClass("btn-save");
-    
-        $('td[contenteditable="true"]').keypress(function(event) {
+        if($(this).hasClass("btn-save")){
             
-            if (event.which == 13)
-                return false;
-        });
-        $(".btn-save").click(function(){
-
             modifyProfile();
-        });
+        }else{
+            
+            $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
+            $(".btn-modify > img").attr("src","/static/images/icons/profile/save.svg");
+            $(".btn-modify").addClass("btn-save");
+        
+            $('td[contenteditable="true"]').keypress(function(event) {
+                
+                if (event.which == 13)
+                    return false;
+            });
+        }
     });
 });
 
@@ -242,28 +250,30 @@ function get_profile() {
             console.log(json);
             var cover_img = json.image.cover_image;
             var profile_img = json.image.profile_image;
-            var username = json.username;
+            var username = json.nickname;
             var waiting = json.waiting;
             // var stamp = json.stamp;
             var userIntro = json.intro;
             var following = json.following;
             var follower = json.follower;
             var posts = json.post_count;
+
             var birthYear = json.birthYear;
-            var birthMonthDate = json.birthMonth;
+            var birthMonth = json.birthMonth;
+            var birthDay = json.birthDay;
             var gender = json.sex;
             var age = json.age;
 
-            var hpNumber = json.age;
-            var location = json.age;
+            var hpNumber = json.phone;
+            var location = json.region;
             var email = json.email;
 
-            var job = json.job;
-            var website = json.website;
+            var job = json.jobs;
+            var website = json.web;
             var fb = json.facebook;
-            var ins = json.instargram;
+            var ins = json.instagram;
             var tw = json.twitter;
-            var subject = json.subject;
+            var subject = json.subjects;
             
             $(".profile_mainbanner > img").attr("src",cover_img);
             $(".profile_img > img").attr("src",profile_img);
@@ -274,22 +284,21 @@ function get_profile() {
             $("#follower").text(follower);
             $("#posts").text(posts);
 
+            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear);
+            if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
+            if(gender)          $(".base-table :contains(성별) + td").text(gender);
+            if(age > 0)         $(".base-table :contains(나이) + td").text(age);
 
-            $(".base-table :contains(태어난 년도) + td").text(birthYear);
-            $(".base-table :contains(생일) + td").text(birthMonthDate);
-            $(".base-table :contains(성별) + td").text(gender);
-            if(age > 0) $(".base-table :contains(나이) + td").text(age);
+            if(hpNumber)        $(".contact-table :contains(휴대폰) + td").text(hpNumber);
+            if(location)        $(".contact-table :contains(지역) + td").text(location);
+            if(email)           $(".contact-table :contains(이메일) + td").text(email);
 
-            $(".base-table :contains(휴대폰) + td").text(hpNumber);
-            $(".base-table :contains(지역) + td").text(location);
-            $(".base-table :contains(이메일) + td").text(email);
-
-            $(".base-table :contains(직업) + td").text(job);
-            $(".base-table :contains(웹사이트) + td").text(website);
-            $(".base-table :contains(facebook) + td").text(fb);
-            $(".base-table :contains(instagram) + td").text(ins);
-            $(".base-table :contains(twitter) + td").text(tw);
-            $(".base-table :contains(관심분야) + td").text(subject);
+            if(job)             $(".private-table :contains(직업) + td").text(job);
+            if(website)         $(".private-table :contains(웹사이트) + td").text(website);
+            if(fb)              $(".private-table :contains(facebook) + td").text(fb);
+            if(ins)             $(".private-table :contains(instagram) + td").text(ins);
+            if(tw)              $(".private-table :contains(twitter) + td").text(tw);
+            if(subject)         $(".private-table :contains(관심분야) + td").text(subject);
 
             historyBarHeight();
         },
@@ -300,18 +309,19 @@ function get_profile() {
 }
 function modifyProfile() {
 
-    if (birthYear) var birthYear = $("#birthYear").text().replace("년","");
-    if (birthMonth) var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
-    if (birthDay) var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
-    if (gender) var gender = $("#gender").text();
-    if (age) var age = $("#age").text();
-    if (hpNumber) var hpNumber = $("#hpNumber").text();
-    if (job) var job = $("#job").text();
-    if (website) var website = $("#website").text();
-    if (fb) var fb = $("#fb").text();
-    if (ins) var ins = $("#ins").text();
-    if (tw) var tw = $("#tw").text();
-    if (subject) var subject = $("#subject").text();
+    var birthYear = $("#birthYear").text().replace("년","");
+    var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
+    var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
+    var gender = $("#gender").text();
+    var age = $("#age").text();
+    var hpNumber = $("#hpNumber").text();
+    var location = $("#location").text();   
+    var job = $("#job").text();
+    var website = $("#website").text();
+    var fb = $("#fb").text();
+    var ins = $("#ins").text();
+    var tw = $("#tw").text();
+    var subject = $("#subject").text();
 
     $.ajax({
         url: "/api/member/updateProfile/",
@@ -324,15 +334,16 @@ function modifyProfile() {
             sex: gender,                      // 성별
             age: age*1,                       // 나이
             hpNumber: hpNumber,               // 폰번호
+            region: location,                 // 지역
             job: job,                         // 직업
-            website: website,                 // 웹사이트
+            web: website,                     // 웹사이트
             fb: fb,                           // 페북
             ins: ins,                         // 인스타
             tw: tw,                           // 트윗
             subject: subject                  // 관심분야
         },
         dataType: 'json',
-        success: function(json) {
+        success: function() {
 
             $(".btn-modify > img").attr("src","/static/images/icons/profile/write.png");
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
@@ -379,7 +390,10 @@ function uploadProfileImg(whichImg) {
         type: 'POST',
         dataType: 'json',
         contentType: "application/json",
-        data: JSON.stringify(img),
+        data: {
+            margin: "x100",
+            img: img
+        },
         success: function(json) {
             console.log("이미지 업데이트 성공");
         },
@@ -396,37 +410,12 @@ function readURL(input,id) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            $(id).attr('src', e.target.result);
+            $(id).attr('src', e.target.result).load(setMargin(id));     // 이미지가 로드 된 후 setMargin 함수 호출
         }
 
         reader.readAsDataURL(input.files[0]);
     }
 }
-
-function setCaretAtEnd(elem) {
-    var elemLen = $(elem).text().length;
-    if(elemLen == 0){
-     $(elem).focus();
-     return;
-    }
-    // For IE Only
-    if (document.selection) {
-        console.log(document.selection);
-        // Set focus
-        $(elem).focus();
-        // Use IE Ranges
-        var oSel = document.selection.createRange();
-        // Reset position to 0 & then set at end
-        oSel.moveStart('character', -elemLen);
-        oSel.moveStart('character', elemLen);
-        oSel.moveEnd('character', 0);
-        oSel.select();
-    }
-    else if (document.selection == undefined || elem.selectionStart || elem.selectionStart == '0') {
-        // Firefox/Chrome
-        $(elem).focus().text($(elem).text());
-    } // if
-} // SetCaretAtEnd()
 
 /* 포인트 내역을 불러온다. */
 function getPointHistory() {

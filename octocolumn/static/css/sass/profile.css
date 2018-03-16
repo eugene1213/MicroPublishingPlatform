@@ -135,8 +135,7 @@
   overflow: hidden;
   cursor: default; }
   .profile .profile_img > img {
-    width: 100%;
-    height: 200px; }
+    border-radius: 10px; }
   .profile .profile_img input {
     position: absolute;
     width: 30px;
@@ -157,8 +156,7 @@
   border-radius: 8px 8px 0 0;
   overflow: hidden; }
   .profile .profile_mainbanner > img {
-    width: 100%;
-    height: 320px; }
+    width: 100%; }
   .profile .profile_mainbanner input {
     position: absolute;
     width: 30px;

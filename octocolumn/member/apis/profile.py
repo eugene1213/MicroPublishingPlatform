@@ -103,15 +103,14 @@ class ProfileUpdate(APIView):
             profile.twitter = data['tw']
             profile.subjects = data['subject']
             profile.save()
-            
-            return Response(status=status.HTTP_200_OK)
+            return Response('')
         except ObjectDoesNotExist:
             if Profile.objects.create(
                     user=user, year=data['bithYear'], month=data['bithMonth'], day=data['bithDay'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
                                       twitter=data['tw'], subjects=data['subject']):
                 return Response(status=status.HTTP_200_OK)
-            return Response(status.HTTP_400_BAD_REQUEST)
+            raise exceptions.ValidationError('Abnormal connectd')
 
 
 class ProfileImageUpload(generics.CreateAPIView):
@@ -167,7 +166,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
 
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        cover_file_obj = self.base64_content(self.request.data)
+        cover_file_obj = self.base64_content(self.request.data['cover_img'])
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
             profile_image.cover_image = cover_file_obj

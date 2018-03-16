@@ -25,8 +25,8 @@ class Follower(APIView):
         user_pk = self.kwargs.get('user_pk')
 
         try:
-            from_user = User.objects.filter(pk=user_pk).get()
-            result = user.follow_toggle(from_user)
+            to_user = User.objects.filter(pk=user_pk).get()
+            result, relation = Relation.objects.get_or_create(to_user=to_user, from_user= self.request.user)
 
             if result:
                 return Response({'detail': 'created',
@@ -35,6 +35,7 @@ class Follower(APIView):
                                      "follower": Relation.objects.filter(from_user=from_user).count()
                                  }
                                  })
+
             return Response({'detail': 'deleted',
                              "author": {
                                  "follow_status": False
@@ -190,7 +191,7 @@ class GetUserFollowerCard(ListAPIView):
                                 "pk": i.from_user.id,
                                 "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                 "nickname": i.from_user.nickname,
-                                "follow_status":self.follower_status(i.from_user),
+                                "follow_status": self.follower_status(i.from_user),
                                 "intro": profile_serializer.data['intro'],
                                 "profile_img": profile_serializer.data['image']['profile_image'],
                                 "cover_img": profile_serializer.data['image']['cover_image']

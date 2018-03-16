@@ -3,9 +3,9 @@
 <head>
 	{% load static %}
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="viewport" content="width=1280, user-scalable=no, target-densitydpi=medium-dpi">
+	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
+	<!-- <meta name="format-detection" content="telephone=no"> -->
 	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
 	<meta name="description" content="octoclumn" />
 	<meta name="keyworads" content="octoclumn">
@@ -22,10 +22,13 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/profile.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/flip-card.css' %}">
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/get-profile.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getUserCard.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
 </head>
 <style>
 
@@ -143,7 +146,7 @@
 								<tr>
 									<td>생일</td>
 									<td contenteditable="false" id="birthMonthDate">9월30일</td>
-									<td></td>
+									<td contenteditable="false" id="birthDay"></td>
 								</tr>
 								<tr>
 									<td>성별</td>
@@ -194,7 +197,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<td>instargam</td>
+									<td>instagram</td>
 									<td contenteditable="false" id="ins"></td>
 									<td></td>
 								</tr>
