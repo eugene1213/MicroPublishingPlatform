@@ -117,8 +117,6 @@ $(document).ready(function(){
 
         
     });
-
-
 /* start 커버, 프로필 이미지 업로드 처리 */
     $("#coverImgInput").change(function() {
         readURL(this,"#coverImg");
@@ -392,7 +390,10 @@ function uploadProfileImg(whichImg) {
         type: 'POST',
         dataType: 'json',
         contentType: "application/json",
-        data: JSON.stringify(img),
+        data: {
+            margin: "x100",
+            img: img
+        },
         success: function(json) {
             console.log("이미지 업데이트 성공");
         },
@@ -409,37 +410,12 @@ function readURL(input,id) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            $(id).attr('src', e.target.result);
+            $(id).attr('src', e.target.result).load(setMargin(id));     // 이미지가 로드 된 후 setMargin 함수 호출
         }
 
         reader.readAsDataURL(input.files[0]);
     }
 }
-
-function setCaretAtEnd(elem) {
-    var elemLen = $(elem).text().length;
-    if(elemLen == 0){
-     $(elem).focus();
-     return;
-    }
-    // For IE Only
-    if (document.selection) {
-        console.log(document.selection);
-        // Set focus
-        $(elem).focus();
-        // Use IE Ranges
-        var oSel = document.selection.createRange();
-        // Reset position to 0 & then set at end
-        oSel.moveStart('character', -elemLen);
-        oSel.moveStart('character', elemLen);
-        oSel.moveEnd('character', 0);
-        oSel.select();
-    }
-    else if (document.selection == undefined || elem.selectionStart || elem.selectionStart == '0') {
-        // Firefox/Chrome
-        $(elem).focus().text($(elem).text());
-    } // if
-} // SetCaretAtEnd()
 
 /* 포인트 내역을 불러온다. */
 function getPointHistory() {

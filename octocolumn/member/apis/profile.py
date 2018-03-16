@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from column.models import Post, Temp
 from column.serializers import PostSerializer, TempSerializer
 from member.models import ProfileImage, Profile
-from member.models.user import WaitingRelation
+from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
 
 __all__ = (
@@ -44,8 +44,8 @@ class ProfileInfo(APIView):
                              "post_count": Post.objects.filter(author=user).count(),
                              "point": user.point,
                              "intro": "-",
-                             "following": user.following_users_count,
-                             "follower": user.follower_users_count,
+                             "following": Relation.objects.filter(from_user=user).count(),
+                             "follower": Relation.objects.filter(to_user=user).count(),
                              "image": {
                                  "profile_image": "/static/images/example/2.jpeg",
                                 "cover_image": "/static/images/example/1.jpeg"

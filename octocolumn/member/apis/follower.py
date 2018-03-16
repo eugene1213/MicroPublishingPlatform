@@ -28,22 +28,14 @@ class Follower(APIView):
             to_user = User.objects.filter(pk=user_pk).get()
             result, relation = Relation.objects.get_or_create(to_user=to_user, from_user= self.request.user)
 
-            if relation:
-                user.following_users_count += 1
-                to_user.follower_users_count += 1
-                user.save()
-                to_user.save()
+            if result:
                 return Response({'detail': 'created',
                                  "author":{
                                      "follow_status": True,
-                                     "follower": to_user.following_users_count
+                                     "follower": Relation.objects.filter(from_user=from_user).count()
                                  }
                                  })
-            to_user.following_users_count -= 1
-            user.follower_users_count -= 1
-            user.save()
-            to_user.save()
-            result.delete()
+
             return Response({'detail': 'deleted',
                              "author": {
                                  "follow_status": False
@@ -66,11 +58,7 @@ class Waiting(APIView):
             result = from_user.waiting_toggle(user)
 
             if result:
-                from_user.waiting_count += 1
-                from_user.save()
                 return Response({'detail': 'created'})
-            from_user.waiting_count -= 1
-            from_user.save()
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
