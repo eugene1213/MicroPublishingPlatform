@@ -92,6 +92,7 @@ def profile_cover_image_user_directory_path(instance, filename, size):
      images/{year}/{month}/{day}/{username}/{filename}
      images/2016/7/12/2016-07-12-158859.png """
     now = timezone.now()
+    print(instance)
     path = "profile/cover/{username}/{year}/{month}/{day}/{filename}".format(
         username=instance.user.pk,
         year=now.year,

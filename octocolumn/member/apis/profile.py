@@ -167,7 +167,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
 
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        cover_file_obj = self.base64_content(self.request.data)
+        cover_file_obj = self.base64_content(self.request.data['cover_img'])
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
             profile_image.cover_image = cover_file_obj

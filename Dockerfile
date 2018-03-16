@@ -1,6 +1,8 @@
 FROM        jhe702/basebuild:base
 MAINTAINER  develop@octocolumn.com
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ENV         LANG C.UTF-8
 
 # 현재경로의 모든 파일들을 컨테이너의 /srv/app폴더에 복사
