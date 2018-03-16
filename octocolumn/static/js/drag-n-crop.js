@@ -18,3 +18,10 @@ function setMargin(img) {                         // img: 이미지 태그 셀�
     console.log(direction);
     $(img).draggable({axis: direction});
 }
+
+function imgLoader() {
+
+    var elRatio = 0;
+    elRatio = $(img).parents().width()/$(img).parents().height();
+    // $(img)[0].naturalWidth/$(img)[0].naturalHeight > elRatio ? ;
+}

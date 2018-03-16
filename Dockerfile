@@ -3,6 +3,8 @@ MAINTAINER  develop@octocolumn.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
 ENV         LANG C.UTF-8
 
 # 현재경로의 모든 파일들을 컨테이너의 /srv/app폴더에 복사
@@ -73,7 +75,7 @@ RUN apt-get update
 RUN apt-get install dialog apt-utils -y
 RUN apt-get install -y python-certbot-nginx
 
-RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos -d octocolumn.com
+RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos --email develop@octocolumn.com -d octocolumn.com
 
 RUN certbot renew
 

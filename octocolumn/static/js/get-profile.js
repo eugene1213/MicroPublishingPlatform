@@ -390,12 +390,12 @@ function uploadProfileImg(whichImg) {
         type: 'POST',
         dataType: 'json',
         contentType: "application/json",
-        data: {
-            margin: "x100",
-            img: img
-        },
+        data: JSON.stringify({
+            img:img,
+            margin:"magin"
+        }),
         success: function(json) {
-            console.log("이미지 업데이트 성공");
+            console.log("hgfyj!");
         },
         error: function(error) {
             console.log(error);

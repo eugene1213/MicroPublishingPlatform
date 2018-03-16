@@ -38,9 +38,8 @@ class ProfileInfo(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
-
             return Response({"nickname": user.nickname,
-                             "waiting": WaitingRelation.objcets.filter(to_user=user).count(),
+                             "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
                              "post_count": Post.objects.filter(author=user).count(),
                              "point": user.point,
                              "intro": "-",
@@ -130,10 +129,12 @@ class ProfileImageUpload(generics.CreateAPIView):
     #파일 업로드
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        profile_file_obj = self.base64_content(self.request.data)
+        profile_file_obj = self.base64_content(self.request.data['img'])
+        size = self.request.data['margin']
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
+            profile_file_obj.name = size + '.png'
             profile_image.profile_image = profile_file_obj
             profile_image.save()
 
@@ -143,6 +144,7 @@ class ProfileImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
         except ObjectDoesNotExist:
+            profile_file_obj.name = size + '.png'
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
                                                                             profile_image=profile_file_obj))
             if serializer:
@@ -166,9 +168,12 @@ class UserCoverImageUpload(generics.CreateAPIView):
 
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        cover_file_obj = self.base64_content(self.request.data['cover_img'])
+        cover_file_obj = self.base64_content(self.request.data['img'])
+        size = self.request.data['margin']
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
+            cover_file_obj.name = size + '.png'
+            # cover_file_obj.save()
             profile_image.cover_image = cover_file_obj
             profile_image.save()
             serializer = ProfileImageSerializer(profile_image)
@@ -177,8 +182,9 @@ class UserCoverImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
         except ObjectDoesNotExist:
+            cover_file_obj.name = size + '.png'
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
-                                                                            cover_image=cover_file_obj))
+                                                                            cover_image=cover_file_obj + size))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
