@@ -29,20 +29,12 @@ class Follower(APIView):
             result = user.follow_toggle(from_user)
 
             if result:
-                from_user.following_users_count += 1
-                user.follower_users_count += 1
-                user.save()
-                from_user.save()
                 return Response({'detail': 'created',
                                  "author":{
                                      "follow_status": True,
-                                     "follower": from_user.following_users_count
+                                     "follower": Relation.objects.filter(from_user=from_user).count()
                                  }
                                  })
-            from_user.following_users_count -= 1
-            user.follower_users_count -= 1
-            user.save()
-            from_user.save()
             return Response({'detail': 'deleted',
                              "author": {
                                  "follow_status": False
@@ -65,11 +57,7 @@ class Waiting(APIView):
             result = from_user.waiting_toggle(user)
 
             if result:
-                from_user.waiting_count += 1
-                from_user.save()
                 return Response({'detail': 'created'})
-            from_user.waiting_count -= 1
-            from_user.save()
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
