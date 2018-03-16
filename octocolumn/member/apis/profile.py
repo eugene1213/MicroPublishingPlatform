@@ -182,6 +182,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
         except ObjectDoesNotExist:
+            print('1')
             cover_file_obj.name = size + '.png'
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
                                                                             cover_image=cover_file_obj + size))
