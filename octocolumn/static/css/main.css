@@ -106,7 +106,7 @@
 .mainfeed .feedbox1{
 	width: 624px;
 	height: 360px;
-	background-color: #efefef;
+	background-color: #ffffff;
 	display: block;
 	float: left;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
@@ -180,11 +180,22 @@
 .mainfeed .feedbox1 .fb1_txt .profile_box .profile_img{
 	width: 56px;
 	height: 56px;
-	border-radius: 50px;
-	background: url(http://via.placeholder.com/56x56);
+	border-radius: 50%;
+	overflow: hidden;
 	display: block;
 	float: left;
 }
+.profile_img{
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.profile_img > img{
+	width: 56px;
+	height: 56px;
+}
+
 .mainfeed .feedbox1 .fb1_txt .profile_box .profile_name{
 	width: 176px;
 	height: 28px;
@@ -228,7 +239,7 @@
 .mainfeed .feedbox2{
 	width: 304px;
 	height: 736px;
-	background-color: #efefef;
+	background-color: #ffffff;
 	display: block;
 	float: left;
 	margin-left: 16px;
@@ -351,7 +362,7 @@
 .mainfeed .feedbox3{
 	width: 304px;
 	height: 360px;
-	background-color: #efefef;
+	background-color: #ffffff;
 	display: block;
 	float: left;
 	margin-top: 16px;
@@ -469,7 +480,7 @@
 .mainfeed .feedbox4{
 	width: 944px;
 	height: 360px;
-	background-color: #efefef;
+	background-color: #ffffff;
 	display: block;
 	float: left;
 	margin-top: 16px;

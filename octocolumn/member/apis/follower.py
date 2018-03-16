@@ -203,7 +203,7 @@ class GetUserFollowerCard(ListAPIView):
                                 "pk": i.from_user.id,
                                 "follower": Relation.objects.filter(from_user=i.from_user).count(),
                                 "nickname": i.from_user.nickname,
-                                "follow_status":self.follower_status(i.from_user),
+                                "follow_status": self.follower_status(i.from_user),
                                 "intro": profile_serializer.data['intro'],
                                 "profile_img": profile_serializer.data['image']['profile_image'],
                                 "cover_img": profile_serializer.data['image']['cover_image']

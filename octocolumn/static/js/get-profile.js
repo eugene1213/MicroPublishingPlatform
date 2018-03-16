@@ -48,6 +48,11 @@ $(document).ready(function(){
             $(".flip").remove();
             getUserCard("Follower");
         });
+        // $("#1:contains(Following)").click().bind(function(){
+        //     var user_id = $(e.target).attr("id");
+        //     console.log(1);
+        //     follow(user_id);
+        // });
     });
     $(".profile_tab4").click(function(){
         

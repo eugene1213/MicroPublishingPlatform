@@ -18,14 +18,18 @@ function getUserCard(followDirection){
             
             for( json in jsons) {
 
+                console.log(jsons[json]);
                 var cover_img = jsons[json].cover_img;
                 var profile_img = jsons[json].profile_img;
                 var nickname = jsons[json].nickname;
                 var followers = jsons[json].follower;
                 var intro = jsons[json].intro;
-                var follow_status = jsons[json].follow_status;
-                var status = 'Follow';
-                if(follow_status) status += 'ing';
+                var pk = jsons[json].pk;
+                if(followDirection == 'Follower') {
+                    var follow_status = jsons[json].follow_status;
+                    var status = 'Follow';
+                    if(follow_status) status += 'ing';
+                }else var status = 'Following';
 
                 var str =  '<div class="flip"> \
                                 <div class="arrow_box_1"> \
@@ -40,7 +44,7 @@ function getUserCard(followDirection){
                                             '+ followers +' \
                                         </div> \
                                     </div> \
-                                    <div class="btn-follow"> \
+                                    <div class="btn-follow" id="'+pk+'"> \
                                         '+ status + ' \
                                     </div> \
                                     <div class="card_profile_name"> \
