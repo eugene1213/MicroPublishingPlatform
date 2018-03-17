@@ -75,7 +75,7 @@ RUN apt-get update
 RUN apt-get install dialog apt-utils -y
 RUN apt-get install -y python-certbot-nginx
 
-RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos --email develop@octocolumn.com -d octocolumn.com
+RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos --email develop@octocolumn.com -d www.octocolumn.com
 
 RUN certbot renew
 
