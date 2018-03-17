@@ -53,9 +53,9 @@ class PostCreateView(generics.GenericAPIView,
         return User.objects.filter(id=self.request.user.id).update(point=point)
 
     # 작가인증
-    def is_author(self):
+    def is_author(self, user):
         try:
-            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
+            author = AuthorModel.objects.all().get(author=self.request.user)
             return author
         except ObjectDoesNotExist:
             author = None
