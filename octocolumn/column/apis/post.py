@@ -368,7 +368,7 @@ class AuthorResult(APIView):
 
     def post(self, request):
         try:
-            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
+            author = AuthorModel.objects.filter(author=self.request.user).get()
             if author is not None:
                 return Response({"author": True}, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
