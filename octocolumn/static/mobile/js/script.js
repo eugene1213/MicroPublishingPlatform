@@ -69,9 +69,5 @@ jQuery(document).ready(function(){
 		bg.animate({opacity:0},500).hide(300);
 		clicked = 0;
 	});
-
 	//sidebar.slideUp(0);
-
-
-
 }); //ready

@@ -19,7 +19,7 @@ def mobile(request):
 
 def index(request):
     if mobile(request):
-        return render_to_response('mobile/main.html', )
+        return render_to_response('mobile/main_m.html', )
 
     if request.COOKIES:
         token = request.COOKIES.get('token')
@@ -31,6 +31,9 @@ def index(request):
 
 
 def write(request):
+    if mobile(request):
+        return redirect('views:index')
+
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -41,6 +44,9 @@ def write(request):
 
 
 def read(request, post_id):
+    if mobile(request):
+        return redirect('views:index')
+
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -51,13 +57,14 @@ def read(request, post_id):
 
 
 def profile(request):
+    if mobile(request):
+        return redirect('views:index')
+
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
             response = render_to_response("view/profile.html", {"login": True})
             return response
-
-
 
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')
