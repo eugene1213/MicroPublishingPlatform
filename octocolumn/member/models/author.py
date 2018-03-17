@@ -7,7 +7,7 @@ __all__ = (
 
 
 class Author(models.Model):
-    author = models.ForeignKey('User', null=True)
+    author = models.OneToOneField('User')
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     intro = models.CharField(max_length=255, null=True)
