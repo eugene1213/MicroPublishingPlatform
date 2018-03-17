@@ -53,9 +53,9 @@ class PostCreateView(generics.GenericAPIView,
         return User.objects.filter(id=self.request.user.id).update(point=point)
 
     # 작가인증
-    def is_author(self, user):
+    def is_author(self):
         try:
-            author = AuthorModel.objects.all().get(author=self.request.user)
+            author = AuthorModel.objects.filter(author=self.request.user).get()
             return author
         except ObjectDoesNotExist:
             author = None
@@ -111,7 +111,6 @@ class PostCreateView(generics.GenericAPIView,
         author = self.is_author()
         # 작가 일 경우
         if author is not None:
-
             # 작가가 활성화 되지 않았을경우
             if author.is_active:
                 # 임시저장 파일이 없을 경우
