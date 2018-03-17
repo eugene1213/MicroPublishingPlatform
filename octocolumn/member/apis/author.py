@@ -44,7 +44,7 @@ class AuthorAplly(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
-        author, result = super().get_queryset().get_or_create(author=user, intro=data['intro'], blog=data['blog'])
+        author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
         if result:
 
