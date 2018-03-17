@@ -6,7 +6,7 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com']
+ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
 
 
 # WSGI application
