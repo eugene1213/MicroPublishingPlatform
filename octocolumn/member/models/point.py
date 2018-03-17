@@ -99,8 +99,8 @@ class PointHistory(models.Model):
     plus_minus = models.CharField(
         max_length=10,
         choices=PlUS_MINUS_TYPE,
-        null=False,
         blank=False,
+        default=None
     )
 
     point = models.IntegerField(default=0)
