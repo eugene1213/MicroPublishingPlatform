@@ -345,9 +345,19 @@ input, button {
                     font-size: 16px;
                     cursor: pointer;
                 }
+                #btn-author-apply {
+                    width: 144px;
+                    height: 40px;
+                    border-radius: 4px;
+                    background-color: #004b8d;
+                    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+                    color: #ffffff;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
             }
             .preview-terms-wrap {
-                width: 396px;
+                width: 408px;
                 margin: auto;
                 margin-top: 32px;
                 font-size: 10px;
@@ -356,6 +366,38 @@ input, button {
                     color: #004b8d;
                 }
             }
+            .author-intro-title {
+                margin: 20px;
+                text-align: center;
+
+                & > span {
+                    color: #2a292a;
+                    font-weight: 200;
+                }
+            }
+            .author-intro {
+                margin-left: 160px;
+                width: 624px;
+                height: 160px;
+                border-radius: 8px;
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+                border: solid 1px #2a292a;
+                resize: none;
+            }
+            #inputUrl {
+                margin-left: 160px;
+                margin-bottom: 16px;
+                width: 624px;
+                height: 40px;
+                border-radius: 8px;
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+                border: solid 1px #2a292a;
+            }
+        }
+        #authorApply{
+            display: none;
         }
     }
     

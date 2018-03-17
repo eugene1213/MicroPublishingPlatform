@@ -273,13 +273,48 @@ input, button {
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
           font-size: 16px;
           cursor: pointer; }
+        .container .preview-wrap .preview .preview-button-wrap #btn-author-apply {
+          width: 144px;
+          height: 40px;
+          border-radius: 4px;
+          background-color: #004b8d;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+          color: #ffffff;
+          font-size: 16px;
+          cursor: pointer; }
       .container .preview-wrap .preview .preview-terms-wrap {
-        width: 396px;
+        width: 408px;
         margin: auto;
         margin-top: 32px;
         font-size: 10px; }
         .container .preview-wrap .preview .preview-terms-wrap .preview-terms {
           color: #004b8d; }
+      .container .preview-wrap .preview .author-intro-title {
+        margin: 20px;
+        text-align: center; }
+        .container .preview-wrap .preview .author-intro-title > span {
+          color: #2a292a;
+          font-weight: 200; }
+      .container .preview-wrap .preview .author-intro {
+        margin-left: 160px;
+        width: 624px;
+        height: 160px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        border: solid 1px #2a292a;
+        resize: none; }
+      .container .preview-wrap .preview #inputUrl {
+        margin-left: 160px;
+        margin-bottom: 16px;
+        width: 624px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        border: solid 1px #2a292a; }
+    .container .preview-wrap #authorApply {
+      display: none; }
 
 .modal-extend-wrap {
   position: absolute;

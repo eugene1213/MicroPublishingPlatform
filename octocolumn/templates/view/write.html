@@ -7,16 +7,15 @@
     <meta name="theme-color" content="#2a292a">
     <title>octocolumn</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/header.css' %}">
-    <link rel="stylesheet" href="{% static 'css/common2.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sass/write.css' %}">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-    <link rel="stylesheet" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
-    <link rel="stylesheet" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
-    <link rel="stylesheet" href="{% static 'css/themes/default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/write.css' %}">
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/themes/default.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
-    <link rel="icon" href="{% static 'images/favicon/favicon.cio' %}" type="image/x-icon" />
-
+    <link rel="icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
     <!-- JS -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
@@ -253,6 +252,31 @@
                      --><span>을 참고하세요.</span>
                     </div>
                 </div> 
+                <div class="preview" id="authorApply">
+                    <div class="btn-cancel-wrap">
+                        <div class="btn-cancel"></div>
+                    </div>
+                    <div class="ready2publish">Become a writer</div>
+                    <div class="preview-notice-wrap">
+                        <span>작가님에 대해서 이해하고, 앞으로의 활동을 기대할 수 있도록 몇가지 정보를 입력해주세요.</span>
+                    </div>
+                    <div class="author-intro-title">
+                        <span>작가소개</span>
+                    </div>
+                    <textarea class="author-intro"></textarea>
+                    <div class="author-intro-title">
+                        <span>작가님께서 기존에 쓴 글 혹은 활동사항을 확인할 수 있는 URL</span>
+                    </div>
+                    <input type="text" id="inputUrl">
+                    <div class="preview-button-wrap">
+                        <button class="btn_disabled" id="btn-author-apply" disabled="disabled">작가신청</button>
+                        <button class="cancel-publish" id="cancel-apply">취소</button>
+                    </div>
+                    <div class="preview-terms-wrap">
+                        <span class="preview-terms">대가성 콘텐츠 표기, 사용자 아이디 정책, 서비스 운영정책, 서비스 이용약관, 저작권법</span><!--
+                        --><span>을 참고하세요.</span>
+                    </div>
+                </div>
             </div>
             <script>
                 var titleEditor = new MediumEditor('.title', {
