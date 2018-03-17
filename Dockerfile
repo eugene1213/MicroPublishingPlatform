@@ -75,11 +75,11 @@ RUN apt-get update
 RUN apt-get install dialog apt-utils -y
 RUN apt-get install -y python-certbot-nginx
 
-RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos --email develop@octocolumn.com -d octocolumn.com
-
-RUN certbot renew
-
-RUN service nginx restart
+#RUN certbot certonly --verbose --noninteractive --quiet --standalone --agree-tos --email develop@octocolumn.com -d www.octocolumn.com
+#
+#RUN certbot renew
+#
+#RUN service nginx restart
 # 실행시
 # docker run --rm -it -p 9000:8000 eb /bin/zsh
 

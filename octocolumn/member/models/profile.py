@@ -37,7 +37,6 @@ class ProfileImage(models.Model):
                                     blank=True,
                                     null=True
                                     )
-    print(cover_image)
     profile_image = models.ImageField('포스트프리뷰 이미지',
                                       upload_to=profile_image_user_directory_path,
                                       blank=True,
