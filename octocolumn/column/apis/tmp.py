@@ -104,7 +104,7 @@ class TempCreateView(generics.GenericAPIView,
             Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(
                 title=data['title'],
                 main_content=data['main_content'],
-                createde_date=datetime.now()
+                created_date=datetime.now()
             )
 
             return Response({"temp": {

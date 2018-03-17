@@ -2,9 +2,9 @@
 	<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/headerInfo.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
 	<div class="header">
 		<div class="header-wrap">
 			<div class="btn-menu">
@@ -62,7 +62,9 @@
 				</div>
 				<div class="btn-user">
 					<span></span>
-					<img >
+					<div class="profile-image-upload-wrap">
+						<img id="header-profile-image">
+					</div>
 				</div>
 			</div>
 		</div><!-- header-wrap-->

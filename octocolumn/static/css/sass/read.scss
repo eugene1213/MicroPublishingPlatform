@@ -10,6 +10,7 @@
     width: 100%;
     margin: auto;
     position: relative;
+    word-break: break-word;
 
     a:link {
         text-decoration: none;
@@ -33,6 +34,7 @@
         width: 952px;
         margin: auto;
         line-height: 2em;
+        font-weight: 300;
     }
     b {
         width: 952px;

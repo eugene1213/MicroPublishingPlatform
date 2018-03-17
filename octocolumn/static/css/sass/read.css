@@ -7,7 +7,8 @@
 .main_content_wrap {
   width: 100%;
   margin: auto;
-  position: relative; }
+  position: relative;
+  word-break: break-word; }
   .main_content_wrap a:link {
     text-decoration: none;
     color: #004b8d; }
@@ -25,7 +26,8 @@
     display: block;
     width: 952px;
     margin: auto;
-    line-height: 2em; }
+    line-height: 2em;
+    font-weight: 300; }
   .main_content_wrap b {
     width: 952px;
     margin: auto;

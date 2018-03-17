@@ -62,7 +62,7 @@ class PostCreateView(generics.GenericAPIView,
             return author
 
     # 포인트사용내역에 추가
-    def add_point_history(self, point, history):
+    def add_point_history(self, point, post, history):
         return PointHistory.objects.publish(user=self.request.user, point=point,
                                             history=history)
 
@@ -85,7 +85,7 @@ class PostCreateView(generics.GenericAPIView,
 
     def waiting_init(self):
         # 웨이팅 릴레이션 모두 삭제
-        if WaitingRelation.objects.filter(to_user=self.request.user).all().delete():
+        if WaitingRelation.objects.filter(receive_user=self.request.user).all().delete():
             return True
         return False
 
@@ -143,6 +143,11 @@ class PostCreateView(generics.GenericAPIView,
                     if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
                         raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
+                user_queryset.point -= self.major_point().point
+                user_queryset.save()
+                self.waiting_init()
+                self.add_point_history(point=self.major_point().point, history=temp.title)
+
                 # 템프파일 삭제
                 try:
                     Temp.objects.filter(id=data['temp_id']).delete()
@@ -150,10 +155,7 @@ class PostCreateView(generics.GenericAPIView,
                     raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
                 # 유저 포인트 업데이트
-                user_queryset.point -= self.major_point().point
-                user_queryset.save()
-                self.waiting_init()
-                self.add_point_history(point=self.major_point().point, history=temp.title)
+
                 # 태그를 추가하고 태그 추가 실패
 
                 if serializer:

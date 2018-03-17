@@ -150,7 +150,7 @@ $(document).ready(function(){
             
         });
         $(".profileimg_save").click(function(){
-            
+
             uploadProfileImg("profile");
             $(".profileimg_save").hide();
         });
@@ -404,32 +404,51 @@ function uploadProfileImg(whichImg) {
     if(whichImg == "cover") {
         img = $("#coverImg").attr("src");
 
-        var marginTop = $("#coverImg").css("top");
+        var marginTop = $("#coverImg").css("top");  //tmpWrap 기준
             marginTop = marginTop.replace("px","");
-            console.log(marginTop);
+
+        var imgHeight = $("#profileImg").height();
+
+        var overflowY = imgHeight - $("#coverImg").closest(".profile-image-upload-wrap").height();
+        var topPercentage = (overflowY - marginTop) / $("#coverImg").closest(".profile-image-upload-wrap").height() * 100;
 
         var marginLeft = $("#coverImg").css("left");
             marginLeft = marginLeft.replace("px","");
-            console.log(marginLeft);
-        if(marginTop > 0)var margin = "y" + marginTop;
-        else             var margin = "x" + marginLeft;
-        console.log(margin);
+
+        var imgWidth = $("#profileImg").width();
+
+        var overflowX = imgWidth - $("#coverImg").closest(".profile-image-upload-wrap").width();
+        var leftPercentage = (overflowX - marginLeft) / $("#coverImg").closest(".profile-image-upload-wrap").width() * 100;
+
+        if(marginTop > 0)var percentage = "y" + topPercentage;
+        else             var percentage = "x" + leftPercentage;
+
         url = "/api/member/usercover-image/";
+
     } else if(whichImg == "profile") {
+
         img = $("#profileImg").attr("src");
 
 
-        var marginTop = $("#profileImg").css("top");
+        var marginTop = $("#profileImg").css("top");  //tmpWrap 기준
             marginTop = marginTop.replace("px","");
+
+        var imgHeight = $("#profileImg").height();
+
+        var overflowY = imgHeight - $("#profileImg").closest(".profile-image-upload-wrap").height();
+        var topPercentage = (overflowY - marginTop) / $("#profileImg").closest(".profile-image-upload-wrap").height() * 100;
 
         var marginLeft = $("#profileImg").css("left");
             marginLeft = marginLeft.replace("px","");
-            
-        if(marginTop > 0)var margin = "y" + marginTop;
-        else             var margin = "x" + marginLeft;
-        console.log(marginTop);
-        console.log(marginLeft);
-        console.log(margin);
+
+        var imgWidth = $("#profileImg").width();
+
+        var overflowX = imgWidth - $("#profileImg").closest(".profile-image-upload-wrap").width();
+        var leftPercentage = (overflowX - marginLeft) / $("#profileImg").closest(".profile-image-upload-wrap").width() * 100;
+         
+        if(marginTop > 0)var percentage = "y" + topPercentage;
+        else             var percentage = "x" + leftPercentage;
+
         url = "/api/member/profile-image/";
     }
     $.ajax({
@@ -440,7 +459,7 @@ function uploadProfileImg(whichImg) {
         contentType: "application/json",
         data: JSON.stringify({
             img: img,
-            margin: margin
+            margin: percentage
         }),
         success: function(json) {
             console.log("이미지 업로드 성공!");

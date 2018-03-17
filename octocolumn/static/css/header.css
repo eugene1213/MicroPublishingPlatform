@@ -192,10 +192,12 @@ li {
     font-weight: 300;
     margin-top: -1px;
 }
-.btn-user > img {
+.btn-user > .profile-image-upload-wrap {
     float: right;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     margin: 0;
     border-radius: 4px;
+    overflow: hidden;
+    position: relative;
 }

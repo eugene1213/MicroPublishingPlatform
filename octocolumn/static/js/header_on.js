@@ -23,12 +23,14 @@ function getUserInfo() {
             
             var point = json.user.point;
             var username = json.username;
-            var first_name = json.user.first_name;
-            var last_name = json.user.last_name;
-            var profileImg = json.profileImg;
+            var nickname = json.user.nickname;
+            var profile_image = json.profileImg.profile_image;
 
             $(".btn-point .point").text(point + "p");
-            $(".btn-user > span").text(first_name + " " + last_name);
+            $(".btn-user > span").text(nickname);
+            $(".btn-right-wrap > .btn-user img").attr("src", profile_image);
+
+            loadCropImage("#header-profile-image")
         }
     });
 }
