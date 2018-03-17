@@ -244,6 +244,8 @@ class PostListView(APIView):
             return None
 
     def follower_status(self, user):
+        if self.request.auth is None:
+            return False
         try:
             Relation.objects.filter(to_user=user, from_user=self.request.user).get()
             return True

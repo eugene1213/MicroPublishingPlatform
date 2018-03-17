@@ -121,7 +121,7 @@ $(document).ready(function(){
 
     $("#coverImgInput").change(function() {
 
-        if($("#coverImg").parents().hasClass("tmpWrap")) $("#coverImg").unwrap();
+//        if($("#coverImg").parents().hasClass("tmpWrap")) $("#coverImg").unwrap();
         readURL(this,"#coverImg");
         
         //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
@@ -319,9 +319,9 @@ function get_profile() {
 
             historyBarHeight();
 
-            $("#coverImg").load(function(){
-                loadCropImage("#coverImg");
-            });
+            // $("#coverImg").load(function(){
+            //     loadCropImage("#coverImg");
+            // });
             $("#profileImg").load(function(){
                 loadCropImage("#profileImg");
             });
@@ -478,7 +478,7 @@ function readURL(input,id) {
 
         reader.onload = function(e) {
             $(id).attr('src', e.target.result).load(function(){
-                setMargin(id);
+                if(id == "#profileImg") setMargin(id);
             });     // 이미지가 로드 된 후 setMargin 함수 호출
         }
 

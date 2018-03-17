@@ -56,6 +56,8 @@ def profile(request):
         if token is not None:
             response = render_to_response("view/profile.html", {"login": True})
             return response
+        return redirect('views:index')
+    return redirect('views:index')
 
 
 

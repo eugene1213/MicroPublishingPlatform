@@ -63,9 +63,24 @@ function getData(){
                 $("#coverImg").load(function(){
                     loadCropImage("#coverImg");
                 });
-                
-                $("#profile-image"+i).load(function(e){
-                    loadCropImage("#profile-image" + i);
+
+                $("#profile-image"+1).load(function(e){
+                    loadCropImage("#profile-image" + 1);
+                });
+                $("#profile-image"+2).load(function(e){
+                    loadCropImage("#profile-image" + 2);
+                });
+                $("#profile-image"+3).load(function(e){
+                    loadCropImage("#profile-image" + 3);
+                });
+                $("#profile-image"+4).load(function(e){
+                    loadCropImage("#profile-image" + 4);
+                });
+                $("#profile-image"+5).load(function(e){
+                    loadCropImage("#profile-image" + 5);
+                });
+                $("#profile-image"+6).load(function(e){
+                    loadCropImage("#profile-image" + 6);
                 });
             }
         },

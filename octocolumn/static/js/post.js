@@ -25,7 +25,7 @@ $(document).ready(function(){
     });
 
     $(".agreement-checkbox").click(function(){
-        btn_activation();
+        btn_activation(this,".done-publish");
     });
 
     $(".done-publish").click(function(){
@@ -38,7 +38,29 @@ $(document).ready(function(){
         var price = $(".preview-br-list-wrap > .price-set-decimal").text();
         var temp_id = localStorage.getItem("temp_id");
 
-        data ? publish(temp_id, cover_img, preview_img, tag, code, price) : console.log("다음단계모달팝업");
+        if(data) {
+            publish(temp_id, cover_img, preview_img, tag, code, price);
+        } else {
+
+            $("#authorApply").show();
+            $("#preview").hide();
+
+            window.location.href = "#top";
+
+            if($("#inputUrl").val() != '' && $(".author-intro").val() != ''){
+                $("#btn-author-apply").removeAttr("disabled");
+                $("#btn-author-apply").removeClass("btn_disabled");
+            }else{
+                $("#btn-author-apply").attr("disabled", "true");
+                $("#btn-author-apply").addClass("btn_disabled");
+            }
+            $("#btn-author-apply").click(function(){
+        
+                var intro = $(".author-intro").html();
+                var url = $("#inputUrl").val();
+                authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url);
+            });
+        }
     });
 });
 
@@ -55,18 +77,18 @@ $(document).mouseup(function (e) {
     }	
 });
 /* 버튼 활성화 & 비활성화 */
-function btn_activation(){
+function btn_activation(handler,target){
 
-    if($(".agreement-checkbox").is(":checked")){
-        $(".done-publish").removeAttr("disabled");
-        $(".done-publish").removeClass("btn_disabled");
+    if($(handler).is(":checked")){
+        $(target).removeAttr("disabled");
+        $(target).removeClass("btn_disabled");
     }else{
-        $(".done-publish").attr("disabled", "true");
-        $(".done-publish").addClass("btn_disabled");
+        $(target).attr("disabled", "true");
+        $(target).addClass("btn_disabled");
     }
 }
 
-/* 최종적으로 발행을 결정하면 실행되는 함수 */
+/* 최종적으로 발행을 결정하면 실행되는 함수*/
 function publish(temp_id, cover_img, preview_img, tag, code, price) {
     
     $.ajax({
@@ -124,4 +146,35 @@ function isAuthor() {
         }
     });
     return data;
+}
+/* 작가신청 */
+function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url) {
+    
+    $.ajax({
+        url: "/api/member/author-apply/",
+        async: false,
+        type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            "temp_id" : temp_id,
+            "cover" : cover_img,
+            "preview" : preview_img,
+            "tag" : tag,
+            "code" : code,
+            "price" : price,
+            "intro" : intro,
+            "blog" : url
+        }),
+        success: function(json) {
+            console.log("신청됨");
+            localStorage.setItem("temp_id", '');
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
 }
