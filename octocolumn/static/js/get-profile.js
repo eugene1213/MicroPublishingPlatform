@@ -428,7 +428,7 @@ function uploadProfileImg(whichImg) {
             margin: margin
         }),
         success: function(json) {
-            console.log("이미지 업데이트 성공!");
+            console.log("hgfyj!");
         },
         error: function(error) {
             console.log(error);

@@ -29,6 +29,7 @@ class Profile(models.Model):
     twitter = models.CharField(max_length=255,null=True, blank=True)
     subjects = models.CharField(max_length=255, null=True, blank=True)
 
+
 class ProfileImage(models.Model):
     user = models.ForeignKey('member.User', null=True)
     cover_image = models.ImageField('포스트커버 이미지',
@@ -36,6 +37,7 @@ class ProfileImage(models.Model):
                                     blank=True,
                                     null=True
                                     )
+    print(cover_image)
     profile_image = models.ImageField('포스트프리뷰 이미지',
                                       upload_to=profile_image_user_directory_path,
                                       blank=True,
