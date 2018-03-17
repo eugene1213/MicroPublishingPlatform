@@ -62,8 +62,8 @@ class PostCreateView(generics.GenericAPIView,
             return author
 
     # 포인트사용내역에 추가
-    def add_point_history(self, point, history):
-        return PointHistory.objects.publish(user=self.request.user, point=point,
+    def add_point_history(self, point, post, history):
+        return PointHistory.objects.publish(user=self.request.user, point=point, post=post,
                                             history=history)
 
     # 검색 태그 추가
@@ -132,12 +132,13 @@ class PostCreateView(generics.GenericAPIView,
                 if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-                serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
+                post = Post.objects.create(author=user, title=temp.title,
                                                                 main_content=temp.main_content,
                                                                 price=data['price'],
                                                                 preview_image=preview_file_obj,
                                                                 cover_image=cover_file_obj
-                                                                ))
+                                                                )
+                serializer = PostSerializer(post)
                 # 태그 추가
                 if data['tag'] != '':
                     if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
@@ -153,7 +154,7 @@ class PostCreateView(generics.GenericAPIView,
                 user_queryset.point -= self.major_point().point
                 user_queryset.save()
                 self.waiting_init()
-                self.add_point_history(point=self.major_point().point, history=temp.title)
+                self.add_point_history(point=self.major_point().point, post=post, history=temp.title)
                 # 태그를 추가하고 태그 추가 실패
 
                 if serializer:
@@ -179,12 +180,14 @@ class PostCreateView(generics.GenericAPIView,
             # if self.is_post(data['temp_id']):
             #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
 
-            serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
-                                                            main_content=temp.main_content,
-                                                            price=data['price'],
-                                                            preview_image=preview_file_obj,
-                                                            cover_image=cover_file_obj
-                                                            ))
+            post = Post.objects.create(author=user, title=temp.title,
+                                       main_content=temp.main_content,
+                                       price=data['price'],
+                                       preview_image=preview_file_obj,
+                                       cover_image=cover_file_obj
+                                       )
+
+            serializer = PostSerializer(post)
             # 태그 추가
             if data['tag'] != '':
                 if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
@@ -201,7 +204,7 @@ class PostCreateView(generics.GenericAPIView,
             user_queryset.save()
             self.waiting_init()
 
-            self.add_point_history(point=self.first_point().point, history=temp.title)
+            self.add_point_history(point=self.first_point().point, post=post, history=temp.title)
             # 태그를 추가하고 태그 추가 실패
 
             if serializer:
