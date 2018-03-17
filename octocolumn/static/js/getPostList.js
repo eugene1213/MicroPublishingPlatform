@@ -58,7 +58,15 @@ function getData(){
                 $("#card_"+i+" .profile_readtime").text(readTime+" min read");                          // read time
                 $("#card_"+i+" .profile_img > img").attr("src",json[i-1].post.author.img.profile_image);                          // read time
 
-                //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가    
+                //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
+                
+                $("#coverImg").load(function(){
+                    loadCropImage("#coverImg");
+                });
+                
+                $("#profile-image"+i).load(function(e){
+                    loadCropImage("#profile-image" + i);
+                });
             }
         },
         error: function(error) {

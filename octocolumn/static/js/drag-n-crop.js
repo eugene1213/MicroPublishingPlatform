@@ -52,7 +52,7 @@ function loadCropImage(img) {
         var position = ((divHeight / fileHeight) * fileWidth - divWidth - uploadPosition)*(-1);
 
         $(img).height("100%");
-        $(img).css("left",position);
+        $(img).css("left","-"+position);
         
     }else {
 

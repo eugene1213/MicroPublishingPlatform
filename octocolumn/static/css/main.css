@@ -192,8 +192,7 @@
 	overflow: hidden;
 }
 .profile_img > img{
-	width: 56px;
-	height: 56px;
+	
 }
 
 .mainfeed .feedbox1 .fb1_txt .profile_box .profile_name{
@@ -315,7 +314,6 @@
 	width: 56px;
 	height: 56px;
 	border-radius: 50px;
-	background: url(http://via.placeholder.com/56x56);
 	display: block;
 	float: left;
 }
@@ -433,7 +431,6 @@
 	width: 56px;
 	height: 56px;
 	border-radius: 50px;
-	background: url(http://via.placeholder.com/56x56);
 	display: block;
 	float: left;
 }
@@ -558,7 +555,6 @@
 	width: 56px;
 	height: 56px;
 	border-radius: 50px;
-	background: url(http://via.placeholder.com/56x56);
 	display: block;
 	float: left;
 }
