@@ -128,7 +128,12 @@ $(document).ready(function(){
         
         $("#coverImg").unbind("load").load(function(){
             
+            $(".profile_save").show();
+        });
+        $(".profile_save").click(function(){
+
             uploadProfileImg("cover");
+            $(".profile_save").hide();
         });
     });
 
@@ -145,6 +150,7 @@ $(document).ready(function(){
             
         });
         $(".profileimg_save").click(function(){
+            
             uploadProfileImg("profile");
             $(".profileimg_save").hide();
         });
@@ -312,6 +318,13 @@ function get_profile() {
             if(subject)         $(".private-table :contains(관심분야) + td").text(subject);
 
             historyBarHeight();
+
+            $("#coverImg").load(function(){
+                loadCropImage("#coverImg");
+            });
+            $("#profileImg").load(function(){
+                loadCropImage("#profileImg");
+            });
         },
         error: function(error) {
             console.log(error);
@@ -393,13 +406,14 @@ function uploadProfileImg(whichImg) {
 
         var marginTop = $("#coverImg").css("top");
             marginTop = marginTop.replace("px","");
+            console.log(marginTop);
 
         var marginLeft = $("#coverImg").css("left");
             marginLeft = marginLeft.replace("px","");
-
+            console.log(marginLeft);
         if(marginTop > 0)var margin = "y" + marginTop;
         else             var margin = "x" + marginLeft;
-
+        console.log(margin);
         url = "/api/member/usercover-image/";
     } else if(whichImg == "profile") {
         img = $("#profileImg").attr("src");
@@ -413,8 +427,9 @@ function uploadProfileImg(whichImg) {
             
         if(marginTop > 0)var margin = "y" + marginTop;
         else             var margin = "x" + marginLeft;
-
-
+        console.log(marginTop);
+        console.log(marginLeft);
+        console.log(margin);
         url = "/api/member/profile-image/";
     }
     $.ajax({
@@ -428,7 +443,7 @@ function uploadProfileImg(whichImg) {
             margin: margin
         }),
         success: function(json) {
-            console.log("hgfyj!");
+            console.log("이미지 업로드 성공!");
         },
         error: function(error) {
             console.log(error);

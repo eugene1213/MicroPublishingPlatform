@@ -45,19 +45,20 @@ function loadCropImage(img) {
     var fileWidth = $(img)[0].naturalWidth;
     var fileHeight = $(img)[0].naturalHeight;
 
+    $(img).css("position","relative");
+
     if(direction == 'x') {
 
-        var position = (divHeight / fileHeight) * fileWidth - divWidth - uploadPosition;
+        var position = ((divHeight / fileHeight) * fileWidth - divWidth - uploadPosition)*(-1);
 
         $(img).height("100%");
         $(img).css("left",position);
         
     }else {
 
-        var position = (divWidth / fileWidth) * fileHeight - divHeight - uploadPosition;
+        var position = ((divWidth / fileWidth) * fileHeight - divHeight - uploadPosition)*(-1);
 
         $(img).width("100%");
         $(img).css("top",position);
-        
     }
 }
