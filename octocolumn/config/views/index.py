@@ -1,5 +1,5 @@
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 
 __all__ = (
     'index',
@@ -22,8 +22,8 @@ def write(request):
         if token is not None:
             response = render_to_response("view/write.html", {"login": True})
             return response
-        return render_to_response('view/main.html', )
-    return render_to_response('view/main.html', )
+        return redirect('views:index')
+    return redirect('views:index')
 
 
 def read(request, post_id):
@@ -32,8 +32,8 @@ def read(request, post_id):
         if token is not None:
             response = render_to_response("view/read.html", {"login": True})
             return response
-        return render_to_response('view/main.html', )
-    return render_to_response('view/main.html', )
+        return redirect('views:index')
+    return redirect('views:index')
 
 
 def profile(request):
@@ -42,8 +42,7 @@ def profile(request):
         if token is not None:
             response = render_to_response("view/profile.html", {"login": True})
             return response
-        return render_to_response('view/main.html', )
-    return render_to_response('view/main.html', )
+
 
 
 def facebook(request):
