@@ -157,8 +157,6 @@ class PostCreateView(generics.GenericAPIView,
                 except ObjectDoesNotExist:
                     raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-
-
                 # 태그를 추가하고 태그 추가 실패
 
                 if serializer:
@@ -169,53 +167,7 @@ class PostCreateView(generics.GenericAPIView,
                 raise exceptions.NotAcceptable({"detail": "This Account is Deactive "}, 401)
 
         else:
-            # 임시저장 파일이 없을 경우
-            if data['temp_id'] == '':
-                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
-            try:
-                temp = Temp.objects.filter(id=data['temp_id']).get()
-            except ObjectDoesNotExist:
-                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
-
-            # 포인트가 모자르다면 에러발생
-            # 정확한 정보를 위해 db의 유저 정보를 가져온다
-            user_queryset = User.objects.filter(id=self.request.user.id).get()
-
-            # if self.is_post(data['temp_id']):
-            #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
-
-            post = Post.objects.create(author=user, title=temp.title,
-                                       main_content=temp.main_content,
-                                       price=data['price'],
-                                       preview_image=preview_file_obj,
-                                       cover_image=cover_file_obj
-                                       )
-
-            serializer = PostSerializer(post)
-            # 태그 추가
-            if data['tag'] != '':
-                if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-                    raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
-
-            # 유저 포인트 업데이트
-            user_queryset.point -= self.first_point().point
-            user_queryset.save()
-            self.waiting_init()
-
-            self.add_point_history(point=self.first_point().point, post=post, history=temp.title)
-
-            # 템프파일 삭제
-            try:
-                Temp.objects.filter(id=data['temp_id']).delete()
-            except ObjectDoesNotExist:
-                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
-
-            # 태그를 추가하고 태그 추가 실패
-
-            if serializer:
-                return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
-            else:
-                raise exceptions.ValidationError({'detail': 'Already added'}, 400)
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
 class PostListView(APIView):
