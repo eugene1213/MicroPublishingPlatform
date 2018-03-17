@@ -118,24 +118,35 @@ $(document).ready(function(){
         
     });
 /* start 커버, 프로필 이미지 업로드 처리 */
+
     $("#coverImgInput").change(function() {
+
+        if($("#coverImg").parents().hasClass("tmpWrap")) $("#coverImg").unwrap();
         readURL(this,"#coverImg");
         
         //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
         
-        $("#coverImg").load(function(){
+        $("#coverImg").unbind("load").load(function(){
             
             uploadProfileImg("cover");
         });
     });
+
     $("#profileImgInput").change(function() {
+
+        if($("#profileImg").parents().hasClass("tmpWrap")) $("#profileImg").unwrap();
         readURL(this,"#profileImg");
         
         //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
         
-        $("#profileImg").load(function(){
+        $("#profileImg").unbind("load").load(function(){
             
+            $(".profileimg_save").show();
+            
+        });
+        $(".profileimg_save").click(function(){
             uploadProfileImg("profile");
+            $(".profileimg_save").hide();
         });
     });
 
@@ -379,9 +390,31 @@ function uploadProfileImg(whichImg) {
 
     if(whichImg == "cover") {
         img = $("#coverImg").attr("src");
+
+        var marginTop = $("#coverImg").css("top");
+            marginTop = marginTop.replace("px","");
+
+        var marginLeft = $("#coverImg").css("left");
+            marginLeft = marginLeft.replace("px","");
+
+        if(marginTop > 0)var margin = "y" + marginTop;
+        else             var margin = "x" + marginLeft;
+
         url = "/api/member/usercover-image/";
     } else if(whichImg == "profile") {
         img = $("#profileImg").attr("src");
+
+
+        var marginTop = $("#profileImg").css("top");
+            marginTop = marginTop.replace("px","");
+
+        var marginLeft = $("#profileImg").css("left");
+            marginLeft = marginLeft.replace("px","");
+            
+        if(marginTop > 0)var margin = "y" + marginTop;
+        else             var margin = "x" + marginLeft;
+
+
         url = "/api/member/profile-image/";
     }
     $.ajax({
@@ -391,8 +424,8 @@ function uploadProfileImg(whichImg) {
         dataType: 'json',
         contentType: "application/json",
         data: JSON.stringify({
-            img:img,
-            margin:"magin"
+            img: img,
+            margin: margin
         }),
         success: function(json) {
             console.log("이미지 업데이트 성공!");
@@ -410,7 +443,9 @@ function readURL(input,id) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            $(id).attr('src', e.target.result).load(setMargin(id));     // 이미지가 로드 된 후 setMargin 함수 호출
+            $(id).attr('src', e.target.result).load(function(){
+                setMargin(id);
+            });     // 이미지가 로드 된 후 setMargin 함수 호출
         }
 
         reader.readAsDataURL(input.files[0]);
