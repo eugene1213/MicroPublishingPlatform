@@ -16,7 +16,7 @@ def signup_email_send(user):
     # url = get_current_site(urlrequest)
     message = render_to_string('singup_activation.html', {
         'user': user,
-        'domain': 'localhost:8000',
+        'domain': 'www.octocolumn.com',
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })
@@ -33,11 +33,9 @@ def signup_email_send(user):
 def password_reset_email_send(user):
     # 이메일 발송
     mail_subject = 'Octocolumn 비밀번호 변경.'
-    urlrequest = request
-    url = get_current_site(urlrequest)
     message = render_to_string('pw_change.html', {
         'user': user,
-        'domain': url,
+        'domain': 'www.octocolumn.com',
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })

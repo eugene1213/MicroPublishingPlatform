@@ -96,6 +96,12 @@ class PointHistory(models.Model):
         null=False,
         blank=False
     )
+    plus_minus = models.CharField(
+        max_length=10,
+        choices=PlUS_MINUS_TYPE,
+        null=False,
+        blank=False,
+    )
 
     point = models.IntegerField(default=0)
     history = models.CharField(max_length=255)

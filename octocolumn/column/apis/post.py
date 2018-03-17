@@ -63,7 +63,7 @@ class PostCreateView(generics.GenericAPIView,
 
     # 포인트사용내역에 추가
     def add_point_history(self, point, post, history):
-        return PointHistory.objects.publish(user=self.request.user, point=point,
+        return PointHistory.objects.publish(user=self.request.user, point=point, post=post,
                                             history=history)
 
     # 검색 태그 추가
@@ -132,21 +132,24 @@ class PostCreateView(generics.GenericAPIView,
                 if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-                serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
+                post = Post.objects.create(author=user, title=temp.title,
                                                                 main_content=temp.main_content,
                                                                 price=data['price'],
                                                                 preview_image=preview_file_obj,
                                                                 cover_image=cover_file_obj
-                                                                ))
+                                                                )
+                serializer = PostSerializer(post)
                 # 태그 추가
                 if data['tag'] != '':
                     if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
                         raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
+
+                # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
                 user_queryset.save()
                 self.waiting_init()
-                self.add_point_history(point=self.major_point().point, history=temp.title)
+                self.add_point_history(point=self.major_point().point, post=post, history=temp.title)
 
                 # 템프파일 삭제
                 try:
@@ -154,7 +157,7 @@ class PostCreateView(generics.GenericAPIView,
                 except ObjectDoesNotExist:
                     raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-                # 유저 포인트 업데이트
+
 
                 # 태그를 추가하고 태그 추가 실패
 
@@ -181,16 +184,25 @@ class PostCreateView(generics.GenericAPIView,
             # if self.is_post(data['temp_id']):
             #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
 
-            serializer = PostSerializer(Post.objects.create(author=user, title=temp.title,
-                                                            main_content=temp.main_content,
-                                                            price=data['price'],
-                                                            preview_image=preview_file_obj,
-                                                            cover_image=cover_file_obj
-                                                            ))
+            post = Post.objects.create(author=user, title=temp.title,
+                                       main_content=temp.main_content,
+                                       price=data['price'],
+                                       preview_image=preview_file_obj,
+                                       cover_image=cover_file_obj
+                                       )
+
+            serializer = PostSerializer(post)
             # 태그 추가
             if data['tag'] != '':
                 if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
                     raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+
+            # 유저 포인트 업데이트
+            user_queryset.point -= self.first_point().point
+            user_queryset.save()
+            self.waiting_init()
+
+            self.add_point_history(point=self.first_point().point, post=post, history=temp.title)
 
             # 템프파일 삭제
             try:
@@ -198,12 +210,6 @@ class PostCreateView(generics.GenericAPIView,
             except ObjectDoesNotExist:
                 raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-            # 유저 포인트 업데이트
-            user_queryset.point -= self.first_point().point
-            user_queryset.save()
-            self.waiting_init()
-
-            self.add_point_history(point=self.first_point().point, history=temp.title)
             # 태그를 추가하고 태그 추가 실패
 
             if serializer:
@@ -304,11 +310,13 @@ class PostLikeToggleView(APIView):
 class PostReadView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def is_buyed(self, post_id):
+    def is_buyed(self, post):
         try:
-            BuyList.objects.filter(user=self.request.user, post_id=post_id).get()
+            BuyList.objects.filter(user=self.request.user, post=post).get()
             return True
         except ObjectDoesNotExist:
+            if self.request.user == post.author:
+                return True
             return False
 
     def tag(self, post):
@@ -331,7 +339,7 @@ class PostReadView(APIView):
         serializer = PostSerializer(post)
 
         # 구매를 했는지를 검사
-        if self.is_buyed(param):
+        if self.is_buyed(post):
             # 구매했을때 원본 출력
             if serializer:
 
