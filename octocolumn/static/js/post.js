@@ -39,6 +39,7 @@ $(document).ready(function(){
         var temp_id = localStorage.getItem("temp_id");
 
         if(data) {
+
             publish(temp_id, cover_img, preview_img, tag, code, price);
         } else {
 
@@ -47,13 +48,6 @@ $(document).ready(function(){
 
             window.location.href = "#top";
 
-            if($("#inputUrl").val() != '' && $(".author-intro").val() != ''){
-                $("#btn-author-apply").removeAttr("disabled");
-                $("#btn-author-apply").removeClass("btn_disabled");
-            }else{
-                $("#btn-author-apply").attr("disabled", "true");
-                $("#btn-author-apply").addClass("btn_disabled");
-            }
             $("#btn-author-apply").click(function(){
         
                 var intro = $(".author-intro").html();

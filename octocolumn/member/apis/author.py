@@ -6,7 +6,7 @@ from rest_framework import generics, mixins, exceptions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from column.models import Temp, PreAuthorPost
+from column.models import Temp, PreAuthorPost, SearchTag
 from column.serializers import PostSerializer, PreAuthorPostSerializer
 from member.models import Author as AuthorModel, User
 from member.serializers import AuthorSerializer
@@ -38,6 +38,17 @@ class AuthorAplly(generics.GenericAPIView,
 
     def first_point(self):
         return UsePoint.objects.filter(type='first_user').get()
+
+    # 검색 태그 추가
+    def search_tag(self, post_id, tag):
+        search_tag = tag.split(',')
+        if len(search_tag) > 5:
+            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
+
+        for i in search_tag:
+            SearchTag.objects.create(post_id=post_id, tag=i)
+
+        return True
 
     #작가 신청메서드
     def post(self, request):
