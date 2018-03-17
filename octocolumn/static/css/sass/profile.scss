@@ -141,19 +141,20 @@
 	border-radius: 10px;
 	display: block;
 	position: absolute;
+	background-color: #ffffff;
 	top: 222px;
 	left: 41px;
     z-index: 2;
     overflow: hidden;
-    cursor: default;
+	cursor: default;
     
     & > img {
 		border-radius: 10px;
     }
     input {
         position: absolute;
-        width: 30px;
-        height: 50px;
+        width: 15px;
+        height: 40px;
         right: 8px;
         bottom: 4px;
         opacity: 0;
@@ -173,7 +174,6 @@
     overflow: hidden;
 
     & > img {
-		width: 100%;
 		border-radius: 8px 8px 0 0;
     }
     input {
@@ -200,6 +200,17 @@
     top: 174px;
     left: 175px;
 }
+.profileimg_save{
+    width: 15px;
+    height: 15px;
+    background: url('/static/images/icons/profile/save.svg') no-repeat;
+    background-size: 100%;
+	display: none;
+	cursor: pointer;
+    position: absolute;
+    top: 174px;
+    left: 152px;
+}
 
 .profile .profile_write{
 	width: 22px;
@@ -211,6 +222,7 @@
 	top: 288px;
 	left: 914px;
 }
+
 
 .profile .profile_condition{
 	width: 944px;
