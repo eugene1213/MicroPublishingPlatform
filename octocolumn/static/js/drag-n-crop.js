@@ -1,27 +1,63 @@
-function setMargin(img) {                         // img: 이미지 태그 셀렉터, elRatio: 엘리먼트 비율
+function setMargin(img) {                         // img: 이미지 태그 셀렉터
 
-    var elRatio = 0;
-    var direction = '';
-    var marginDirect = '';
+    $(img).removeAttr("style");
+    $(img).css("position","relative");
 
-    elRatio = $(img).parents().width()/$(img).parents().height();
-    console.log($(img)[0].naturalWidth/$(img)[0].naturalHeight +" : "+elRatio);
-    if($(img)[0].naturalWidth/$(img)[0].naturalHeight > elRatio) {
+    var direction = '';                           // 드레그 허용할 방향
+
+    var divHeight = $(img).closest(".profile-image-upload-wrap").height();         // 이미지를 감싼 부모 요소의 높이
+    var divWidth = $(img).closest(".profile-image-upload-wrap").width();           // 이미지를 감싼 부모 요소의 너비
+
+    if($(img)[0].naturalHeight/$(img)[0].naturalWidth < divHeight/divWidth) {      // 원본 이미지의 비율과 출력될 비율을 비교해서 횡,종 이동을 결정
+
         direction = 'x';
-        $(img).heigth("100%");
+        $(img).height(divHeight);
+        $(img).css("cursor","ew-resize");
 
+        var width = divHeight / $(img)[0].naturalHeight * $(img)[0].naturalWidth;
+        
+        $(img).wrap("<div class='tmpWrap' style='height:100%;width:" + (width+(width-divWidth)) + "px;position:relative;left:-"+ (width - divWidth) +"px'></div>");
     }else {
-        direction = 'y';
-        $(img).width("100%");
-    }
 
-    console.log(direction);
-    $(img).draggable({axis: direction});
+        direction = 'y';
+        $(img).width(divWidth);
+        $(img).css("cursor","ns-resize");
+
+        var height = divWidth/$(img)[0].naturalWidth*$(img)[0].naturalHeight;
+        
+        $(img).wrap("<div class='tmpWrap' style='width:100%;height:" + (height+(height-divHeight)) + "px;position:relative;top:-"+ (height - divHeight) +"px'></div>");
+        
+    }
+    $(img).draggable({axis: direction,containment : $(".tmpWrap")});
 }
 
-function imgLoader() {
+function loadCropImage(img) {
 
-    var elRatio = 0;
-    elRatio = $(img).parents().width()/$(img).parents().height();
-    // $(img)[0].naturalWidth/$(img)[0].naturalHeight > elRatio ? ;
+    var divHeight = $(img).closest(".profile-image-upload-wrap").height();         // 이미지를 감싼 부모 요소의 높이
+    var divWidth = $(img).closest(".profile-image-upload-wrap").width();           // 이미지를 감싼 부모 요소의 너비
+
+    var src = $(img).attr("src");
+    var position_strtmp = src.split("_")[1];
+    var position_strtmp = position_strtmp.split("-")[0];
+    var direction = position_strtmp.substr(0,1);
+    var uploadPosition = position_strtmp.substr(1,position_strtmp.length-1);
+
+    var fileWidth = $(img)[0].naturalWidth;
+    var fileHeight = $(img)[0].naturalHeight;
+
+    if(direction == 'x') {
+
+        var position = (divHeight / fileHeight) * fileWidth - divWidth - uploadPosition;
+
+        $(img).height("100%");
+        $(img).css("left",position);
+        
+    }else {
+
+        var position = (divWidth / fileWidth) * fileHeight - divHeight - uploadPosition;
+
+        $(img).width("100%");
+        $(img).css("top",position);
+        
+    }
 }

@@ -6,7 +6,7 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
+ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com']
 
 
 # WSGI application
@@ -193,11 +193,16 @@ LOGGING = {
         }
 }
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SECURE_HSTS_SECONDS = 31536000
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+SECURE_SSL_REDIRECT = True
 
 CSRF_COOKIE_SECURE = True
 
-
 CORS_ORIGIN_ALLOW_ALL = True
-
 
 SITE_ID = 1
