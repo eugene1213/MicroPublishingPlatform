@@ -1,3 +1,4 @@
+import re
 
 from django.shortcuts import render_to_response, redirect
 
@@ -6,7 +7,20 @@ __all__ = (
 )
 
 
+def mobile(request):
+
+    MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
+    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        return True
+    else:
+        return False
+
+
 def index(request):
+    if mobile(request):
+        return render_to_response('mobile/main.html', )
+
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:

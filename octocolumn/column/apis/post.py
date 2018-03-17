@@ -302,11 +302,13 @@ class PostLikeToggleView(APIView):
 class PostReadView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def is_buyed(self, post_id):
+    def is_buyed(self, post):
         try:
-            BuyList.objects.filter(user=self.request.user, post_id=post_id).get()
+            BuyList.objects.filter(user=self.request.user, post=post).get()
             return True
         except ObjectDoesNotExist:
+            if self.request.user == post.author:
+                return True
             return False
 
     def tag(self, post):
@@ -329,7 +331,7 @@ class PostReadView(APIView):
         serializer = PostSerializer(post)
 
         # 구매를 했는지를 검사
-        if self.is_buyed(param):
+        if self.is_buyed(post):
             # 구매했을때 원본 출력
             if serializer:
 
