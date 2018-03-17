@@ -201,15 +201,26 @@
     left: 175px;
 }
 .profileimg_save{
-    width: 15px;
-    height: 15px;
+    width: 23px;
+    height: 27px;
     background: url('/static/images/icons/profile/save.svg') no-repeat;
     background-size: 100%;
-	display: none;
-	cursor: pointer;
+    display: none;
+    cursor: pointer;
     position: absolute;
-    top: 174px;
-    left: 152px;
+    top: 172px;
+    left: 146px;
+}
+.profile_save{
+	width: 36px;
+    height: 36px;
+    background: url('/static/images/icons/profile/save.svg') no-repeat;
+    background-size: 100%;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 280px;
+    left: 867px;
 }
 
 .profile .profile_write{
