@@ -662,14 +662,15 @@
 	line-height: 26px;
 	text-align: center;
 }
-.flip .arrow_box_1 .card_profile_img {
+.flip .arrow_box_1 .card_profile_img_wrap {
 	position: absolute;
 	width: 76px;
 	height: 76px;
 	border: 1px solid #ffffff;
 	border-radius: 50%;
-	left: 104px;
+	left: 100px;
 	top: 106px;
+	overflow: hidden;
 }
 .flip .arrow_box_1 .btn-follow {
 	float: right;

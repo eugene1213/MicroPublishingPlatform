@@ -31,14 +31,14 @@ class Follower(APIView):
             to_user = User.objects.filter(pk=user_pk).get()
             result, relation = Relation.objects.get_or_create(to_user=to_user, from_user=user)
 
-            if result:
+            if relation:
                 return Response({'detail': 'created',
                                  "author": {
                                      "follow_status": True,
                                      "follower": Relation.objects.filter(from_user=user).count()
                                  }
                                  })
-            relation.delete()
+            result.delete()
             return Response({'detail': 'deleted',
                              "author": {
                                  "follow_status": False
@@ -130,7 +130,7 @@ class GetUserFollowingCard(ListAPIView):
                                         "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
-                                        "profile_img": '/static/images/example/2_y10_.jpeg',
+                                        "profile_img": '/static/images/example/2_x20_.jpeg',
                                         "cover_img": '/static/images/example/1.jpeg'
 
                                     }
@@ -239,7 +239,7 @@ class GetUserFollowerCard(ListAPIView):
                                         "nickname": i.from_user.nickname,
                                         "follow_status": self.follower_status(i.from_user),
                                         "intro": '-',
-                                        "profile_img": '/static/images/example/2_y10_.jpeg',
+                                        "profile_img": '/static/images/example/2_x20_.jpeg',
                                         "cover_img": '/static/images/example/1.jpeg'
 
                                     }

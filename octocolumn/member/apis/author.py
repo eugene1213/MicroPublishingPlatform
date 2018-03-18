@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from column.models import Temp, PreAuthorPost, Post, SearchTag
+
 from column.serializers import PostSerializer, PreAuthorPostSerializer
 from member.models import Author as AuthorModel, User, PointHistory
 from member.serializers import AuthorSerializer
@@ -19,10 +20,10 @@ __all__ = (
 
 # 1
 class AuthorApply(generics.GenericAPIView,
-             mixins.ListModelMixin,
-             mixins.CreateModelMixin,
-             mixins.DestroyModelMixin):
-    permission_classes = (IsAuthenticated, )
+                  mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  mixins.DestroyModelMixin):
+    permission_classes = (IsAuthenticated,)
     queryset = AuthorModel.objects.all()
     serializer_class = AuthorSerializer
 
@@ -54,13 +55,24 @@ class AuthorApply(generics.GenericAPIView,
     def first_point(self):
         return UsePoint.objects.filter(type='first_user').get().point
 
-    #작가 신청메서드
+    # 검색 태그 추가
+    def search_tag(self, post_id, tag):
+        search_tag = tag.split(',')
+        if len(search_tag) > 5:
+            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
+
+        for i in search_tag:
+            SearchTag.objects.create(post_id=post_id, tag=i)
+
+        return True
+
+    # 작가 신청메서드
     def post(self, request):
         user = self.request.user
         data = self.request.data
 
         if AuthorModel.objects.filter(author=user).get() is not None:
-            raise exceptions.ValidationError({"datail":"Already Apply"})
+            raise exceptions.ValidationError({"datail": "Already Apply"})
 
         author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
@@ -107,6 +119,7 @@ class AuthorApply(generics.GenericAPIView,
             if not point_history:
                 raise exceptions.ValidationError({'detail': 'Upload Failed'})
 
+
             user.point -= self.first_point()
             user.save()
             # 태그를 추가하고 태그 추가 실패
@@ -117,8 +130,4 @@ class AuthorApply(generics.GenericAPIView,
                 raise exceptions.ValidationError({'detail': 'Already added'}, 400)
 
         else:
-            raise exceptions.ValidationError({'detail': 'Already attempted author'}, 400)
-
-
-
-
+                raise exceptions.ValidationError({'detail': 'Already attempted author'}, 400)

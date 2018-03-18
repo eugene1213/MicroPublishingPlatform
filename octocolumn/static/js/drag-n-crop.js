@@ -37,6 +37,7 @@ function loadCropImage(img) {
         var divWidth = $(img).closest(".profile-image-upload-wrap").width();           // 이미지를 감싼 부모 요소의 너비
     
         var src = $(img).attr("src");
+        if(src == null) return;
         var position_strtmp = src.split("_")[1];
         var direction = position_strtmp.substr(0,1);
         var uploadPosition = position_strtmp.substr(1,position_strtmp.length-1);

@@ -1,15 +1,6 @@
 $(document).ready(function(){
 
     getUserInfo();
-
-    $("body").click(function(e){
-        
-        validLocate = window.innerWidth - $(".btn-user").width()-17;    // 유저버튼 위치
-        if( e.clientX > validLocate && e.clientY < 30 ){
-            
-            window.location.href = "/profile/"
-        }
-    });
 });
 
 function getUserInfo() {

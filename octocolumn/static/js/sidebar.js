@@ -2,12 +2,14 @@ $(document).ready(function(){
 
     var menuText = "";
     var windowHeight = window.innerHeight;
+    var validLocate = window.innerWidth - $(".btn-user").width()-17;    // 유저버튼 위치
+    console.log(validLocate);
 
     ($(".btn-user > img").length == 0) ? $(".footer").css("margin-top","600px") : $(".footer").css("margin-top","300px");
 
     $(".btn-menu > ul").css("height", windowHeight - 32 - 40 + "px");   // 헤더높이 = 32, ul 패딩탑 = 40
 
-    $("body").click(function(e){
+    $("body").unbind('click').click(function(e){
 
         if(e.clientX < 153 && e.clientY < 32) {
 
@@ -21,9 +23,18 @@ $(document).ready(function(){
                 $(".btn-menu > ul").slideDown();
                 $(".btn-menu > div").text("Menu");
             }
-        }else if(e.clientX > 153){
+        }else if ( e.clientX > validLocate && e.clientY < 30 ){
             
-            if( $(".btn-menu > ul").is(":visible") ){
+            console.log("clicked");
+            window.location.href = "/profile/"
+        }
+    });
+
+    $("html").click(function(e){
+        
+        if( e.target != $("ul") && $(".btn-menu > ul").is(":visible") ){
+            if(e.clientX > 153){
+                
                 $(".btn-menu > ul").slideUp();
                 $(".btn-menu > div").text(menuText);
             }

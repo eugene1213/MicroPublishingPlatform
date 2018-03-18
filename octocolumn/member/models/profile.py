@@ -42,6 +42,6 @@ class ProfileImage(models.Model):
                                       upload_to=profile_image_user_directory_path,
                                       blank=True,
                                       null=True,
-                                      default='/static/images/example/2_y10_.jpeg'
+                                      default='/static/images/example/2_x20_.jpeg'
 
                                       )

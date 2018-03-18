@@ -234,7 +234,7 @@ class PostListView(APIView):
                     "price":serializer.data['price'],
                     "author": {
                         "author_id": serializer.data['author'],
-                        "username": user.last_name + " " + user.first_name,
+                        "username": user.nickname,
                         "follow_status": self.follower_status(user),
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
@@ -337,7 +337,7 @@ class PostReadView(APIView):
                         "tag": self.tag(post),
                         "author":{
                             "author_id": serializer.data['author'],
-                            "username": user.last_name + " " + user.first_name,
+                            "username": user.nickname,
                             "achevement": "",
                             "profile_img": "",# ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
                             "cover_img": "",

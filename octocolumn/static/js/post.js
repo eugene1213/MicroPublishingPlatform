@@ -5,13 +5,13 @@ $(document).ready(function(){
     /* 발행버튼 클릭시 발행메뉴 드롭다운 */
     $(".btn-publish").click(function(event) {
 
-        if($(".arrow-box").is(":visible")){
+        if($(".arrow-box").is(":visible")){     // 발행메뉴와 버튼에 화살표 방향 변경
 
             $(".arrow-box").hide();
             $(".css-arrow").css("transform","rotate(360deg)");
         } else {
 
-            if( $(".editable").text().length > 543 ){
+            if( $(".editable").text().length > 543 ){       // 글자 수 체크 후 발행버튼 활성화
                 $(".btn-publish-final").removeAttr("disabled");
                 $(".btn-publish-final").removeClass("btn_disabled");
             }else{
@@ -24,11 +24,11 @@ $(document).ready(function(){
         }
     });
 
-    $(".agreement-checkbox").click(function(){
+    $(".agreement-checkbox").click(function(){              // 동의 체크 여부 확인 후 버튼 활성화
         btn_activation(this,".done-publish");
     });
 
-    $(".done-publish").click(function(){
+    $(".done-publish").click(function(){                    // 출판 버튼 누르면 작가인지 판단해서 출판/작가신청 진행. 아래 if문에서 data는 boolean타입
 
         var cover_img = $("#preview-cover-img").attr("src");
         var preview_img = $("#preview-main-content > img").attr("src");
@@ -39,6 +39,7 @@ $(document).ready(function(){
         var temp_id = localStorage.getItem("temp_id");
 
         if(data) {
+
             publish(temp_id, cover_img, preview_img, tag, code, price);
         } else {
 
@@ -47,18 +48,17 @@ $(document).ready(function(){
 
             window.location.href = "#top";
 
-            if($("#inputUrl").val() != '' && $(".author-intro").val() != ''){
-                $("#btn-author-apply").removeAttr("disabled");
-                $("#btn-author-apply").removeClass("btn_disabled");
-            }else{
-                $("#btn-author-apply").attr("disabled", "true");
-                $("#btn-author-apply").addClass("btn_disabled");
-            }
-            $("#btn-author-apply").click(function(){
+            $("#btn-author-apply").unbind('click').click(function(){
         
                 var intro = $(".author-intro").html();
                 var url = $("#inputUrl").val();
+
                 authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url);
+                
+                $(".btn-confirm").unbind('click').click(function(){
+
+                    window.location.href = "/";
+                });
             });
         }
     });
@@ -132,7 +132,7 @@ function isAuthor() {
         success: function(json) {
 
             data = json.author;
-
+console.log(data)
             if(data) {
                 $(".ready2publish").text("Ready to publish?");      // 작가면 모달창 상단에 보여줄 텍스트
             }
@@ -171,10 +171,18 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
         }),
         success: function(json) {
             console.log("신청됨");
+            $(".modal-success-wrap").show();
             localStorage.setItem("temp_id", '');
         },
         error: function(error) {
+            
             console.log(error);
+
+            if(error.responseJSON.detail == "Already attempted author") {
+
+                $(".modal-success-wrap").show();
+                localStorage.setItem("temp_id", '');
+            }
         }
     });
 }
