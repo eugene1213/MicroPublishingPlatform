@@ -30,7 +30,7 @@ def index(request):
     return render_to_response('view/main.html',)
 
 
-def write(request, temp_id):
+def write(request):
     if mobile(request):
         return redirect('views:index')
 
