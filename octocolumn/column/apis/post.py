@@ -370,6 +370,8 @@ class AuthorResult(APIView):
         try:
             author = AuthorModel.objects.filter(author=self.request.user).get()
             if author is not None:
-                return Response({"author": True}, status=status.HTTP_200_OK)
+                if author.is_active:
+                    return Response({"author": True}, status=status.HTTP_200_OK)
+                return Response({"author": False}, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response({"author": False}, status=status.HTTP_200_OK)

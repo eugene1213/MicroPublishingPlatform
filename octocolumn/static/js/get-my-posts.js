@@ -42,6 +42,7 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
                 var posts = json.post;
                 var posts_num = json.post.length;
 
+                console.log(json)
                 /* 오른쪽에 배치 될 태그 */
                 var date_div_right_1 = "<div class=\"history_date2\"><span>";                               // 작성일 왼쪽 태그
                 var date_div_right_4 = "\" alt=\"\"></div><span>";                                          // 이미지 소스 오른쪽 태그 + 타이틀 왼쪽 태그
@@ -65,7 +66,7 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
 
                     var created_date = posts[post].created_date.split("T")[0];
                         created_date = created_date.split("-")[1] + "." + created_date.split("-")[2];
-                    var pk = posts[post].pk;
+                    var pk = posts[post].id;
                     var title = posts[post].title;
 
                     if(which == 'post'){

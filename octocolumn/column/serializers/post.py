@@ -97,8 +97,6 @@ class TempFileSerializer(serializers.ModelSerializer):
 
 class PreAuthorPostSerializer(serializers.ModelSerializer):
     # 아래 코드가 동작하도록 CommentSerializer를 구현
-    my_comment = CommentSerializer(read_only=True)
-    comments = CommentSerializer(read_only=True, many=True)
 
     class Meta:
         model = Post

@@ -126,7 +126,7 @@ function isAuthor() {
         success: function(json) {
 
             data = json.author;
-
+console.log(data)
             if(data) {
                 $(".ready2publish").text("Ready to publish?");      // 작가면 모달창 상단에 보여줄 텍스트
             }

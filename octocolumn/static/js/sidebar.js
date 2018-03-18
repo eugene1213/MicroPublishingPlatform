@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     $(".btn-menu > ul").css("height", windowHeight - 32 - 40 + "px");   // 헤더높이 = 32, ul 패딩탑 = 40
 
-    $("body").click(function(e){
+    $("body").unbind("click").click(function(e){
 
         if(e.clientX < 153 && e.clientY < 32) {
 
