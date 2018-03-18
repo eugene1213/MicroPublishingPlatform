@@ -23,21 +23,10 @@ $(document).ready(function(){
                 $(".btn-menu > ul").slideDown();
                 $(".btn-menu > div").text("Menu");
             }
-        }else if ( e.clientX > validLocate && e.clientY < 30 ){
-            
-            console.log("clicked");
-            window.location.href = "/profile/"
-        }
-    });
-
-    $("html").click(function(e){
-        
-        if( e.target != $("ul") && $(".btn-menu > ul").is(":visible") ){
-            if(e.clientX > 153){
+        }else if(e.clientX > 153){
                 
-                $(".btn-menu > ul").slideUp();
-                $(".btn-menu > div").text(menuText);
-            }
+            $(".btn-menu > ul").slideUp();
+            $(".btn-menu > div").text(menuText);
         }
     });
 });

@@ -79,11 +79,10 @@ class TempCreateView(generics.GenericAPIView,
             raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
         if data['temp_id'] is not '':
-            temp = Temp.objects.filter(author=self.request.user, id=data['temp_id']).get()
-            temp.title = data['title']
-            temp.main_content = data['main_content'],
-            temp.created_date = datetime.now()
-            temp.save()
+            Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(title=data['title'],
+                                                                                            main_content=data['main_content'],
+                                                                                            created_date = datetime.now()
+                                                                                            )
 
             return Response({"temp": {
                 "temp_id": data['temp_id']

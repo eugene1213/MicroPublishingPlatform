@@ -68,6 +68,18 @@ def profile(request):
         return redirect('views:index')
     return redirect('views:index')
 
+def recent(request):
+    if mobile(request):
+        return redirect('views:index')
+
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/recent-more.html", {"login": True})
+            return response
+        return redirect('views:index')
+    return redirect('views:index')
+
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')
 

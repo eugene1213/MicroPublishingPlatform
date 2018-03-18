@@ -32,6 +32,14 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
             
                 $(".preview-wrap").height($("html").height());
                 $(".preview-wrap").show();
+                $("#preview-main-content > img").load(function() {
+
+                    if( $("#preview").height() > $("html").height() ) {
+                        $(".preview-wrap").height($("#preview").height() + 256);
+                    }else {
+                        $(".preview-wrap").height($("html").height() + 256);
+                    }
+                });
             }
             console.log("isBought: "+json.detail.isBuy);
         },

@@ -56,13 +56,13 @@ class AuthorApply(generics.GenericAPIView,
         return UsePoint.objects.filter(type='first_user').get().point
 
     # 검색 태그 추가
-    def search_tag(self, post_id, tag):
+    def search_tag(self, post, tag):
         search_tag = tag.split(',')
         if len(search_tag) > 5:
             raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
 
         for i in search_tag:
-            SearchTag.objects.create(post_id=post_id, tag=i)
+            SearchTag.objects.create(post=post, tag=i)
 
         return True
 
@@ -70,9 +70,6 @@ class AuthorApply(generics.GenericAPIView,
     def post(self, request):
         user = self.request.user
         data = self.request.data
-
-        if AuthorModel.objects.filter(author=user).get() is not None:
-            raise exceptions.ValidationError({"datail": "Already Apply"})
 
         author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 

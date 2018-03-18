@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from config.views import index
-from config.views.index import write, kakao, google, facebook
+from config.views.index import write, kakao, google, facebook, recent
 from config.views.index import read
 from config.views.index import profile
 
@@ -14,6 +14,7 @@ urlpatterns = [
     ]), name='write'),
     url(r'^read/(?P<post_id>\d+)$', read, name='read'),
     url(r'^profile/$', profile, name='profile'),
+    url(r'^recent/$', recent, name='recent'),
     url(r'^kakao-login/$', kakao, name='kakao-login'),
     url(r'^google-login/$', google, name='google-login'),
     url(r'^facebook-login/$', facebook, name='google-login'),

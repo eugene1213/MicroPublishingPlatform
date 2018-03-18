@@ -41,7 +41,7 @@ function loadTemp() {
         }
     });
     
-    if(data != '' && temp_id == ''){
+    if(data != '' && temp_id == '' && temp_id == '#top'){
 
         dateTime = data.created_date;
         yyyymmdd = dateTime.split("T")[0].replace(/-/g,".");

@@ -1,6 +1,16 @@
 $(document).ready(function(){
 
     getUserInfo();
+
+    $(document).click(function(e){
+        var windowHeight = window.innerHeight;
+        var validLocate = window.innerWidth - $(".btn-user").width()-17;    // 유저버튼 위치
+        if ( e.clientX > validLocate && e.clientY < 30 ){
+            
+            console.log("clicked");
+            window.location.href = "/profile/"
+        }
+    });
 });
 
 function getUserInfo() {

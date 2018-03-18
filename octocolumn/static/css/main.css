@@ -47,9 +47,10 @@
 }
 .mainfeed{
 	width: 945px;
-	height: 2530px;
+	height: 100%;
 	display: block;
 	margin: 0 auto;
+	margin-bottom: 80px;
 }
 .main_title{
 	width: 945px;
@@ -80,6 +81,7 @@
 	text-align: right;
 	line-height: 36px;
 	opacity: 0.9;
+	cursor: pointer;
 }
 .mainfeed .main_hr{
 	width: 945px;
