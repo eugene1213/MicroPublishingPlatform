@@ -73,12 +73,14 @@ class AuthorAplly(generics.GenericAPIView,
             if 300 > user.point:
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-            serializer = PreAuthorPostSerializer(PreAuthorPost.objects.create(author=user, title=temp.title,
+            post = PreAuthorPost.objects.create(author=user, title=temp.title,
                                                                               main_content=temp.main_content,
                                                                               price=data['price'],
                                                                               preview_image=preview_file_obj,
                                                                               cover_image=cover_file_obj
-                                                                              ))
+                                                                              )
+
+            serializer = PreAuthorPostSerializer(post)
             # 태그 추가
             if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
                 raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
