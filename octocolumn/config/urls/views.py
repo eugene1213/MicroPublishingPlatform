@@ -9,7 +9,10 @@ from member.apis.verify import VerifyEmail, PasswordResetEmail
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^write/(?P<temp_id>\d+)$', write, name='write'),
+    url(r'^write/', include([
+            url(r'^$', write, name="write"),
+            url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
+    ]), name='write'),
     url(r'^read/(?P<post_id>\d+)$', read, name='read'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^kakao-login/$', kakao, name='kakao-login'),
