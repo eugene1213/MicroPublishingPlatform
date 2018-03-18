@@ -20,7 +20,7 @@ function loadTemp() {
         }
     });
 
-    if(data != ''){
+    if(data != '' && temp_id == null){
         dateTime = data.created_date;
         yyyymmdd = dateTime.split("T")[0].replace(/-/g,".");
         HHMM     = dateTime.split("T")[1].substr(0,5);
@@ -31,18 +31,18 @@ function loadTemp() {
     return data;
 }
 /* 불러온 데이터를  */
-function viewTemp(loadTempReturnData) {                         // 파라미터는 loadTemp의 리턴값
+function viewTemp(loadTempReturnData) {                            // 파라미터는 loadTemp의 리턴값
 
     if(loadTempReturnData != ''){
 
         $(".title").append(loadTempReturnData.title);
         $(".editable").append(loadTempReturnData.main_content);
 
-        localStorage.setItem("temp_id", loadTempReturnData.id); // 넘겨 받은 tmp_id를 로컬 저장소에 저장
+        localStorage.setItem("temp_id", loadTempReturnData.id);    // 넘겨 받은 tmp_id를 로컬 저장소에 저장
                                                                 
-                                         /*                                                */
+                                                                   /*                                                */
         $(".editable").focus();                                    /* 값이 있을때 페이지 로딩 후 placeholder를 제거하기 위함.  */
-        $(".title").focus();                                 /*                                                */
+        $(".title").focus();                                       /*                                                */
         $(".editable").focus();
     }
 }

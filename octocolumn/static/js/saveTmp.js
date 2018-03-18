@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     localStorage.setItem("temp_id", '');
 
-    loadTemp();
+    viewTemp( loadTemp() );
 
     $(".modal-extend > .btn-yes").click(function(){
         $(".editable > p").remove();
