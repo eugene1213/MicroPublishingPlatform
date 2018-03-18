@@ -25,6 +25,30 @@ __all__ = (
 
 
 class PostSerializer(serializers.ModelSerializer):
+    my_comment = CommentSerializer(read_only=True)
+    comments = CommentSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Post
+        fields = (
+            'pk',
+            'author',
+            'main_content',
+            'my_comment',
+            'title',
+            'created_date',
+            'price',
+            'comments',
+            'cover_image',
+            'preview_image',
+        )
+        read_only_fields = (
+            'author',
+            'my_comment',
+        )
+
+
+class PostMoreSerializer(serializers.ModelSerializer):
     # 아래 코드가 동작하도록 CommentSerializer를 구현
     def follower_status(self, user):
         if self.request.auth is None:
