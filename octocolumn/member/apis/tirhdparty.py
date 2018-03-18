@@ -1,4 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from google.auth.transport import requests
 from google.oauth2 import id_token
@@ -22,6 +21,9 @@ __all__ =(
 )
 
 
+# 1
+# OAUTH2 GOOGLE API
+# URL /api/member/google-login/(?P<token>.*)$
 class GoogleLogin(APIView):
     permission_classes = (AllowAny,)
 
@@ -92,6 +94,9 @@ class GoogleLogin(APIView):
         return response
 
 
+# 1
+# OAUTH2 KAKAO API
+# URL /api/member/kakao-login/(?P<token>.*)$
 class KakaoLogin(APIView):
     permission_classes = (AllowAny,)
 

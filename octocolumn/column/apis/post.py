@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag
+from column.pagination import PostPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
 from member.models.user import Relation, WaitingRelation
@@ -26,7 +27,8 @@ __all__ = (
     'PostPreReadView',
     'AuthorResult',
     'IsBuyPost',
-    'PostListView'
+    'PostListView',
+    'PostMoreListView'
 )
 
 
@@ -229,7 +231,7 @@ class PostListView(APIView):
                     'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ')/2,
                     "tag": tag,
-                    "price":serializer.data['price'],
+                    "price": serializer.data['price'],
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.nickname,
@@ -245,6 +247,29 @@ class PostListView(APIView):
             lists.append(data)
 
         return Response(lists, status=status.HTTP_200_OK)
+
+
+class PostMoreListView(generics.ListAPIView):
+    permission_classes = (AllowAny,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        try:
+            post = Post.objects.all().order_by('-created_date')
+
+            page = self.paginate_queryset(post)
+            serializer = PostSerializer(page, many=True)
+
+            if page is not None:
+                serializer = PostSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
 
 
 class PostLikeToggleView(APIView):
@@ -373,6 +398,7 @@ class AuthorResult(APIView):
                 if author.is_active:
                     return Response({"author": True}, status=status.HTTP_200_OK)
                 return Response({"author": False}, status=status.HTTP_200_OK)
+
 
         except ObjectDoesNotExist:
             return Response({"author": False}, status=status.HTTP_200_OK)

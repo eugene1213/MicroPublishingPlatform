@@ -22,3 +22,4 @@ class AuthorSerializer(serializers.ModelSerializer):
             'created_at'
         )
 
+

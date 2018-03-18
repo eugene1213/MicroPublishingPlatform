@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
     CommentListView, CommentCreateView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
-    CommentLikeToggleView, TempView
+    CommentLikeToggleView, TempView, PostMoreListView
 
 urlpatterns = [
     # 포스트 생성
@@ -26,6 +26,10 @@ urlpatterns = [
             url(r'^$', PostListView.as_view(), name="post-list"),
             url(r'^(?P<page>\w+)$', PostListView.as_view(), name="post-list-page")
     ])),
+
+    # 포스트 최신순 더보기
+    url(r'^postRecentMore/$', PostMoreListView.as_view(), name='post-view'),
+
     url(r'^post-isbuy/(?P<pk>\d+)$', IsBuyPost.as_view(), name='post-isbuy'),
 
     # 작가 구분
