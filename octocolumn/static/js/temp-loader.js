@@ -33,7 +33,7 @@ function loadTemp() {
 /* 불러온 데이터를  */
 function viewTemp(loadTempReturnData) {                            // 파라미터는 loadTemp의 리턴값
 
-    if(loadTempReturnData != ''){
+    if(loadTempReturnData != null){
 
         $(".title").append(loadTempReturnData.title);
         $(".editable").append(loadTempReturnData.main_content);
