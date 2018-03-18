@@ -120,33 +120,23 @@ class TempCreateView(generics.GenericAPIView,
         return self.queryset.filter(author=user).delete(id=data['temp_id'])
 
 
+# 1
 class TempFileUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     parser_classes = (MultiPartParser,)
     serializer_class = TempFileSerializer
 
-    def is_author(self):
-        try:
-            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
-            return author
-        except ObjectDoesNotExist:
-            author = None
-            return author
-
     # 파일 업로드
     def post(self, request, *args, **kwargs):
+        user = self.request.user
         file_obj = self.request.FILES['files[]']
 
-        # author = self.is_author()
-        #
-        # if author is not None:
-        #     if not author.is_active:
-        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        # else:
-        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
-        user = User.objects.filter(pk=self.request.user.id).get()
+        temp_file = TempFile.objects.create(author=user, file=file_obj)
+        # 예외처리
+        if not temp_file:
+            raise exceptions.ValidationError({"detail": "Upload Failed"})
 
-        serializer = TempFileSerializer(TempFile.objects.create(author=user, file=file_obj))
+        serializer = TempFileSerializer(temp_file)
         if serializer:
             return Response({"files[0]":
                 {
@@ -159,6 +149,7 @@ class TempFileUpload(generics.CreateAPIView):
         raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
 
+# 1
 class TempListView(generics.ListCreateAPIView):
     queryset = Temp.objects.all()
     permission_classes = (IsAuthenticated,)
@@ -166,11 +157,9 @@ class TempListView(generics.ListCreateAPIView):
 
     # 임시저장된 문서를 보여주는 리스트 뷰
     def get(self, request, *args, **kwargs):
-        author = self.request.user
-        if not self.request.user.is_authenticated():
-            raise exceptions.NotAuthenticated()
+        user = self.request.user
 
-        result = Temp.objects.filter(author=author)
+        result = Temp.objects.filter(author=user).all()
         serializer = self.get_serializer(result, many=True)
 
         if result is None:
