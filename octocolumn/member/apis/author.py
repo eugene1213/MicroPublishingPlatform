@@ -12,8 +12,12 @@ from member.models import Author as AuthorModel, User
 from member.serializers import AuthorSerializer
 from octo.models import UsePoint
 
+__all__ = (
+    'AuthorApply',
+)
 
-class AuthorAplly(generics.GenericAPIView,
+
+class AuthorApply(generics.GenericAPIView,
              mixins.ListModelMixin,
              mixins.CreateModelMixin,
              mixins.DestroyModelMixin):
@@ -55,6 +59,9 @@ class AuthorAplly(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
+        if AuthorModel.objects.filter(author=user).get() is not None:
+            raise exceptions.ValidationError({"datail":"Already Apply"})
+
         author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
         if result:
@@ -74,11 +81,12 @@ class AuthorAplly(generics.GenericAPIView,
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
             post = PreAuthorPost.objects.create(author=user, title=temp.title,
-                                                                              main_content=temp.main_content,
-                                                                              price=data['price'],
-                                                                              preview_image=preview_file_obj,
-                                                                              cover_image=cover_file_obj
-                                                                              )
+                                                main_content=temp.main_content,
+                                                price=data['price'],
+                                                preview_image=preview_file_obj,
+                                                cover_image=cover_file_obj,
+
+                                                )
 
             serializer = PreAuthorPostSerializer(post)
             # 태그 추가

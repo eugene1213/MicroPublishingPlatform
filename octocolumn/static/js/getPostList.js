@@ -60,10 +60,6 @@ function getData(){
 
                 //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
                 
-                $("#coverImg").load(function(){
-                    loadCropImage("#coverImg");
-                });
-
                 $("#profile-image"+1).load(function(e){
                     loadCropImage("#profile-image" + 1);
                 });

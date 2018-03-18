@@ -373,5 +373,6 @@ class AuthorResult(APIView):
                 if author.is_active:
                     return Response({"author": True}, status=status.HTTP_200_OK)
                 return Response({"author": False}, status=status.HTTP_200_OK)
+
         except ObjectDoesNotExist:
             return Response({"author": False}, status=status.HTTP_200_OK)

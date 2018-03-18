@@ -32,7 +32,7 @@ class Follower(APIView):
                 return Response({'detail': 'created',
                                  "author":{
                                      "follow_status": True,
-                                     "follower": Relation.objects.filter(from_user=from_user).count()
+                                     "follower": Relation.objects.filter(from_user=user).count()
                                  }
                                  })
 

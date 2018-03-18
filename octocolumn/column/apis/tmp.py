@@ -19,6 +19,7 @@ __all__ = (
 )
 
 
+# 1
 class TempView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -46,6 +47,7 @@ class TempView(APIView):
                 return Response('', 200)
 
 
+# 1
 class TempCreateView(generics.GenericAPIView,
                      mixins.ListModelMixin,
                      mixins.CreateModelMixin,
@@ -56,56 +58,32 @@ class TempCreateView(generics.GenericAPIView,
 
     def is_author(self):
         try:
-            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
+            author = AuthorModel.objects.filter(author=self.request.user).get()
             return author
         except ObjectDoesNotExist:
             author = None
             return author
 
-    def temp_result(self, user):
-        try:
-            result = Temp.objects.all().get(author=user)
-            return result
-        except ObjectDoesNotExist:
-            result = None
-            return result
-
+    # 임시저장 카운트 갯수
     def check_post_count(self, user):
         temp = Temp.objects.filter(author=user).count()
         if temp < 10:
             return True
-            # return temp
+        return False
 
     def post(self, request):
         user = self.request.user
         data = self.request.data
 
-        # 1. 작가가 신청되어있는지 확인
-        # 2. 작가 활성이 되어있는지를 확인
-        # author = self.is_author()
-        # if author is not None:
-        #     if not author.is_active:
-        #         raise exceptions.NotAcceptable({"detail": "This Account is Deactive"}, 401)
-        # else:
-        #     raise exceptions.NotAcceptable({"detail": "This Account is not Author"}, 401)
-
-        # 1. 작성중인 포스트 검색
-        # 2. 있다면 업데이트 없다면 생성
-
-        # if data['id'] is None:
-        #     return Response({"detail": "Abnormal Connect"}, status=status.HTTP_400_BAD_REQUEST)
-
-        key = list(self.request.data.keys())
-
-        if len(key) is not 3:
+        if self.request.data.get('temp_id') is None:
             raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
         if data['temp_id'] is not '':
-            Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(
-                title=data['title'],
-                main_content=data['main_content'],
-                created_date=datetime.now()
-            )
+            temp = Temp.objects.filter(author=self.request.user, id=data['temp_id']).get()
+            temp.title = data['title']
+            temp.main_content = data['main_content'],
+            temp.created_date = datetime.now()
+            temp.save()
 
             return Response({"temp": {
                 "temp_id": data['temp_id']
@@ -113,31 +91,33 @@ class TempCreateView(generics.GenericAPIView,
 
         else:
             # 임시 저장 할 수있는 게시물 제한
-            checkcount = self.check_post_count(user)
-            if not checkcount:
+            if not self.check_post_count(user):
                 raise exceptions.ValidationError({"detail": "This account exceeded the number of articles you could write"},
                                 400)
+            temp = self.queryset.create(author=user, title=data['title'], main_content=data['main_content'])
 
-            serializer = self.get_serializer(self.queryset.create(author=user, title=data['title'],
-                                                                  main_content=data['main_content']))
-            return Response({"temp": {
-                "temp_id": serializer.data['id'],
-            }}, status=status.HTTP_201_CREATED)
+            # 예외처리
+            if not temp:
+                raise exceptions.ValidationError({"detail": "Critical Error"}, 406)
+
+            serializer = self.get_serializer(temp)
+            if serializer:
+                return Response({"temp": {
+                    "temp_id": serializer.data['id'],
+                }}, status=status.HTTP_201_CREATED)
+            raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
     # 임시저장 삭제
     def delete(self, request):
         user = self.request.user
         data = self.request.data
-
-        key = list(self.request.data.keys())
-
-        if len(key) is not 3:
-            return Response({"detail": "Abnormal Connected"},
-                            status=status.HTTP_406_NOT_ACCEPTABLE)
+        # request.data 에 temp_id 없을시 에러 발생
+        if self.request.data.get('temp_id') is None:
+            raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
         if data['temp_id'] is '':
-            return Response({"detail": "Temp does not exist."}, status=status.HTTP_200_OK)
-        return self.queryset.filter(author=user).delete(id=data['id'])
+            raise exceptions.ValidationError({"detail": "Temp does not exist."})
+        return self.queryset.filter(author=user).delete(id=data['temp_id'])
 
 
 class TempFileUpload(generics.CreateAPIView):
