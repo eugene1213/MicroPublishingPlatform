@@ -231,7 +231,7 @@ class PostListView(APIView):
                     'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ')/2,
                     "tag": tag,
-                    "price":serializer.data['price'],
+                    "price": serializer.data['price'],
                     "author": {
                         "author_id": serializer.data['author'],
                         "username": user.nickname,
