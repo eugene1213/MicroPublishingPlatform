@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from member.models import User
+from member.models import User, Profile
 from member.serializers import UserSerializer
 from utils.tokengenerator import account_activation_token
 
@@ -23,6 +23,7 @@ class VerifyEmail(APIView):
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
+            Profile.objects.create(user=user)
 
             return HttpResponseRedirect(redirect_to='/')
         else:

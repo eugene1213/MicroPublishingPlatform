@@ -157,7 +157,9 @@
   border-radius: 8px 8px 0 0;
   overflow: hidden; }
   .profile .profile_mainbanner > img {
-    border-radius: 8px 8px 0 0; }
+    border-radius: 8px 8px 0 0;
+    width: 100%;
+    height: 320px; }
   .profile .profile_mainbanner input {
     position: absolute;
     width: 30px;

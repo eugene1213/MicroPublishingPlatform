@@ -53,9 +53,9 @@ class PostCreateView(generics.GenericAPIView,
         return User.objects.filter(id=self.request.user.id).update(point=point)
 
     # 작가인증
-    def is_author(self, user):
+    def is_author(self):
         try:
-            author = AuthorModel.objects.all().get(author=self.request.user)
+            author = AuthorModel.objects.filter(author=self.request.user).get()
             return author
         except ObjectDoesNotExist:
             author = None
@@ -111,7 +111,6 @@ class PostCreateView(generics.GenericAPIView,
         author = self.is_author()
         # 작가 일 경우
         if author is not None:
-
             # 작가가 활성화 되지 않았을경우
             if author.is_active:
                 # 임시저장 파일이 없을 경우
@@ -196,6 +195,8 @@ class PostListView(APIView):
             return None
 
     def follower_status(self, user):
+        if self.request.auth is None:
+            return False
         try:
             Relation.objects.filter(to_user=user, from_user=self.request.user).get()
             return True
@@ -367,7 +368,7 @@ class AuthorResult(APIView):
 
     def post(self, request):
         try:
-            author = AuthorModel.objects.all().get(author_id=self.request.user.id)
+            author = AuthorModel.objects.filter(author=self.request.user).get()
             if author is not None:
                 return Response({"author": True}, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
