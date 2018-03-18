@@ -5,7 +5,7 @@ function loadTemp() {
     var splitString = url.split("/");
     var temp_id     = splitString[splitString.length-1];
     var data        = {};
-
+    
     $.ajax({
         url: "/api/column/tempView/" + temp_id,
         async: false,
@@ -19,8 +19,9 @@ function loadTemp() {
             console.log(error);
         }
     });
-
-    if(data != '' && temp_id == null){
+    
+    if(data != '' && temp_id == ''){
+        console.log(1);
         dateTime = data.created_date;
         yyyymmdd = dateTime.split("T")[0].replace(/-/g,".");
         HHMM     = dateTime.split("T")[1].substr(0,5);
