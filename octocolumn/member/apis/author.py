@@ -93,7 +93,7 @@ class AuthorAplly(generics.GenericAPIView,
 
             user_queryset = User.objects.filter(id=self.request.user.id).get()
 
-            user_queryset.point -= self.first_point()
+            user_queryset.point -= self.first_point().point
             user_queryset.save()
             # 태그를 추가하고 태그 추가 실패
 

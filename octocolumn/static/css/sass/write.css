@@ -93,7 +93,8 @@ input, button {
     width: 100%;
     height: 100%;
     min-height: 2000px;
-    display: none; }
+    display: none;
+    z-index: 990; }
     .container .preview-wrap .preview {
       position: relative;
       margin: auto;
@@ -354,12 +355,54 @@ input, button {
       font-weight: 400;
       text-align: center;
       color: #ffffff;
-      border-radius: 8px; }
+      border-radius: 8px;
+      cursor: pointer; }
     .modal-extend-wrap .modal-extend .btn-yes {
       margin-right: 32px;
       background-color: #004b8d; }
     .modal-extend-wrap .modal-extend .btn-no {
       background-color: #cc1c3b; }
+
+.modal-success-wrap {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 1500px;
+  background-color: rgba(42, 41, 42, 0.5);
+  display: none;
+  z-index: 1000; }
+  .modal-success-wrap .modal-success {
+    position: relative;
+    margin: auto;
+    top: 0;
+    margin-top: 464px;
+    padding: 32px 8px 15px 8px;
+    width: 304px;
+    height: 192px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    background-color: #ffffff; }
+    .modal-success-wrap .modal-success .modal-success-text {
+      display: block;
+      width: 272px;
+      height: 72px;
+      margin: auto;
+      margin-bottom: 16px;
+      font-weight: 200;
+      font-size: 16px;
+      text-align: center; }
+    .modal-success-wrap .modal-success .btn-confirm {
+      width: 128px;
+      height: 40px;
+      padding-top: 6px;
+      font-size: 16px;
+      font-weight: 400;
+      text-align: center;
+      color: #ffffff;
+      border-radius: 8px;
+      margin: auto;
+      background-color: #004b8d;
+      cursor: pointer; }
 
 .toggle-wrap {
   display: flex;
@@ -674,9 +717,11 @@ input, button {
   display: flex;
   justify-content: start; }
   .profile-wrap .profile-img {
-    width: 64px; }
-    .profile-wrap .profile-img img {
-      border-radius: 50%; }
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%; }
   .profile-wrap .profile-sub-wrap {
     margin-left: 16px; }
     .profile-wrap .profile-sub-wrap .username {

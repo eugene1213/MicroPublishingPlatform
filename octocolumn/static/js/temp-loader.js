@@ -19,22 +19,45 @@ function loadTemp() {
             console.log(error);
         }
     });
+    $.ajax({
+        url: "/api/member/userInfo/",
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        success: function(json) {
+
+            var nickname = json.user.nickname;
+            var profile_image = json.profileImg.profile_image;
+
+            $(".profile-img > img").attr("src",profile_image);
+            $(".profile-sub-wrap > .username").text(nickname);
+
+            $(".profile-img > img").load(function(e){
+                loadCropImage(".profile-img > img");
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
     
     if(data != '' && temp_id == ''){
-        console.log(1);
+
         dateTime = data.created_date;
         yyyymmdd = dateTime.split("T")[0].replace(/-/g,".");
         HHMM     = dateTime.split("T")[1].substr(0,5);
 
         $(".modal-ask-text > span").text(yyyymmdd + " " + HHMM);
         $(".modal-extend-wrap").show();
-    }
+
+    }else viewTemp(data);
+    
     return data;
 }
 /* 불러온 데이터를  */
 function viewTemp(loadTempReturnData) {                            // 파라미터는 loadTemp의 리턴값
 
-    if(loadTempReturnData != null){
+    if(loadTempReturnData != ''){
 
         $(".title").append(loadTempReturnData.title);
         $(".editable").append(loadTempReturnData.main_content);
