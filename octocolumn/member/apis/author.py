@@ -6,17 +6,18 @@ from rest_framework import generics, mixins, exceptions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from column.models import Temp, PreAuthorPost
+from column.models import Temp, PreAuthorPost, Post, SearchTag
 from column.serializers import PostSerializer, PreAuthorPostSerializer
-from member.models import Author as AuthorModel, User
+from member.models import Author as AuthorModel, User, PointHistory
 from member.serializers import AuthorSerializer
 from octo.models import UsePoint
 
 __all__ = (
-    'AuthorApply'
+    'AuthorApply',
 )
 
 
+# 1
 class AuthorApply(generics.GenericAPIView,
              mixins.ListModelMixin,
              mixins.CreateModelMixin,
@@ -40,8 +41,18 @@ class AuthorApply(generics.GenericAPIView,
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
+    def search_tag(self, post, tag):
+        search_tag = tag.split(',')
+        if len(search_tag) > 5:
+            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
+
+        for i in search_tag:
+            SearchTag.objects.create(post=post, tag=i)
+
+        return True
+
     def first_point(self):
-        return UsePoint.objects.filter(type='first_user').get()
+        return UsePoint.objects.filter(type='first_user').get().point
 
     #작가 신청메서드
     def post(self, request):
@@ -69,29 +80,35 @@ class AuthorApply(generics.GenericAPIView,
             if 300 > user.point:
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-            post = PreAuthorPost.objects.create(author=user, title=temp.title,
-                                                main_content=temp.main_content,
-                                                price=data['price'],
-                                                preview_image=preview_file_obj,
-                                                cover_image=cover_file_obj,
+            # 클로즈 베타 끝나고 -> PreAuthorpost 변경
+            post = Post.objects.create(author=user, title=temp.title,
+                                       main_content=temp.main_content,
+                                       price=data['price'],
+                                       preview_image=preview_file_obj,
+                                       cover_image=cover_file_obj,
 
-                                                )
+                                       )
+            # 클로즈 베타 끝나고 -> PreAuthorpost 변경
+            serializer = PostSerializer(post)
 
-            serializer = PreAuthorPostSerializer(post)
-            # 태그 추가
-            if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+            # 태그 추가 에외처리
+            if not self.search_tag(post=post, tag=self.request.data['tag']):
                 raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
 
-            # 템프파일 삭제
+            # 템프파일 삭제 예외처리
             try:
                 Temp.objects.filter(id=data['temp_id']).delete()
             except ObjectDoesNotExist:
                 raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
 
-            user_queryset = User.objects.filter(id=self.request.user.id).get()
+            # 포인트 내역 추가 예외처리 완료
+            point_history = PointHistory.objects.publish(user=self.request.user, point=self.first_point(), post=post,
+                                                         history=temp.title)
+            if not point_history:
+                raise exceptions.ValidationError({'detail': 'Upload Failed'})
 
-            user_queryset.point -= self.first_point()
-            user_queryset.save()
+            user.point -= self.first_point()
+            user.save()
             # 태그를 추가하고 태그 추가 실패
 
             if serializer:
