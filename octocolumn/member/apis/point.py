@@ -8,15 +8,17 @@ from member.pagination import PointHistoryPagination
 from member.serializers.point import PointHistorySerializer
 
 
+# 1
 # 유저의 포인트 사용내역을 가져오는 API
-# URL /api/member/getUserFollowingCard/(?P<count>\w+)$
+# URL /api/member/getPointHistory/
 class UserPointHistory(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     pagination_class = PointHistoryPagination
 
     def list(self, request, *args, **kwargs):
+        user = self.request.user
         try:
-            point = PointHistory.objects.filter(user=self.request.user)
+            point = PointHistory.objects.filter(user=user).all()
 
             page = self.paginate_queryset(point)
             serializer = PointHistorySerializer(page, many=True)
