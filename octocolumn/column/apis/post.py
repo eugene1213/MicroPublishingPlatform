@@ -47,7 +47,7 @@ class PostCreateView(generics.GenericAPIView,
             return True
         return False
 
-    def validate_code(self,  code):
+    def validate_code(self, code):
         pass
 
     # 포인트 감소
@@ -134,17 +134,16 @@ class PostCreateView(generics.GenericAPIView,
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
                 post = Post.objects.create(author=user, title=temp.title,
-                                                                main_content=temp.main_content,
-                                                                price=data['price'],
-                                                                preview_image=preview_file_obj,
-                                                                cover_image=cover_file_obj
-                                                                )
+                                           main_content=temp.main_content,
+                                           price=data['price'],
+                                           preview_image=preview_file_obj,
+                                           cover_image=cover_file_obj
+                                           )
                 serializer = PostSerializer(post)
                 # 태그 추가
                 if data['tag'] != '':
                     if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
                         raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
-
 
                 # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
@@ -192,7 +191,7 @@ class PostListView(APIView):
     def image(self, user):
         try:
             img = ProfileImage.objects.filter(user=user).get()
-            print(img.profile_image)
+
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             return '/static/images/example/1.jpeg'
@@ -229,8 +228,8 @@ class PostListView(APIView):
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
-                    'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
-                    "typo_count": len(text) - text.count(' ')/2,
+                    'created_datetime': time.strftime('%Y.%m.%d') + ' ' + time2.strftime('%H:%M'),
+                    "typo_count": len(text) - text.count(' ') / 2,
                     "tag": tag,
                     "price": serializer.data['price'],
                     "author": {
@@ -321,7 +320,6 @@ class PostReadView(APIView):
         if self.is_buyed(post):
             # 구매했을때 원본 출력
             if serializer:
-
                 # 조회수 증가
                 post.hit += 1
                 post.save()
@@ -330,17 +328,17 @@ class PostReadView(APIView):
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
                 SearchTagSerializer()
                 return Response({
-                    "detail":{
+                    "detail": {
                         "post_id": serializer.data['pk'],
                         "cover_img": serializer.data['cover_image'],
                         "main_content": serializer.data['main_content'],
                         "title": serializer.data['title'],
                         "tag": self.tag(post),
-                        "author":{
+                        "author": {
                             "author_id": serializer.data['author'],
                             "username": user.nickname,
                             "achevement": "",
-                            "profile_img": "",# ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
+                            "profile_img": "",  # ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
                             "cover_img": "",
                         },
 
