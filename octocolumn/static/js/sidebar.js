@@ -1,9 +1,7 @@
 $(document).ready(function(){
 
-    var menuText = "";
+    var menuText = $(".btn-menu > div").text();
     var windowHeight = window.innerHeight;
-    var validLocate = window.innerWidth - $(".btn-user").width()-17;    // 유저버튼 위치
-    console.log(validLocate);
 
     ($(".btn-user > img").length == 0) ? $(".footer").css("margin-top","600px") : $(".footer").css("margin-top","300px");
 
