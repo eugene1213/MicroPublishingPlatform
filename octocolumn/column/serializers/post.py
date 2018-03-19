@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from rest_framework.fields import SerializerMethodField
+from rest_framework.fields import SerializerMethodField, CurrentUserDefault
 
 from column.models import Temp, SearchTag
 from column.models import TempFile
@@ -18,6 +18,7 @@ from ..models import Post
 __all__ = (
     'PostSerializer',
     'TempSerializer',
+    'PostMoreSerializer',
     'TempFileSerializer',
     'PostListSerializer',
     'PreAuthorPostSerializer'
@@ -50,11 +51,9 @@ class PostSerializer(serializers.ModelSerializer):
 
 class PostMoreSerializer(serializers.ModelSerializer):
     # 아래 코드가 동작하도록 CommentSerializer를 구현
-    def follower_status(self, user):
-        if self.request.auth is None:
-            return False
+    def follower_status(self, data):
         try:
-            Relation.objects.filter(to_user=user, from_user=self.request.user).get()
+            Relation.objects.filter(to_user=data, from_user=self.context.get('request').user).get()
             return True
         except ObjectDoesNotExist:
             return False
@@ -62,9 +61,13 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def image(self, user):
         try:
             img = ProfileImage.objects.filter(user=user).get()
-            return ProfileImageSerializer(img)
+            return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
-            return None
+            data = {
+                'profile_img': '/static/images/example/2.png',
+                'cover_img': '/static/images/example/1.png'
+            }
+            return data
 
     def get_created_datetime(self,obj):
         return obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M')
@@ -84,15 +87,14 @@ class PostMoreSerializer(serializers.ModelSerializer):
 
     def get_author(self,obj):
         serializer = UserSerializer(obj.author)
-
         data = {
             "author_id": serializer.data['pk'],
             "username": serializer.data['username'],
             "follow_status": self.follower_status(obj.author),
-            "follower_count": Relation.objects.filter(to_user=obj.auhor).count(),
-            "following_url": "/api/member/" + serializer.data['pk'] + "/follow/",
+            "follower_count": Relation.objects.filter(to_user=obj.author).count(),
+            "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
             "achevement": "",
-            "img": self.image(obj.author).data
+            "img": self.image(obj.author)
         }
 
         return data
@@ -102,6 +104,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     created_datetime = SerializerMethodField()
     typo_count = SerializerMethodField()
     tag = SerializerMethodField()
+
     author = SerializerMethodField()
 
     class Meta:
@@ -119,6 +122,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
             'comments',
             'cover_image',
             'preview_image',
+            'typo_count'
         )
         read_only_fields = (
             'author',
