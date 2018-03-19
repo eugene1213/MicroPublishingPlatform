@@ -43,7 +43,7 @@ def write(request, temp_id=None):
     return redirect('views:index')
 
 
-def read(request, post_id):
+def read(request, post_id=None):
     if mobile(request):
         return redirect('views:index')
 
@@ -68,6 +68,7 @@ def profile(request):
         return redirect('views:index')
     return redirect('views:index')
 
+
 def recent(request):
     if mobile(request):
         return redirect('views:index')
@@ -79,6 +80,7 @@ def recent(request):
             return response
         return redirect('views:index')
     return redirect('views:index')
+
 
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')

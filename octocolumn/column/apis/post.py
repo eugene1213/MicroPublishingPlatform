@@ -18,7 +18,7 @@ from member.models.user import Relation, WaitingRelation
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from ..models import Post
-from ..serializers import PostSerializer
+from ..serializers import PostSerializer, PostMoreSerializer
 
 __all__ = (
     'PostLikeToggleView',
@@ -194,7 +194,7 @@ class PostListView(APIView):
             img = ProfileImage.objects.filter(user=user).get()
             return ProfileImageSerializer(img)
         except ObjectDoesNotExist:
-            return None
+            return '/static/images/example/1.jpeg'
 
     def follower_status(self, user):
         if self.request.auth is None:
@@ -239,7 +239,7 @@ class PostListView(APIView):
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
-                        "img": self.image(user).data
+                        "img": self.image(user)
 
                     }
                 }
@@ -259,10 +259,10 @@ class PostMoreListView(generics.ListAPIView):
             post = Post.objects.all().order_by('-created_date')
 
             page = self.paginate_queryset(post)
-            serializer = PostSerializer(page, many=True)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
 
             if page is not None:
-                serializer = PostSerializer(page, many=True)
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:
