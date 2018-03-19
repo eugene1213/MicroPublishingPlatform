@@ -8,7 +8,7 @@ function getUserCard(followDirection){
 
         count = $(".flip").length;
     }
-    console.log(count);
+    
     $.ajax({
         url: "/api/member/getUser" + followDirection + "Card/" + count,
         async: false,
