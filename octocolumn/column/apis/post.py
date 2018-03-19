@@ -11,13 +11,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag
+from column.pagination import PostPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
 from member.models.user import Relation, WaitingRelation
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from ..models import Post
-from ..serializers import PostSerializer
+from ..serializers import PostSerializer, PostMoreSerializer
 
 __all__ = (
     'PostLikeToggleView',
@@ -26,7 +27,8 @@ __all__ = (
     'PostPreReadView',
     'AuthorResult',
     'IsBuyPost',
-    'PostListView'
+    'PostListView',
+    'PostMoreListView'
 )
 
 
@@ -45,7 +47,7 @@ class PostCreateView(generics.GenericAPIView,
             return True
         return False
 
-    def validate_code(self,  code):
+    def validate_code(self, code):
         pass
 
     # 포인트 감소
@@ -132,17 +134,16 @@ class PostCreateView(generics.GenericAPIView,
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
                 post = Post.objects.create(author=user, title=temp.title,
-                                                                main_content=temp.main_content,
-                                                                price=data['price'],
-                                                                preview_image=preview_file_obj,
-                                                                cover_image=cover_file_obj
-                                                                )
+                                           main_content=temp.main_content,
+                                           price=data['price'],
+                                           preview_image=preview_file_obj,
+                                           cover_image=cover_file_obj
+                                           )
                 serializer = PostSerializer(post)
                 # 태그 추가
                 if data['tag'] != '':
                     if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
                         raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
-
 
                 # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
@@ -190,9 +191,10 @@ class PostListView(APIView):
     def image(self, user):
         try:
             img = ProfileImage.objects.filter(user=user).get()
-            return ProfileImageSerializer(img)
+
+            return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
-            return None
+            return '/static/images/example/1.jpeg'
 
     def follower_status(self, user):
         if self.request.auth is None:
@@ -226,18 +228,18 @@ class PostListView(APIView):
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
-                    'created_datetime': time.strftime('%Y.%m.%d')+' '+time2.strftime('%H:%M'),
-                    "typo_count": len(text) - text.count(' ')/2,
+                    'created_datetime': time.strftime('%Y.%m.%d') + ' ' + time2.strftime('%H:%M'),
+                    "typo_count": len(text) - text.count(' ') / 2,
                     "tag": tag,
-                    "price":serializer.data['price'],
+                    "price": serializer.data['price'],
                     "author": {
                         "author_id": serializer.data['author'],
-                        "username": user.last_name + " " + user.first_name,
+                        "username": user.nickname,
                         "follow_status": self.follower_status(user),
                         "follower_count": follower_count,
                         "following_url": "/api/member/" + str(user.pk) + "/follow/",
                         "achevement": "",
-                        "img": self.image(user).data
+                        "img": self.image(user)
 
                     }
                 }
@@ -245,6 +247,29 @@ class PostListView(APIView):
             lists.append(data)
 
         return Response(lists, status=status.HTTP_200_OK)
+
+
+class PostMoreListView(generics.ListAPIView):
+    permission_classes = (AllowAny,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        try:
+            post = Post.objects.all().order_by('-created_date')
+
+            page = self.paginate_queryset(post)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
 
 
 class PostLikeToggleView(APIView):
@@ -295,7 +320,6 @@ class PostReadView(APIView):
         if self.is_buyed(post):
             # 구매했을때 원본 출력
             if serializer:
-
                 # 조회수 증가
                 post.hit += 1
                 post.save()
@@ -304,17 +328,17 @@ class PostReadView(APIView):
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
                 SearchTagSerializer()
                 return Response({
-                    "detail":{
+                    "detail": {
                         "post_id": serializer.data['pk'],
                         "cover_img": serializer.data['cover_image'],
                         "main_content": serializer.data['main_content'],
                         "title": serializer.data['title'],
                         "tag": self.tag(post),
-                        "author":{
+                        "author": {
                             "author_id": serializer.data['author'],
-                            "username": user.last_name + " " + user.first_name,
+                            "username": user.nickname,
                             "achevement": "",
-                            "profile_img": "",# ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
+                            "profile_img": "",  # ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
                             "cover_img": "",
                         },
 
@@ -370,6 +394,10 @@ class AuthorResult(APIView):
         try:
             author = AuthorModel.objects.filter(author=self.request.user).get()
             if author is not None:
-                return Response({"author": True}, status=status.HTTP_200_OK)
+                if author.is_active:
+                    return Response({"author": True}, status=status.HTTP_200_OK)
+                return Response({"author": False}, status=status.HTTP_200_OK)
+
+
         except ObjectDoesNotExist:
             return Response({"author": False}, status=status.HTTP_200_OK)

@@ -3,12 +3,10 @@ $(document).ready(function() {
 });
 
 function progressBar(){
-    $('#draggable-point').draggable({
-        axis: 'x',
-        containment: "#audio-progress"
-    });
 
     $('#draggable-point').draggable({
+        axis: 'x',
+        containment: "#audio-progress",
         drag: function() {
             var maxPrice = 200;             // 최대 가격 변경 시 이 변수 수정
             var smallestUnit = 50;          // 가격 설정 최소 단위 변경 시 이 변수 수정

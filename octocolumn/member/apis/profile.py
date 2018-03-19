@@ -25,6 +25,9 @@ __all__ = (
 )
 
 
+# 1
+# 유저의 프로필을 가져오는 API
+# URL /api/member/getProfileInfo/
 class ProfileInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -46,12 +49,15 @@ class ProfileInfo(APIView):
                              "following": Relation.objects.filter(from_user=user).count(),
                              "follower": Relation.objects.filter(to_user=user).count(),
                              "image": {
-                                 "profile_image": "/static/images/example/2_y10_.jpeg",
+                                 "profile_image": "/static/images/example/2_x20_.jpeg",
                                 "cover_image": "/static/images/example/1.jpeg"
                              }
                              }, status=status.HTTP_200_OK)
 
 
+# 1
+# 유저의 프로필중 자기소개를 업데이트 하는 API
+# URL /api/member/updateProfileIntro/
 class ProfileIntroUpdate(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -66,6 +72,7 @@ class ProfileIntroUpdate(APIView):
             profile.save()
             serializer = ProfileSerializer(profile)
 
+            # 데이터를 직렬화 시켜 프린트
             if serializer:
                 return Response('', status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
@@ -79,12 +86,16 @@ class ProfileIntroUpdate(APIView):
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
+# 1
+# 유저의 프로필중 자기소개를 업데이트 하는 API
+# URL /api/member/updateProfile/
 class ProfileUpdate(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request):
         user = self.request.user
         data = self.request.data
+
         try:
             profile = Profile.objects.filter(user=user).get()
 
@@ -102,39 +113,43 @@ class ProfileUpdate(APIView):
             profile.twitter = data['tw']
             profile.subjects = data['subject']
             profile.save()
-            return Response('')
+            return Response('', status=status.HTTP_200_OK)
+
         except ObjectDoesNotExist:
             if Profile.objects.create(
                     user=user, year=data['bithYear'], month=data['bithMonth'], day=data['bithDay'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
-                                      twitter=data['tw'], subjects=data['subject']):
+                    twitter=data['tw'], subjects=data['subject']):
                 return Response(status=status.HTTP_200_OK)
             raise exceptions.ValidationError('Abnormal connectd')
 
 
+# 1
+# 유저의 프로필중 프로필이미지를를 업데이트 하는 API
+# URL /api/member/profile-image/
 class ProfileImageUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     parser_classes = (JSONParser,)
     serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
-    def base64_content(self, image):
+    def base64_content(self, image, size):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+            data = ContentFile(base64.b64decode(imgstr), size + '.' + ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        profile_file_obj = self.base64_content(self.request.data['img'])
         size = self.request.data['margin']
+        profile_file_obj = self.base64_content(self.request.data['img'], size)
+
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
-            profile_file_obj.name = size + '.png'
             profile_image.profile_image = profile_file_obj
             profile_image.save()
 
@@ -144,7 +159,6 @@ class ProfileImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
         except ObjectDoesNotExist:
-            profile_file_obj.name = size + '.png'
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
                                                                             profile_image=profile_file_obj))
             if serializer:
@@ -152,28 +166,30 @@ class ProfileImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
 
+# 1
+# 유저의 프로필중 커버이미지를 업데이트 하는 API
+# URL /api/member/usercover-image/
 class UserCoverImageUpload(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     parser_classes = (JSONParser,)
     serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
-    def base64_content(self, image):
+    def base64_content(self, image, size):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+            data = ContentFile(base64.b64decode(imgstr), name=size + '.' + ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        cover_file_obj = self.base64_content(self.request.data['img'])
         size = self.request.data['margin']
+        cover_file_obj = self.base64_content(self.request.data['img'], size)
+
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
-            cover_file_obj.name = size + '.png'
-            # cover_file_obj.save()
             profile_image.cover_image = cover_file_obj
             profile_image.save()
             serializer = ProfileImageSerializer(profile_image)
@@ -182,8 +198,6 @@ class UserCoverImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
         except ObjectDoesNotExist:
-            print('1')
-            cover_file_obj.name = size + '.png'
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
                                                                             cover_image=cover_file_obj + size))
             if serializer:
@@ -191,6 +205,9 @@ class UserCoverImageUpload(generics.CreateAPIView):
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
 
+# 1
+# 유저의 프로필중 자기가 발행한 컬럼들을 리스팅 하는 API
+# URL /api/member/getMyPost/
 class PublishPost(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -208,6 +225,9 @@ class PublishPost(APIView):
             return None
 
 
+# 1
+# 유저의 프로필중 자기가 임시저장된 컬럼들을 리스팅 하는 API
+# URL /api/member/getMyTemp/
 class MyTemp(APIView):
     permission_classes = (IsAuthenticated,)
 

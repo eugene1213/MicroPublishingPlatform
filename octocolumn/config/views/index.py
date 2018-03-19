@@ -30,7 +30,7 @@ def index(request):
     return render_to_response('view/main.html',)
 
 
-def write(request):
+def write(request, temp_id=None):
     if mobile(request):
         return redirect('views:index')
 
@@ -43,7 +43,7 @@ def write(request):
     return redirect('views:index')
 
 
-def read(request, post_id):
+def read(request, post_id=None):
     if mobile(request):
         return redirect('views:index')
 
@@ -67,6 +67,20 @@ def profile(request):
             return response
         return redirect('views:index')
     return redirect('views:index')
+
+
+def recent(request):
+    if mobile(request):
+        return redirect('views:index')
+
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/recent-more.html", {"login": True})
+            return response
+        return redirect('views:index')
+    return redirect('views:index')
+
 
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')

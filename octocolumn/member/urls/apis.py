@@ -3,7 +3,7 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
-    GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
+    GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo,\
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard
 from member.apis.point import UserPointHistory
@@ -52,7 +52,7 @@ urlpatterns = [
     # 기다림
 
     # api:author 신청
-    url(r'^author-apply', apis.AuthorAplly.as_view(), name='apply'),
+    url(r'^author-apply', apis.AuthorApply.as_view(), name='apply'),
 
     # 2차 비밀번호 관련
     url(r'^create-sp', SecondPasswordCreateView.as_view(), name='create-sp'),

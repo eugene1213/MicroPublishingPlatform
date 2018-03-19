@@ -39,6 +39,14 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
         }
         var whichProfile = $(this).attr('id');
         var authorName = $("#" + whichProfile + "+ .profile_name").text();
+        var profileImage = $("#" + whichProfile + " > img").attr("src");
+
+        $(".card_profile_img").attr("src",profileImage);
+
+        $(".card_profile_img").load(function(e){
+            loadCropImage(".card_profile_img");
+        });
+
         $(".card_profile_name").text(authorName);
         
         controllBalloonCoord(whichProfile);

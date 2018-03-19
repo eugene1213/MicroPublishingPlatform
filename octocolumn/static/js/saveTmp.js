@@ -63,6 +63,7 @@ function saveTmp(auto){
             temp_id : temp_id
         },
         success: function(json) {
+            console.log(main_content);
             localStorage.setItem("temp_id", json.temp.temp_id);
             $(".state").text("저장됨");
         },

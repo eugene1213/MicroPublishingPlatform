@@ -33,35 +33,36 @@ function setMargin(img) {                         // img: 이미지 태그 셀�
 
 function loadCropImage(img) {
     
-        var divHeight = $(img).closest(".profile-image-upload-wrap").height();         // 이미지를 감싼 부모 요소의 높이
-        var divWidth = $(img).closest(".profile-image-upload-wrap").width();           // 이미지를 감싼 부모 요소의 너비
-    
-        var src = $(img).attr("src");
-        var position_strtmp = src.split("_")[1];
-        var direction = position_strtmp.substr(0,1);
-        var uploadPosition = position_strtmp.substr(1,position_strtmp.length-1);
-    
-        var fileWidth = $(img)[0].naturalWidth;
-        var fileHeight = $(img)[0].naturalHeight;
-    
-        $(img).css("position","relative");
-    
-        if(direction == 'x') {
-    
-            var position = uploadPosition;
-            if(position > 0) position = "-"+position+"%";
-            else position = position+"%";
-    
-            $(img).height("100%");
-            $(img).css("left",position);
-            
-        }else {
-    
-            var position = uploadPosition;
-            if(position > 0) position = "-"+position+"%";
-            else position = position+"%";
-            
-            $(img).width("100%");
-            $(img).css("top",position);
-        }
+    var divHeight = $(img).closest(".profile-image-upload-wrap").height();         // 이미지를 감싼 부모 요소의 높이
+    var divWidth = $(img).closest(".profile-image-upload-wrap").width();           // 이미지를 감싼 부모 요소의 너비
+
+    var src = $(img).attr("src");
+    if(src == null) return;
+    var position_strtmp = src.split("_")[1];
+    var direction = position_strtmp.substr(0,1);
+    var uploadPosition = position_strtmp.substr(1,position_strtmp.length-1);
+
+    var fileWidth = $(img)[0].naturalWidth;
+    var fileHeight = $(img)[0].naturalHeight;
+
+    $(img).css("position","relative");
+
+    if(direction == 'x') {
+
+        var position = uploadPosition;
+        if(position > 0) position = "-"+position+"%";
+        else position = position+"%";
+
+        $(img).height("100%");
+        $(img).css("left",position);
+        
+    }else {
+
+        var position = uploadPosition;
+        if(position > 0) position = "-"+position+"%";
+        else position = position+"%";
+        
+        $(img).width("100%");
+        $(img).css("top",position);
     }
+}

@@ -45,7 +45,8 @@
       margin: 0 0 20px 0; }
   .main_content_wrap .medium-insert-images-wide {
     width: 952px;
-    margin: auto; }
+    margin: auto;
+    text-align: center; }
     .main_content_wrap .medium-insert-images-wide img {
       max-width: 100%;
       margin: 0 0 20px 0; }
@@ -64,7 +65,8 @@
       float: right;
       margin: 0 0 20px 30px; }
   .main_content_wrap .medium-insert-images-full {
-    width: 100%; }
+    width: 100%;
+    text-align: center; }
 
 .preview-tag-wrap {
   width: 784px;
