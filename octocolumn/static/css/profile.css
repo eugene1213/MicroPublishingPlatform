@@ -140,14 +140,14 @@
 	position: absolute;
 	top: 222px;
 	left: 41px;
-	background: url(http://via.placeholder.com/200x200);
+
 	z-index: 2;
 }
 
 .profile .profile_mainbanner{
 	width: 944px;
 	height: 320px;
-	background: url(http://via.placeholder.com/944x320);
+
 	display: block;
 	position: relative;
   border-radius: 8px 8px 0 0;
@@ -613,7 +613,7 @@
 .profile .profile_content .profile_history .history_bar .history_date2 .date_box .date_img{
 	width: 112px;
 	height: 72px;
-	background: url(http://via.placeholder.com/104x72);
+
 	margin-top: 2px;
 
 }
@@ -676,7 +676,7 @@
 .profile .profile_content .profile_history .history_bar .history_date3 .date_box .date_img{
 	width: 112px;
 	height: 72px;
-	background: url(http://via.placeholder.com/104x72);
+
 	margin-top: 2px;
 
 }
