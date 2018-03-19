@@ -123,7 +123,6 @@
 	height: 360px;
 	display: block;
 	float: left;
-	background: url(http://via.placeholder.com/320x360);
 }
 .mainfeed .feedbox1 .fb1_txt{
 	width: 304px;
@@ -256,7 +255,6 @@
 	height: 360px;
 	display: block;
 	float: left;
-	background: url(http://via.placeholder.com/304x360);
 }
 .mainfeed .feedbox2 .fb1_txt{
 	width: 304px;
@@ -378,7 +376,6 @@
 	height: 160px;
 	display: block;
 	float: left;
-	background: url(http://via.placeholder.com/304x160);
 }
 .mainfeed .feedbox3 .fb1_txt{
 	width: 304px;
@@ -495,7 +492,6 @@
 	height: 360px;
 	display: block;
 	float: left;
-	background: url(http://via.placeholder.com/464x360);
 }
 .mainfeed .feedbox4 .fb1_txt{
 	width: 456px;
