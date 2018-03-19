@@ -137,7 +137,7 @@ class ProfileImageUpload(generics.CreateAPIView):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name=size)
+            data = ContentFile(base64.b64decode(imgstr), size + '.' + ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
@@ -179,7 +179,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name=size)
+            data = ContentFile(base64.b64decode(imgstr), name=size + '.' + ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 

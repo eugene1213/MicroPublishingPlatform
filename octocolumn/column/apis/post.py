@@ -192,7 +192,7 @@ class PostListView(APIView):
     def image(self, user):
         try:
             img = ProfileImage.objects.filter(user=user).get()
-            return ProfileImageSerializer(img)
+            return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             return '/static/images/example/1.jpeg'
 
