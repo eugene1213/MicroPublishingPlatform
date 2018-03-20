@@ -1705,3 +1705,5 @@ member.models.user.DoesNotExist: User matching query does not exist.
 [14/Mar/2018 15:36:39] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
 [14/Mar/2018 15:38:52] INFO [django.server:124] "GET / HTTP/1.1" 200 38649
 [14/Mar/2018 15:38:53] INFO [django.server:124] "GET /api/column/postList/ HTTP/1.1" 200 2
+[20/Mar/2018 14:39:10] ERROR [django.security.DisallowedHost:80] Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+[20/Mar/2018 14:39:10] WARNING [django.server:124] "GET / HTTP/1.1" 400 26
