@@ -1,7 +1,7 @@
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
-from member.models import User
+from member.models import User, Profile, ProfileImage
 from utils.customsendmail import signup_email_send
 
 __all__=(
@@ -54,6 +54,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         )
 
         if user:
+            Profile.objects.create(user=user)
+            ProfileImage.objects.create(user=user)
             email = signup_email_send(user)
             if not email:
                 raise serializers.ValidationError('이메일 발송에 실패하였습니다.')
@@ -71,8 +73,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         }
         # 마지막엔 serializer.data를 출력했을 때 반환될 값을 반환해줘야 함
         return data
-
-
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
