@@ -64,8 +64,8 @@ class PostMoreSerializer(serializers.ModelSerializer):
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             data = {
-                'profile_img': '/static/images/example/2.png',
-                'cover_img': '/static/images/example/1.png'
+                'profile_image': '/static/images/example/2_x20_.jpeg',
+                'cover_image': '/static/images/example/1.jpeg'
             }
             return data
 
