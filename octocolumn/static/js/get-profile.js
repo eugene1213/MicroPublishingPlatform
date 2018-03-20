@@ -122,7 +122,7 @@ $(document).ready(function(){
     $("#coverImgInput").change(function() {
 
 //        if($("#coverImg").parents().hasClass("tmpWrap")) $("#coverImg").unwrap();
-        readURL(this,"#coverImg");
+        readURL(this,".profile_mainbanner");
         
         //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
         
@@ -292,7 +292,7 @@ function get_profile() {
             var tw = json.twitter;
             var subject = json.subjects;
             
-            $(".profile_mainbanner > img").attr("src",cover_img);
+            $(".profile_mainbanner").css("background",'url(' +cover_img+ ')');
             $(".profile_img > img").attr("src",profile_img);
             $(".content_title1 > span").text(username);
             $(".profile_con_icon").text(waiting);
@@ -477,9 +477,13 @@ function readURL(input,id) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            $(id).attr('src', e.target.result).load(function(){
-                if(id == "#profileImg") setMargin(id);
-            });     // 이미지가 로드 된 후 setMargin 함수 호출
+
+            if(id == "#profileImg"){
+                $(id).attr('src', e.target.result).load(function(){
+                    setMargin(id);
+                });     // 이미지가 로드 된 후 setMargin 함수 호출
+            }
+            $(id).css('background', 'url(' +e.target.result+ ')');
         }
 
         reader.readAsDataURL(input.files[0]);
