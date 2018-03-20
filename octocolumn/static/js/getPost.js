@@ -29,7 +29,7 @@ $(document).ready(function(){
                 $(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tagText+"</div>");
             }
             
-            $(".mainImg").attr("background-image","url("+cover_img+")");
+            $(".mainImg").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);
             $(".main_content_wrap").append(json.detail.main_content);
