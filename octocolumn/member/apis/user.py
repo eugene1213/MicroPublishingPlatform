@@ -240,8 +240,8 @@ class UserInfo(APIView):
         except ObjectDoesNotExist:
             return Response({"user": serializer.data,
                              "profileImg":{
-                                 "profile_image": '/example/2_x20_.jpeg',
-                                 "cover_image": '/example/1.jpeg'
+                                 "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
+                                 "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
                              }}, status=status.HTTP_200_OK)
 
 
