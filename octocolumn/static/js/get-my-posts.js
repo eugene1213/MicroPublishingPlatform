@@ -16,20 +16,20 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
         url = "/api/member/getMyPost/";
 
         var date_div_right_2 = "</span><div class=\"date_box\" onclick=\"window.location.href=\'\/read\/";                         // 작성일 오른쪽 태그 + 이미지 소스 왼쪽 태그
-        var date_div_right_3 = "\'\"><div class=\"date_img\"><img src=\"";
+        var date_div_right_3 = "\'\"><div class=\"date_img\" style=\"background:url(";
 
         var date_div_left_2 = "</span><div class=\"date_box\" onclick=\"window.location.href=\'\/read\/";
-        var date_div_left_3 = "\'\"><div class=\"date_img\"><img src=\"";
+        var date_div_left_3 = "\'\"><div class=\"date_img\" style=\"background:url(";
 
     }else if(which == "temp") {
 
         url = "/api/member/getMyTemp/";
 
         var date_div_right_2 = "</span><div class=\"date_box\" onclick=\"window.location.href=\'\/write\/";                         // 작성일 오른쪽 태그 + 이미지 소스 왼쪽 태그
-        var date_div_right_3 = "\'\"><div class=\"date_img\"><img src=\"";
+        var date_div_right_3 = "\'\"><div class=\"date_img\" style=\"background:url(";
 
         var date_div_left_2 = "</span><div class=\"date_box\" onclick=\"window.location.href=\'\/write\/";
-        var date_div_left_3 = "\'\"><div class=\"date_img\"><img src=\"";
+        var date_div_left_3 = "\'\"><div class=\"date_img\" style=\"background:url(";
     }
     $.ajax({
         url: url,
@@ -45,11 +45,11 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
                 console.log(json)
                 /* 오른쪽에 배치 될 태그 */
                 var date_div_right_1 = "<div class=\"history_date2\"><span>";                               // 작성일 왼쪽 태그
-                var date_div_right_4 = "\" alt=\"\"></div><span>";                                          // 이미지 소스 오른쪽 태그 + 타이틀 왼쪽 태그
+                var date_div_right_4 = ");\"></div><span>";                                          // 이미지 소스 오른쪽 태그 + 타이틀 왼쪽 태그
                 var date_div_right_5 = "</span></div><div class=\"bordertip_left\"></div></div>";           // 타이틀 오른쪽 태그
                 /* 왼쪽에 배치 될 태그 */
                 var date_div_left_1 = "<div class=\"history_date3\"><span>";
-                var date_div_left_4 = "\" alt=\"\"></div><span>";
+                var date_div_left_4 = ");\"></div><span>";
                 var date_div_left_5 = "</span></div><div class=\"bordertip_right\"></div></div>";
 
                 

@@ -84,7 +84,6 @@
 			</div>
 			<div class="profile_mainbanner profile-image-upload-wrap">
 				<input type='file' id="coverImgInput" accept=".jpg,.jpeg,.png"/>
-				<img id="coverImg" src="" alt="">
 			</div>
 			<div class="profile_write"></div>
 			<div class="profile_save"></div>
@@ -130,7 +129,7 @@
 				</div>
 				<div class="profile-userInfo profile-infomations">
 					<div class="btn-modify">
-						<img src="/static/images/icons/profile/write.png" alt="수정버튼">
+						<img src="{% static 'images/icons/profile/write.png' %}" alt="수정버튼">
 					</div>
 					<div class="profile-title-wrap">
 						<div class="infoTitle">기본 정보</div>
@@ -276,9 +275,7 @@
 						<!-- <div class="history_date2">
 							<span>07.11</span>
 							<div class="date_box">
-								<div class="date_img">
-									<img src="http://via.placeholder.com/104x72" alt="">
-								</div>
+								<div class="date_img"></div>
 								<span>And Then I Made My First Million (Only To Lose It Later)</span>
 							</div>
 							<div class="bordertip_left"></div>

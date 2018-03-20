@@ -48,8 +48,8 @@ function getData(){
                 $("#card_"+i+" .fb1_txt_1").attr("id", json[i-1].post.post_id);
                 $("#card_"+i+" .fb1_txt_2").attr("id", json[i-1].post.post_id);
 
-                $("#card_"+i+" .fb1_img > img").attr("src",json[i-1].post.cover_img);
-                // $("#card_"+i+" .fb1_img").css("background","url("+json[i-1].post.cover_img+")");        // 커버사진
+                // $("#card_"+i+" .fb1_img > img").attr("src",json[i-1].post.cover_img);
+                $("#card_"+i+" .fb1_img").css("background","url("+json[i-1].post.cover_img+")");        // 커버사진
                 $("#card_"+i+" .fb1_txt_1").text(json[i-1].post.title);                                 // 제목
                 $("#card_"+i+" .fb1_txt_2").text(json[i-1].post.main_content.substr(0,100));            // 내용
                 $("#card_"+i+" .profile_date").text(json[i-1].post.created_date);                       // 작성일

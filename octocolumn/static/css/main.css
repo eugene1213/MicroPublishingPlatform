@@ -124,6 +124,10 @@
 	display: block;
 	float: left;
 }
+.fb1_img {
+	background-position: 50% 50% !important;
+    background-size: cover !important;
+}
 .mainfeed .feedbox1 .fb1_txt{
 	width: 304px;
 	height: 360px;
