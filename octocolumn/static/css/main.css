@@ -2,7 +2,7 @@
 	width: 944px;
 	height: 497px;
 	display: block;
-	background: url(/static/images/example/3.jpeg);
+	background: url(/static/images/example/3.png);
 	background-size: 100%;
 	margin: 0 auto;
 	padding: 24px;
@@ -12,7 +12,8 @@
 }
 .main .main_txt1{
 	width: 500px;
-	height: 213px;
+	height: 127px;
+    padding-top: 96px;	
 	font-size: 41px;
 	font-weight: 400;
 	text-align: left;

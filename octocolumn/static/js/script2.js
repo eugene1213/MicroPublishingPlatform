@@ -64,6 +64,15 @@ function signinWith(){
 function signin(){
     $(".signinWith").hide();
     $(".findPass").hide();
+
+    var email = localStorage.getItem("id");
+
+    if(email != ''){
+
+        $("#checkbox-signin").prop("checked","true");
+        
+        $("#email-signin").val(email);
+    }
     $(".signin").show();
 }
 function findPass(){
@@ -82,6 +91,8 @@ function signup(){
     btn_activation();
 }
 function check_email(){
+    signup_api();
+    $(".welcome2 > span").text($("#email-signup").val());
     $(".signup").hide();
     $(".check_email").show();
 }
