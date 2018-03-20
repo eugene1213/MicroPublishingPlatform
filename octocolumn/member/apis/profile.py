@@ -136,7 +136,6 @@ class ProfileImageUpload(generics.CreateAPIView):
     def base64_content(self, image, size):
         if image is not '':
             format, imgstr = image.split(';base64,')
-            ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name=size)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
@@ -146,7 +145,6 @@ class ProfileImageUpload(generics.CreateAPIView):
         user = self.request.user
         size = self.request.data['margin']
         profile_file_obj = self.base64_content(self.request.data['img'], size)
-
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
@@ -178,7 +176,6 @@ class UserCoverImageUpload(generics.CreateAPIView):
     def base64_content(self, image, size):
         if image is not '':
             format, imgstr = image.split(';base64,')
-            ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name=size)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
