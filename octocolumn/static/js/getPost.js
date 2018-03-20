@@ -29,7 +29,7 @@ $(document).ready(function(){
                 $(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tagText+"</div>");
             }
             
-            $(".mainImg > img").attr("src",cover_img);
+            $(".mainImg").attr("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);
             $(".main_content_wrap").append(json.detail.main_content);
@@ -51,5 +51,5 @@ function coverImgController(){
 
     var imgHeight = window.innerHeight - $(".read_wrap").height() - 32 - 40;
 
-    $(".mainImg > img").height(imgHeight);
+    $(".mainImg").height(imgHeight);
 }

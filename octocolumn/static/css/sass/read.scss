@@ -1,10 +1,7 @@
 .mainImg {
     padding-top: 32px;
-    
-    img {
-        width:100%;
-        min-height: 200px;
-    }
+    background-position: 50% 50% !important;
+	background-size: cover !important;
 }
 .main_content_wrap {
     width: 100%;
