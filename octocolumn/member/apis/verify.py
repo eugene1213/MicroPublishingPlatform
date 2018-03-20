@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from member.models import User, Profile
+from member.models import User, Profile, ProfileImage
 from member.serializers import UserSerializer
 from utils.tokengenerator import account_activation_token
 
@@ -21,10 +21,10 @@ class VerifyEmail(APIView):
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user is not None and account_activation_token.check_token(user, token):
+            Profile.objects.create(user=user)
+            ProfileImage.objects.create(user=user)
             user.is_active = True
             user.save()
-            Profile.objects.create(user=user)
-
             return HttpResponseRedirect(redirect_to='/')
         else:
             return Response('Activation link is invalid!', status=404)

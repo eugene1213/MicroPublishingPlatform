@@ -54,8 +54,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         )
 
         if user:
-            Profile.objects.create(user=user)
-            ProfileImage.objects.create(user=user)
             email = signup_email_send(user)
             if not email:
                 raise serializers.ValidationError('이메일 발송에 실패하였습니다.')
