@@ -32,11 +32,11 @@ function signin_api() {
         },
         success: function(json) {
             console.log("통신성공");
-            var keepLoginStatus = json.token;
+
             if($("#checkbox-signin").prop("checked") == true){
-                localStorage.setItem("tk",keepLoginStatus);
+                localStorage.setItem("id",email);
             }else {
-                localStorage.setItem("tk","");
+                localStorage.setItem("id","");
             }
             window.location.href = "/";
         },

@@ -6,11 +6,9 @@ function signup_api(){
     var password1 = $("#password1-signup").val().trim();
     var password2 = $("#password2-signup").val().trim();
 
-    console.log(nickName);
-
     $.ajax({
         url: "/api/member/signup/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         data: {
@@ -21,7 +19,6 @@ function signup_api(){
         },
         success: function(json) {
             console.log("통신성공");
-            check_email();
         },
         error: function(error) {
             console.log(error);
