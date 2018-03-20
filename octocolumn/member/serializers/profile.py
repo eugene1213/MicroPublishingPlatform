@@ -36,7 +36,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             if serializer:
                 print(serializer.data)
                 return serializer.data
-            raise exceptions.ValidationError({"detail":"excepted error"})
+            raise exceptions.ValidationError({"detail": "excepted error"})
         except ObjectDoesNotExist:
             data = {
                 "image": {
