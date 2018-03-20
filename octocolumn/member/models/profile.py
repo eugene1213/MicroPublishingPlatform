@@ -43,5 +43,4 @@ class ProfileImage(models.Model):
                                       blank=True,
                                       null=True,
                                       default='/static/images/example/2_x20_.jpeg'
-
                                       )

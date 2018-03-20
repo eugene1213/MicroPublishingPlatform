@@ -23,12 +23,13 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, nickname, password=None, *args,**kwargs):
+    def create_superuser(self, username, password=None, *args,**kwargs):
         user = self.model(
             username=username,
-            nickname=nickname,
+            nickname='Superuser',
 
         )
+        user.is_active = True
         user.user_type = 'd'
         user.set_password(password)
         user.is_staff = True
