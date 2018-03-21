@@ -21,7 +21,7 @@ function getUserInfo() {
         type: 'POST',
         dataType: 'json',
         success: function(json) {
-            
+            console.log(json)
             var point = json.user.point;
             var username = json.username;
             var nickname = json.user.nickname;
