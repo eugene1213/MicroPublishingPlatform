@@ -130,8 +130,8 @@ class GetUserFollowingCard(ListAPIView):
                                         "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
-                                        "profile_img": '/static/images/example/2_x20_.jpeg',
-                                        "cover_img": '/static/images/example/1.jpeg'
+                                        "profile_img": 'example/2_x20_.jpeg',
+                                        "cover_img": 'example/1.jpeg'
 
                                     }
                                     list.append(data)
@@ -239,8 +239,8 @@ class GetUserFollowerCard(ListAPIView):
                                         "nickname": i.from_user.nickname,
                                         "follow_status": self.follower_status(i.from_user),
                                         "intro": '-',
-                                        "profile_img": '/static/images/example/2_x20_.jpeg',
-                                        "cover_img": '/static/images/example/1.jpeg'
+                                        "profile_img": 'example/2_x20_.jpeg',
+                                        "cover_img": 'example/1.jpeg'
 
                                     }
                                     list.append(data)

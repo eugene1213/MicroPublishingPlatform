@@ -195,8 +195,8 @@ class PostListView(APIView):
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             return {
-                "profile_image": '/media/example/2_x20_.jpeg',
-                "cover_image": '/media/example/1.jpeg'
+                "profile_image": 'example/2_x20_.jpeg',
+                "cover_image": 'example/1.jpeg'
                     }
 
     def follower_status(self, user):
@@ -328,6 +328,8 @@ class PostReadView(APIView):
                 post.save()
                 # 작가임
                 user = User.objects.filter(pk=post.author_id).get()
+                profile_image = ProfileImage.objects.filter(user=user).get()
+                image_serializer = ProfileImageSerializer(profile_image)
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
                 SearchTagSerializer()
                 return Response({
@@ -341,8 +343,7 @@ class PostReadView(APIView):
                             "author_id": serializer.data['author'],
                             "username": user.nickname,
                             "achevement": "",
-                            "profile_img": "",  # ProfileImageSerializer(ProfileImage.objects.filter(user=post.author)),
-                            "cover_img": "",
+                            "image":image_serializer
                         },
 
                         'created_datetime': time.strftime('%Y.%m.%d'),
