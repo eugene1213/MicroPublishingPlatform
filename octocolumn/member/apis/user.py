@@ -65,17 +65,19 @@ class Login(APIView):
                                         httponly=True)
 
                 self.saved_login_log(user)
+                # return response
                 return HttpResponseRedirect(redirect_to='/')
             data = {
                 "detail": "This Account is not Activate"
             }
-            return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-
+            # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponseRedirect(redirect_to='/signin/')
         data = {
             'detail': 'Invalid credentials'
         }
 
-        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+        # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+        return HttpResponseRedirect(redirect_to='/signin')
 
 
 class Logout(APIView):
@@ -108,7 +110,8 @@ class SignUp(generics.CreateAPIView):
         if serializer.is_valid():
             serializer.save()
             return HttpResponseRedirect(redirect_to='/okay/')
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponseRedirect(redirect_to='/signup/')
 
 
 class FacebookLogin(APIView):

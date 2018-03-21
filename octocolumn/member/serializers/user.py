@@ -62,7 +62,6 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         return user
 
-
     def to_representation(self, instance):
         # serializer된 형태를 결정
         # super().to_representation()은 serialize된 기본 형태(dict)
@@ -72,6 +71,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         }
         # 마지막엔 serializer.data를 출력했을 때 반환될 값을 반환해줘야 함
         return data
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
