@@ -65,7 +65,7 @@ class Login(APIView):
                                         httponly=True)
 
                 self.saved_login_log(user)
-                return response
+                return HttpResponseRedirect(redirect_to='/')
             data = {
                 "detail": "This Account is not Activate"
             }
