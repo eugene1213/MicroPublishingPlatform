@@ -14,16 +14,22 @@ def set_filename_format(now, instance, filename):
     )
 
 
-def user_set_filename_format(now, instance , filename):
+def user_set_filename_format(now, instance, filename):
     """ file format setting e.g) {username}-{date}-{microsecond}{extension} hjh-2016-07-12-158859.png """
-    print(filename.split('.png')[0])
+    if os.path.splitext(filename)[1] is '':
+        return "{username}-{date}-{microsecond}_{size}_{extension}".format(
+            username=instance.user.pk,
+            date=str(now.date()),
+            microsecond=now.microsecond,
+            size='NaN',
+            extension=os.path.splitext(filename)[0]
+        )
     return "{username}-{date}-{microsecond}_{size}_{extension}".format(
         username=instance.user.pk,
         date=str(now.date()),
         microsecond=now.microsecond,
-        size=filename.split('.png')[0],
-        extension=os.path.splitext(filename)[1],
-
+        size=os.path.splitext(filename)[0],
+        extension=os.path.splitext(filename)[1]
     )
 
 
@@ -32,7 +38,6 @@ def temp_user_directory_path(instance, filename):
     """ image upload directory setting e.g)
      images/{year}/{month}/{day}/{username}/{filename}
      images/2016/7/12/hjh/hjh-2016-07-12-158859.png """
-    print()
     now = timezone.now()
     path = "post-image/{username}/{year}/{month}/{day}/{filename}".format(
         username=instance.author.pk,

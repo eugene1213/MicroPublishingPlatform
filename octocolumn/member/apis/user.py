@@ -1,6 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 import requests
 from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
@@ -56,24 +58,29 @@ class Login(APIView):
             }
 
             if data['user']['is_active']:
-                response = Response(data, status=status.HTTP_200_OK)
+                # response = Response(data, status=status.HTTP_200_OK)
+                # response = render_to_response("view/main.html", {"login": True})
+                response = HttpResponseRedirect(redirect_to='/')
                 if api_settings.JWT_AUTH_COOKIE:
                     response.set_cookie(api_settings.JWT_AUTH_COOKIE,
-                                        response.data['token'],
+                                        data['token'],
                                         max_age=21600,
                                         httponly=True)
-                self.saved_login_log(user)
+                    self.saved_login_log(user)
+                    return response
+                # return response
                 return response
             data = {
                 "detail": "This Account is not Activate"
             }
-            return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-
+            # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+            return HttpResponseRedirect(redirect_to='/signin/')
         data = {
             'detail': 'Invalid credentials'
         }
 
-        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+        # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+        return HttpResponseRedirect(redirect_to='/signin/')
 
 
 class Logout(APIView):
@@ -100,6 +107,14 @@ class SignUp(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = SignUpSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = SignUpSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponseRedirect(redirect_to='/okay/')
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponseRedirect(redirect_to='/signup/')
 
 
 class FacebookLogin(APIView):
@@ -240,8 +255,8 @@ class UserInfo(APIView):
         except ObjectDoesNotExist:
             return Response({"user": serializer.data,
                              "profileImg":{
-                                 "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
-                                 "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
+                                 "profile_image": '{% static "images/example/2_x20_.jpeg" %}',
+                                 "cover_image": '{% static "images/example/1.jpeg" %}'
                              }}, status=status.HTTP_200_OK)
 
 

@@ -41,6 +41,19 @@ class ProfileInfo(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
+            profile_image = ProfileImage.objects.filter(user=user).get()
+            if profile_image is not None:
+                serializer = ProfileImageSerializer(profile_image)
+                return Response({"nickname": user.nickname,
+                                 "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
+                                 "post_count": Post.objects.filter(author=user).count(),
+                                 "point": user.point,
+                                 "intro": "-",
+                                 "following": Relation.objects.filter(from_user=user).count(),
+                                 "follower": Relation.objects.filter(to_user=user).count(),
+                                 "image": serializer.data
+
+                                 }, status=status.HTTP_200_OK)
             return Response({"nickname": user.nickname,
                              "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
                              "post_count": Post.objects.filter(author=user).count(),
@@ -136,7 +149,8 @@ class ProfileImageUpload(generics.CreateAPIView):
     def base64_content(self, image, size):
         if image is not '':
             format, imgstr = image.split(';base64,')
-            data = ContentFile(base64.b64decode(imgstr), name=size)
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(imgstr), name=size+'.'+ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
@@ -176,7 +190,8 @@ class UserCoverImageUpload(generics.CreateAPIView):
     def base64_content(self, image, size):
         if image is not '':
             format, imgstr = image.split(';base64,')
-            data = ContentFile(base64.b64decode(imgstr), name=size)
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(imgstr), name=size+'.'+ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
@@ -242,3 +257,8 @@ class MyTemp(APIView):
             return None
 
 
+class InviteUser(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self):
+        user = self.request.user

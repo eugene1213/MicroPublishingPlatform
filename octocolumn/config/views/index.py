@@ -70,17 +70,30 @@ def profile(request):
 
 
 def recent(request):
-    if mobile(request):
-        return redirect('views:index')
+    response = render_to_response("view/recent-more.html", {"login": False})
+    return response
+
+
+def signin(request):
 
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
-            response = render_to_response("view/recent-more.html", {"login": True})
-            return response
-        return redirect('views:index')
-    return redirect('views:index')
+            return redirect('views:index')
+        response = render_to_response("view/beta-signin.html", {"login": False})
+        return response
+    response = render_to_response("view/beta-signin.html", {"login": False})
+    return response
 
+
+def signup(request):
+    return render_to_response('view/beta-signup.html')
+
+def signinForm(request):
+    return render_to_response('view/beta-signin2.html')
+
+def okay(request):
+    return render_to_response('view/beta-okay.html')
 
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')

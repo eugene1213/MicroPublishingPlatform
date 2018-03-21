@@ -54,6 +54,7 @@
 	{% if login %}
 		{% include 'view/header_on.html' %}
 	{% else %}
+		<script>window.location.href = '/signin/'</script>
 		{% include 'view/header.html' %}
 	{% endif %}
 	<div class="main">

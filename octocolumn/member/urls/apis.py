@@ -22,9 +22,9 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
 
 
-    url(r'^facebook-login/', FacebookLogin.as_view(), name='facebook'),
-    url(r'^google-login/(?P<token>.*)$', GoogleLogin.as_view(), name='google'),
-    url(r'^kakao-login/(?P<token>.*)$', KakaoLogin.as_view(), name='kakao'),
+    url(r'^facebookLogin/', FacebookLogin.as_view(), name='facebook'),
+    url(r'^googleLogin/(?P<token>.*)$', GoogleLogin.as_view(), name='google'),
+    url(r'^kakaoLogin/(?P<token>.*)$', KakaoLogin.as_view(), name='kakao'),
 
 
     # 프로필 관련
