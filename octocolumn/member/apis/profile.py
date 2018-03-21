@@ -41,8 +41,9 @@ class ProfileInfo(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
-            profile_image = ProfileImage.objects.filter(user=user).get()
-            if profile_image is not None:
+            try:
+                profile_image = ProfileImage.objects.filter(user=user).get()
+
                 serializer = ProfileImageSerializer(profile_image)
                 return Response({"nickname": user.nickname,
                                  "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
@@ -54,7 +55,8 @@ class ProfileInfo(APIView):
                                  "image": serializer.data
 
                                  }, status=status.HTTP_200_OK)
-            return Response({"nickname": user.nickname,
+            except ObjectDoesNotExist:
+                return Response({"nickname": user.nickname,
                              "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
                              "post_count": Post.objects.filter(author=user).count(),
                              "point": user.point,
