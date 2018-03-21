@@ -64,8 +64,8 @@ class ProfileInfo(APIView):
                              "following": Relation.objects.filter(from_user=user).count(),
                              "follower": Relation.objects.filter(to_user=user).count(),
                              "image": {
-                                 "profile_image": "/static/images/example/2_x20_.jpeg",
-                                "cover_image": "/static/images/example/1.jpeg"
+                                 "profile_image": "example/2_x20_.jpeg",
+                                "cover_image": "example/1.jpeg"
                              }
                              }, status=status.HTTP_200_OK)
 
