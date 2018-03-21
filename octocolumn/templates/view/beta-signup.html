@@ -28,12 +28,6 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
-    {% if context %}
-    <script>
-        var msg = "{{ context }}";
-        alert(msg);
-    </script>
-    {% endif %}
     <form action="/api/member/signup/" method="post">
         <div class="modal_window signinWith">
             <!-- form_wrap -->
