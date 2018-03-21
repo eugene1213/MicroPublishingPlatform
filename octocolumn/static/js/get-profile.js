@@ -121,20 +121,7 @@ $(document).ready(function(){
 
     $("#coverImgInput").change(function() {
 
-//        if($("#coverImg").parents().hasClass("tmpWrap")) $("#coverImg").unwrap();
         readURL(this,".profile_mainbanner");
-        
-        //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
-        
-        $("#coverImg").unbind("load").load(function(){
-            
-            $(".profile_save").show();
-        });
-        $(".profile_save").click(function(){
-
-            uploadProfileImg("cover");
-            $(".profile_save").hide();
-        });
     });
 
     $("#profileImgInput").change(function() {
@@ -402,28 +389,11 @@ function updateUserIntro(userIntro) {
 function uploadProfileImg(whichImg) {
 
     if(whichImg == "cover") {
-        img = $("#coverImg").attr("src");
-
-        var marginTop = $("#coverImg").css("top");  //tmpWrap 기준
-            marginTop = marginTop.replace("px","");
-
-        var imgHeight = $("#profileImg").height();
-
-        var overflowY = imgHeight - $("#coverImg").closest(".profile-image-upload-wrap").height();
-        var topPercentage = (overflowY - marginTop) / $("#coverImg").closest(".profile-image-upload-wrap").height() * 100;
-
-        var marginLeft = $("#coverImg").css("left");
-            marginLeft = marginLeft.replace("px","");
-
-        var imgWidth = $("#profileImg").width();
-
-        var overflowX = imgWidth - $("#coverImg").closest(".profile-image-upload-wrap").width();
-        var leftPercentage = (overflowX - marginLeft) / $("#coverImg").closest(".profile-image-upload-wrap").width() * 100;
-
-        if(marginTop > 0)var percentage = "y" + topPercentage;
-        else             var percentage = "x" + leftPercentage;
-
-        url = "/api/member/usercover-image/";
+        var img = $(".profile_mainbanner").css("background");
+            img = img.split("url(")[1].split(")")[0];
+        var url = "/api/member/usercover-image/";
+        var percentage = '';
+        console.log(img);
 
     } else if(whichImg == "profile") {
 
@@ -482,8 +452,10 @@ function readURL(input,id) {
                 $(id).attr('src', e.target.result).load(function(){
                     setMargin(id);
                 });     // 이미지가 로드 된 후 setMargin 함수 호출
+            }else {
+                $(id).css('background', 'url(' +e.target.result+ ')');
+                uploadProfileImg('cover');
             }
-            $(id).css('background', 'url(' +e.target.result+ ')');
         }
 
         reader.readAsDataURL(input.files[0]);

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	{% load static %}
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
+	<meta name="description" content="octoclumn" />
+	<meta name="keywords" content="octoclumn">
+	<meta name="copyright" content="octoclumn"/>
+	<meta name="theme-color" content="#2a292a">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="x-rim-auto-match" content="none">
+	<title>octoclumn</title>
+	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}">
+	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <!-- <script src="{% static 'js/script2.js' %}"></script> -->
+    <script src="{% static 'js/signin.js' %}"></script>
+    <meta name="google-signin-scope" content="profile email openid">
+    <meta name="google-signin-client_id" content="512110342313-s4n09bgd4ok88kf8nrinmlhpg4i3rr6g.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+    <div class="modal_window signinWith">
+        <a class="close_btn" href="javascript:modal_off();">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
+        <div class="welcome">
+            Welcome Back
+        </div>
+        <div class="welcome2">
+            octocolumn에 오신 것을 환영합니다.<br>
+            당신의 이야기를 쓰고, 사랑하는 작가와 주제를 탐험하고,<br>
+            중요한 이야기를 나눌 수 있도록 로그인하십시오.
+        </div>
+        <div class="btn_wrap">
+            <div class="btn-signin facebook" onclick="alert('준비중 입니다.');">
+                <img src="{% static 'images/icons/modal/fill-42-copy@3x.png' %}">
+                Sign in with Facebook
+            </div>
+            <div class="btn-signin google" onclick="alert('준비중 입니다.');">
+                <img src="{% static 'images/icons/modal/fill-46-copy@3x.png' %}">
+                Sign in with Google
+            </div>
+            <script>
+                    function onSignIn(googleUser) {
+                    // Useful data for your client-side scripts:
+                    var profile = googleUser.getBasicProfile();
+                    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                    console.log('Full Name: ' + profile.getName());
+                    console.log('Given Name: ' + profile.getGivenName());
+                    console.log('Family Name: ' + profile.getFamilyName());
+                    console.log("Image URL: " + profile.getImageUrl());
+                    console.log("Email: " + profile.getEmail());
+
+                    // The ID token you need to pass to your backend:
+                    var id_token = googleUser.getAuthResponse().id_token;
+                    window.location.href ='/api/member/google-login/' + id_token
+                    };
+            </script>
+
+            <div class="btn-signin kakao"  onclick="javascript:loginWithKakao();">
+                <img src="{% static 'images/icons/modal/kakao@2x.png' %}">
+                Sign in with Kakao
+            </div>
+            <script type='text/javascript'>
+                //<![CDATA[
+                // 사용할 앱의 JavaScript 키를 설정해 주세요.
+                Kakao.init('9122a1cfdf084dac234748d85896d95a');
+                function loginWithKakao() {
+                    // 로그인 창을 띄웁니다.
+                    Kakao.Auth.login({
+                        success: function(authObj) {
+                            alert(JSON.stringify(authObj));//authObj.access_token
+                            $.ajax({
+                                url: "/api/column/kakaoLogin/",
+                                async: false,
+                                type: 'POST',
+                                dataType: 'json',
+                                data: JSON.stringify(authObj.access_token),
+                            });
+                        },
+                        fail: function(err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                };
+            //]]>
+            </script>
+            <a class="btn-signin" href="/signinForm/">
+                <img src="{% static 'images/icons/modal/group-2@3x.png' %}">
+                Sign in with email
+            </a>
+            <!-- <div class="signup-wrap">
+                <input type="email" placeholder="이메일 주소를 입력해주시면 2차 초대시 안내해드리겠습니다.">
+                <button>완료!</button>
+            </div> -->
+        </div>
+    </div>
+</body>
+</html>
