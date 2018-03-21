@@ -10,20 +10,20 @@ def set_filename_format(now, instance, filename):
         username=instance.author.pk,
         date=str(now.date()),
         microsecond=now.microsecond,
+        size=filename.split('.png')[0],
         extension=os.path.splitext(filename)[1],
     )
 
 
-def user_set_filename_format(now, instance , filename):
+def user_set_filename_format(now, instance, filename):
     """ file format setting e.g) {username}-{date}-{microsecond}{extension} hjh-2016-07-12-158859.png """
-    print(filename.split('.png')[0])
-    return "{username}-{date}-{microsecond}_{size}_{extension}".format(
+    print(filename)
+    print(os.path.splitext(filename)[1])
+    return "{username}-{date}-{microsecond}_{filename}".format(
         username=instance.user.pk,
         date=str(now.date()),
         microsecond=now.microsecond,
-        size=filename.split('.png')[0],
-        extension=os.path.splitext(filename)[1],
-
+        filename=filename,
     )
 
 
@@ -94,6 +94,7 @@ def profile_cover_image_user_directory_path(instance, filename):
      images/{year}/{month}/{day}/{username}/{filename}
      images/2016/7/12/2016-07-12-158859.png """
     now = timezone.now()
+    print(filename)
     path = "profile/cover/{username}/{year}/{month}/{day}/{filename}".format(
         username=instance.user.pk,
         year=now.year,
