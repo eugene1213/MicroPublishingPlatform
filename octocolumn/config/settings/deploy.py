@@ -59,6 +59,7 @@ AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
 AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['s3_bucket_name']
 AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
 AWS_QUERYSTRING_AUTH = False
+AWS_HEADERS = {'Cache-Control': 'max-age=86400', }
 
 S3_USE_SIGV4 = True
 

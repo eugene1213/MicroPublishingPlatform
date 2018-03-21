@@ -36,11 +36,11 @@ class ProfileImage(models.Model):
                                     upload_to=profile_cover_image_user_directory_path,
                                     blank=True,
                                     null=True,
-                                    default='/example/1.jpeg'
+                                    default='/media/example/1.jpeg'
                                     )
     profile_image = models.ImageField('포스트프리뷰 이미지',
                                       upload_to=profile_image_user_directory_path,
                                       blank=True,
                                       null=True,
-                                      default='/example/2_x20_.jpeg'
+                                      default='/media/example/2_x20_.jpeg'
                                       )
