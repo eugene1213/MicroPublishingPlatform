@@ -229,7 +229,7 @@ $(document).ready(function(){
         }else{
             
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
-            $(".btn-modify > img").attr("src","/static/images/icons/profile/save.svg");
+            $(".btn-modify > img").attr("src","example/save.svg");
             $(".btn-modify").addClass("btn-save");
         
             $('td[contenteditable="true"]').keypress(function(event) {
@@ -356,7 +356,7 @@ function modifyProfile() {
         dataType: 'json',
         success: function() {
 
-            $(".btn-modify > img").attr("src","/static/images/icons/profile/write.png");
+            $(".btn-modify > img").attr("src","example/write.png");
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
             $(".btn-save").removeClass("btn-save");
         },
