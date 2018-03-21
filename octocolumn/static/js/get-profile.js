@@ -136,7 +136,7 @@ $(document).ready(function(){
             $(".profileimg_save").show();
             
         });
-        $(".profileimg_save").click(function(){
+        $(".profileimg_save").unbind('click').click(function(){
 
             uploadProfileImg("profile");
             $(".profileimg_save").hide();
