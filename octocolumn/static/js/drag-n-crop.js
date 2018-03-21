@@ -26,11 +26,11 @@ function setMargin(img) {                         // img: 이미지 태그 셀�
         var height = divWidth/$(img)[0].naturalWidth*$(img)[0].naturalHeight;
         
         $(img).wrap("<div class='tmpWrap' style='width:100%;height:" + (height+(height-divHeight)) + "px;position:relative;top:-"+ (height - divHeight) +"px'></div>");
-        
+        //드레그 영역을 제한할 부모요소 생성
     }
     $(img).draggable({axis: direction,containment : $(".tmpWrap")});
 }
-
+/* 프로필 이미지를 로드하는 곳에서 반드시 이 함수로 사이즈를 조절해줘야함 */
 function loadCropImage(img) {
     
     var divHeight = $(img).closest(".profile-image-upload-wrap").height();         // 이미지를 감싼 부모 요소의 높이
