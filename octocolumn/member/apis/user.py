@@ -107,7 +107,7 @@ class SignUp(generics.CreateAPIView):
         serializer = SignUpSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return HttpResponseRedirect(redirect_to='/')
+            return HttpResponseRedirect(redirect_to='/okay/')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
