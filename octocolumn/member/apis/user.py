@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import requests
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
@@ -71,13 +72,13 @@ class Login(APIView):
                 "detail": "This Account is not Activate"
             }
             # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-            return HttpResponseRedirect(redirect_to='/signin/')
+            return render_to_response('views:signin', {"context": data})
         data = {
             'detail': 'Invalid credentials'
         }
 
         # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-        return HttpResponseRedirect(redirect_to='/signin')
+        return render_to_response('views:signin', {"context": data})
 
 
 class Logout(APIView):
@@ -111,7 +112,7 @@ class SignUp(generics.CreateAPIView):
             serializer.save()
             return HttpResponseRedirect(redirect_to='/okay/')
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return HttpResponseRedirect(redirect_to='/signup/')
+        return render_to_response('views:signup', {"context": serializer.data})
 
 
 class FacebookLogin(APIView):
