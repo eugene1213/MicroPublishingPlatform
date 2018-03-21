@@ -194,7 +194,10 @@ class PostListView(APIView):
 
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
-            return '/static/images/example/1.jpeg'
+            return {
+                "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
+                "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
+                    }
 
     def follower_status(self, user):
         if self.request.auth is None:

@@ -64,8 +64,8 @@ class PostMoreSerializer(serializers.ModelSerializer):
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             data = {
-                'profile_img': '/static/images/example/2.png',
-                'cover_img': '/static/images/example/1.png'
+                'profile_image': 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
+                'cover_image': 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
             }
             return data
 
@@ -88,6 +88,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def get_author(self,obj):
         serializer = UserSerializer(obj.author)
         data = {
+            "author": {
             "author_id": serializer.data['pk'],
             "username": serializer.data['username'],
             "follow_status": self.follower_status(obj.author),
@@ -95,6 +96,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
             "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
             "achevement": "",
             "img": self.image(obj.author)
+            }
         }
 
         return data

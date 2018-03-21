@@ -34,10 +34,17 @@ class ProfileSerializer(serializers.ModelSerializer):
             image = ProfileImage.objects.filter(user=obj.user).get()
             serializer = ProfileImageSerializer(image)
             if serializer:
+                print(serializer.data)
                 return serializer.data
-            raise exceptions.ValidationError({"detail":"excepted error"})
+            raise exceptions.ValidationError({"detail": "excepted error"})
         except ObjectDoesNotExist:
-            return None
+            data = {
+                "image": {
+                    "profile_image": "/example/2_x20_.jpeg",
+                    "cover_image": "/example/1.jpeg"
+                }
+            }
+            return data
 
     post_count = SerializerMethodField()
     follower = SerializerMethodField()

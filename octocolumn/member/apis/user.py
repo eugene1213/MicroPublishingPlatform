@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 import requests
 from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
 from ipware.ip import get_ip
 
 from rest_framework import status, generics, permissions
@@ -62,6 +63,7 @@ class Login(APIView):
                                         response.data['token'],
                                         max_age=21600,
                                         httponly=True)
+
                 self.saved_login_log(user)
                 return response
             data = {
@@ -100,6 +102,13 @@ class SignUp(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = SignUpSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = SignUpSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponseRedirect(redirect_to='/okay/')
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FacebookLogin(APIView):
@@ -240,8 +249,8 @@ class UserInfo(APIView):
         except ObjectDoesNotExist:
             return Response({"user": serializer.data,
                              "profileImg":{
-                                 "profile_image": '/static/images/example/2_x20_.jpeg',
-                                 "cover_image": '/static/images/example/1.jpeg'
+                                 "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
+                                 "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
                              }}, status=status.HTTP_200_OK)
 
 
