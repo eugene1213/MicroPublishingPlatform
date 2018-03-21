@@ -419,6 +419,7 @@ function uploadProfileImg(whichImg) {
         if(marginTop > 0)var percentage = "y" + topPercentage;
         else             var percentage = "x" + leftPercentage;
 
+        percentage = percentage.replace('.','d');
         url = "/api/member/profile-image/";
     }
     $.ajax({
