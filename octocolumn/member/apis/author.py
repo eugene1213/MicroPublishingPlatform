@@ -73,6 +73,7 @@ class AuthorApply(generics.GenericAPIView,
 
         author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
+        first_point = UsePoint.objects.filter(type='first_user').get()
         if result:
 
             preview_file_obj = self.base64_content(self.request.data['preview'])
@@ -86,7 +87,7 @@ class AuthorApply(generics.GenericAPIView,
             except ObjectDoesNotExist:
                 raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
             # 포인트가 모자르다면 에러발생
-            if 300 > user.point:
+            if first_point > user.point:
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경
