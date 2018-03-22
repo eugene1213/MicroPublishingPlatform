@@ -100,12 +100,17 @@ class PostMoreSerializer(serializers.ModelSerializer):
 
         return data
 
+    def get_main_content(self, obj):
+        cleaner = re.compile('<.*?>')
+        clean_text = re.sub(cleaner, '', obj.main_content)
+        return clean_text
+
     my_comment = CommentSerializer(read_only=True)
     comments = CommentSerializer(read_only=True, many=True)
     created_datetime = SerializerMethodField()
     typo_count = SerializerMethodField()
     tag = SerializerMethodField()
-
+    main_content = SerializerMethodField()
     author = SerializerMethodField()
 
     class Meta:
