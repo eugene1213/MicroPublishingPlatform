@@ -5,6 +5,7 @@ from config.views import index
 from config.views.index import write, kakao, google, facebook, recent, signin, signup, signinForm, okay
 from config.views.index import read
 from config.views.index import profile
+from member.apis import VerifyEmail, PasswordResetEmail
 
 urlpatterns = [
     url(r'^$', index, name='index'),
@@ -22,4 +23,15 @@ urlpatterns = [
     url(r'^kakao-login/$', kakao, name='kakao-login'),
     url(r'^google-login/$', google, name='google-login'),
     url(r'^facebook-login/$', facebook, name='google-login'),
+
+    # 이메일 체킹
+    url(r'^verifyChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        VerifyEmail.as_view(), name='verifyChecking'),
+
+    url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        PasswordResetEmail.as_view(), name='password-reset'),
+
+    url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)//(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        PasswordResetEmail.as_view(), name='password-reset'),
+
 ]

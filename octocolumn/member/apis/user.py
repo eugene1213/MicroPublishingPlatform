@@ -17,9 +17,10 @@ from rest_framework_jwt.settings import api_settings
 
 from config import settings
 from member.backends import FacebookBackend
-from member.models import User, ProfileImage, ConnectedLog
+from member.models import User, ProfileImage, ConnectedLog, InviteUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
+from utils.customsendmail import invite_email_send
 from utils.jwt import jwt_token_generator
 
 __all__ = (
@@ -28,6 +29,7 @@ __all__ = (
     'Logout',
     'FacebookLogin',
     'UpdatePassword',
+    'SendInviteEmail',
     'UserInfo'
 )
 
@@ -254,12 +256,20 @@ class UserInfo(APIView):
 
         except ObjectDoesNotExist:
             return Response({"user": serializer.data,
-                             "profileImg":{
+                             "profileImg": {
                                  "profile_image": 'example/2_x20_.jpeg',
                                  "cover_image": 'example/1.jpeg'
                              }}, status=status.HTTP_200_OK)
 
 
+class SendInviteEmail(APIView):
+    permission_classes = (IsAuthenticated, )
 
+    def post(self, request):
+        data = self.request.data
 
-
+        user = InviteUser.objects.create(email=data['email'])
+        email = invite_email_send(user, self.request.user)
+        if email:
+            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+        raise APIException({"Email send failed"})
