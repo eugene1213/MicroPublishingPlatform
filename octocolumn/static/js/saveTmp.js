@@ -21,7 +21,7 @@ $(document).ready(function(){
     saveHandler();
 
     var placeholderCoord = $("#title").offset().left; // 에디터 placeholder 부분에서 마우스 커서가 변하지 않고 위치가 맞지 않는 문제 해결.가상요소(:after)라서 style태그를 추가하는 방식으로만 해결 가능
-    var addStyle = "<style>.editable.medium-editor-placeholder:after{left: "+placeholderCoord+"px;top: 0;padding:0!important;cursor:text;z-index:-1;}.medium-insert-buttons{left:"+(placeholderCoord-35)+"px!important;margin-top:-7px!important;}.medium-insert-embeds-placeholder:after{left:"+placeholderCoord+"px;}</style>";
+    var addStyle = "<style>.editable.medium-editor-placeholder:after{left: "+placeholderCoord+"px;top: 0;padding:0!important;cursor:text;z-index:-1;}.medium-insert-buttons{left:"+(placeholderCoord-35)+"px!important;}.medium-insert-embeds-placeholder:after{left:"+placeholderCoord+"px;}</style>";
 
     $('head').append(addStyle);
     $(".title").focus();                          // 페이지 로드가 완료되면 제목 input박스에 포커스
@@ -32,7 +32,7 @@ $(document).ready(function(){
 $(window).resize(function(){
 
     placeholderCoord = $("#title").offset().left; // 에디터 placeholder 부분에서 마우스 커서가 변하지 않고 위치가 맞지 않는 문제 해결.가상요소(:after)라서 style태그를 추가하는 방식으로만 해결 가능
-    addStyle = "<style>.editable.medium-editor-placeholder:after{left: "+placeholderCoord+"px;top: 0;padding:0!important;cursor:text;z-index:-1;}.medium-insert-buttons{left:"+(placeholderCoord-35)+"px!important;margin-top:-7px!important;}.medium-insert-embeds-placeholder:after{left:"+placeholderCoord+"px;}</style>";
+    addStyle = "<style>.editable.medium-editor-placeholder:after{left: "+placeholderCoord+"px;top: 0;padding:0!important;cursor:text;z-index:-1;}.medium-insert-buttons{left:"+(placeholderCoord-35)+"px!important;}.medium-insert-embeds-placeholder:after{left:"+placeholderCoord+"px;}</style>";
 
     $('style').replaceWith(addStyle);
 });
@@ -63,7 +63,7 @@ function saveTmp(auto){
             temp_id : temp_id
         },
         success: function(json) {
-            console.log(main_content);
+
             localStorage.setItem("temp_id", json.temp.temp_id);
             $(".state").text("저장됨");
         },
