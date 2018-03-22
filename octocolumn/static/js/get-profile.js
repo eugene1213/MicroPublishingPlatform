@@ -6,9 +6,7 @@ $(document).ready(function(){
         
         $(".active").removeClass("active");
         $(this).addClass("active");
-
                                                     // 개인정보 탭 클릭 시 보여줄 팔로잉 목록 호출
-
         $(".profile-userInfo").css("display","flex");
         $(".currentView").removeClass("currentView");
         $(".profile-userInfo").addClass("currentView");
@@ -71,12 +69,10 @@ $(document).ready(function(){
         
         $(".active").removeClass("active");
         $(this).addClass("active");
-
-                                                    // 계정정보 탭 클릭 시 보여줄 팔로잉 목록 호출
-
-        $(".profile-userInfo").css("display","flex");
+                                                    // 계정정보 탭 클릭 시 보여줄 목록 호출
+        $(".profile-privateInfo").css("display","flex");
         $(".currentView").removeClass("currentView");
-        $(".profile-userInfo").addClass("currentView");
+        $(".profile-privateInfo").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
     });
     $(".profile_tab6").click(function(){
@@ -119,6 +115,12 @@ $(document).ready(function(){
     });
 /* start 커버, 프로필 이미지 업로드 처리 */
 
+    $(".btn-send").unbind('click').click(function(){
+
+        var email = $("#email").val();
+        console.log(email)
+        invite(email);
+    });
     $("#coverImgInput").change(function() {
 
         readURL(this,".profile_mainbanner");
