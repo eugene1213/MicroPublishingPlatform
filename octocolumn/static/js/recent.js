@@ -29,29 +29,29 @@ $(document).ready(function(){
 });
 
 
-function getRecent(){
+function getRecent(url){
 
     var data = {};
     var count = 0;
-
+        if(url=='') url = "/api/column/postRecentMore/";
     if($(".flip").length != 0){
 
         count = $(".flip").length;
     }
     $.ajax({
-        url: "/api/column/postRecentMore/",
+        url: url,
         async: false,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
 
             data = json;
-            // var usernameArray = [];
+            var usernameArray = [];
             for(var i in json.results){
                 console.log(i)
                 console.log(json.results[i])
                 var post_id = json.results[i].pk;
-                var readTime = Math.round(json.results[i-1].typo_count / 500);                               // 1분/500자 반올림
+                var readTime = Math.round(json.results[i].typo_count / 500);                               // 1분/500자 반올림
                 var cover_img = json.results[i].cover_image;
                 var title = json.results[i].title;
                 var main_content = json.results[i].main_content.substr(0,100);
@@ -59,7 +59,7 @@ function getRecent(){
                 var username = json.results[i].author.username;
                 var profile_image = json.results[i].author.img.profile_image;
                 
-                // usernameArray.push(username);
+                usernameArray.push(username);
                 var str =  '<div class="feedbox4 feedbox" id="card_'+ i +'">              \
                                 <div class="fb1_img profile-image-upload-wrap"><img class="fb1_img" src="'+ cover_img +'" alt="" id="'+ post_id+'"/></div>           \
                                 <div class="fb1_txt">                   \
@@ -92,12 +92,12 @@ function getRecent(){
                     getRecent();
                 } 
             });
-            // for( i in usernameArray){
-            //     console.log("#" + usernameArray[i]);
-            //     $("#" + usernameArray[i]).imagesLoaded().then(function(){
-            //         loadCropImage("#" + usernameArray[i]);
-            //     });
-            // }
+            for( i in usernameArray){
+                console.log("#" + usernameArray[i]);
+                $("#" + usernameArray[i]).imagesLoaded().then(function(){
+                    loadCropImage("#" + usernameArray[i]);
+                });
+            }
         },
         error: function(error) {
             console.log(error);
