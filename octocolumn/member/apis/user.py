@@ -268,6 +268,7 @@ class SendInviteEmail(APIView):
     def post(self, request):
         data = self.request.data
 
+        print(data['email'])
         user = InviteUser.objects.create(email=data['email'])
         email = invite_email_send(user, self.request.user)
         if email:

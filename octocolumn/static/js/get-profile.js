@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     $(".btn-send").unbind('click').click(function(){
 
-        var email = $("#email").val();
+        var email = $("#emailAddr").val();
         console.log(email)
         invite(email);
     });
