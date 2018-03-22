@@ -88,15 +88,14 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def get_author(self,obj):
         serializer = UserSerializer(obj.author)
         data = {
-            "author": {
             "author_id": serializer.data['pk'],
-            "username": serializer.data['username'],
+            "username": serializer.data['nickname'],
             "follow_status": self.follower_status(obj.author),
             "follower_count": Relation.objects.filter(to_user=obj.author).count(),
             "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
             "achevement": "",
             "img": self.image(obj.author)
-            }
+
         }
 
         return data
