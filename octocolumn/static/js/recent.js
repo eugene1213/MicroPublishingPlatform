@@ -33,34 +33,33 @@ function getRecent(){
 
     var data = {};
     var count = 0;
-    
-    
+
     if($(".flip").length != 0){
 
         count = $(".flip").length;
     }
     $.ajax({
-        url: "/api/column/postList/",
+        url: "/api/column/postRecentMore/",
         async: false,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
 
             data = json;
-
-            var usernameArray = [];
-            for(var i=1; i<=json.length; i++){
-
-                var post_id = json[i-1].post.post_id;
-                var readTime = Math.round(json[i-1].post.typo_count / 500);                               // 1분/500자 반올림
-                var cover_img = json[i-1].post.cover_img;
-                var title = json[i-1].post.title;
-                var main_content = json[i-1].post.main_content.substr(0,100);
-                var created_date = json[i-1].post.created_date;
-                var username = json[i-1].post.author.username;
-                var profile_image = json[i-1].post.author.img.profile_image;
+            // var usernameArray = [];
+            for(var i in json.results){
+                console.log(i)
+                console.log(json.results[i])
+                var post_id = json.results[i].pk;
+                var readTime = Math.round(json.results[i-1].typo_count / 500);                               // 1분/500자 반올림
+                var cover_img = json.results[i].cover_image;
+                var title = json.results[i].title;
+                var main_content = json.results[i].main_content.substr(0,100);
+                var created_date = json.results[i].created_datetime;
+                var username = json.results[i].author.username;
+                var profile_image = json.results[i].author.img.profile_image;
                 
-                usernameArray.push(username);
+                // usernameArray.push(username);
                 var str =  '<div class="feedbox4 feedbox" id="card_'+ i +'">              \
                                 <div class="fb1_img profile-image-upload-wrap"><img class="fb1_img" src="'+ cover_img +'" alt="" id="'+ post_id+'"/></div>           \
                                 <div class="fb1_txt">                   \
@@ -93,12 +92,12 @@ function getRecent(){
                     getRecent();
                 } 
             });
-            for( i in usernameArray){
-                console.log("#" + usernameArray[i]);
-                $("#" + usernameArray[i]).imagesLoaded().then(function(){
-                    loadCropImage("#" + usernameArray[i]);
-                });
-            }
+            // for( i in usernameArray){
+            //     console.log("#" + usernameArray[i]);
+            //     $("#" + usernameArray[i]).imagesLoaded().then(function(){
+            //         loadCropImage("#" + usernameArray[i]);
+            //     });
+            // }
         },
         error: function(error) {
             console.log(error);
