@@ -105,6 +105,9 @@ class PostMoreSerializer(serializers.ModelSerializer):
         clean_text = re.sub(cleaner, '', obj.main_content)
         return clean_text
 
+    def get_created_date(self, obj):
+        return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
+
     my_comment = CommentSerializer(read_only=True)
     comments = CommentSerializer(read_only=True, many=True)
     created_datetime = SerializerMethodField()
@@ -112,6 +115,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     tag = SerializerMethodField()
     main_content = SerializerMethodField()
     author = SerializerMethodField()
+    created_date = SerializerMethodField()
 
     class Meta:
         model = Post
