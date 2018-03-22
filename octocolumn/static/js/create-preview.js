@@ -2,6 +2,10 @@ $(document).ready(function() {
     
     $(".btn-publish-final").click(function(){
 
+        var target = document.getElementById('container');
+		var spinner = new Spinner().spin(target);
+        target.appendChild(spinner.el);
+        
         $(".medium-insert-buttons").hide();     // 에디터 이미지 툴바 숨김(안숨기면 이미지에 '+' 모양 찍힘)
 
         dom2img();                              // 미리보기 이미지 렌더링
@@ -60,7 +64,6 @@ function previewModalHeight(){
     var previewHeight = $(".preview").height();
     
     $(".preview-wrap").height(editorHeight + 1600);
-    $(".preview-wrap").show();
 }
 
 /* 설정된 커버 이미지 preview에 출력 */
@@ -176,5 +179,8 @@ function dom2img(){
     }).then(function(){
 
         $("#tmp").replaceWith("<div id=\"tmp\"></div>");                    // blurText()에서 임시로 추가했던 요소 초기화
+    }).then(function(){
+        $('.spinner').remove();
+        $(".preview-wrap").show();
     });
 }

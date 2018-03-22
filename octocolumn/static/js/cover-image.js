@@ -36,7 +36,7 @@ function readURL(input) {
 
         reader.onload = function(e) {
             $('#blah').attr('src', e.target.result).load(function(){
-                if(id == "#profileImg") setMargin(id);
+                if(input == "#profileImg") setMargin(input);
             });
         }
 
