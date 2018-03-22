@@ -15,20 +15,23 @@
 	<meta name="theme-color" content="#2a292a">
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<title>octoclumn</title>
+	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/common2.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/profile.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/flip-card.css' %}">
+	<!-- JS -->
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="{% static 'js/invite.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>	
 	<script type="text/javascript" src="{% static 'js/get-profile.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getUserCard.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
 </head>
 <style>
 
@@ -78,7 +81,7 @@
 			</div>
 			<div class="profile_img profile-image-upload-wrap">
 					<input type='file' id="profileImgInput" accept=".jpg,.jpeg,.png"/>
-					<img id="profileImg" src="{% static 'images/example/2_x20_.jpeg' %}" alt="">
+					<img id="profileImg" src="" alt="">
 				<div class="profileimg_write"></div>
 				<div class="profileimg_save"></div>
 			</div>
@@ -253,10 +256,31 @@
 						<div class="tab">Follower</div>
 						<div class="tab">Blocked</div>
 					</div>
-
 				</div>
 				<div class="profile-privateInfo profile-infomations">
-
+					<div class="infoTitle">
+						<span>비밀번호</span>
+						<div class="info-hr"></div>
+					</div>
+					<div class="infoTitle">
+						<span>octo-code</span>
+						<div class="info-hr"></div>
+					</div>
+					<div class="infoTitle">
+						<span>자동충전</span>
+						<div class="info-hr"></div>
+					</div>
+					<div class="infoTitle">
+						<div class="info-hr">
+							<span>신용카드</span><span id="cardName">카드이름</span><span>1234-567890-12345</span>
+							<div class="profile-modify-card"></div>
+						</div>
+					</div>
+					<div class="infoTitle">
+						<span>초대장 전송</span>
+						<input id='emailAddr' type="email" placeholder="초대장을 보낼 사람의 이메일을 입력하세요."></input>
+						<div class="btn-send">전송</div>
+					</div>
 				</div>
 				<div class="profile_history profile-infomations">
 					<div class="pro_his_tit1">출판</div>
