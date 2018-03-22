@@ -79,16 +79,16 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # )
 
 
-## AWS Static Settings
-# STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
-# STATICFILES_LOCATION = 'static'
-# STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
-#         custom_domain=AWS_S3_CUSTOM_DOMAIN,
-#         staticfiles_location=STATICFILES_LOCATION,
-#     )
+# AWS Static Settings
+STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
+STATICFILES_LOCATION = 'static'
+STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+        custom_domain=AWS_S3_CUSTOM_DOMAIN,
+        staticfiles_location=STATICFILES_LOCATION,
+    )
 # base static
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+# STATIC_DIR = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = '/static/'
 
 ## AZURE Media settigns
 # DEFAULT_FILE_STORAGE = 'config.s3storages.AzureMediaStorage'
