@@ -5,7 +5,7 @@ from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
-    GetUserFollowingCard, SendInviteEmail
+    GetUserFollowingCard, SendInviteEmail, PasswordReset
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -13,7 +13,9 @@ urlpatterns = [
     url(r'^login/$', Login.as_view(), name='login'),
     url(r'^logout/$', Logout.as_view(), name='logout'),
     url(r'^signup/$',SignUp.as_view(), name='signup'),
-    url(r'^password-change/$', UpdatePassword.as_view(), name='password-change'),
+    # 비밀번호 찾기
+    url(r'^passwordReset/$', PasswordReset.as_view(), name='passwordReset'),
+    # 유저정보 요청
     url(r'^userInfo/$', UserInfo.as_view(), name='signup'),
 
     # 토큰 관련
@@ -22,7 +24,7 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
 
 
-    url(r'^facebookLogin/', FacebookLogin.as_view(), name='facebook'),
+    url(r'^facebookLogin/(?P<token>.*)$', FacebookLogin.as_view(), name='facebook'),
     url(r'^googleLogin/(?P<token>.*)$', GoogleLogin.as_view(), name='google'),
     url(r'^kakaoLogin/(?P<token>.*)$', KakaoLogin.as_view(), name='kakao'),
 

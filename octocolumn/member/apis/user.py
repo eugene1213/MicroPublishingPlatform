@@ -20,7 +20,7 @@ from member.backends import FacebookBackend
 from member.models import User, ProfileImage, ConnectedLog, InviteUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
-from utils.customsendmail import invite_email_send
+from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.jwt import jwt_token_generator
 
 __all__ = (
@@ -28,8 +28,9 @@ __all__ = (
     'SignUp',
     'Logout',
     'FacebookLogin',
-    'UpdatePassword',
+    'PasswordReset',
     'SendInviteEmail',
+    'PasswordResetSendEmail',
     'UserInfo'
 )
 
@@ -210,30 +211,23 @@ class TokenUserInfoAPIView(APIView):
         return Response(UserSerializer(user).data)
 
 
-class UpdatePassword(APIView):
-    """
-    An endpoint for changing password.
-    """
-    permission_classes = (permissions.IsAuthenticated, )
+class PasswordReset(APIView):
+    permission_classes = (AllowAny, )
 
-    def get_object(self, queryset=None):
+    def social_check(self):
         if self.request.user.user_type is not 'd':
             raise APIException('소셜계정은 비밀번호를 변경할수 없습니다.')
         return self.request.user
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        serializer = ChangePasswordSerializer(data=request.data)
+        serializer = ChangePasswordSerializer(data=self.request.data)
 
         if serializer.is_valid():
             # Check old password
-            old_password = serializer.data.get("old_password")
-            if not self.object.check_password(old_password):
-                return Response({"old_password": ["Wrong password."]},
-                                status=status.HTTP_400_BAD_REQUEST)
+
             # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
+            self.request.user.set_password(serializer.data['password1'])
+            self.request.user.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -268,9 +262,26 @@ class SendInviteEmail(APIView):
     def post(self, request):
         data = self.request.data
 
-        print(data['email'])
         user = InviteUser.objects.create(email=data['email'])
         email = invite_email_send(user, self.request.user)
         if email:
             return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
         raise APIException({"Email send failed"})
+
+
+class PasswordResetSendEmail(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        data =self.request.data
+
+        try:
+            user = User.objects.filter(username=data['username']).get()
+
+            email = password_reset_email_send(user)
+
+            if email:
+                return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+            raise APIException({"Email send failed"})
+        except ObjectDoesNotExist:
+            raise APIException({"this username is not valid"})
