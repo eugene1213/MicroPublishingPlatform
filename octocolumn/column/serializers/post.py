@@ -9,7 +9,7 @@ from column.models import Temp, SearchTag
 from column.models import TempFile
 
 from member.models import ProfileImage
-from member.models.user import Relation
+from member.models.user import Relation, Bookmark
 from member.serializers import UserSerializer, ProfileImageSerializer
 from ..serializers.comment import CommentSerializer
 from ..models import Post
@@ -85,7 +85,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
             return tag_serializer.data
         return None
 
-    def get_author(self,obj):
+    def get_author(self, obj):
         serializer = UserSerializer(obj.author)
         data = {
             "author_id": serializer.data['pk'],
@@ -108,6 +108,13 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def get_created_date(self, obj):
         return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
 
+    def get_bookmark_status(self, obj):
+        try:
+            Bookmark.objects.filter(user=self.context.get('request').user, post=obj).get()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     my_comment = CommentSerializer(read_only=True)
     comments = CommentSerializer(read_only=True, many=True)
     created_datetime = SerializerMethodField()
@@ -116,6 +123,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     main_content = SerializerMethodField()
     author = SerializerMethodField()
     created_date = SerializerMethodField()
+    bookmark_status =SerializerMethodField()
 
     class Meta:
         model = Post
@@ -132,7 +140,8 @@ class PostMoreSerializer(serializers.ModelSerializer):
             'comments',
             'cover_image',
             'preview_image',
-            'typo_count'
+            'typo_count',
+            'bookmark_status'
         )
         read_only_fields = (
             'author',

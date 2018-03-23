@@ -1,7 +1,6 @@
 
 from django.db import models
 
-from member.models import User
 
 __all__ = (
     'Comment',
@@ -70,8 +69,6 @@ class Comment(models.Model):
         #    아니면 raise ValueError()
         # 2. 주어진 user를 follow하고 있으면 해제
         #    안 하고 있으면 follow함
-        if not isinstance(user, User):
-            raise ValueError('"comment" argument must be User instance!')
 
         comment_like, relation_created = CommentLike.objects.get_or_create(user=user, comment=comment)
         if relation_created:
