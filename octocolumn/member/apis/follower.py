@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from column.models import Post
 from member.models import User, ProfileImage, Profile
 from member.models.user import Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
@@ -62,6 +63,27 @@ class Waiting(APIView):
         try:
             from_user = User.objects.filter(pk=user_pk).get()
             result = from_user.waiting_toggle(user)
+
+            if result:
+                return Response({'detail': 'created'})
+            return Response({'created': 'deleted'})
+
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
+
+# 1
+# 기다림 API
+# URL  /api/member/(?P<book_pk>\d+)/bookmark/$
+class Bookmark(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        post_pk = self.kwargs.get('post_pk')
+
+        try:
+            post = Post.objects.filter(pk=post_pk).get()
+            result = post.bookmark_toggle(post)
 
             if result:
                 return Response({'detail': 'created'})

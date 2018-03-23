@@ -39,9 +39,12 @@ urlpatterns = [
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),
     url(r'^getPointHistory/$', UserPointHistory.as_view(), name='point-history'),
 
+    # bookmark
+    url(r'^(?P<post_pk>\d+)/bookmark/$', Waiting.as_view(), name='bookmark'),
+
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
-    url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
+
     url(r'^getUserFollowerCard/', include([
             url(r'^$', GetUserFollowerCard.as_view(), name="follower"),
             url(r'^(?P<count>\w+)$', GetUserFollowerCard.as_view(), name="follower")])),
@@ -55,6 +58,7 @@ urlpatterns = [
     url(r'^passwordResetEmail/$', PasswordResetSendEmail.as_view(), name='PasswordResetSendEmail'),
 
     # 기다림
+    url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
 
     # api:author 신청
     url(r'^author-apply', apis.AuthorApply.as_view(), name='apply'),

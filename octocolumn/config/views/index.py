@@ -1,6 +1,7 @@
 import re
 
 from django.shortcuts import render_to_response, redirect
+from django.views.decorators.cache import never_cache
 
 __all__ = (
     'index',
@@ -16,7 +17,7 @@ def mobile(request):
     else:
         return False
 
-
+@never_cache
 def index(request):
     if mobile(request):
         return render_to_response('mobile/main_m.html', )
@@ -30,6 +31,7 @@ def index(request):
     return render_to_response('view/main.html',)
 
 
+@never_cache
 def write(request, temp_id=None):
     if mobile(request):
         return redirect('views:index')
@@ -43,6 +45,7 @@ def write(request, temp_id=None):
     return redirect('views:index')
 
 
+@never_cache
 def read(request, post_id=None):
     if mobile(request):
         return redirect('views:index')
@@ -55,7 +58,7 @@ def read(request, post_id=None):
         return redirect('views:index')
     return redirect('views:index')
 
-
+@never_cache
 def profile(request):
     if mobile(request):
         return redirect('views:index')
@@ -82,6 +85,7 @@ def recent(request):
     return redirect('views:index')
 
 
+@never_cache
 def signin(request):
 
     if request.COOKIES:
@@ -94,23 +98,32 @@ def signin(request):
     return response
 
 
+@never_cache
 def signup(request):
     return render_to_response('view/beta-signup.html')
 
+
+@never_cache
 def signinForm(request):
     return render_to_response('view/beta-signin2.html')
 
+
+@never_cache
 def okay(request):
     return render_to_response('view/beta-okay.html')
 
+
+@never_cache
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')
 
 
+@never_cache
 def kakao(request):
     return render_to_response('view/login/kakao_login.html')
 
 
+@never_cache
 def google(reqeust):
     return render_to_response('view/login/google_login.html')
 
