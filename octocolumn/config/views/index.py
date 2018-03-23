@@ -70,8 +70,16 @@ def profile(request):
 
 
 def recent(request):
-    response = render_to_response("view/recent-more.html", {"login": False})
-    return response
+    if mobile(request):
+        return redirect('views:index')
+
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/recent-more.html", {"login": True})
+            return response
+        return redirect('views:index')
+    return redirect('views:index')
 
 
 def signin(request):

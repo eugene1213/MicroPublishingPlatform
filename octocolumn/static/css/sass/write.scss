@@ -141,12 +141,14 @@ input, button {
                 position: absolute;
                 right: -56px;
                 top: -8px;
-                width: 32px;
+                width: 48px;
                 height: 32px;
 
                 .btn-cancel {
                     position: fixed;
                     transform: rotate(45deg);
+                    width: 40px;
+                    height: 40px;
 
                     &:before {
                         display: block;
@@ -441,7 +443,7 @@ input, button {
             float: left;
             width: 128px;
             height: 40px;
-            padding-top: 6px;
+            padding-top: 11px;
             font-size: 16px;
             font-weight: 400;
             text-align: center;
@@ -578,7 +580,7 @@ input, button {
     p {
         margin: 0px;
         width: 20px;
-        margin-top: 5px;
+        margin-top: 8px;
         margin-left: 4px;
         display: inline-block;
         font-size: 7px;
