@@ -3,9 +3,9 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
-    GoogleLogin, UpdatePassword, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
+    GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
-    GetUserFollowingCard, SendInviteEmail, PasswordReset
+    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -50,8 +50,9 @@ urlpatterns = [
         url(r'^(?P<count>\w+)$', GetUserFollowingCard.as_view(), name="follower")])),
 
 
-    # 초대 메일
+    # 메일 관련
     url(r'^invite/$', SendInviteEmail.as_view(), name='Invite'),
+    url(r'^passwordResetEmail/$', PasswordResetSendEmail.as_view(), name='PasswordResetSendEmail'),
 
     # 기다림
 

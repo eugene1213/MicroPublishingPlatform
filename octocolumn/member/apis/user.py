@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from ipware.ip import get_ip
+from redis_cache import cache
 
 from rest_framework import status, generics, permissions
 from rest_framework.authtoken.models import Token
@@ -35,6 +36,10 @@ __all__ = (
 )
 
 
+# 1
+# 로그인 API
+# URL /api/member/login/
+# 전달 키값 : username, password
 class Login(APIView):
     permission_classes = (AllowAny,)
 
@@ -86,6 +91,10 @@ class Login(APIView):
         return HttpResponseRedirect(redirect_to='/signin/')
 
 
+# 1
+# 로그아웃 API
+# URL /api/member/logout/
+# 전달 키값 : username, password1, password2, nickname
 class Logout(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -106,6 +115,10 @@ class Logout(APIView):
         return response
 
 
+# 1
+# 회원가입 API
+# URL /api/member/signup/
+# 전달 키값 : username, password1, password2, nickname
 class SignUp(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
@@ -120,6 +133,10 @@ class SignUp(generics.CreateAPIView):
         return HttpResponseRedirect(redirect_to='/signup/')
 
 
+# 1
+# 페이스북 로그인 API
+# URL /api/member/facebookLogin/
+# 전달 키값 : token
 class FacebookLogin(APIView):
     permission_classes = (AllowAny,)
     # /api/member/facebook-login/
@@ -200,17 +217,9 @@ class FacebookLogin(APIView):
         return response
 
 
-class TokenUserInfoAPIView(APIView):
-    def post(self, request):
-        token_string = request.data.get('token')
-        try:
-            token = Token.objects.get(key=token_string)
-        except Token.DoesNotExist:
-            raise APIException('token invalid')
-        user = token.user
-        return Response(UserSerializer(user).data)
-
-
+# 1
+# 이메일 전달체킹 완료시 비밀번호변경 API
+# URL /api/member/passwordReset/
 class PasswordReset(APIView):
     permission_classes = (AllowAny, )
 
@@ -233,12 +242,16 @@ class PasswordReset(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# 1
+# 유저정보 관련 API
+# URL /api/member/userInfo/
 class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = UserSerializer(self.request.user)
         try:
+            profile = cache.get
             profile_image = ProfileImage.objects.filter(user=self.request.user).get()
             profile_serializer = ProfileImageSerializer(profile_image)
 
@@ -256,6 +269,10 @@ class UserInfo(APIView):
                              }}, status=status.HTTP_200_OK)
 
 
+# 1
+# 초대메일 API
+# URL /api/member/invite/
+# 데이터 전송 키 값 : email
 class SendInviteEmail(APIView):
     permission_classes = (IsAuthenticated, )
 
@@ -269,11 +286,15 @@ class SendInviteEmail(APIView):
         raise APIException({"Email send failed"})
 
 
+# 1
+# 패스워드 분실시 비밀번호 초기화 API
+# URL /api/member/passwordResetEmail/
+# 데이터 전송 키 값 : username
 class PasswordResetSendEmail(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        data =self.request.data
+        data = self.request.data
 
         try:
             user = User.objects.filter(username=data['username']).get()

@@ -52,8 +52,9 @@ class InviteVerifyEmail(APIView):
             return Response('Activation link is invalid!', status=404)
 
 
-class PasswordResetEmail(APIView):
+# 1
 
+class PasswordResetEmail(APIView):
     def get(self, request, uidb64, token):
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))
