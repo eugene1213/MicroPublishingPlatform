@@ -87,7 +87,7 @@ class AuthorApply(generics.GenericAPIView,
             except ObjectDoesNotExist:
                 raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
             # 포인트가 모자르다면 에러발생
-            if first_point > user.point:
+            if first_point.point > user.point:
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경
@@ -116,7 +116,6 @@ class AuthorApply(generics.GenericAPIView,
                                                          history=temp.title)
             if not point_history:
                 raise exceptions.ValidationError({'detail': 'Upload Failed'})
-
 
             user.point -= self.first_point()
             user.save()

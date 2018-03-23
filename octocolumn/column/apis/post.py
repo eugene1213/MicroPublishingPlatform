@@ -14,7 +14,7 @@ from column.models import Temp, SearchTag
 from column.pagination import PostPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
-from member.models.user import Relation, WaitingRelation
+from member.models.user import Relation, WaitingRelation, Bookmark
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from ..models import Post
@@ -260,6 +260,30 @@ class PostMoreListView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         try:
             post = Post.objects.all().order_by('-created_date')
+
+            page = self.paginate_queryset(post)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
+
+
+class BookmarkListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        try:
+            user = self.request.user
+            post = Bookmark.objects.filter(user=user).order_by('-created_date')
 
             page = self.paginate_queryset(post)
             serializer = PostMoreSerializer(page, context={'request': request}, many=True)
