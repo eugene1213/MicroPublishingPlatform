@@ -18,14 +18,14 @@ admin.site.unregister(Token)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_per_page = 20
-    list_display = ['username', 'first_name', 'last_name', 'point', 'user_type', 'created_at', 'post_count',
+    list_display = ['username', 'first_name', 'nickname', 'last_name', 'point', 'user_type', 'created_at', 'post_count',
                     'is_active']
     list_display_links = ['username']
     search_fields = ('username', 'first_name', 'last_name')
     ordering = ('-id', 'username')
     fieldsets = (
         ['기본 정보', {
-            'fields': ('username', 'last_name', 'first_name',),
+            'fields': ('username', 'nickname', 'last_name', 'first_name',),
         }],
         ['접속 정보', {
             'fields': ('last_login',),

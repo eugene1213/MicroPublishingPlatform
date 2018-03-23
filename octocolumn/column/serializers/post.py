@@ -88,26 +88,34 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def get_author(self,obj):
         serializer = UserSerializer(obj.author)
         data = {
-            "author": {
             "author_id": serializer.data['pk'],
-            "username": serializer.data['username'],
+            "username": serializer.data['nickname'],
             "follow_status": self.follower_status(obj.author),
             "follower_count": Relation.objects.filter(to_user=obj.author).count(),
             "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
             "achevement": "",
             "img": self.image(obj.author)
-            }
+
         }
 
         return data
+
+    def get_main_content(self, obj):
+        cleaner = re.compile('<.*?>')
+        clean_text = re.sub(cleaner, '', obj.main_content)
+        return clean_text
+
+    def get_created_date(self, obj):
+        return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
 
     my_comment = CommentSerializer(read_only=True)
     comments = CommentSerializer(read_only=True, many=True)
     created_datetime = SerializerMethodField()
     typo_count = SerializerMethodField()
     tag = SerializerMethodField()
-
+    main_content = SerializerMethodField()
     author = SerializerMethodField()
+    created_date = SerializerMethodField()
 
     class Meta:
         model = Post

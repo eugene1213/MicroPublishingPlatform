@@ -74,12 +74,11 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    """
-    Serializer for password change endpoint.
-    """
-    old_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True)
 
-    def validate_new_password(self, value):
-        validate_password(value)
-        return value
+    password1 = serializers.CharField(required=True)
+    password2 = serializers.CharField(required=True)
+
+    def validate(self, data):
+        if data['password1'] != data['password2']:
+            raise serializers.ValidationError('비밀번호가 일치하지 않습니다')
+        return data

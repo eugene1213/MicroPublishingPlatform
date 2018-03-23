@@ -28,8 +28,8 @@ urlpatterns = [
     url(r'^verifyChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         VerifyEmail.as_view(), name='verifyChecking'),
 
-    url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        PasswordResetEmail.as_view(), name='password-reset'),
+    url(r'^passwordResetChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        PasswordResetEmail.as_view(), name='passwordResetChecking'),
 
     url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)//(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         InviteVerifyEmail.as_view(), name='inviteChecking'),
