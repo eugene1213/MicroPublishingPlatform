@@ -245,6 +245,23 @@
 	top: 15px;
 	right: 2px;
 }
+/* .profile_mark:after {
+	content: '';
+    display: block;
+    width: 26px;
+    height: 28px;
+    border: 3px solid #2a292a;
+    border-radius: 5px;
+}
+.profile_mark:before {
+	content: '';
+    display: block;
+    width: 26px;
+    height: 28px;
+    border: 3px solid #2a292a;
+    border-radius: 5px;
+} */
+
 .mainfeed .feedbox2{
 	width: 304px;
 	height: 736px;
