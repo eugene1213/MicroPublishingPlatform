@@ -1,6 +1,6 @@
 $(document).ready(function() {
     
-    $(".btn-publish-final").click(function(){
+    $(".btn-publish-final").unbind('click').click(function(){
 
         var target = document.getElementById('container');
 		var spinner = new Spinner().spin(target);
@@ -24,6 +24,7 @@ $(document).ready(function() {
                 });
             }
         });
+        $("#previewPrice").text($("#setPrice").text());
         $(".arrow-box").hide();
         $(".css-arrow").css("transform","rotate(360deg)");
     });
