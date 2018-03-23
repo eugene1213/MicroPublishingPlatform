@@ -32,7 +32,7 @@ body {
       width: 24px;
       height: 24px;
       margin: 12px; }
-    .modal_window .btn_wrap .btn-signin:nth-last-child(1) img {
+    .modal_window .btn_wrap .btn-signin:nth-last-child(2) img {
       height: 15px;
       margin-top: 16.5px; }
   .modal_window .welcome {
@@ -76,6 +76,27 @@ body {
         width: 144px;
         height: 24px;
         text-align: center; }
+    .modal_window .signup-wrap input[type=email] {
+      float: left;
+      font-size: 12px;
+      font-weight: 300;
+      text-align: center;
+      width: 417px;
+      height: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+      border: solid 1px #2a292a;
+      margin-bottom: 16px; }
+    .modal_window .signup-wrap button {
+      display: block;
+      float: right;
+      width: 92px;
+      border-radius: 5px;
+      height: 36px;
+      text-align: center;
+      color: #ffffff;
+      background-color: #004b8d;
+      margin-left: 24px; }
   .modal_window .form_wrap {
     margin: 0 auto;
     width: 308px; }

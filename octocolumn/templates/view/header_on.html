@@ -5,66 +5,78 @@
 	<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
-	<div class="header">
-		<div class="header-wrap">
-			<div class="btn-menu">
-				<img src="{% static 'images/icons/header/burger2.png' %}">
-				<div>octocolumn</div>
-				<ul>
-					<li>Recent Posts</li>
-					<li>Feed</li>
-					<li>Purchased Posts</li>
-					<li>Bookmarks</li>
-					<li class="under-line">Brand Page</li>
-					<li onclick='window.location.href="/write/"'>New Story</li>
-					<li>Point Shop</li>
-					<li>Settings</li>
-					<li class="under-line">Stats</li>
-					<li>Support</li>
-					<li>Terms of Service</li>
-					<li>Privacy Policy</li>
-					<li class="under-line">Rules</li>
-					<li id="logout">Sign out</li>
-					<div class="footer">
-						octocolumn.com<br/>
+	<header tabindex="0"><span onclick="window.location.href='/'">octocolumn</span></header>
+    <div id="nav-container">
+        <div class="bg"></div>
+        <div class="button" tabindex="0">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div id="nav-content" tabindex="0">
+            <ul>
+                <li><a href="/recent/">Recent Posts</a></li>
+                <li><a href="">Feed</a></li>
+                <li><a href="">Purchased Posts</a></li>
+                <li><a href="">Bookmarks</a></li>
+                <li><a href="">Brand Page</a></li>
+                <li class="divline"></li>
+                <li><a href="/write/">New Story</a></li>
+				<li><a href="">Point Shop</a></li>
+				<li><a href="">Settings</a></li>
+                <li class="divline"></li>
+				<li><a href="">Support</a></li>
+				<li><a href="">Term of Service</a></li>
+				<li><a href="http://octocolumn.com/">Privacy Policy</a></li>
+				<li><a href="http://octocolumn.com/">Rules</a></li>
+                <li class="divline"></li>
+                <li id="logout"><a href="">Sign out</a></li>
+                <li class="info">
+					<span>octocolumn.com<br/>
 						Copyright octocolumn.com<br/>
 						All Rights Reserved<br/>
 						주식회사 옥토칼럼<br/>
 						대표 오정민<br/>
 						사업자등록번호<br/>
-						576-52-00020<br/>
-						통신판매업신고 2016<br/>
-						수원권선 0350<br/>
+						308-81-44686<br/>
+						통신판매업신고 2017<br/>
+						수원권선 0386<br/>
 						개인정보관리 책임자 오정민<br/>
 						경기도 수원시 권선구 정조로<br/>
 						580-9<br/>
 						연락처<br/>
 						mackenzie@octocolumn.com<br/>
-						고객센터 070-4809-7166<br/>
-					</div>            
-				</ul><!-- sidebar -->
-			</div>
-			<div class="btn-search">
-				<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
-			</div>
-			<div class="btn-point">
-				<div class="point">0p</div>
-			</div>
-			<div class="btn-logo-wrap">
-				<div class="btn-logo" id="header-title" onclick='window.location.href="/"'>
-					octocolumn
-				</div>
-			</div>
-			<div class="btn-right-wrap">
-				<div class="btn-notice">
-					<img src="{% static 'images/icons/header/Shape2.png' %}">
-				</div>
-				<div class="btn-user">
-					<span></span>
-					<div class="profile-image-upload-wrap">
-						<img id="header-profile-image" src="">
-					</div>
-				</div>
-			</div>
-		</div><!-- header-wrap-->
-	</div><!-- //header -->
+						고객센터 070-4809-7166
+					</span>
+				</li>
+                <!--
+                <li class="small"><a href="#0">Facebook</a><a href="#0">Instagram</a></li>
+                -->
+            </ul>
+        </div>
+	</div>
+	<div class="btn-search">
+		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
+	</div>
+	<div class="btn-point">
+		<div class="point">0p</div>
+	</div>
+	<div class="btn-notice">
+		<img src="{% static 'images/icons/header/Shape2.png' %}">
+	</div>
+	<div class="profile-img">
+		<img id="header-profile-image" src="" alt="profile image"></img>
+	</div>
+    <div id="profile-container" onclick='window.location.href = "/profile/"'>
+    	<div class="profile-text"></div>
+    </div>
+<!-- 
+	<div class="btn-search">
+		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
+	</div>
+	<div class="btn-point">
+		<div class="point">0p</div>
+	</div>
+	<div class="btn-notice">
+		<img src="{% static 'images/icons/header/Shape2.png' %}">
+	</div> -->

@@ -3,7 +3,7 @@ $(document).ready(function(){
     var menuText = $(".btn-menu > div").text();
     var windowHeight = window.innerHeight;
 
-    ($(".btn-user > img").length == 0) ? $(".footer").css("margin-top","600px") : $(".footer").css("margin-top","300px");
+   // ($(".btn-user > img").length == 0) ? $(".footer").css("margin-top","600px") : $(".footer").css("margin-top","300px");
 
     $(".btn-menu > ul").css("height", windowHeight - 32 - 40 + "px");   // 헤더높이 = 32, ul 패딩탑 = 40
 

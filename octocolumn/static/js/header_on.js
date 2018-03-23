@@ -28,8 +28,8 @@ function getUserInfo() {
             var profile_image = json.profileImg.profile_image;
 
             $(".btn-point .point").text(point + "p");
-            $(".btn-user > span").text(nickname);
-            $(".btn-right-wrap > .btn-user img").attr("src", profile_image);
+            $("#profile-container > .profile-text").text(nickname);
+            $("#header-profile-image").attr("src", profile_image);
 
             loadCropImage("#header-profile-image")
         }
