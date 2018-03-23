@@ -17,5 +17,6 @@ class InviteTokenGenerator(PasswordResetTokenGenerator):
             six.text_type(user.is_active)
         )
 
+
 account_activation_token = TokenGenerator()
 invite_token = InviteTokenGenerator()

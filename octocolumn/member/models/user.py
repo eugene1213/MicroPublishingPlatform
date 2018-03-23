@@ -261,4 +261,13 @@ class BuyList(models.Model):
                f'to: {self.post.title})'
 
 
+class Bookmark(models.Model):
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='bookmark_user_relation',
+        null=True
+    )
+    post = models.ForeignKey('column.Post', null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
