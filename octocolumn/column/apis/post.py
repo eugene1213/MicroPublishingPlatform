@@ -28,7 +28,8 @@ __all__ = (
     'AuthorResult',
     'IsBuyPost',
     'PostListView',
-    'PostMoreListView'
+    'PostMoreListView',
+    'BookmarkListView'
 )
 
 
@@ -424,6 +425,29 @@ class AuthorResult(APIView):
                     return Response({"author": True}, status=status.HTTP_200_OK)
                 return Response({"author": False}, status=status.HTTP_200_OK)
 
-
         except ObjectDoesNotExist:
             return Response({"author": False}, status=status.HTTP_200_OK)
+
+
+class BookmarkListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        try:
+            user = self.request.user
+            post = Bookmark.objects.filter(user=user).order_by('-created_date')
+
+            page = self.paginate_queryset(post)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
