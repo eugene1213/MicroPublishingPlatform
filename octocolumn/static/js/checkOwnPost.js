@@ -16,10 +16,11 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
 
-                var img = new Image();
+                // var img = new Image();
                 // img.src = json.detail.preview;
 
-                // $("#preview-main-content > img").replaceWith(img);
+                console.log(preview)
+                $("#preview-main-content").append(preview);
 
                 $("#preview-cover-img").attr("src",cover_img);
                 $(".preview-title").text(title);
