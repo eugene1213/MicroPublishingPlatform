@@ -7,18 +7,19 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
         type: 'GET',
         dataType: 'json',
         success: function(json) {
+            console.log(json)
             if(json.detail.isBuy) {
                 window.location.href = "/read/"+post_id;
             }else {
-                var preview_image = json.detail.preview;
+                // var preview_image = json.detail.preview;
 
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
 
                 var img = new Image();
-                img.src = json.detail.preview;
+                // img.src = json.detail.preview;
 
-                $("#preview-main-content > img").replaceWith(img);
+                // $("#preview-main-content > img").replaceWith(img);
 
                 $("#preview-cover-img").attr("src",cover_img);
                 $(".preview-title").text(title);
