@@ -84,7 +84,8 @@ input, button {
       width: 100%; }
   .container #tmp {
     margin-bottom: 0px;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    zoom: 70%; }
   .container .preview-wrap {
     position: absolute;
     left: 0;
@@ -723,7 +724,8 @@ input, button {
     height: 64px;
     overflow: hidden;
     position: relative;
-    border-radius: 50%; }
+    border-radius: 50%;
+    z-index: 0; }
   .profile-wrap .profile-sub-wrap {
     margin-left: 16px; }
     .profile-wrap .profile-sub-wrap .username {

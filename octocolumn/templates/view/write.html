@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#2a292a">
     <title>octocolumn</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
@@ -15,8 +17,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/default.css' %}">
-    <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
-    <link rel="icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
@@ -186,7 +186,7 @@
                 <div class="title" id="title"></div>
                 <div class="editable" id="editable"></div>
             </div>
-            <div id="tmp"></div>
+            
             <div class="preview-wrap">
                 <div class="preview" id="preview">
                     <div class="btn-cancel-wrap">
@@ -204,8 +204,9 @@
                         <div class="preview-create-date">2017. 12. 18 18:33</div>
                     </div>
                     <div class="preview-main-content" id="preview-main-content">
-                        <img src="" alt="">
-                        <!-- preview-image -->
+                        <div id="tmp"></div>
+                        <!-- <img src="" alt="">
+                        preview-image -->
                     </div>
                     <div class="preview-tag-wrap">
                     </div>
