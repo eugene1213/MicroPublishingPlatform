@@ -109,6 +109,7 @@ class PostCreateView(generics.GenericAPIView,
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
+        print(data['preview'])
 
         author = self.is_author()
         # 작가 일 경우

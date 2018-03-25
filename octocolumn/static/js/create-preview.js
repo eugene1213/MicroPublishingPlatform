@@ -5,7 +5,6 @@ $(document).ready(function() {
         // var target = document.getElementById('container');
 		// var spinner = new Spinner().spin(target);
         // target.appendChild(spinner.el);
-creatPreviewElements();
 
         $(".medium-insert-buttons").hide();     // 에디터 이미지 툴바 숨김(안숨기면 이미지에 '+' 모양 찍힘)
         // setTimeout(function(){
@@ -153,9 +152,8 @@ function creatPreviewElements() {
     var count = 0;
     var i = 0;
     var previewRule = 500;                                  // octocolumn 미리보기에서 보여주는 글자 수. 정책이 바뀌면 이 부분 수정
-    var previewElements = $(document.createElement('div'));    // 미리보기에서 보여줄 내용
-console.log(previewElements);
-document.create
+    var previewElements = document.createElement('div');    // 미리보기에서 보여줄 내용
+
     var appendEl = '';
     $(previewElements).addClass('previewElementsWrap');
 

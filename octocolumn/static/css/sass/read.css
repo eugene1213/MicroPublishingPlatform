@@ -42,6 +42,8 @@
     .main_content_wrap .medium-insert-images img {
       max-width: 100%;
       margin: 0 0 20px 0; }
+    .main_content_wrap .medium-insert-images figure {
+      text-align: center; }
   .main_content_wrap .medium-insert-images-wide {
     width: 952px;
     margin: auto;

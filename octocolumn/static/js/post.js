@@ -111,7 +111,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
             "preview" : preview.outerHTML
         }),
         success: function(json) {
-            console.log("발행됨");
+            console.log("출판됨");
             localStorage.setItem("temp_id", '');
         },
         error: function(error) {

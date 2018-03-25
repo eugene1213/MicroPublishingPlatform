@@ -77,7 +77,7 @@ function saveTmp(auto){
 function saveHandler(){
     $(document).keyup(function(event) {     // 자동저장
 
-        if($(event.target).hasClass('editable')) {
+        if($(event.target).hasClass('editable')||$(event.target).hasClass('title')) {
 
             $(".state").text("작성중");
 

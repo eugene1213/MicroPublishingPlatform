@@ -19,7 +19,8 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price,
                 // var img = new Image();
                 // img.src = json.detail.preview;
 
-                $("#preview-main-content").append(preview);
+                $("#preview-main-content > .previewElementsWrap").replaceWith(preview);
+                $(".previewElementsWrap").children(":last").css("filter","blur(4px)");
 
                 $("#preview-cover-img").attr("src",cover_img);
                 $(".preview-title").text(title);
