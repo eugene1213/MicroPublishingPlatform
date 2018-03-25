@@ -92,6 +92,7 @@ class Bookmark(APIView):
         except ObjectDoesNotExist:
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
+
 # 1
 # 내가 팔로워 하고있는 유저를 프로필에 유저정보카드를 리스트화 시켜서 내보내는 함수 (from_user== 나  , to_user 상대)
 # URL /api/member/getUserFollowingCard/(?P<count>\w+)$

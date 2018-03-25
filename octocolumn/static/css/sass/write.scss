@@ -112,6 +112,7 @@ input, button {
     #tmp {
         margin-bottom: 0px;
         word-wrap: break-word;
+        zoom: 70%;
     }
     .preview-wrap {
         position: absolute;
@@ -900,6 +901,7 @@ input, button {
         overflow: hidden;
         position: relative;
         border-radius: 50%;
+        z-index: 0;
 
         img {
             

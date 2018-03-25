@@ -2,8 +2,7 @@ from django.conf.urls import url, include
 
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
     CommentListView, CommentCreateView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
-    CommentLikeToggleView, TempView, PostMoreListView
-from column.apis.post import BookmarkListView
+    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView
 
 urlpatterns = [
     # 포스트 생성

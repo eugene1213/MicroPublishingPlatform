@@ -29,6 +29,7 @@
 	<script src="{% static 'js/checkOwnPost.js' %}"></script>
 	<script src="{% static 'js/request-buy.js' %}"></script>
 	<script src="{% static 'js/drag-n-crop.js' %}"></script>
+	<script src="{% static 'js/bookmark.js' %}"></script>
 	<!--구글 태그 매니저-->
 	<!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':-->
 	<!--new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],-->
@@ -54,7 +55,7 @@
 	{% if login %}
 		{% include 'view/header_on.html' %}
 	{% else %}
-		 <script>window.location.href = '/signin/'</script>
+		<script>window.location.href = '/signin/'</script>
 		{% include 'view/header.html' %}
 	{% endif %}
 	<div class="main">
