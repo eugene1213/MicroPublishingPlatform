@@ -136,7 +136,8 @@ class PostCreateView(generics.GenericAPIView,
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],
-                                           cover_image=cover_file_obj
+                                           cover_image=cover_file_obj,
+                                           preview=data['preview']
                                            )
                 serializer = PostSerializer(post)
                 # 태그 추가
@@ -236,6 +237,7 @@ class PostListView(APIView):
                     "title": serializer.data['title'],
                     "main_content": rm_content,
                     "cover_img": serializer.data['cover_image'],
+                    "preview": serializer.data['preview'],
                     "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
                     'created_datetime': time.strftime('%Y.%m.%d') + ' ' + time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ') / 2,
@@ -362,7 +364,6 @@ class PostReadView(APIView):
                 profile_image = ProfileImage.objects.filter(user=user).get()
                 image_serializer = ProfileImageSerializer(profile_image)
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-                SearchTagSerializer()
                 return Response({
                     "detail": {
                         "post_id": serializer.data['pk'],
@@ -374,7 +375,7 @@ class PostReadView(APIView):
                             "author_id": serializer.data['author'],
                             "username": user.nickname,
                             "achevement": "",
-                            "image":image_serializer
+                            "image": image_serializer.data
                         },
 
                         'created_datetime': time.strftime('%Y.%m.%d'),
@@ -403,23 +404,18 @@ class IsBuyPost(APIView):
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
+        post = Post.objects.filter(id=param).get()
         try:
-            BuyList.objects.filter(user=self.request.user, post=param).get()
+            BuyList.objects.filter(user=self.request.user, post=post).get()
             return Response({"detail": {
                 "isBuy": True
             }}, status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
-            post = Post.objects.filter(pk=param).get()
-            serializer = PostSerializer(post)
-
-            if serializer:
-                return Response({"detail": {
-                    "isBuy": False,
-                    "preview": serializer.data['preview_image'],
-                }},
-                    status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+            return Response({"detail": {
+                "isBuy": False,
+            }},
+                status=status.HTTP_200_OK)
 
 
 class AuthorResult(APIView):
@@ -449,7 +445,6 @@ class BookmarkListView(generics.ListAPIView):
 
             page = self.paginate_queryset(post.post)
             serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-
 
             if page is not None:
                 serializer = PostMoreSerializer(page, context={'request': request}, many=True)
