@@ -80,9 +80,9 @@ class TempCreateView(generics.GenericAPIView,
 
         if data['temp_id'] is not '':
             Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(title=data['title'],
-                                                                                            main_content=data['main_content'],
-                                                                                            created_date = datetime.now()
-                                                                                            )
+                                                                                     main_content=data['main_content'],
+                                                                                     created_date=datetime.now()
+                                                                                     )
 
             return Response({"temp": {
                 "temp_id": data['temp_id']
@@ -92,7 +92,7 @@ class TempCreateView(generics.GenericAPIView,
             # 임시 저장 할 수있는 게시물 제한
             if not self.check_post_count(user):
                 raise exceptions.ValidationError({"detail": "This account exceeded the number of articles you could write"},
-                                400)
+                                                 400)
             temp = self.queryset.create(author=user, title=data['title'], main_content=data['main_content'])
 
             # 예외처리

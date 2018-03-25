@@ -207,6 +207,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         relation.delete()
         return False
 
+
 # 팔로우 다대다
 class Relation(models.Model):
     # User의 follow목록을 가질 수 있도록

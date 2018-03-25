@@ -125,14 +125,14 @@ input, button {
             position: absolute;
             width: 45px;
             height: 3px;
-            margin: 7px 0px 0px -7px;
+            margin: 17px 0px 0px -2px;
             background: #ffffff;
             z-index: 1; }
           .container .preview-wrap .preview .btn-cancel-wrap .btn-cancel:after {
             content: "";
             display: inline-block;
             position: absolute;
-            margin: -14px 0px 0px 14px;
+            margin: -3px 0px 0px 19px;
             padding: 0;
             width: 3px;
             height: 45px;

@@ -15,17 +15,17 @@ $(document).ready(function(){
             var author = data[card_id-1].post.author;
             var tag = data[card_id-1].post.tag;
             var price = data[card_id-1].post.price;
-
+            var preview = data[card_id-1].post.preview;
             var readtime = $("#card_" + card_id + " .profile_readtime").text();
 
-            isBought(post_id, cover_img, title, date, author, tag, readtime, price);
+            isBought(post_id, cover_img, title, date, author, tag, readtime, price, preview);
             
         }
     });
     $(".profile_mark").click(function(e){
         
         var post_id = $(e.target).closest(".fb1_txt_2").attr("id");
-        
+
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();

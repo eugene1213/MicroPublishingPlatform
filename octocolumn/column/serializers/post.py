@@ -39,9 +39,9 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
             'price',
+            'preview',
             'comments',
             'cover_image',
-            'preview_image',
         )
         read_only_fields = (
             'author',
@@ -139,7 +139,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
             'price',
             'comments',
             'cover_image',
-            'preview_image',
+            'preview',
             'typo_count',
             'bookmark_status'
         )
@@ -168,7 +168,6 @@ class PostListSerializer(serializers.ModelSerializer):
             'created_date',
             'comments',
             'cover_image',
-            'preview_image'
         )
         read_only_fields = (
             'author',
