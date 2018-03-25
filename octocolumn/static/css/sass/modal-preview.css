@@ -18,13 +18,15 @@
     .preview-wrap .preview .btn-cancel-wrap {
       cursor: pointer;
       position: absolute;
-      right: -56px;
+      right: -40px;
       top: -8px;
       width: 32px;
       height: 32px; }
       .preview-wrap .preview .btn-cancel-wrap * {
         position: fixed; }
       .preview-wrap .preview .btn-cancel-wrap .btn-cancel {
+        width: 40px;
+        height: 40px;
         transform: rotate(45deg); }
         .preview-wrap .preview .btn-cancel-wrap .btn-cancel:before {
           display: block;
@@ -32,14 +34,14 @@
           position: absolute;
           width: 45px;
           height: 3px;
-          margin: 7px 0px 0px -7px;
+          margin: 18px 0px 0px -2px;
           background: #ffffff;
           z-index: 1; }
         .preview-wrap .preview .btn-cancel-wrap .btn-cancel:after {
           content: "";
           display: inline-block;
           position: absolute;
-          margin: -14px 0px 0px 14px;
+          margin: -2px 0px 0px 18px;
           padding: 0;
           width: 3px;
           height: 45px;
@@ -56,7 +58,7 @@
         background-color: rgba(0, 75, 141, 0.8);
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
         margin-top: 72px;
-        margin-left: -11px;
+        margin-left: 4px;
         line-height: 32px;
         font-weight: 200; }
     .preview-wrap .preview .ready2publish {

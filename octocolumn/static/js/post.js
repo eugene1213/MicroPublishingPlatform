@@ -90,7 +90,9 @@ function btn_activation(handler,target){
 
 /* 최종적으로 발행을 결정하면 실행되는 함수*/
 function publish(temp_id, cover_img, preview_img, tag, code, price) {
-    
+
+    var preview = creatPreviewElements();
+
     $.ajax({
         url: "/api/column/post-create/",
         async: false,
@@ -105,7 +107,8 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
             "cover" : cover_img,
             "tag" : tag,
             "code" : code,
-            "price" : price
+            "price" : price,
+            "preview" : preview
         }),
         success: function(json) {
             console.log("발행됨");

@@ -5,7 +5,7 @@ $(document).ready(function() {
         // var target = document.getElementById('container');
 		// var spinner = new Spinner().spin(target);
         // target.appendChild(spinner.el);
-        
+
         $(".medium-insert-buttons").hide();     // 에디터 이미지 툴바 숨김(안숨기면 이미지에 '+' 모양 찍힘)
         // setTimeout(function(){
 
@@ -147,7 +147,49 @@ function countTitle(){
         }
     }
 }
+function creatPreviewElements() {
 
+    var count = 0;
+    var i = 0;
+    var previewRule = 500;                                  // octocolumn 미리보기에서 보여주는 글자 수. 정책이 바뀌면 이 부분 수정
+    var previewElements = document.createElement('div');    // 미리보기에서 보여줄 내용
+
+    var appendEl = '';
+    $(previewElements).addClass('previewElementsWrap');
+
+    while( count < previewRule ) {
+
+        if( $("#editable").children(":eq("+i+")")[0].localName == 'div' ){
+            count += 125;                                                       // 500글자 -> 1분 기준 이미지가 대응하는 글자수.(15초 분량)
+
+            appendEl = $("#editable").children(":eq("+i+")").clone()[0];
+        
+            previewElements.append( appendEl );
+            i++;
+
+            continue;
+        }
+        
+        count += $("#editable").children(":eq("+i+")").text().length;
+
+        appendEl = $("#editable").children(":eq("+i+")").clone()[0];
+        previewElements.append( appendEl );
+
+        i++;
+    }
+    var lastLocalName = $("#editable").children(":eq("+(i-1)+")")[0].localName;
+    if( lastLocalName != 'div' ) {
+
+        var overText = count - previewRule;                                     // 500글자에서 얼마나 초과됐는지
+        var lastText = $("#editable").children(":eq("+(i-1)+")").text();        // 500글자가 넘어가는 부분
+        var textForReplace = lastText.substr( 0, lastText.length - overText );
+        var lastElement = document.createElement(lastLocalName);
+
+        $(lastElement).text(textForReplace);
+        $(previewElements).children(':last').replaceWith(lastElement);
+    }
+    return previewElements;
+}
 /* 텍스트와 이미지를 블러처리 */
 function blurText(){
 
