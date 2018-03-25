@@ -104,7 +104,6 @@ class PostCreateView(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
-        preview_file_obj = self.base64_content(self.request.data['preview'])
         cover_file_obj = self.base64_content(self.request.data['cover'])
 
         # 1. 작가가 신청되어있는지 확인
@@ -136,7 +135,6 @@ class PostCreateView(generics.GenericAPIView,
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],
-                                           preview_image=preview_file_obj,
                                            cover_image=cover_file_obj
                                            )
                 serializer = PostSerializer(post)
@@ -275,7 +273,7 @@ class PostMoreListView(generics.ListAPIView):
         return self.list(request)
 
 
-class BookmarkListView(generics.ListAPIView):
+class f(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     pagination_class = PostPagination
     serializer_class = PostSerializer
