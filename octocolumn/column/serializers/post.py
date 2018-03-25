@@ -39,6 +39,7 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
             'price',
+            'preview',
             'comments',
             'cover_image',
         )
@@ -138,6 +139,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
             'price',
             'comments',
             'cover_image',
+            'preview',
             'typo_count',
             'bookmark_status'
         )

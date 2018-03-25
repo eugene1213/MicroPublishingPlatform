@@ -92,6 +92,7 @@ function btn_activation(handler,target){
 function publish(temp_id, cover_img, preview_img, tag, code, price) {
 
     var preview = creatPreviewElements();
+    console.log(preview);
 
     $.ajax({
         url: "/api/column/post-create/",
