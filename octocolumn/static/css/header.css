@@ -129,6 +129,8 @@ li.info {
 }
 li.info span {
     color: #888;
+    line-height: 1.25em;
+    font-weight: 100;
 }
 #nav-content li:not(.info) + .info {margin-top: auto; margin-bottom: 40px;}
 #nav-content li a:hover {color: #004b8d;}
@@ -259,7 +261,7 @@ li.info span {
     min-width: 24px;
     height: 24px;
     margin-top: 4px;
-    margin-left: 56px;
+    margin-left: 64px;
     cursor: pointer;
 }
 .point {

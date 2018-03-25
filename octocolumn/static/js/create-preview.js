@@ -1,14 +1,17 @@
 $(document).ready(function() {
     
-    $(".btn-publish-final").click(function(){
+    $(".btn-publish-final").unbind('click').click(function(){
 
-        var target = document.getElementById('container');
-		var spinner = new Spinner().spin(target);
-        target.appendChild(spinner.el);
+        // var target = document.getElementById('container');
+		// var spinner = new Spinner().spin(target);
+        // target.appendChild(spinner.el);
         
         $(".medium-insert-buttons").hide();     // 에디터 이미지 툴바 숨김(안숨기면 이미지에 '+' 모양 찍힘)
+        // setTimeout(function(){
 
-        dom2img();                              // 미리보기 이미지 렌더링
+        $("#tmp").replaceWith("<div id='tmp'>" + $(".editable").html() + "</div>");
+        $(".preview-wrap").show();
+        // dom2img();                              // 미리보기 이미지 렌더링
         previewCoverImg();                      // 설정된 커버이미지 미리보기에 출력
         previewContentInfo();                   // 설정된 값들 미리보기에 출력
 
@@ -18,12 +21,14 @@ $(document).ready(function() {
             if($(document).scrollTop() > $(".preview").height()) {
 
                 $('#html').on('scroll touchmove mousewheel', function(event) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  return false;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
                 });
             }
         });
+        $("#previewPrice").text($("#setPrice").text());
+        // },100)
         $(".arrow-box").hide();
         $(".css-arrow").css("transform","rotate(360deg)");
     });
@@ -85,7 +90,7 @@ function focusJump(e) {
     var id = $(e.target).attr('id');
     var idNum = id.replace("octo-code-","");
 
-    if($(e.target).attr("id")==('octo-code-' + idNum) && idNum !="5") {
+    if($(e.target).attr("id")==('octo-code-' + idNum) && idNum !="5" && $(e.target).val() != '') {
         $("#octo-code-" + (++idNum)).focus();
     }
 }

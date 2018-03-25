@@ -103,7 +103,6 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
         data: JSON.stringify({
             "temp_id" : temp_id,
             "cover" : cover_img,
-            "preview" : preview_img,
             "tag" : tag,
             "code" : code,
             "price" : price
