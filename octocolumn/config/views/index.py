@@ -27,8 +27,8 @@ def index(request):
         if token is not None:
             response = render_to_response("view/main.html", {"login": True})
             return response
-        return redirect('views:signin', )
-    return redirect('views:signin',)
+        return render_to_response("view/main.html", )
+    return render_to_response("view/main.html",)
 
 
 @never_cache
