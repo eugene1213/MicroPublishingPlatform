@@ -198,6 +198,13 @@ class PostListView(APIView):
                 "cover_image": 'example/1.jpeg'
                     }
 
+    def bookmark_status(self, post):
+        try:
+            Bookmark.objects.filter(user=self.request.user, post=post).get()
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def follower_status(self, user):
         if self.request.auth is None:
             return False
@@ -233,6 +240,7 @@ class PostListView(APIView):
                     'created_datetime': time.strftime('%Y.%m.%d') + ' ' + time2.strftime('%H:%M'),
                     "typo_count": len(text) - text.count(' ') / 2,
                     "tag": tag,
+                    "bookmark_status": self.bookmark_status(i),
                     "price": serializer.data['price'],
                     "author": {
                         "author_id": serializer.data['author'],
@@ -438,8 +446,9 @@ class BookmarkListView(generics.ListAPIView):
             user = self.request.user
             post = Bookmark.objects.filter(user=user).order_by('-created_date')
 
-            page = self.paginate_queryset(post)
+            page = self.paginate_queryset(post.post)
             serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
 
             if page is not None:
                 serializer = PostMoreSerializer(page, context={'request': request}, many=True)
