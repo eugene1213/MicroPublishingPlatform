@@ -40,11 +40,7 @@ class Post(models.Model):
                                     blank=True,
                                     null=True
                                     )
-    preview_image = models.ImageField('포스트프리뷰 이미지',
-                                      upload_to=preview_image_user_directory_path,
-                                      blank=True,
-                                      null=True
-                                      )
+
 
     class Meta:
         ordering = ['-pk', ]
