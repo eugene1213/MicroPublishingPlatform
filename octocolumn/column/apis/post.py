@@ -133,8 +133,8 @@ class PostCreateView(generics.GenericAPIView,
                 if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-                post = Post.objects.create(author=user, title=temp.title,
-                                           main_content=temp.main_content,
+                post = Post.objects.create(author=user, title=data['title'],
+                                           main_content=data['main_content'],
                                            price=data['price'],
                                            cover_image=cover_file_obj,
                                            preview=data['preview']
