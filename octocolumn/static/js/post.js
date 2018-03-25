@@ -92,7 +92,7 @@ function btn_activation(handler,target){
 function publish(temp_id, cover_img, preview_img, tag, code, price) {
 
     var preview = creatPreviewElements();
-    console.log(preview);
+
 
     $.ajax({
         url: "/api/column/post-create/",
@@ -109,7 +109,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
             "tag" : tag,
             "code" : code,
             "price" : price,
-            "preview" : preview
+            "preview" : preview.outerHTML
         }),
         success: function(json) {
             console.log("발행됨");
