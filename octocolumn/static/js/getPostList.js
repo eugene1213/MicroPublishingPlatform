@@ -3,7 +3,6 @@ $(document).ready(function(){
     var data = getData();
     popBalloon(data);
 
-    console.log(data)
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");

@@ -52,6 +52,7 @@ function saveTmp(auto){
         if($(".editable").text().length < 543) return console.log("분량 미달");       // 분량 미달이면 자동저장x
     }
 
+    console.log($(editor));
     $.ajax({
         url: "/api/column/temp/",
         async: false,

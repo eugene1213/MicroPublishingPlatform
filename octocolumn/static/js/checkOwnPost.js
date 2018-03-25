@@ -1,5 +1,5 @@
 /* 구매했는지 체크 */
-function isBought(post_id, cover_img, title, date, author, tag, readtime, price) {
+function isBought(post_id, cover_img, title, date, author, tag, readtime, price, preview) {
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
@@ -19,7 +19,6 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price)
                 // var img = new Image();
                 // img.src = json.detail.preview;
 
-                console.log(preview)
                 $("#preview-main-content").append(preview);
 
                 $("#preview-cover-img").attr("src",cover_img);
