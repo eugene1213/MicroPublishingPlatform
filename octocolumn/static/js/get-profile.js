@@ -257,6 +257,7 @@ function get_profile() {
             var cover_img = json.image.cover_image;
             var profile_img = json.image.profile_image;
             var username = json.nickname;
+            var email = json.username;
             var waiting = json.waiting;
             // var stamp = json.stamp;
             var userIntro = json.intro;
@@ -264,9 +265,9 @@ function get_profile() {
             var follower = json.follower;
             var posts = json.post_count;
 
-            var birthYear = json.birthYear;
-            var birthMonth = json.birthMonth;
-            var birthDay = json.birthDay;
+            var birthYear = json.year;
+            var birthMonth = json.month;
+            var birthDay = json.day;
             var gender = json.sex;
             var age = json.age;
 
@@ -289,6 +290,7 @@ function get_profile() {
             $("#following").text(following);
             $("#follower").text(follower);
             $("#posts").text(posts);
+            $("#email").text(email);
 
             if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear);
             if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
