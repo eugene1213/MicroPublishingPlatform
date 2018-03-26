@@ -34,7 +34,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             image = ProfileImage.objects.filter(user=obj.user).get()
             serializer = ProfileImageSerializer(image)
             if serializer:
-                print(serializer.data)
                 return serializer.data
             raise exceptions.ValidationError({"detail": "excepted error"})
         except ObjectDoesNotExist:
