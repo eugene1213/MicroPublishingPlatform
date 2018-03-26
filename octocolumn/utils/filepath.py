@@ -84,7 +84,7 @@ def profile_image_user_directory_path(instance, filename):
      images/{year}/{month}/{day}/{username}/{filename}
      images/2016/7/12/hjh/hjh-2016-07-12-158859.png """
     now = timezone.now()
-    path = "profile/profile/{username}/{year}/{month}/{day}/{filename}".format(
+    path = "profile/profile/{username}/{filename}".format(
         username=instance.user.pk,
         year=now.year,
         month=now.month,
