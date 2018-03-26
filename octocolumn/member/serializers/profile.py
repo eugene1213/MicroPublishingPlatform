@@ -40,8 +40,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             data = {
                 "image": {
-                    "profile_image": "/example/2_x20_.jpeg",
-                    "cover_image": "/example/1.jpeg"
+                    "profile_image": "/media/example/2_x20_.jpeg",
+                    "cover_image": "/media/example/1.jpeg"
                 }
             }
             return data
