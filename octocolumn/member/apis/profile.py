@@ -14,6 +14,7 @@ from column.serializers import PostSerializer, TempSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
+from utils.image_rescale import profile_image_resizing
 
 __all__ = (
     'ProfileImageUpload',
@@ -127,7 +128,7 @@ class ProfileUpdate(APIView):
             profile.age = data['age']
             profile.web = data['web']
             profile.jobs = data['job']
-            profile.region =data['region']
+            profile.region = data['region']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
             profile.twitter = data['tw']
@@ -153,20 +154,20 @@ class ProfileImageUpload(generics.CreateAPIView):
     serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
-    def base64_content(self, image, size):
+    def base64_content(self, image, margin):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name=size+'.'+ext)
+            data = ContentFile(base64.b64decode(imgstr), name=margin+'.'+ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        size = self.request.data['margin']
-        profile_file_obj = self.base64_content(self.request.data['img'], size)
-        print(Image.open(profile_file_obj))
+        margin = self.request.data['margin']
+        profile_file_obj = self.base64_content(self.request.data['img'], margin)
+        # profile_image_resizing(profile_file_obj, margin)
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
