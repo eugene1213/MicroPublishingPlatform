@@ -63,7 +63,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'username',
             'year',
             'month',
-            'day'
+            'day',
             'sex',
             'facebook',
             'instagram',
