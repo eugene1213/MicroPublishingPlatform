@@ -40,8 +40,9 @@ def password_reset_email_send(user):
     })
     to_email = user.username
     email = EmailMultiAlternatives(
-        mail_subject, message, to=[to_email]
+        mail_subject, to=[to_email]
     )
+    email.attach_alternative(message, "text/html")
     if not email.send():
         return False
     return True
