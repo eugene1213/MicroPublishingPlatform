@@ -17,6 +17,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_nickname(self,obj):
         return obj.user.nickname
 
+    def get_username(self,obj):
+        return obj.user.username
+
     def get_following(self, obj):
         return Relation.objects.filter(from_user=obj.user).count()
 
@@ -51,11 +54,13 @@ class ProfileSerializer(serializers.ModelSerializer):
     waiting = SerializerMethodField()
     image = SerializerMethodField()
     nickname = SerializerMethodField()
+    username = SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = (
             'nickname',
+            'username',
             'year',
             'month',
             'sex',
