@@ -41,7 +41,6 @@ function loadCropImage(img) {
     var position_strtmp = src.split("_")[1];
     var direction = position_strtmp.substr(0,1);                                   // x or y
     var uploadPosition = position_strtmp.substr(1,position_strtmp.length-1);
-        uploadPosition = uploadPosition.replace('d','.');
 
     var fileWidth = $(img)[0].naturalWidth;
     var fileHeight = $(img)[0].naturalHeight;

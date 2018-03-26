@@ -228,9 +228,10 @@ $(document).ready(function(){
         if($(this).hasClass("btn-save")){
             
             modifyProfile();
-        }else{
+        } else {
             
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
+            $("#birthDay").prop("contenteditable","true");
             $(".btn-modify > img").attr("src","https://devtestserver.s3.amazonaws.com/media/example/save.svg");
             $(".btn-modify").addClass("btn-save");
         
@@ -273,7 +274,6 @@ function get_profile() {
 
             var hpNumber = json.phone;
             var location = json.region;
-            var email = json.email;
 
             var job = json.jobs;
             var website = json.web;
@@ -420,10 +420,13 @@ function uploadProfileImg(whichImg) {
         var overflowX = imgWidth - $("#profileImg").closest(".profile-image-upload-wrap").width();
         var leftPercentage = (overflowX - marginLeft) / $("#profileImg").closest(".profile-image-upload-wrap").width() * 100;
          
-        if(marginTop > 0)var percentage = "y" + topPercentage;
-        else             var percentage = "x" + leftPercentage;
+        if(marginTop != 0)          var percentage = "y" + topPercentage;
+        else if(marginLeft != 0)    var percentage = "x" + leftPercentage;
+        else {
+            if(overflowY>0) percentage = "y" + topPercentage;
+            else percentage = "x" + leftPercentage;
+        }
 
-        percentage = percentage.replace('.','d');
         url = "/api/member/profile-image/";
     }
     $.ajax({
