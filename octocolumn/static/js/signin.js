@@ -14,7 +14,6 @@ $(document).ready(function(){
 
 function signin_api() {
 
-    console.log("signin_api 호출성공")
     var email = $("#email-signin").val();
     var password = $("#password-signin").val();
 
@@ -31,7 +30,6 @@ function signin_api() {
             password : password
         },
         success: function(json) {
-            console.log("통신성공");
 
             if($("#checkbox-signin").prop("checked") == true){
                 localStorage.setItem("id",email);

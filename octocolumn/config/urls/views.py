@@ -2,9 +2,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from config.views import index
-from config.views.index import write, kakao, google, facebook, recent, signin, signup, signinForm, okay
+from config.views.index import write
+from config.views.index import recent
+from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook
 from config.views.index import read
 from config.views.index import profile
+from config.views.index import shop
 from member.apis import VerifyEmail, PasswordResetEmail, InviteVerifyEmail
 
 urlpatterns = [
@@ -19,7 +22,9 @@ urlpatterns = [
     url(r'^signin/$', signin, name='signin'),
     url(r'^signinForm/$', signinForm, name='signinForm'),
     url(r'^okay/$', okay, name='okay'),
+    url(r'^findPass/$', findPass, name='findPass'),
     url(r'^signup/$', signup, name='signup'),
+    url(r'^shop/$', shop, name='shop'),
     url(r'^kakao-login/$', kakao, name='kakao-login'),
     url(r'^google-login/$', google, name='google-login'),
     url(r'^facebook-login/$', facebook, name='google-login'),
