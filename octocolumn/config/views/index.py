@@ -113,6 +113,20 @@ def okay(request):
     return render_to_response('view/beta-okay.html')
 
 
+def findPass(request):
+    return render_to_response('view/beta-findPass.html')
+
+
+def shop(request):
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/shop.html", {"login": True})
+            return response
+        return render_to_response("view/shop.html", )
+    return render_to_response("view/shop.html",)
+
+
 @never_cache
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')

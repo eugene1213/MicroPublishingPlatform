@@ -1,5 +1,6 @@
 import base64
 
+from PIL import Image
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import generics, status, exceptions
@@ -13,6 +14,7 @@ from column.serializers import PostSerializer, TempSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
+from utils.image_rescale import profile_image_resizing
 
 __all__ = (
     'ProfileImageUpload',
@@ -45,29 +47,33 @@ class ProfileInfo(APIView):
                 profile_image = ProfileImage.objects.filter(user=user).get()
 
                 serializer = ProfileImageSerializer(profile_image)
-                return Response({"nickname": user.nickname,
-                                 "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
-                                 "post_count": Post.objects.filter(author=user).count(),
-                                 "point": user.point,
-                                 "intro": "-",
-                                 "following": Relation.objects.filter(from_user=user).count(),
-                                 "follower": Relation.objects.filter(to_user=user).count(),
-                                 "image": serializer.data
+                return Response({
+                    "nickname": user.nickname,
+                    "username": user.username,
+                    "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
+                    "post_count": Post.objects.filter(author=user).count(),
+                    "point": user.point,
+                    "intro": "-",
+                    "following": Relation.objects.filter(from_user=user).count(),
+                    "follower": Relation.objects.filter(to_user=user).count(),
+                    "image": serializer.data
+                }, status=status.HTTP_200_OK)
 
-                                 }, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
-                return Response({"nickname": user.nickname,
-                             "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
-                             "post_count": Post.objects.filter(author=user).count(),
-                             "point": user.point,
-                             "intro": "-",
-                             "following": Relation.objects.filter(from_user=user).count(),
-                             "follower": Relation.objects.filter(to_user=user).count(),
-                             "image": {
-                                 "profile_image": "https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg",
-                                "cover_image": "https://devtestserver.s3.amazonaws.com/media/example/1.jpeg"
-                             }
-                             }, status=status.HTTP_200_OK)
+                return Response({
+                    "nickname": user.nickname,
+                    "username": user.username,
+                    "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
+                    "post_count": Post.objects.filter(author=user).count(),
+                    "point": user.point,
+                    "intro": "-",
+                    "following": Relation.objects.filter(from_user=user).count(),
+                    "follower": Relation.objects.filter(to_user=user).count(),
+                    "image": {
+                        "profile_image": "https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg",
+                        "cover_image": "https://devtestserver.s3.amazonaws.com/media/example/1.jpeg"
+                    }
+                }, status=status.HTTP_200_OK)
 
 
 # 1
@@ -122,7 +128,7 @@ class ProfileUpdate(APIView):
             profile.age = data['age']
             profile.web = data['web']
             profile.jobs = data['job']
-            profile.region =data['region']
+            profile.region = data['region']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
             profile.twitter = data['tw']
@@ -148,19 +154,20 @@ class ProfileImageUpload(generics.CreateAPIView):
     serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
-    def base64_content(self, image, size):
+    def base64_content(self, image, margin):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name=size+'.'+ext)
+            data = ContentFile(base64.b64decode(imgstr), name=margin+'.'+ext)
             return data
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     #파일 업로드
     def post(self, request,*args,**kwargs):
         user = self.request.user
-        size = self.request.data['margin']
-        profile_file_obj = self.base64_content(self.request.data['img'], size)
+        margin = self.request.data['margin']
+        profile_file_obj = self.base64_content(self.request.data['img'], margin)
+        # profile_image_resizing(profile_file_obj, margin)
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
