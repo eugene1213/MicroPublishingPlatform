@@ -267,7 +267,8 @@
     height: 32px;
     background-size: 100%;
     background: url('/static/images/icons/profile/love.png') 1px no-repeat;
-    margin-left: 5px;
+	margin-left: 5px;
+	padding-right: 2px;
     display: block;
     float: left;
     font-size: 10px;
@@ -490,6 +491,10 @@
 			padding-top: 8px;
 			border-top: 1px solid #2a292a;
 	
+			[contenteditable=true]:empty::before {
+				content: attr(placeholder);
+				opacity: 0.5;
+			}
 			tr  {
 				display: inline-block;
 				width: 456px;
@@ -640,24 +645,39 @@
 			top: 8px;
 			left: 100px;
 			float: left;
-			width: 440px;
+			width: 408px;
 			border-bottom: 1px solid #1f1f1f;
 
 			.profile-modify-card{
 				width: 15px;
 				height: 15px;
+				float: right;
 				background: url('/static/images/icons/profile/write.png') no-repeat;
 				background-size: 100%;
-				display: inline-block;
+				display: block;
 				width: 18px;
 				margin-left: 64px;
 				cursor: pointer;
+				margin-top: -14px;
 			}
+		}
+		.btn-set-info {
+			width: 80px;
+			float: right;
+			margin-top: -4px;
+			margin-right: -32px;
+			height: 24px;
+			border-radius: 8px;
+			background-color: #ffffff;
+			border: solid 1px #2a292a;
+			text-align: center;
+			padding-top: 2px;
 		}
 		&:nth-last-of-type(2){
 			margin-bottom: 80px;
 		
 			& > .info-hr {
+				width: 424px;
 				height: 24px;
 				top: -16px;
 				left: 160px;
