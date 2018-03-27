@@ -228,7 +228,7 @@ $(document).ready(function(){
         if($(this).hasClass("btn-save")){
             
             modifyProfile();
-        }else{
+        } else {
             
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
             $(".btn-modify > img").attr("src","https://devtestserver.s3.amazonaws.com/media/example/save.svg");
@@ -239,6 +239,12 @@ $(document).ready(function(){
                 if (event.which == 13)
                     return false;
             });
+            $("td[contenteditable=\"true\"]").focus(function(){
+                console.log('asf');
+                $(this).text('');
+            });
+            console.log( $(".base-table :contains(태어난 년도) + td").text())
+            $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
         }
     });
 });
@@ -257,6 +263,7 @@ function get_profile() {
             var cover_img = json.image.cover_image;
             var profile_img = json.image.profile_image;
             var username = json.nickname;
+            var email = json.username;
             var waiting = json.waiting;
             // var stamp = json.stamp;
             var userIntro = json.intro;
@@ -264,15 +271,14 @@ function get_profile() {
             var follower = json.follower;
             var posts = json.post_count;
 
-            var birthYear = json.birthYear;
-            var birthMonth = json.birthMonth;
-            var birthDay = json.birthDay;
+            var birthYear = json.year;
+            var birthMonth = json.month;
+            var birthDay = json.day;
             var gender = json.sex;
             var age = json.age;
 
             var hpNumber = json.phone;
             var location = json.region;
-            var email = json.email;
 
             var job = json.jobs;
             var website = json.web;
@@ -289,8 +295,9 @@ function get_profile() {
             $("#following").text(following);
             $("#follower").text(follower);
             $("#posts").text(posts);
+            $("#email").text(email);
 
-            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear);
+            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear + "년");
             if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
             if(gender)          $(".base-table :contains(성별) + td").text(gender);
             if(age > 0)         $(".base-table :contains(나이) + td").text(age);
@@ -322,9 +329,11 @@ function get_profile() {
 }
 function modifyProfile() {
 
-    var birthYear = $("#birthYear").text().replace("년","");
-    var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
-    var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
+    var birthYear = $("#birthYear").text();
+    if(birthMonth != '') {
+        var birthMonth = $("#birthMonth").text().split("월")[0];
+        var birthDay = $("#birthMonth").text().split("월")[1].replace("일","");
+    }
     var gender = $("#gender").text();
     var age = $("#age").text();
     var hpNumber = $("#hpNumber").text();
@@ -335,6 +344,21 @@ function modifyProfile() {
     var ins = $("#ins").text();
     var tw = $("#tw").text();
     var subject = $("#subject").text();
+
+    if( typeof(birthYear*1) != 'number' ){
+        return alert("태어난 년도를 다시 입력해주세요.")
+    }
+    if( birthMonth > 12 || birthMonth < 1 || birthDay > 31 || birthDay < 1 || birthDay > 31 ) {
+        return alert("생일을 다시 입력해주세요.");
+    } else {
+        if( birthMonth == 2 && birthDay > 29 ) {
+            return alert("생일을 다시 입력해주세요.");
+        } else {
+            if( (birthMonth == 4 || birthMonth == 6 || birthMonth == 9 || birthMonth == 11) && birthDay > 30 ) {
+                return alert("생일을 다시 입력해주세요.");            
+            }
+        }
+    }
 
     $.ajax({
         url: "/api/member/updateProfile/",
@@ -361,6 +385,9 @@ function modifyProfile() {
             $(".btn-modify > img").attr("src","https://devtestserver.s3.amazonaws.com/media/example/write.png");
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
             $(".btn-save").removeClass("btn-save");
+            if(birthYear != ''){
+                $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text() + '년');
+            }
         },
         error: function(error) {
             console.log(error);
@@ -418,10 +445,13 @@ function uploadProfileImg(whichImg) {
         var overflowX = imgWidth - $("#profileImg").closest(".profile-image-upload-wrap").width();
         var leftPercentage = (overflowX - marginLeft) / $("#profileImg").closest(".profile-image-upload-wrap").width() * 100;
          
-        if(marginTop > 0)var percentage = "y" + topPercentage;
-        else             var percentage = "x" + leftPercentage;
+        if(marginTop != 0)          var percentage = "y" + topPercentage;
+        else if(marginLeft != 0)    var percentage = "x" + leftPercentage;
+        else {
+            if(overflowY>0) percentage = "y" + topPercentage;
+            else percentage = "x" + leftPercentage;
+        }
 
-        percentage = percentage.replace('.','d');
         url = "/api/member/profile-image/";
     }
     $.ajax({

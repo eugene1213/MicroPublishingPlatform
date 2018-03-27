@@ -66,9 +66,9 @@ class Login(APIView):
             }
 
             if data['user']['is_active']:
-                # response = Response(data, status=status.HTTP_200_OK)
+                response = Response(data, status=status.HTTP_200_OK)
                 # response = render_to_response("view/main.html", {"login": True})
-                response = HttpResponseRedirect(redirect_to='/')
+                # response = HttpResponseRedirect(redirect_to='/')
                 if api_settings.JWT_AUTH_COOKIE:
                     response.set_cookie(api_settings.JWT_AUTH_COOKIE,
                                         data['token'],
@@ -81,14 +81,14 @@ class Login(APIView):
             data = {
                 "detail": "This Account is not Activate"
             }
-            # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-            return HttpResponseRedirect(redirect_to='/signin/')
+            return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+            # return HttpResponseRedirect(redirect_to='/signin/')
         data = {
             'detail': 'Invalid credentials'
         }
 
-        # return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-        return HttpResponseRedirect(redirect_to='/signin/')
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+        # return HttpResponseRedirect(redirect_to='/signin/')
 
 
 # 1

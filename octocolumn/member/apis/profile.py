@@ -1,8 +1,9 @@
 import base64
+from io import BytesIO
 
 from PIL import Image
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.base import ContentFile
+from django.core.files.base import ContentFile, File
 from rest_framework import generics, status, exceptions
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
@@ -14,7 +15,7 @@ from column.serializers import PostSerializer, TempSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
-from utils.image_rescale import profile_image_resizing
+from utils.image_rescale import profile_image_resizing, image_quality_down
 
 __all__ = (
     'ProfileImageUpload',
@@ -163,15 +164,15 @@ class ProfileImageUpload(generics.CreateAPIView):
         raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
 
     #파일 업로드
-    def post(self, request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
         user = self.request.user
         margin = self.request.data['margin']
         profile_file_obj = self.base64_content(self.request.data['img'], margin)
-        # profile_image_resizing(profile_file_obj, margin)
+        resizing_image = profile_image_resizing(profile_file_obj, margin)
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
-            profile_image.profile_image = profile_file_obj
+            profile_image.profile_image = resizing_image
             profile_image.save()
 
             serializer = ProfileImageSerializer(profile_image)
@@ -181,7 +182,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 
         except ObjectDoesNotExist:
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
-                                                                            profile_image=profile_file_obj))
+                                                                            profile_image=resizing_image))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
@@ -208,6 +209,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
         user = self.request.user
         size = self.request.data['margin']
         cover_file_obj = self.base64_content(self.request.data['img'], size)
+        # resizing_image = image_quality_down(cover_file_obj)
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
@@ -220,7 +222,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
 
         except ObjectDoesNotExist:
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
-                                                                            cover_image=cover_file_obj + size))
+                                                                            cover_image=cover_file_obj))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
             raise exceptions.APIException({"detail": "Upload Failed"}, 400)
