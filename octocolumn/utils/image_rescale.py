@@ -15,17 +15,29 @@ def profile_image_resizing(content_file, margin):
             rescale_height = height - 200
             rescale_ratio = rescale_height/height
             img.resize((int(width - width * rescale_ratio), 200), Image.ANTIALIAS)
+            img.crop((200 * size, 0, 200 * size + 200, 200))
+            output = BytesIO()
+            img.save(output, format='JPEG', quality=70)
+            print(img.height)
+            img.file = output
+            return img
         elif height == 200:
-            pass
+            img.crop((200 * size, 0, 200 * size + 200, 200))
+            output = BytesIO()
+            img.save(output, format='JPEG', quality=70)
+            img.file = output
+            return img
         else:
             rescale_ratio = 200/height
             img.resize((int(width * rescale_ratio), 200), Image.ANTIALIAS)
+            img.crop((200 * size, 0, 200 * size + 200, 200))
+            output = BytesIO()
+            img.save(output, format='JPEG', quality=70)
+            img.file = output
+            return img
 
-        img.crop((200*size, 0, 200*size + 200, 200))
-        output = BytesIO()
-        img.save(output, format='JPEG', quality=70)
-        img.file = output
-        return img
+
+
 
     else:
         size = float(margin[1:]) * 0.01
@@ -43,6 +55,7 @@ def profile_image_resizing(content_file, margin):
             img.resize((height * rescale_ratio, 200), Image.ANTIALIAS)
 
         img.crop((0, 200 * size, 200, 200 * size + 200))
+        # print(img.height)
         output = BytesIO()
         img.save(output, format='JPEG', quality=70)
         img.file = output
