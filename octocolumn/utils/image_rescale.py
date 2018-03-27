@@ -26,6 +26,7 @@ def profile_image_resizing(content_file, margin):
         img.save(output, format='JPEG', quality=70)
         img.file = output
         return img
+
     else:
         size = float(margin[1:]) * 0.01
         height = img.height

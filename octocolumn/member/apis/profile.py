@@ -171,7 +171,7 @@ class ProfileImageUpload(generics.CreateAPIView):
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
-            profile_image.profile_image = profile_file_obj
+            profile_image.profile_image = resizing_image
             profile_image.save()
 
             serializer = ProfileImageSerializer(profile_image)
