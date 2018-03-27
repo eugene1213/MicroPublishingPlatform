@@ -127,6 +127,7 @@
 					<div id="profileIntro" contenteditable="false">자기소개란을 준비했습니다.<br />
 							다른 사람들이 당신에 대해서 알 수 있도록 도와줄 겁니다.</div>
 				</div>
+			<!-- 개인정보 -->
 				<div class="profile-userInfo profile-infomations">
 					<div class="btn-modify">
 						<img src="{% static 'images/icons/profile/write.png' %}" alt="수정버튼">
@@ -141,22 +142,22 @@
 							<table class="base-table">
 								<tr>
 									<td>태어난 년도</td>
-									<td contenteditable="false" id="birthYear"></td>
+									<td contenteditable="false" placeholder="숫자만 입력해주세요.ex) 2000" id="birthYear"></td>
 									<td ></td>
 								</tr>
 								<tr>
 									<td>생일</td>
-									<td contenteditable="false" id="birthMonth"></td>
-									<td contenteditable="false" id="birthDay"></td>
+									<td contenteditable="false" placeholder="ex) 01월20일" id="birthMonth"></td>
+									<td></td>
 								</tr>
 								<tr>
 									<td>성별</td>
-									<td contenteditable="false" id="gender"></td>
+									<td contenteditable="false" placeholder="" id="gender"></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td>나이</td>
-									<td contenteditable="false" id="age"></td>
+									<td contenteditable="false" placeholder="숫자만 입력해주세요.ex) 30" id="age"></td>
 									<td></td>
 								</tr>
 							</table>
@@ -165,7 +166,7 @@
 							<table class="contact-table">
 								<tr>
 									<td>휴대폰</td>
-									<td contenteditable="false" id="hpNumber"></td>
+									<td contenteditable="false" placeholder="숫자만 입력해주세요.ex) 01012345678" id="hpNumber"></td>
 									<td></td>
 								</tr>
 								<tr>
@@ -216,6 +217,8 @@
 						</div>
 					</div>
 				</div>
+			<!-- //개인정보 -->
+			<!-- 포인트내역 -->
 				<div class="profile-point-history profile-infomations">
 					<div class="items-wrap">
 						<div class="have-point">
@@ -247,6 +250,8 @@
 						</tr> -->
 					</table>
 				</div>
+			<!-- //포인트내역 -->
+			<!-- 관계 -->
 				<div class="profile-relationship profile-infomations">
 					<div class="relationship-tab-wrap">
 						<div class="tab">Following</div>
@@ -254,18 +259,23 @@
 						<div class="tab">Blocked</div>
 					</div>
 				</div>
+			<!-- //관계 -->
+			<!-- 계정정보 -->
 				<div class="profile-privateInfo profile-infomations">
 					<div class="infoTitle">
 						<span>비밀번호</span>
 						<div class="info-hr"></div>
+						<div class="btn-set-info" id="btnSetPassword">변경</div>
 					</div>
 					<div class="infoTitle">
 						<span>octo-code</span>
 						<div class="info-hr"></div>
+						<div class="btn-set-info" id="btnSetOctoCode">변경</div>
 					</div>
 					<div class="infoTitle">
 						<span>자동충전</span>
 						<div class="info-hr"></div>
+						<div class="btn-set-info" id="btnSetAutoCharge">해지</div>						
 					</div>
 					<div class="infoTitle">
 						<div class="info-hr">
@@ -279,6 +289,8 @@
 						<div class="btn-send">전송</div>
 					</div>
 				</div>
+			<!-- //계정정보 -->
+			<!-- 내 글 -->
 				<div class="profile_history profile-infomations">
 					<div class="pro_his_tit1">출판</div>
 					<div class="pro_his_tit2">작성 중</div>
@@ -312,6 +324,7 @@
 						</div> -->
 					</div>
 				</div>
+			<!-- //내 글 -->
 			</div>
 		</div>
 

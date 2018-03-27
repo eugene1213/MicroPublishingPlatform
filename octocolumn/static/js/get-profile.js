@@ -231,7 +231,6 @@ $(document).ready(function(){
         } else {
             
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","true");
-            $("#birthDay").prop("contenteditable","true");
             $(".btn-modify > img").attr("src","https://devtestserver.s3.amazonaws.com/media/example/save.svg");
             $(".btn-modify").addClass("btn-save");
         
@@ -240,6 +239,12 @@ $(document).ready(function(){
                 if (event.which == 13)
                     return false;
             });
+            $("td[contenteditable=\"true\"]").focus(function(){
+                console.log('asf');
+                $(this).text('');
+            });
+            console.log( $(".base-table :contains(태어난 년도) + td").text())
+            $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
         }
     });
 });
@@ -292,7 +297,7 @@ function get_profile() {
             $("#posts").text(posts);
             $("#email").text(email);
 
-            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear);
+            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear + "년");
             if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
             if(gender)          $(".base-table :contains(성별) + td").text(gender);
             if(age > 0)         $(".base-table :contains(나이) + td").text(age);
@@ -324,9 +329,11 @@ function get_profile() {
 }
 function modifyProfile() {
 
-    var birthYear = $("#birthYear").text().replace("년","");
-    var birthMonth = $("#birthMonthDate").text().replace("월","").replace("일","");
-    var birthDay = $("#birthMonthDate").text().replace("월","").replace("일","");
+    var birthYear = $("#birthYear").text();
+    if(birthMonth != '') {
+        var birthMonth = $("#birthMonth").text().split("월")[0];
+        var birthDay = $("#birthMonth").text().split("월")[1].replace("일","");
+    }
     var gender = $("#gender").text();
     var age = $("#age").text();
     var hpNumber = $("#hpNumber").text();
@@ -337,6 +344,21 @@ function modifyProfile() {
     var ins = $("#ins").text();
     var tw = $("#tw").text();
     var subject = $("#subject").text();
+
+    if( typeof(birthYear*1) != 'number' ){
+        return alert("태어난 년도를 다시 입력해주세요.")
+    }
+    if( birthMonth > 12 || birthMonth < 1 || birthDay > 31 || birthDay < 1 || birthDay > 31 ) {
+        return alert("생일을 다시 입력해주세요.");
+    } else {
+        if( birthMonth == 2 && birthDay > 29 ) {
+            return alert("생일을 다시 입력해주세요.");
+        } else {
+            if( (birthMonth == 4 || birthMonth == 6 || birthMonth == 9 || birthMonth == 11) && birthDay > 30 ) {
+                return alert("생일을 다시 입력해주세요.");            
+            }
+        }
+    }
 
     $.ajax({
         url: "/api/member/updateProfile/",
@@ -363,6 +385,9 @@ function modifyProfile() {
             $(".btn-modify > img").attr("src","https://devtestserver.s3.amazonaws.com/media/example/write.png");
             $(".table-wrap td:nth-child(2)").not("#email, #subject").prop("contenteditable","false");
             $(".btn-save").removeClass("btn-save");
+            if(birthYear != ''){
+                $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text() + '년');
+            }
         },
         error: function(error) {
             console.log(error);
