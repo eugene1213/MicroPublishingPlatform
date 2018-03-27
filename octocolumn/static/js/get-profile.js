@@ -243,8 +243,9 @@ $(document).ready(function(){
                 console.log('asf');
                 $(this).text('');
             });
-            console.log( $(".base-table :contains(태어난 년도) + td").text())
-            $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
+            if($(".base-table :contains(태어난 년도) + td").text() != ''){
+                $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
+            }
         }
     });
 });
