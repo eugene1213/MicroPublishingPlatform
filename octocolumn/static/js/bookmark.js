@@ -9,7 +9,7 @@ function bookmark(post_id) {
         success: function(json) {
 
             console.log(json.author.bookmark_status);
-            json.author.bookmark_status ? $(".btn-follow").text("Following") : $(".btn-follow").text("Follow");
+            json.author.bookmark_status ? $("#" +post_id+ ".profile_mark > div").prop("class","icon-bookmark") : $(".profile_mark > div").prop("class","icon-bookmark-empty");
         },
         error: function(error) {
             console.log(error);
