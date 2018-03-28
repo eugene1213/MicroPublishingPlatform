@@ -285,7 +285,7 @@ class PostMoreListView(generics.ListAPIView):
         return self.list(request)
 
 
-class f(generics.ListAPIView):
+class BookmarkListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     pagination_class = PostPagination
     serializer_class = PostSerializer
