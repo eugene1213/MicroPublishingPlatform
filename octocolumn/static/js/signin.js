@@ -10,6 +10,10 @@ $(document).ready(function(){
             }
         }
     });
+    $("#btn2ndInvite").unbind('click').click(function(){
+
+        secondInvite();
+    });
 });
 
 function signin_api() {
@@ -54,4 +58,25 @@ function signin_api() {
 }
 
 
+function secondInvite() {
+
+    var email  = $("#email").val();
+
+    $.ajax({
+        url: "/api/member/secondInvite/",
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            email: email
+        },
+        success: function(json) {
+
+            alert('감사합니다.');
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
 

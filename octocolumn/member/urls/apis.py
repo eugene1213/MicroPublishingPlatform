@@ -5,7 +5,7 @@ from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
-    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView
+    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^getPointHistory/$', UserPointHistory.as_view(), name='point-history'),
 
     # bookmark
-    url(r'^(?P<post_pk>\d+)/bookmark/$', Waiting.as_view(), name='bookmark'),
+    url(r'^(?P<post_pk>\d+)/bookmark/$', BookmarkView.as_view(), name='bookmark'),
 
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),

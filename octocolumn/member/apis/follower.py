@@ -7,12 +7,13 @@ from rest_framework.views import APIView
 
 from column.models import Post
 from member.models import User, ProfileImage, Profile
-from member.models.user import Relation
+from member.models.user import Relation, Bookmark
 from member.serializers import ProfileImageSerializer, ProfileSerializer
 
 __all__ = (
     'Follower',
     'Waiting',
+    'BookmarkView',
     'GetUserFollowingCard',
     'GetUserFollowerCard'
 )
@@ -75,18 +76,19 @@ class Waiting(APIView):
 # 1
 # 기다림 API
 # URL  /api/member/(?P<book_pk>\d+)/bookmark/$
-class Bookmark(APIView):
+class BookmarkView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         post_pk = self.kwargs.get('post_pk')
+        user = self.request.user
 
         try:
             post = Post.objects.filter(pk=post_pk).get()
-            result = post.bookmark_toggle(post)
-
-            if result:
+            result, relation = Bookmark.objects.get_or_create(user=user, post=post)
+            if relation:
                 return Response({'detail': 'created'})
+            result.delete()
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
