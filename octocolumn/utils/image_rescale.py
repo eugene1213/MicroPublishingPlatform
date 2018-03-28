@@ -48,7 +48,7 @@ def profile_image_resizing(content_file, margin):
         if width > 200:
             rescale_width = width - 200
             rescale_ratio = rescale_width / height
-            img.resize((200, int(height - height * rescale_ratio)))
+            img.thumbnail((200, int(height - height * rescale_ratio)))
             area = (0, int(200 * size), 200, int(200 * size) + 200)
             img = img.crop(area)
             img.save(img_io, format='JPEG', quality=100)

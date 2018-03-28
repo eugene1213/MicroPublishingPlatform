@@ -27,14 +27,26 @@ body {
     line-height: 48px;
     font-weight: bold;
     cursor: pointer; }
-    .modal_window .btn_wrap .btn-signin img {
-      float: left;
-      width: 24px;
-      height: 24px;
-      margin: 12px; }
+    .modal_window .btn_wrap .btn-signin .icon-comment-alt {
+      width: 0px;
+      height: 0px;
+      margin-left: 12px; }
+    .modal_window .btn_wrap .btn-signin .icon-facebook-rect {
+      width: 0px;
+      height: 0px;
+      margin-left: 12px; }
+    .modal_window .btn_wrap .btn-signin .icon-googleplus-rect {
+      width: 0px;
+      height: 0px;
+      margin-left: 12px; }
+    .modal_window .btn_wrap .btn-signin .signwith {
+      margin-left: 49px; }
     .modal_window .btn_wrap .btn-signin:nth-last-child(2) img {
       height: 15px;
-      margin-top: 16.5px; }
+      margin-top: 16.5px;
+      margin-left: 12px; }
+    .modal_window .btn_wrap .btn-signin:nth-last-child(2) span {
+      margin-left: 10px; }
   .modal_window .welcome {
     height: 99px;
     width: 944px;

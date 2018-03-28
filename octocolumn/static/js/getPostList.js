@@ -64,25 +64,6 @@ function getData(){
                 $("#card_"+i+" .profile_img > img").attr("src",json[i-1].post.author.img.profile_image);                          // read time
 
                 //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
-                
-                $("#profile-image"+1).load(function(e){
-                    loadCropImage("#profile-image" + 1);
-                });
-                $("#profile-image"+2).load(function(e){
-                    loadCropImage("#profile-image" + 2);
-                });
-                $("#profile-image"+3).load(function(e){
-                    loadCropImage("#profile-image" + 3);
-                });
-                $("#profile-image"+4).load(function(e){
-                    loadCropImage("#profile-image" + 4);
-                });
-                $("#profile-image"+5).load(function(e){
-                    loadCropImage("#profile-image" + 5);
-                });
-                $("#profile-image"+6).load(function(e){
-                    loadCropImage("#profile-image" + 6);
-                });
             }
         },
         error: function(error) {

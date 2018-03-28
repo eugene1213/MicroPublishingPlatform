@@ -18,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}">
 	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
     <!-- <script src="{% static 'js/script2.js' %}"></script> -->
@@ -42,12 +43,12 @@
         </div>
         <div class="btn_wrap">
             <div class="btn-signin facebook" onclick="alert('준비중 입니다.');">
-                <img src="{% static 'images/icons/modal/fill-42-copy@3x.png' %}">
-                Sign in with Facebook
+                <div class="icon-facebook-rect"></div>
+                <span class="signwith">Sign in with Facebook</span>
             </div>
-            <div class="btn-signin google" onclick="alert('준비중 입니다.');">
-                <img src="{% static 'images/icons/modal/fill-46-copy@3x.png' %}">
-                Sign in with Google
+            <div class="btn-signin google" onclick="onSignIn();">
+                <div class="icon-googleplus-rect"></div>
+                <span class="signwith">Sign in with Google</span>
             </div>
             <script>
                     function onSignIn(googleUser) {
@@ -67,8 +68,8 @@
             </script>
 
             <div class="btn-signin kakao"  onclick="javascript:loginWithKakao();">
-                <img src="{% static 'images/icons/modal/kakao@2x.png' %}">
-                Sign in with Kakao
+                <div class="icon-comment-alt"></div>
+                <span class="signwith">Sign in with Kakao</span>
             </div>
             <script type='text/javascript'>
                 //<![CDATA[
@@ -80,11 +81,10 @@
                         success: function(authObj) {
                             alert(JSON.stringify(authObj));//authObj.access_token
                             $.ajax({
-                                url: "/api/column/kakaoLogin/",
+                                url: "/api/member/kakaoLogin/" + authObj.access_token,
                                 async: false,
-                                type: 'POST',
-                                dataType: 'json',
-                                data: JSON.stringify(authObj.access_token),
+                                type: 'GET',
+                                dataType: 'json'
                             });
                         },
                         fail: function(err) {
@@ -96,7 +96,7 @@
             </script>
             <a class="btn-signin" href="/signinForm/">
                 <img src="{% static 'images/icons/modal/group-2@3x.png' %}">
-                Sign in with email
+                <span class="signwith">Sign in with email</span>
             </a>
             <div class="signup-wrap" style="margin-top: 32px;width: 537px;">
                 <input type="email" placeholder="이메일 주소를 입력해주시면 2차 초대시 안내해드리겠습니다.">

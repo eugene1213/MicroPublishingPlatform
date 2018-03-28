@@ -183,6 +183,10 @@ $(document).ready(function(){
 
         $('div[contenteditable="true"]').keypress(function(event) {
             
+            if($(this).text().length == 2001) {
+                alert("자기소개는 2000자 이하로 작성해주세요.");
+                return false;
+            }
             if (event.which != 13)
                 return true;
         
@@ -243,8 +247,9 @@ $(document).ready(function(){
                 console.log('asf');
                 $(this).text('');
             });
-            console.log( $(".base-table :contains(태어난 년도) + td").text())
-            $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
+            if($(".base-table :contains(태어난 년도) + td").text() != ''){
+                $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
+            }
         }
     });
 });
@@ -318,9 +323,9 @@ function get_profile() {
             // $("#coverImg").load(function(){
             //     loadCropImage("#coverImg");
             // });
-            $("#profileImg").load(function(){
-                loadCropImage("#profileImg");
-            });
+            // $("#profileImg").load(function(){
+            //     loadCropImage("#profileImg");
+            // });
         },
         error: function(error) {
             console.log(error);

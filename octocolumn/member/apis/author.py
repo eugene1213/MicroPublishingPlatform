@@ -91,11 +91,11 @@ class AuthorApply(generics.GenericAPIView,
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경
-            post = Post.objects.create(author=user, title=temp.title,
-                                       main_content=temp.main_content,
-                                       price=data['price'],
-                                       preview_image=preview_file_obj,
-                                       cover_image=cover_file_obj,
+            post = PreAuthorPost.objects.create(author=user, title=temp.title,
+                                                main_content=temp.main_content,
+                                                price=data['price'],
+                                                preview_image=preview_file_obj,
+                                                cover_image=cover_file_obj,
 
                                        )
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경

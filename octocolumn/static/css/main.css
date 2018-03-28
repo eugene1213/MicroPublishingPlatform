@@ -202,7 +202,7 @@
 	overflow: hidden;
 }
 .profile_img > img{
-	
+	width: 100%;
 }
 
 .mainfeed .feedbox1 .fb1_txt .profile_box .profile_name{
@@ -697,6 +697,9 @@
 	left: 100px;
 	top: 106px;
 	overflow: hidden;
+}
+.flip .arrow_box_1 .card_profile_img_wrap > img {
+	width: 100%
 }
 .flip .arrow_box_1 .btn-follow {
 	float: right;

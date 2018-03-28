@@ -278,6 +278,25 @@ class BuyList(models.Model):
                f'to: {self.post.title})'
 
 
+class SellList(models.Model):
+    # User의 sell_list 가질 수 있도록
+    # MTM에 대한 중개모델을 구성
+    # user, post, created_at으로 3개의 필드를 사용
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='sell_list_user_relation',
+        null=True
+    )
+    post = models.ForeignKey('column.Post', null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'SellList (' \
+               f'from: {self.user.username}, ' \
+               f'to: {self.post.title})'
+
+
 class Bookmark(models.Model):
     user = models.ForeignKey(
         'User',

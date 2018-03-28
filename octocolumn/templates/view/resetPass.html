@@ -29,20 +29,17 @@
         <a class="close_btn" href="javascript:modal_off();">
             <img src="{% static 'images/icons/modal/combined-shape.png' %}">
         </a>
-        <div class="welcome">Forgot your password?</div>
+        <div class="welcome">Reset your password.</div>
         <div class="welcome2">
-            비밀번호가 기억나지 않으세요?<br>
-            octocolumn에 가입한 이메일 주소를 입력해주세요.<br>
-            해당 이메일을 통해 비밀번호를 재설정해주세요.<br>
+            비밀번호를 재설정합니다.<br>
+            변경하고 싶은 비밀번호를 입력해주세요.<br>
         </div>
         <div class="form_wrap">
-            <span>이메일 주소</span>
-            <input type="email" id='username'>
-            <button id="btnFindPass">비밀번호 재설정 이메일 받기</button>
-        </div>
-        <div class="signup-wrap">
-            <span>아직 계정이 없다구요?</span>
-            <a onclick="window.location.href = '/signup/'">지금 만드세요!</a>
+            <span>새로운 비밀번호(영문, 숫자 포함 8자리 이상)</span>
+            <input type="password" id='pass1'>
+            <span>새로운 비밀번호 재입력</span>
+            <input type="password" id='pass2'>
+            <button id="btnResetPass">비밀번호 변경</button>
         </div>
     </div>
 </body>
