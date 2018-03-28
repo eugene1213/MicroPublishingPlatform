@@ -32,9 +32,9 @@ function loadTemp() {
             $(".profile-img > img").attr("src",profile_image);
             $(".profile-sub-wrap > .username").text(nickname);
 
-            $(".profile-img > img").load(function(e){
-                loadCropImage(".profile-img > img");
-            });
+            // $(".profile-img > img").load(function(e){
+            //     loadCropImage(".profile-img > img");
+            // });
         },
         error: function(error) {
             console.log(error);

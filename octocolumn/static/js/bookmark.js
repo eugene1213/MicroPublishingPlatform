@@ -80,26 +80,26 @@ function getRecent(url){
                                     </div>                              \
                                 </div>                                  \
                             </div>';
-
-                $(".main_title").append(str).find("#" + username).load(function(){loadCropImage("#" + username);});
+                $(".main_title").append(str)
+                // $(".main_title").append(str).find("#" + username).load(function(){loadCropImage("#" + username);});
 
                 //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
                 
-                $("#" + username).load(function(e){
-                    loadCropImage("#" + username);
-                });
+                // $("#" + username).load(function(e){
+                //     loadCropImage("#" + username);
+                // });
             }
             $(window).scroll(function() { 
                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
                     getRecent(next);
                 } 
             });
-            for( i in usernameArray){
-                console.log("#" + usernameArray[i]);
-                $("#" + usernameArray[i]).imagesLoaded().then(function(){
-                    loadCropImage("#" + usernameArray[i]);
-                });
-            }
+            // for( i in usernameArray){
+            //     console.log("#" + usernameArray[i]);
+            //     $("#" + usernameArray[i]).imagesLoaded().then(function(){
+            //         loadCropImage("#" + usernameArray[i]);
+            //     });
+            // }
         },
         error: function(error) {
             console.log(error);
