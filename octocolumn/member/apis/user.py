@@ -3,6 +3,8 @@ import requests
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 from ipware.ip import get_ip
 from redis_cache import cache
 
@@ -23,6 +25,7 @@ from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSer
 from member.serializers.user import ChangePasswordSerializer
 from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.jwt import jwt_token_generator
+from utils.tokengenerator import account_activation_token
 
 __all__ = (
     'Login',
@@ -223,23 +226,43 @@ class FacebookLogin(APIView):
 class PasswordReset(APIView):
     permission_classes = (AllowAny, )
 
-    def social_check(self):
-        if self.request.user.user_type is not 'd':
+    def social_check(self, user):
+        if user.user_type is not 'd':
             raise APIException('소셜계정은 비밀번호를 변경할수 없습니다.')
-        return self.request.user
+        return user
 
     def post(self, request, *args, **kwargs):
-        serializer = ChangePasswordSerializer(data=self.request.data)
 
-        if serializer.is_valid():
-            # Check old password
+        uidb64 = self.request.data['uid']
+        token = self.request.data['token']
 
-            # set_password also hashes the password that the user will get
-            self.request.user.set_password(serializer.data['password1'])
-            self.request.user.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if user is not None and account_activation_token.check_token(user, token):
+            self.social_check(user)
+
+            data = {
+                "password1": self.request.data['password1'],
+                "password2": self.request.data['password2']
+
+            }
+
+            serializer = ChangePasswordSerializer(data=data)
+
+            if serializer.is_valid():
+                # Check old password
+
+                # set_password also hashes the password that the user will get
+                user.set_password(serializer.data['password1'])
+                user.save()
+                return Response(status=status.HTTP_200_OK)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponseRedirect(redirect_to='/')
 
 
 # 1

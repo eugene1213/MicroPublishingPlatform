@@ -72,7 +72,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         # 마지막엔 serializer.data를 출력했을 때 반환될 값을 반환해줘야 함
         return data
 
-
 class ChangePasswordSerializer(serializers.Serializer):
 
     password1 = serializers.CharField(required=True)
@@ -82,3 +81,5 @@ class ChangePasswordSerializer(serializers.Serializer):
         if data['password1'] != data['password2']:
             raise serializers.ValidationError('비밀번호가 일치하지 않습니다')
         return data
+
+

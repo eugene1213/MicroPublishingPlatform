@@ -8,7 +8,7 @@ from config.views.index import signin, signup, signinForm, okay, findPass, kakao
 from config.views.index import read
 from config.views.index import profile
 from config.views.index import shop
-from member.apis import VerifyEmail, PasswordResetEmail, InviteVerifyEmail
+from member.apis import VerifyEmail, InviteVerifyEmail
 
 urlpatterns = [
     url(r'^$', index, name='index'),
@@ -23,7 +23,8 @@ urlpatterns = [
     url(r'^signinForm/$', signinForm, name='signinForm'),
     url(r'^okay/$', okay, name='okay'),
     url(r'^findPass/$', findPass, name='findPass'),
-    url(r'^resetPass/$', resetPass, name='resetPass'),
+    url(r'^resetPass/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        resetPass, name='resetPass'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^shop/$', shop, name='shop'),
     url(r'^kakao-login/$', kakao, name='kakao-login'),
@@ -33,9 +34,6 @@ urlpatterns = [
     # 이메일 체킹
     url(r'^verifyChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         VerifyEmail.as_view(), name='verifyChecking'),
-
-    url(r'^passwordResetChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        PasswordResetEmail.as_view(), name='passwordResetChecking'),
 
     url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)//(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         InviteVerifyEmail.as_view(), name='inviteChecking'),
