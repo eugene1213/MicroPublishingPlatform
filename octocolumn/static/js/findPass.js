@@ -8,7 +8,10 @@ $(document).ready(function(){
         
         resetPass();
     });
+    $("#pass2").keypress(function(e){
 
+        if(e.keyCode == 13) resetPass();
+    });
 });
 
 function findPass() {
@@ -37,9 +40,6 @@ function resetPass() {
     var uid = url.split('/')[url.split('/').length-3];
     var pass1 = $('#pass1').val();
     var pass2 = $('#pass2').val();
-
-    console.log(uid);
-    console.log(token);
     
     $.ajax({
         url: "/api/member/passwordReset/",
@@ -53,8 +53,9 @@ function resetPass() {
             password2: pass2
         },
         success: function(json) {
+            
             alert('성공적으로 변경 되었습니다.');
-            window.location.href = '/signForm/';
+            window.location.href = '/signinForm/';
         },
         error: function(error) {
             console.log(error);
