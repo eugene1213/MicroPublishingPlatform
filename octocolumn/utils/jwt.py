@@ -9,3 +9,5 @@ def jwt_token_generator(user):
     token = jwt_encode_handler(payload)
 
     return token
+
+# def password_reset_jwt_token_generatior(user):
