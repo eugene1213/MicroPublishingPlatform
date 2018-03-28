@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Post, Temp
-from column.serializers import PostSerializer, TempSerializer
+from column.serializers import PostSerializer, TempSerializer, MyTempSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
@@ -259,7 +259,7 @@ class MyTemp(APIView):
 
         try:
             temp = Temp.objects.filter(author=user).order_by('-created_date').all()
-            serializer = TempSerializer(temp, many=True)
+            serializer = MyTempSerializer(temp, many=True)
             if serializer:
                 return Response({"post": serializer.data}, status=status.HTTP_200_OK)
             raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
