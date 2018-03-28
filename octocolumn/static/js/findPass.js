@@ -8,6 +8,7 @@ $(document).ready(function(){
         
         resetPass();
     });
+
 });
 
 function findPass() {
@@ -32,8 +33,8 @@ function findPass() {
 function resetPass() {
     
     var url = window.location.href;
-    var token = url.split('/')[url.split('/').length-1];
-    var uid = url.split('/')[url.split('/').length-2];
+    var token = url.split('/')[url.split('/').length-2];
+    var uid = url.split('/')[url.split('/').length-3];
     var pass1 = $('#pass1').val();
     var pass2 = $('#pass2').val();
 
@@ -46,11 +47,15 @@ function resetPass() {
         type: 'POST',
         dataType: 'json',
         data: {
+            uid: uid,
+            token: token,
             password1: pass1,
             password2: pass2
         },
         success: function(json) {
-            console.log(json)
+            console.log(1234)
+            alert('성공적으로 변경 되었습니다.');
+            window.location.href = '/signForm/';
         },
         error: function(error) {
             console.log(error);
