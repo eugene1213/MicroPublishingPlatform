@@ -21,7 +21,8 @@ __all__ = (
     'PostMoreSerializer',
     'TempFileSerializer',
     'PostListSerializer',
-    'PreAuthorPostSerializer'
+    'PreAuthorPostSerializer',
+    'MyTempSerializer'
 )
 
 
@@ -34,7 +35,6 @@ class PostSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'author',
-            'main_content',
             'my_comment',
             'title',
             'created_date',
@@ -183,6 +183,19 @@ class TempSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'main_content',
+            'created_date',
+            'author'
+
+        )
+
+
+class MyTempSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Temp
+        fields = (
+            'id',
+            'title',
             'created_date',
             'author'
 
