@@ -143,6 +143,6 @@ class KakaoLogin(APIView):
                                 max_age=21600,
                                 httponly=True)
 
-        return HttpResponseRedirect(redirect_to='/')
+        return response
 
 
