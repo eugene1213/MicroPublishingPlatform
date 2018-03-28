@@ -1,7 +1,13 @@
 import re
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
+
+from member.models import User
+from utils.tokengenerator import account_activation_token
 
 __all__ = (
     'index',
@@ -117,8 +123,16 @@ def findPass(request):
     return render_to_response('view/beta-findPass.html')
 
 
-def resetPass(request):
-    return render_to_response('view/resetPass.html')
+def resetPass(request, uidb64=None, token=None):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        return render_to_response('view/resetPass.html')
+    else:
+        return HttpResponseRedirect(redirect_to='/')
 
 
 def shop(request):
