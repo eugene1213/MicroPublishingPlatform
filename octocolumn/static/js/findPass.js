@@ -53,7 +53,6 @@ function resetPass() {
             password2: pass2
         },
         success: function(json) {
-            console.log(1234)
             alert('성공적으로 변경 되었습니다.');
             window.location.href = '/signForm/';
         },
