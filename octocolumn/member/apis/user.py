@@ -21,6 +21,7 @@ from rest_framework_jwt.settings import api_settings
 from config import settings
 from member.backends import FacebookBackend
 from member.models import User, ProfileImage, ConnectedLog, InviteUser
+from member.models.invitations import InvitationUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
 from utils.customsendmail import invite_email_send, password_reset_email_send
@@ -35,7 +36,8 @@ __all__ = (
     'PasswordReset',
     'SendInviteEmail',
     'PasswordResetSendEmail',
-    'UserInfo'
+    'UserInfo',
+    'InvitationUserView'
 )
 
 
@@ -328,3 +330,18 @@ class PasswordResetSendEmail(APIView):
             raise APIException({"Email send failed"})
         except ObjectDoesNotExist:
             raise APIException({"this username is not valid"})
+
+
+# 1
+class InvitationUserView(APIView):
+    permission_classes = (AllowAny, )
+
+    def post(self, request):
+        data = self.request.data
+
+        if InvitationUser.objects.create(email=data['email']):
+            return Response({"detail": "sucess"}, status=status.HTTP_200_OK)
+        return Response({"detail": "fail"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+

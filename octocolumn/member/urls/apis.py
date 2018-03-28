@@ -5,7 +5,7 @@ from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
-    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail
+    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -55,6 +55,7 @@ urlpatterns = [
 
     # 메일 관련
     url(r'^invite/$', SendInviteEmail.as_view(), name='Invite'),
+    url(r'^secondInvite/$', InvitationUserView.as_view(), name='secondInvite'),
     url(r'^passwordResetEmail/$', PasswordResetSendEmail.as_view(), name='PasswordResetSendEmail'),
 
     # 기다림
