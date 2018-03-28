@@ -341,7 +341,7 @@ class InvitationUserView(APIView):
 
         if InvitationUser.objects.create(email=data['email']):
             return Response({"detail": "sucess"}, status=status.HTTP_200_OK)
-        return Response({"detail": "fail"}, status=status.HTTP_200_OK)
+        return Response({"detail": "fail"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
