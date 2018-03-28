@@ -62,7 +62,7 @@ def read(request, post_id=None):
             response = render_to_response("view/read.html", {"login": True})
             return response
         return redirect('views:index')
-    return redirect('views:index')
+    # return redirect('views:index')
 
 @never_cache
 def profile(request):
