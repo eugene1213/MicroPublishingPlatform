@@ -183,6 +183,10 @@ $(document).ready(function(){
 
         $('div[contenteditable="true"]').keypress(function(event) {
             
+            if($(this).text().length == 2001) {
+                alert("자기소개는 2000자 이하로 작성해주세요.");
+                return false;
+            }
             if (event.which != 13)
                 return true;
         

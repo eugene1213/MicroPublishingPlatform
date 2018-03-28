@@ -4,6 +4,10 @@ $(document).ready(function(){
 
         findPass();
     });
+    $("#btnResetPass").unbind('click').click(function(){
+        
+        resetPass();
+    });
 });
 
 function findPass() {
@@ -25,3 +29,24 @@ function findPass() {
         }
     });
 }
+function resetPass() {
+    
+        var pass1 = $('#pass1').val();
+        var pass2 = $('#pass2').val();
+        $.ajax({
+            url: "/api/member/passwordReset/",
+            async: false,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                password1: pass1,
+                password2: pass2
+            },
+            success: function(json) {
+                console.log(json)
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }

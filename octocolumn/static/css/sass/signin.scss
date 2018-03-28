@@ -32,16 +32,32 @@ body {
             font-weight: bold;
             cursor: pointer;
         
-            img {
-                float: left;
-                width: 24px;
-                height: 24px;
-                margin: 12px;
+            .icon-comment-alt {
+                width: 0px;
+                height: 0px;
+                margin-left: 12px;
+            }
+            .icon-facebook-rect {
+                width: 0px;
+                height: 0px;
+                margin-left: 12px;
+            }
+            .icon-googleplus-rect{
+                width: 0px;
+                height: 0px;
+                margin-left: 12px;
+            }
+            .signwith {
+                margin-left: 49px;
             }
             &:nth-last-child(2) {
                 img{
                     height: 15px;
                     margin-top: 16.5px;
+                    margin-left: 12px;
+                }
+                span {
+                    margin-left: 10px;
                 }
             }
         }

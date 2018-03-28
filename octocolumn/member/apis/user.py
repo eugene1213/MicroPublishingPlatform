@@ -66,9 +66,9 @@ class Login(APIView):
             }
 
             if data['user']['is_active']:
-                # response = Response(data, status=status.HTTP_200_OK)
+                response = Response(data, status=status.HTTP_200_OK)
                 # response = render_to_response("view/main.html", {"login": True})
-                response = HttpResponseRedirect(redirect_to='/')
+                # response = HttpResponseRedirect(redirect_to='/')
                 if api_settings.JWT_AUTH_COOKIE:
                     response.set_cookie(api_settings.JWT_AUTH_COOKIE,
                                         data['token'],
