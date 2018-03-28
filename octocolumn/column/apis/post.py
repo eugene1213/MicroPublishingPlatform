@@ -109,7 +109,6 @@ class PostCreateView(generics.GenericAPIView,
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
-        print(data['preview'])
 
         author = self.is_author()
         # 작가 일 경우
@@ -135,7 +134,7 @@ class PostCreateView(generics.GenericAPIView,
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
                 post = Post.objects.create(author=user, title=temp.title,
-                                           main_content=data['main_content'],
+                                           main_content=temp.main_content,
                                            price=data['price'],
                                            cover_image=cover_file_obj,
                                            preview=data['preview']
