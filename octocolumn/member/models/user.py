@@ -197,16 +197,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         #     # Relation에 대한역참조 매니저를 사용하는 방법
         #     self.following_user_relations.create(to_user=user)
 
-    def bookmark_toggle(self, post):
-        if not isinstance(post, Post):
-            raise ValueError('"post" argument must be User instance!')
-
-        relation, relation_created = self.bookmark_user_relation.get_or_create(post)
-        if relation_created:
-            return True
-        relation.delete()
-        return False
-
 
 # 팔로우 다대다
 class Relation(models.Model):
@@ -310,4 +300,6 @@ class Bookmark(models.Model):
         related_name='bookmark_post_relations',
         null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
 
