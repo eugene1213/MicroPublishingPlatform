@@ -34,7 +34,7 @@ def password_reset_email_send(user):
     mail_subject = 'Octocolumn 비밀번호 변경.'
     message = render_to_string('pw_change.html', {
         'user': user,
-        'domain': 'www.octocolumn.com',
+        'domain': 'localhost:8000',
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     })
