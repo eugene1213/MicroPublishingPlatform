@@ -259,7 +259,7 @@ class PasswordReset(APIView):
                 # set_password also hashes the password that the user will get
                 user.set_password(serializer.data['password1'])
                 user.save()
-                return Response(status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_200_OK)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return HttpResponseRedirect(redirect_to='/')
