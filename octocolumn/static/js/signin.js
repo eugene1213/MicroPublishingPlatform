@@ -50,7 +50,7 @@ function signin_api() {
 
 function secondInvite() {
 
-    var email  = $("#emailAddr").val();
+    var email  = $("#email").val();
 
     $.ajax({
         url: "/api/member/secondInvite/",

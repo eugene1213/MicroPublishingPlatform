@@ -13,6 +13,7 @@ from member.serializers import ProfileImageSerializer, ProfileSerializer
 __all__ = (
     'Follower',
     'Waiting',
+    'Bookmark',
     'GetUserFollowingCard',
     'GetUserFollowerCard'
 )
@@ -83,7 +84,7 @@ class Bookmark(APIView):
 
         try:
             post = Post.objects.filter(pk=post_pk).get()
-            result = post.bookmark_toggle(post)
+            result = post.bookmark_toggle(self.request.user)
 
             if result:
                 return Response({'detail': 'created'})
