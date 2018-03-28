@@ -43,14 +43,12 @@ function signin_api() {
             window.location.href = "/";
         },
         error: function(error) {
-            if(error.status == 400) {
+            if(error.status == 401) {
                 modal({
                     type: 'alert',
                     title: '알림',
                     text: '아이디와 비밀번호를 확인해 주십시오',
-                    callback: function(result){
-                        obj.focus();
-                    }
+
                 });
             }
         }

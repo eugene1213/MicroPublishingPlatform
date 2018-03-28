@@ -30,7 +30,7 @@ urlpatterns = [
     # 포스트 최신순 더보기
     url(r'^postRecentMore/$', PostMoreListView.as_view(), name='postView'),
     # 북마크 리스트
-    url(r'^bookmakrList/$', BookmarkListView.as_view(), name='bookmarkView'),
+    url(r'^bookmarkList/$', BookmarkListView.as_view(), name='bookmarkView'),
 
     url(r'^post-isbuy/(?P<pk>\d+)$', IsBuyPost.as_view(), name='post-isbuy'),
 
