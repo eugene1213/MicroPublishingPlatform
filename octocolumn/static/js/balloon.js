@@ -45,9 +45,9 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
 
         $(".card_background_img").css("background","url(" +data[i-1].post.author.img.cover_image+ ")")
 
-        $(".card_profile_img").load(function(e){
-            loadCropImage(".card_profile_img");         // !!!!프로필 사진은 로드된 후 반드시 이 함수를 호출해줘야함!!!!
-        });
+        // $(".card_profile_img").load(function(e){
+        //     loadCropImage(".card_profile_img");
+        // });
 
         $(".card_profile_name").text(authorName);
         

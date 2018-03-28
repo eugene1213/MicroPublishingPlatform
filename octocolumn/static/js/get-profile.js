@@ -323,9 +323,9 @@ function get_profile() {
             // $("#coverImg").load(function(){
             //     loadCropImage("#coverImg");
             // });
-            $("#profileImg").load(function(){
-                loadCropImage("#profileImg");
-            });
+            // $("#profileImg").load(function(){
+            //     loadCropImage("#profileImg");
+            // });
         },
         error: function(error) {
             console.log(error);
