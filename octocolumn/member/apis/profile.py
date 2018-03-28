@@ -11,11 +11,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Post, Temp
-from column.serializers import PostSerializer, TempSerializer, MyTempSerializer
+from column.serializers import MyTempSerializer
+from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
-from utils.image_rescale import profile_image_resizing, image_quality_down
+from utils.image_rescale import profile_image_resizing
 
 __all__ = (
     'ProfileImageUpload',
@@ -239,7 +240,7 @@ class PublishPost(APIView):
 
         try:
             post = Post.objects.filter(author=user).order_by('created_date').all()
-            serializer = PostSerializer(post, many=True)
+            serializer = MyPublishPostSerializer(post, many=True)
             if serializer:
                 return Response({"join_date": user.created_at, "post": serializer.data}, status=status.HTTP_200_OK)
             raise exceptions.APIException({"detail": "Abnormal connected"}, 400)

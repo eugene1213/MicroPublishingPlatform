@@ -39,6 +39,30 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
             'price',
+            'main_content',
+            'preview',
+            'comments',
+            'cover_image',
+        )
+        read_only_fields = (
+            'author',
+            'my_comment',
+        )
+
+
+class MyPublishPostSerializer(serializers.ModelSerializer):
+    my_comment = CommentSerializer(read_only=True)
+    comments = CommentSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Post
+        fields = (
+            'pk',
+            'author',
+            'my_comment',
+            'title',
+            'created_date',
+            'price',
             'preview',
             'comments',
             'cover_image',
