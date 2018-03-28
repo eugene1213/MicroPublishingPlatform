@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from config.views import index
-from config.views.index import write
+from config.views.index import write, bookmark
 from config.views.index import recent
 from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^read/(?P<post_id>\d+)$', read, name='read'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^recent/$', recent, name='recent'),
+    url(r'^bookmark/$', bookmark, name='bookmark'),
     url(r'^signin/$', signin, name='signin'),
     url(r'^signinForm/$', signinForm, name='signinForm'),
     url(r'^okay/$', okay, name='okay'),

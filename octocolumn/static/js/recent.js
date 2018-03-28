@@ -48,7 +48,7 @@ function getRecent(url){
             data = json;
             var usernameArray = [];
 
-            console.log(json.next)
+            console.log(json)
             next = json.next;
             for(var i in json.results){
 

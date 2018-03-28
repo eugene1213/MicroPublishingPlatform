@@ -24,7 +24,8 @@ $(document).ready(function() {
     });
     $(".profile_mark").click(function(e){
         
-        var post_id = $(e.target).closest(".fb1_txt_2").attr("id");
+        var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
+        bookmark(bookmark_id);
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();

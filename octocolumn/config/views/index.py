@@ -91,6 +91,19 @@ def recent(request):
     return redirect('views:index')
 
 
+def bookmark(request):
+    if mobile(request):
+        return redirect('views:index')
+
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/bookmark.html", {"login": True})
+            return response
+        return redirect('views:index')
+    return redirect('views:index')
+
+
 @never_cache
 def signin(request):
 
