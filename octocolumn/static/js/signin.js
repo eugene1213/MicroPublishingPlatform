@@ -10,6 +10,10 @@ $(document).ready(function(){
             }
         }
     });
+    $("#btn2ndInvite").unbind('click').click(function(){
+
+        secondInvite();
+    });
 });
 
 function signin_api() {
@@ -40,6 +44,28 @@ function signin_api() {
         },
         error: function(error) {
             if(error.status == 401) alert("아이디 또는 비밀번호가 틀렸습니다.");
+        }
+    });
+}
+
+function secondInvite() {
+
+    var email  = $("#emailAddr").val();
+
+    $.ajax({
+        url: "/api/member/secondInvite/",
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            email: email
+        },
+        success: function(json) {
+
+            alert('감사합니다.');
+        },
+        error: function(error) {
+            console.log(error);
         }
     });
 }
