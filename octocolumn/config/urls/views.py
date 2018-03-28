@@ -4,7 +4,7 @@ from django.contrib import admin
 from config.views import index
 from config.views.index import write
 from config.views.index import recent
-from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook
+from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
 from config.views.index import profile
 from config.views.index import shop
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^signinForm/$', signinForm, name='signinForm'),
     url(r'^okay/$', okay, name='okay'),
     url(r'^findPass/$', findPass, name='findPass'),
+    url(r'^resetPass/$', resetPass, name='resetPass'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^shop/$', shop, name='shop'),
     url(r'^kakao-login/$', kakao, name='kakao-login'),

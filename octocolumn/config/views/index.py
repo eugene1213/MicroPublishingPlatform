@@ -117,6 +117,10 @@ def findPass(request):
     return render_to_response('view/beta-findPass.html')
 
 
+def resetPass(request):
+    return render_to_response('view/resetPass.html')
+
+
 def shop(request):
     if request.COOKIES:
         token = request.COOKIES.get('token')
