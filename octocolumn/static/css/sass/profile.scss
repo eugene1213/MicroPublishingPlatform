@@ -768,7 +768,8 @@
     flex-direction: column;
     justify-content: space-around;
 	margin-top: 10px;
-    position: relative;
+	position: relative;
+	margin-bottom: 8px;
     
     & > div:last-child {
         margin-bottom: 24px;
