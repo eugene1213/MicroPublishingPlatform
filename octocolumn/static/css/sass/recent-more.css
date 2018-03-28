@@ -151,7 +151,8 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  overflow: hidden; }
+  overflow: hidden;
+  background-size: 100%; }
 
 .mainfeed .feedbox1 .fb1_txt .profile_box .profile_name {
   width: 176px;
@@ -187,7 +188,6 @@
   height: 32px;
   display: block;
   float: left;
-  background: url(../../images/icons/read/bm2.png) no-repeat;
   background-size: 100%;
   position: absolute;
   top: 15px;
@@ -308,7 +308,6 @@
   height: 32px;
   display: block;
   float: left;
-  background: url(../images/icons/read/bm2.png) no-repeat;
   background-size: 100%;
   position: absolute;
   top: 15px;
@@ -424,7 +423,6 @@
   height: 32px;
   display: block;
   float: left;
-  background: url(../images/icons/read/bm2.png) no-repeat;
   background-size: 100%;
   position: absolute;
   top: 15px;
@@ -547,7 +545,6 @@
   height: 32px;
   display: block;
   float: left;
-  background: url(../images/icons/read/bm2.png) no-repeat;
   background-size: 100%;
   position: absolute;
   top: 15px;

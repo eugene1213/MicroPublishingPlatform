@@ -33,7 +33,7 @@ function getData(){
 
                 $("#card_"+i+" .profile_name").text(json[i-1].post.author.username);                    // 작가이름
                 $("#card_"+i+" .profile_readtime").text(readTime+" min read");                          // read time
-                $("#card_"+i+" .profile_img > img").attr("src",json[i-1].post.author.img.profile_image);                          // read time
+                $("#card_"+i+" .profile_img").css("background-image","url("+json[i-1].post.author.img.profile_image+")");                          // read time
 
                 //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
 

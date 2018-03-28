@@ -2,8 +2,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from config.views import index
-from config.views.index import write, bookmark
-from config.views.index import recent
+from config.views.index import write
+from config.views.index import recent, bookmark
 from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
 from config.views.index import profile

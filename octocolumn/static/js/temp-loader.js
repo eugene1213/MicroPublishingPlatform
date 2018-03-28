@@ -29,7 +29,7 @@ function loadTemp() {
             var nickname = json.user.nickname;
             var profile_image = json.profileImg.profile_image;
 
-            $(".profile-img > img").attr("src",profile_image);
+            $("#profileImage").css("background-image","url(" + profile_image + ")");
             $(".profile-sub-wrap > .username").text(nickname);
 
             // $(".profile-img > img").load(function(e){

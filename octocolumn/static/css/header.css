@@ -196,27 +196,6 @@ li.info span {
 	touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-.profile-img > img{
-	position: fixed;
-	right: 2px;
-	top: 4px;
-	display: block;
-	z-index: 100;
-    border: 0;
-    overflow: hidden;
-	background-size: 24px 24px;
-	border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-	height: 24px;
-	width: 24px;
-	cursor: pointer;
-	pointer-events: auto;
-	margin-right: 10px;
-	touch-action: manipulation;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
 
 @media screen and (max-width: 480px) {
 	#profile-container {
