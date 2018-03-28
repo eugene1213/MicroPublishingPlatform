@@ -658,7 +658,8 @@
   flex-direction: column;
   justify-content: space-around;
   margin-top: 10px;
-  position: relative; }
+  position: relative;
+  margin-bottom: 8px; }
   .profile .profile_content .profile_history .history_bar > div:last-child {
     margin-bottom: 24px; }
 
