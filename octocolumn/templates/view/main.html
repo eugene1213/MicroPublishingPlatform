@@ -3,7 +3,7 @@
 <head>
 	{% load static %}
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
+	<meta name="viewport" content="width=1280">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
@@ -15,12 +15,17 @@
 	<meta http-equiv="x-rim-auto-match" content="none">
 	<title>octoclumn</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.modal.css' %}"   >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.modal.theme-atlant.css' %}"   >
+	<!-- JS -->
 	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>
 	<script src="{% static 'js/script2.js' %}"></script>
@@ -29,6 +34,14 @@
 	<script src="{% static 'js/checkOwnPost.js' %}"></script>
 	<script src="{% static 'js/request-buy.js' %}"></script>
 	<script src="{% static 'js/drag-n-crop.js' %}"></script>
+    <script src="{% static 'js/bookmark.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/custom-alert/jquery.modal.js'  %}"></script>
+
+
+	<!--jQuery-->
+
+
 	<!--구글 태그 매니저-->
 	<!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':-->
 	<!--new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],-->
@@ -65,7 +78,7 @@
 			마음을 움직이는 흥미로운 아이디어.<br />
 			가장 잘 아는 사람들로부터 직접 들을 수 있습니다.<br />
 			기술에서 정치에 이르기까지 당신이 관심있어하는<br />
-			 모든 분야에 대해서 다루고 있습니다.
+			모든 분야에 대해서 다루고 있습니다.
 		</div>
 		<a href="#" class="learn_btn">
 			Learn more
@@ -87,11 +100,11 @@
 						<div class="fb1_txt_1"></div>
 						<div class="fb1_txt_2"></div>
 						<div class="profile_box">
-							<div class="profile_img profile-image-upload-wrap"><img id="profile-image1" src="" alt="프로필 사진"></div>
+							<div class="profile_img profile-image-upload-wrap"></div>
 							<div class="profile_name"></div>
 							<div class="profile_date"></div>
 							<div class="profile_readtime"></div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -100,11 +113,11 @@
 					<div class="fb1_txt">
 						<div class="fb1_txt_1"></div>
 						<div class="profile_box">
-							<div class="profile_img profile-image-upload-wrap"><img id="profile-image2" src="" alt="프로필 사진"></div>
+							<div class="profile_img profile-image-upload-wrap"></div>
 							<div class="profile_name"></div>
 							<div class="profile_date"></div>
 							<div class="profile_readtime"></div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -113,11 +126,11 @@
 					<div class="fb1_txt">
 						<div class="fb1_txt_1"></div>
 						<div class="profile_box">
-							<div class="profile_img profile-image-upload-wrap"><img id="profile-image3" src="" alt="프로필 사진"></div>
+							<div class="profile_img profile-image-upload-wrap"></div>
 							<div class="profile_name"></div>
 							<div class="profile_date"></div>
 							<div class="profile_readtime"></div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -129,11 +142,11 @@
 						<div class="fb1_txt_1"></div>
 						<div class="fb1_txt_2"></div>
 						<div class="profile_box">
-							<div class="profile_img profile-image-upload-wrap"><img id="profile-image4" src="" alt="프로필 사진"></div>
+							<div class="profile_img profile-image-upload-wrap"></div>
 							<div class="profile_name"></div>
 							<div class="profile_date"></div>
 							<div class="profile_readtime"></div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -144,11 +157,11 @@
 					<div class="fb1_txt_1"></div>
 					<div class="fb1_txt_2"></div>
 					<div class="profile_box">
-						<div class="profile_img profile-image-upload-wrap"><img id="profile-image5" src="" alt="프로필 사진"></div>
+						<div class="profile_img profile-image-upload-wrap"></div>
 						<div class="profile_name"></div>
 						<div class="profile_date"></div>
 						<div class="profile_readtime"></div>
-						<div class="profile_mark"></div>
+						<div class="profile_mark"><div></div></div>
 					</div>
 				</div>
 			</div>
@@ -176,7 +189,7 @@
 							<div class="profile_name">Tristan de Montebello</div>
 							<div class="profile_date">May 10</div>
 							<div class="profile_readtime">5 min read</div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -191,7 +204,7 @@
 							<div class="profile_name">Tristan de Montebello</div>
 							<div class="profile_date">May 10</div>
 							<div class="profile_readtime">5 min read</div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -206,7 +219,7 @@
 							<div class="profile_name">Tristan de Montebello</div>
 							<div class="profile_date">May 10</div>
 							<div class="profile_readtime">5 min read</div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -226,7 +239,7 @@
 							<div class="profile_name">Tristan de Montebello</div>
 							<div class="profile_date">May 10</div>
 							<div class="profile_readtime">5 min read</div>
-							<div class="profile_mark"></div>
+							<div class="profile_mark"><div></div></div>
 						</div>
 					</div>
 				</div>
@@ -245,7 +258,7 @@
 						<div class="profile_name">Tristan de Montebello</div>
 						<div class="profile_date">May 10</div>
 						<div class="profile_readtime">5 min read</div>
-						<div class="profile_mark"></div>
+						<div class="profile_mark"><div></div></div>
 					</div>
 				</div>
 			</div>

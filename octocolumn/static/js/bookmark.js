@@ -1,5 +1,5 @@
-$(document).ready(function(){
-    
+$(document).ready(function() {
+
     var data = getRecent("/api/column/bookmarkList/");
     popBalloon(data);
 
@@ -28,8 +28,27 @@ $(document).ready(function(){
     });
 });
 
-function getRecent(url){
+/* bookmarking / cancel */
+function bookmark(post_id) {
+    
+    $.ajax({
+        url: "/api/member/"+post_id+"/bookmark/",
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        success: function(json) {
 
+            console.log(json);
+            json.detail == 'created' ? $("#bookmark_" +post_id).prop("class","icon-bookmark") : $("#bookmark_"+post_id).prop("class","icon-bookmark-empty");
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+function getRecent(url){
+    
     var data = {};
     var count = 0;
 
@@ -48,7 +67,7 @@ function getRecent(url){
             data = json;
             var usernameArray = [];
 
-            console.log(json.next)
+            console.log(json)
             next = json.next;
             for(var i in json.results){
 
@@ -106,49 +125,4 @@ function getRecent(url){
         }
     });
     return data;
-}
-// Fn to allow an event to fire after all images are loaded
-$.fn.imagesLoaded = function () {
-    
-    // get all the images (excluding those with no src attribute)
-    var $imgs = this.find('img[src!=""]');
-    // if there's no images, just return an already resolved promise
-    if (!$imgs.length) {return $.Deferred().resolve().promise();}
-
-    // for each image, add a deferred object to the array which resolves when the image is loaded (or if loading fails)
-    var dfds = [];  
-    $imgs.each(function(){
-
-        var dfd = $.Deferred();
-        dfds.push(dfd);
-        var img = new Image();
-        img.onload = function(){dfd.resolve();}
-        img.onerror = function(){dfd.resolve();}
-        img.src = this.src;
-
-    });
-
-    // return a master promise object which will resolve when all the deferred objects have resolved
-    // IE - when all the images are loaded
-    return $.when.apply($,dfds);
-
-}
-
-/* bookmarking / cancel */
-function bookmark(post_id) {
-    
-    $.ajax({
-        url: "/api/member/"+post_id+"/bookmark/",
-        async: false,
-        type: 'GET',
-        dataType: 'json',
-        success: function(json) {
-
-            console.log(json.author.bookmark_status);
-            json.author.bookmark_status ? $(".btn-follow").text("Following") : $(".btn-follow").text("Follow");
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
 }

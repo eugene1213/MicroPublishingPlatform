@@ -48,7 +48,7 @@ function getRecent(url){
             data = json;
             var usernameArray = [];
 
-            console.log(json.next)
+            console.log(json)
             next = json.next;
             for(var i in json.results){
 
@@ -72,7 +72,7 @@ function getRecent(url){
                                         '+ main_content +'              \
                                     </div>                              \
                                     <div class="profile_box">           \
-                                        <div class="profile_img profile-image-upload-wrap"><img id="'+ username +'" src="'+ profile_image +'" alt="프로필 사진"></div>  \
+                                        <div class="profile_img" id="'+username+'" style="background-image:url('+profile_image+')"></div>  \
                                         <div class="profile_name">'+ username +'</div>                 \
                                         <div class="profile_date">'+ created_date +'</div>             \
                                         <div class="profile_readtime">'+ readTime +' min read</div>    \

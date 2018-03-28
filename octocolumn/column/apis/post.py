@@ -29,7 +29,7 @@ __all__ = (
     'IsBuyPost',
     'PostListView',
     'PostMoreListView',
-    'BookmarkListView'
+    # 'BookmarkListView'
 )
 
 
@@ -134,7 +134,7 @@ class PostCreateView(generics.GenericAPIView,
                 if self.major_point().point > user_queryset.point:
                     raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
 
-                post = Post.objects.create(author=user, title=data['title'],
+                post = Post.objects.create(author=user, title=temp.title,
                                            main_content=data['main_content'],
                                            price=data['price'],
                                            cover_image=cover_file_obj,
@@ -285,28 +285,7 @@ class PostMoreListView(generics.ListAPIView):
         return self.list(request)
 
 
-class f(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
-    pagination_class = PostPagination
-    serializer_class = PostSerializer
 
-    def list(self, request, *args, **kwargs):
-        try:
-            user = self.request.user
-            post = Bookmark.objects.filter(user=user).order_by('-created_date')
-
-            page = self.paginate_queryset(post)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-
-            if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-                return self.get_paginated_response(serializer.data)
-            return Response(serializer.data)
-        except ObjectDoesNotExist:
-            return Response('', 200)
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request)
 
 
 class PostLikeToggleView(APIView):
@@ -434,25 +413,27 @@ class AuthorResult(APIView):
             return Response({"author": False}, status=status.HTTP_200_OK)
 
 
-class BookmarkListView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
-    pagination_class = PostPagination
-    serializer_class = PostSerializer
-
-    def list(self, request, *args, **kwargs):
-        try:
-            user = self.request.user
-            post = Bookmark.objects.filter(user=user).order_by('-created_date')
-
-            page = self.paginate_queryset(post.post)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-
-            if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-                return self.get_paginated_response(serializer.data)
-            return Response(serializer.data)
-        except ObjectDoesNotExist:
-            return Response('', 200)
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request)
+# class BookmarkListView(generics.ListAPIView):
+#     permission_classes = (IsAuthenticated,)
+#     pagination_class = PostPagination
+#     serializer_class = PostSerializer
+#
+#     def list(self, request, *args, **kwargs):
+#         try:
+#             user = self.request.user
+#             bookmarks = Bookmark.objects.filter(user=user)
+#             # post = Post.objects.filter()
+#             print(bookmarks)
+#
+#             page = self.paginate_queryset(post)
+#             serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+#
+#             if page is not None:
+#                 serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+#                 return self.get_paginated_response(serializer.data)
+#             return Response(serializer.data)
+#         except ObjectDoesNotExist:
+#             return Response('', 200)
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request)

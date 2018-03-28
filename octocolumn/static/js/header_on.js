@@ -29,7 +29,7 @@ function getUserInfo() {
 
             $(".btn-point .point").text(point + "p");
             $("#profile-container > .profile-text").text(nickname);
-            $("#header-profile-image").attr("src", profile_image);
+            $("#header-profile-image").css("background-image", "url("+profile_image+")");
         }
     });
 }

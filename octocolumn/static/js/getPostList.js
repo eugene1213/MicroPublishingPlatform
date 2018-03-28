@@ -1,35 +1,6 @@
 $(document).ready(function(){
 
-    var data = getData();
-    popBalloon(data);
 
-    $(document).click(function(e){
-        
-        var post_id = e.target.getAttribute("id");
-        if(post_id > 0){
-
-            var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            var cover_img = data[card_id-1].post.cover_img;
-            var title = data[card_id-1].post.title;
-            var date = data[card_id-1].post.created_datetime;
-            var author = data[card_id-1].post.author;
-            var tag = data[card_id-1].post.tag;
-            var price = data[card_id-1].post.price;
-            var preview = data[card_id-1].post.preview;
-            var readtime = $("#card_" + card_id + " .profile_readtime").text();
-
-            isBought(post_id, cover_img, title, date, author, tag, readtime, price, preview);
-            
-        }
-    });
-    $(".profile_mark").click(function(e){
-        
-        var post_id = $(e.target).closest(".fb1_txt_2").attr("id");
-
-    });
-    $(".btn-cancel-wrap").click(function(){
-        $(".preview-wrap").hide();
-    });
 });
 
 function getData(){
@@ -52,6 +23,7 @@ function getData(){
                 $("#card_"+i+" .fb1_img").attr("id", json[i-1].post.post_id);
                 $("#card_"+i+" .fb1_txt_1").attr("id", json[i-1].post.post_id);
                 $("#card_"+i+" .fb1_txt_2").attr("id", json[i-1].post.post_id);
+                $("#card_"+i+" .profile_mark > div").attr("id", "bookmark_"+json[i-1].post.post_id);
 
                 // $("#card_"+i+" .fb1_img > img").attr("src",json[i-1].post.cover_img);
                 $("#card_"+i+" .fb1_img").css("background","url("+json[i-1].post.cover_img+")");        // 커버사진
@@ -61,9 +33,11 @@ function getData(){
 
                 $("#card_"+i+" .profile_name").text(json[i-1].post.author.username);                    // 작가이름
                 $("#card_"+i+" .profile_readtime").text(readTime+" min read");                          // read time
-                $("#card_"+i+" .profile_img > img").attr("src",json[i-1].post.author.img.profile_image);                          // read time
+                $("#card_"+i+" .profile_img").css("background-image","url("+json[i-1].post.author.img.profile_image+")");                          // read time
 
                 //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
+
+                json[i-1].post.bookmark_status ? $("#card_"+i+" .profile_mark > div").attr("class", "icon-bookmark") : $("#card_"+i+" .profile_mark > div").attr("class", "icon-bookmark-empty");
             }
         },
         error: function(error) {
