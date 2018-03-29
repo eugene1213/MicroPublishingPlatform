@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
@@ -31,7 +32,7 @@
     <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script> -->
     <script type="text/javascript" src="{% static 'js/saveTmp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
@@ -49,7 +50,7 @@
             {% include 'view/header.html' %}
         {% endif %}
         <div class="container" id="container">
-            <div class="audio-wrap">
+            <!-- <div class="audio-wrap">
                 <audio preload id="audio_1">
                     <source src="{% static 'mp3/key-01.mp3' %}" type="audio/mp3">
                 </audio>
@@ -113,7 +114,7 @@
                 <audio preload id="audio_scrollDown">
                     <source src="{% static 'mp3/scrollDown.mp3' %}" type="audio/mp3">
                 </audio>
-            </div>
+            </div> -->
             <div class="toggle-wrap">
                 <label class="switch">
                     <input type="checkbox">
@@ -186,100 +187,7 @@
                 <div class="editable" id="editable"></div>
             </div>
             
-            <div class="preview-wrap">
-                <div class="preview" id="preview">
-                    <div class="btn-cancel-wrap">
-                        <div class="btn-cancel"></div>
-                    </div>
-                    <div class="ready2publish">Ready to publish?</div>
-                    <div class="preview-cover-img">
-                        <img id="preview-cover-img" src="" alt="">
-                    </div>
-                    <div class="preview-title"></div>
-                    <div class="preview-content-info">
-                        <div class="preview-read-time"></div>
-                        <div class="preview-by">by</div>
-                        <div class="preview-author"></div>
-                        <div class="preview-create-date">2017. 12. 18 18:33</div>
-                    </div>
-                    <div class="preview-main-content" id="preview-main-content">
-                        <div id="tmp"></div>
-                        <!-- <img src="" alt="">
-                        preview-image -->
-                    </div>
-                    <div class="preview-tag-wrap">
-                    </div>
-                    <div class="preview-notice-wrap">
-                        <span>출판하려는 칼럼의 정보를 확인하시고, octo-code를 입력해서 칼럼을 발행해주세요.<br/>
-                            칼럼을 출판한 후에는</span>
-                        <span class="hightlight">수정, 삭제가 불가능</span><!--
-                        --><span>하며, 출판 버튼을 누르면 출판비</span>
-                        <span class="preview-price price-set-decimal">100</span><!--
-                        --><span>P가 차감됩니다.</span>
-                    </div>
-                    <div class="preview-br-wrap">
-                        <div class="preview-br-list-wrap">
-                            <span class="preview-br-list">제목</span>
-                            <span class="preview-br-list preview-title">title</span>
-                        </div>
-                        <div class="preview-br-list-wrap">
-                            <span class="preview-br-list">태그</span>
-                            <span class="preview-br-list" id="tag_all">tag_all</span>
-                        </div>
-                        <div class="preview-br-list-wrap">
-                            <span class="preview-br-list">가격</span>
-                            <span id="previewPrice" class="preview-br-list price-set-decimal">100</span>
-                            <span>point</span>
-                        </div>
-                        <div class="preview-br-list-wrap">
-                            <span class="preview-br-list">octo-code</span>
-                            <input type="text" class="octo-code" id="octo-code-1" maxlength="1" required>
-                            <input type="text" class="octo-code" id="octo-code-2" maxlength="1" required>
-                            <input type="text" class="octo-code" id="octo-code-3" maxlength="1" required>
-                            <input type="text" class="octo-code" id="octo-code-4" maxlength="1" required>
-                            <button class="find-octo-code-button">octo-code 찾기</button>
-                        </div>
-                        <div class="preview-br-list-wrap preview-agreement-wrap">
-                            <span class="preview-br-list"></span>
-                            <span class="preview-br-list preview-agreement">본인은 ‘환불불가정책’에 동의합니다.</span>
-                            <input type="checkbox" class="agreement-checkbox" style="width:24px;height:24px;">
-                        </div>
-                    </div>
-                    <div class="preview-button-wrap">
-                        <button class="done-publish btn_disabled" id="done-publish" disabled="disabled">출판</button>
-                        <button class="cancel-publish" id="cancel-publish">취소</button>
-                    </div>
-                    <div class="preview-terms-wrap">
-                        <span class="preview-terms">대가성 콘텐츠 표기, 사용자 아이디 정책, 서비스 운영정책, 서비스 이용약관, 저작권법</span><!--
-                     --><span>을 참고하세요.</span>
-                    </div>
-                </div> 
-                <div class="preview" id="authorApply">
-                    <div class="btn-cancel-wrap">
-                        <div class="btn-cancel"></div>
-                    </div>
-                    <div class="ready2publish">Become a writer</div>
-                    <div class="preview-notice-wrap">
-                        <span>칼럼리스트님에 대해서 이해하고, 앞으로의 활동을 기대할 수 있도록 몇가지 정보를 입력해주세요.</span>
-                    </div>
-                    <div class="author-intro-title">
-                        <span>칼럼리스트 소개</span>
-                    </div>
-                    <textarea class="author-intro"></textarea>
-                    <div class="author-intro-title">
-                        <span>칼럼리스트님께서 기존에 쓴 글 혹은 활동사항을 확인할 수 있는 URL</span>
-                    </div>
-                    <input type="text" id="inputUrl">
-                    <div class="preview-button-wrap">
-                        <button id="btn-author-apply">칼럼리스트 신청</button>
-                        <button class="cancel-publish" id="cancel-apply">취소</button>
-                    </div>
-                    <div class="preview-terms-wrap">
-                        <span class="preview-terms">대가성 콘텐츠 표기, 사용자 아이디 정책, 서비스 운영정책, 서비스 이용약관, 저작권법</span><!--
-                        --><span>을 참고하세요.</span>
-                    </div>
-                </div>
-            </div>
+
             <script>
                 var titleEditor = new MediumEditor('.title', {
                     disableReturn: true
@@ -308,21 +216,18 @@
                                 },
                                 styles: { // (object) Available image styles configuration
                                     wide: { // (object) Image style configuration. Key is used as a class name added to an image, when the style is selected (.medium-insert-images-wide)
-                                        label: '<span class="fa fa-align-justify"></span>', // (string) A label for a style
+                                        label: '<span class="icon-img-align-center"></span>', // (string) A label for a style
                                         added: function ($el) {}, // (function) Callback function called after the style was selected. A parameter $el is a current active paragraph (.medium-insert-active)
                                         removed: function ($el) {} // (function) Callback function called after a different style was selected and this one was removed. A parameter $el is a current active paragraph (.medium-insert-active)
                                     },
                                     left: {
-                                        label: '<span class="fa fa-align-left"></span>'
+                                        label: '<span class="icon-img-align-left"></span>'
                                     },
                                     right: {
-                                        label: '<span class="fa fa-align-right"></span>'
+                                        label: '<span class="icon-img-align-right"></span>'
                                     },
-                                    // grid: {
-                                    //     label: '<span class="fa fa-th"></span>'
-                                    // },
                                     full: {
-                                        label: '<span class="fa fa-align-justify"></span>'
+                                        label: '<span class="icon-img-align-full"></span>'
                                     }
                                 },
                                 actions: { // (object) Actions for an optional second toolbar
@@ -396,9 +301,103 @@
                 check.click(function(){
                     $(".toggle-wrap p").toggle();
                 });
-//여기부터
+
 
             </script>
+        </div>
+        <div class="preview-wrap">
+            <div class="preview" id="preview">
+                <div class="btn-cancel-wrap">
+                    <div class="btn-cancel"></div>
+                </div>
+                <div class="ready2publish">Ready to publish?</div>
+                <div class="preview-cover-img">
+                    <img id="preview-cover-img" src="" alt="">
+                </div>
+                <div class="preview-title"></div>
+                <div class="preview-content-info">
+                    <div class="preview-read-time"></div>
+                    <div class="preview-by">by</div>
+                    <div class="preview-author"></div>
+                    <div class="preview-create-date">2017. 12. 18 18:33</div>
+                </div>
+                <div class="preview-main-content" id="preview-main-content">
+                    <div id="tmp"></div>
+                    <!-- <img src="" alt="">
+                    preview-image -->
+                </div>
+                <div class="preview-tag-wrap">
+                </div>
+                <div class="preview-notice-wrap">
+                    <span>출판하려는 칼럼의 정보를 확인하시고, octo-code를 입력해서 칼럼을 발행해주세요.<br/>
+                        칼럼을 출판한 후에는</span>
+                    <span class="hightlight">수정, 삭제가 불가능</span><!--
+                    --><span>하며, 출판 버튼을 누르면 출판비</span>
+                    <span class="preview-price price-set-decimal">100</span><!--
+                    --><span>P가 차감됩니다.</span>
+                </div>
+                <div class="preview-br-wrap">
+                    <div class="preview-br-list-wrap">
+                        <span class="preview-br-list">제목</span>
+                        <span class="preview-br-list preview-title">title</span>
+                    </div>
+                    <div class="preview-br-list-wrap">
+                        <span class="preview-br-list">태그</span>
+                        <span class="preview-br-list" id="tag_all">tag_all</span>
+                    </div>
+                    <div class="preview-br-list-wrap">
+                        <span class="preview-br-list">가격</span>
+                        <span id="previewPrice" class="preview-br-list price-set-decimal">100</span>
+                        <span>point</span>
+                    </div>
+                    <div class="preview-br-list-wrap">
+                        <span class="preview-br-list">octo-code</span>
+                        <input type="text" class="octo-code" id="octo-code-1" maxlength="1" required>
+                        <input type="text" class="octo-code" id="octo-code-2" maxlength="1" required>
+                        <input type="text" class="octo-code" id="octo-code-3" maxlength="1" required>
+                        <input type="text" class="octo-code" id="octo-code-4" maxlength="1" required>
+                        <button class="find-octo-code-button">octo-code 찾기</button>
+                    </div>
+                    <div class="preview-br-list-wrap preview-agreement-wrap">
+                        <span class="preview-br-list"></span>
+                        <span class="preview-br-list preview-agreement">본인은 ‘환불불가정책’에 동의합니다.</span>
+                        <input type="checkbox" class="agreement-checkbox" style="width:24px;height:24px;">
+                    </div>
+                </div>
+                <div class="preview-button-wrap">
+                    <button class="done-publish btn_disabled" id="done-publish" disabled="disabled">출판</button>
+                    <button class="cancel-publish" id="cancel-publish">취소</button>
+                </div>
+                <div class="preview-terms-wrap">
+                    <span class="preview-terms">대가성 콘텐츠 표기, 사용자 아이디 정책, 서비스 운영정책, 서비스 이용약관, 저작권법</span><!--
+                    --><span>을 참고하세요.</span>
+                </div>
+            </div> 
+            <div class="preview" id="authorApply">
+                <div class="btn-cancel-wrap">
+                    <div class="btn-cancel"></div>
+                </div>
+                <div class="ready2publish">Become a writer</div>
+                <div class="preview-notice-wrap">
+                    <span>칼럼리스트님에 대해서 이해하고, 앞으로의 활동을 기대할 수 있도록 몇가지 정보를 입력해주세요.</span>
+                </div>
+                <div class="author-intro-title">
+                    <span>칼럼리스트 소개</span>
+                </div>
+                <textarea class="author-intro"></textarea>
+                <div class="author-intro-title">
+                    <span>칼럼리스트님께서 기존에 쓴 글 혹은 활동사항을 확인할 수 있는 URL</span>
+                </div>
+                <input type="text" id="inputUrl">
+                <div class="preview-button-wrap">
+                    <button id="btn-author-apply">칼럼리스트 신청</button>
+                    <button class="cancel-publish" id="cancel-apply">취소</button>
+                </div>
+                <div class="preview-terms-wrap">
+                    <span class="preview-terms">대가성 콘텐츠 표기, 사용자 아이디 정책, 서비스 운영정책, 서비스 이용약관, 저작권법</span><!--
+                    --><span>을 참고하세요.</span>
+                </div>
+            </div>
         </div>
         <div class="modal-extend-wrap">
             <div class="modal-extend">

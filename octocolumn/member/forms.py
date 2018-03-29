@@ -1,8 +1,6 @@
 # from django import forms
 # from common.utils import send_email
 # from . import errors
-#
-#
 # class AccountActionForm(forms.Form):
 #     comment = forms.CharField(
 #         required=False,
@@ -14,14 +12,11 @@
 #     @property
 #     def email_subject_template(self):
 #         return 'email/account/notification_subject.txt'
-#
 #     @property
 #     def email_body_template(self):
 #         raise NotImplementedError()
-#
 #     def form_action(self, account, user):
 #         raise NotImplementedError()
-#
 #     def save(self, account, user):
 #         try:
 #             account, action = self.form_action(account, user)
@@ -29,7 +24,6 @@
 #             error_message = str(e)
 #             self.add_error(None, error_message)
 #             raise
-#
 #         if self.cleaned_data.get('send_email', False):
 #             send_email(
 #                 to=[account.user.email],
@@ -41,3 +35,37 @@
 #                 }
 #             )
 #     return account, action
+#
+# class DepositForm(AccountActionForm):
+#     amount = forms.IntegerField(
+#         min_value=Account.MIN_DEPOSIT,
+#         max_value=Account.MAX_DEPOSIT,
+#         required=True,
+#         help_text=’How much to deposit?’,
+#     )
+#     reference_type = forms.ChoiceField(
+#         required=True,
+#         choices=Action.REFERENCE_TYPE_CHOICES,
+#     )
+#     reference = forms.CharField(
+#         required=False,
+#     )
+#     email_body_template = 'email/account/deposit.txt'
+#     field_order = (
+#         'amount',
+#         'reference_type',
+#         'reference',
+#         'comment',
+#         'send_email',
+#     )
+#     def form_action(self, account, user):
+#         return Account.deposit(
+#             id=account.pk,
+#             user=account.user,
+#             amount=self.cleaned_data['amount'],
+#             deposited_by=user,
+#             reference=self.cleaned_data['reference'],
+#             reference_type=self.cleaned_data['reference_type'],
+#             comment=self.cleaned_data['comment'],
+#             asof=timezone.now(),
+#         )

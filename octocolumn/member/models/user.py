@@ -9,7 +9,8 @@ from column.models import Post
 __all__ = (
     'UserManager',
     'User',
-    'BuyList'
+    'BuyList',
+    'SellList'
 )
 
 

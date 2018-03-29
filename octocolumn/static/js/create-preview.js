@@ -11,22 +11,12 @@ $(document).ready(function() {
 
         $("#tmp").replaceWith("<div id='tmp'>" + $(".editable").html() + "</div>");
         $(".preview-wrap").show();
+        $(".container").css("position", "fixed");
+
         // dom2img();                              // 미리보기 이미지 렌더링
         previewCoverImg();                      // 설정된 커버이미지 미리보기에 출력
         previewContentInfo();                   // 설정된 값들 미리보기에 출력
 
-        previewModalHeight();                   // 모달 높이 계산해서 보여줌
-
-        $(window).scroll(function(){
-            if($(document).scrollTop() > $(".preview").height()) {
-
-                $('#html').on('scroll touchmove mousewheel', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return false;
-                });
-            }
-        });
         $("#previewPrice").text($("#setPrice").text());
         // },100)
         $(".arrow-box").hide();
@@ -34,9 +24,11 @@ $(document).ready(function() {
     });
     $(".cancel-publish").click(function(){
         $(".preview-wrap").hide();
+        $(".container").css("position", "static");
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
+        $(".container").css("position", "static");
     });
 
     /* read time 계산기 */
@@ -61,15 +53,6 @@ $(document).ready(function() {
     
     countTitle();   // 제목 글자수 체크
 }); // $(document).ready(function()
-
-/* preview-wrap 높이 */
-function previewModalHeight(){
-
-    var editorHeight = $(".editable").height();
-    var previewHeight = $(".preview").height();
-    
-    $(".preview-wrap").height(editorHeight + 1600);
-}
 
 /* 설정된 커버 이미지 preview에 출력 */
 function previewCoverImg() {

@@ -42,7 +42,6 @@ class Post(models.Model):
                                     null=True
                                     )
 
-
     class Meta:
         ordering = ['-pk', ]
         verbose_name = '포스팅된 컬럼'
@@ -90,14 +89,11 @@ class PreAuthorPost(models.Model):
                                     blank=True,
                                     null=True
                                     )
-    preview_image = models.ImageField('포스트프리뷰 이미지',
-                                      upload_to=preview_image_user_directory_path,
-                                      blank=True,
-                                      null=True
-                                      )
 
     class Meta:
-        ordering = ['-pk', ]
+        ordering = ['-created_date', ]
+        verbose_name = '작가신청용 포스팅 컬럼'
+        verbose_name_plural = f'{verbose_name} 목록'
 
 
 @receiver(post_save, sender=PostLike, dispatch_uid='postlike_save_update_like_count')
