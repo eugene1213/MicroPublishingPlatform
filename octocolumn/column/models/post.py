@@ -42,7 +42,6 @@ class Post(models.Model):
                                     null=True
                                     )
 
-
     class Meta:
         ordering = ['-pk', ]
         verbose_name = '포스팅된 컬럼'

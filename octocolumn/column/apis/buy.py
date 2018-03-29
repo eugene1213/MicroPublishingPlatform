@@ -4,8 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Post
-from member.models import User, PointHistory,BuyList
-
+from member.models import User, PointHistory, BuyList, SellList
 
 __all__ = (
     'PostBuy',
@@ -37,16 +36,19 @@ class PostBuy(APIView):
         # 구매한 기록이 있는지를 확인
         if self.buylist_duplicate(post_queryset):
             # 구매내역에 추가
-            PointHistory.objects.buy(user=self.request.user, point=post_queryset.price,
+            PointHistory.objects.buy(user=user, point=post_queryset.price,
                                      history=post_queryset.title,
                                      post=post_queryset
                                      )
 
-            buylist = BuyList.objects.create(user=self.request.user, post=post_queryset)
+            buy_list = BuyList.objects.create(user=user, post=post_queryset)
 
-            if buylist:
+            sell_list = SellList.objects.creaet(user=user, post=post_queryset)
+
+            if buy_list and sell_list:
                 post_queryset.buy_count += 1
                 post_queryset.save()
+                post_queryset.author.point += post_queryset.price
             else:
                 raise exceptions.APIException({"detail": "There is not enough points."}, code=400)
 
