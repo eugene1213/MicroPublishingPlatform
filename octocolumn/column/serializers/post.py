@@ -127,7 +127,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def get_main_content(self, obj):
         cleaner = re.compile('<.*?>')
         clean_text = re.sub(cleaner, '', obj.main_content)
-        return clean_text
+        return clean_text[:300]
 
     def get_created_date(self, obj):
         return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
