@@ -39,6 +39,30 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
             'price',
+            'main_content',
+            'preview',
+            'comments',
+            'cover_image',
+        )
+        read_only_fields = (
+            'author',
+            'my_comment',
+        )
+
+
+class MyPublishPostSerializer(serializers.ModelSerializer):
+    my_comment = CommentSerializer(read_only=True)
+    comments = CommentSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Post
+        fields = (
+            'pk',
+            'author',
+            'my_comment',
+            'title',
+            'created_date',
+            'price',
             'preview',
             'comments',
             'cover_image',
@@ -103,7 +127,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def get_main_content(self, obj):
         cleaner = re.compile('<.*?>')
         clean_text = re.sub(cleaner, '', obj.main_content)
-        return clean_text
+        return clean_text[:300]
 
     def get_created_date(self, obj):
         return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')

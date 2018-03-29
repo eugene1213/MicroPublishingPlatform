@@ -333,6 +333,8 @@ class PasswordResetSendEmail(APIView):
 
 
 # 1
+# 초대 DB에 쌓는 API
+
 class InvitationUserView(APIView):
     permission_classes = (AllowAny, )
 
