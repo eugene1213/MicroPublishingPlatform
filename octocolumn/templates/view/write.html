@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
@@ -31,7 +32,7 @@
     <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script> -->
     <script type="text/javascript" src="{% static 'js/saveTmp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
@@ -49,7 +50,7 @@
             {% include 'view/header.html' %}
         {% endif %}
         <div class="container" id="container">
-            <div class="audio-wrap">
+            <!-- <div class="audio-wrap">
                 <audio preload id="audio_1">
                     <source src="{% static 'mp3/key-01.mp3' %}" type="audio/mp3">
                 </audio>
@@ -113,7 +114,7 @@
                 <audio preload id="audio_scrollDown">
                     <source src="{% static 'mp3/scrollDown.mp3' %}" type="audio/mp3">
                 </audio>
-            </div>
+            </div> -->
             <div class="toggle-wrap">
                 <label class="switch">
                     <input type="checkbox">
@@ -215,21 +216,18 @@
                                 },
                                 styles: { // (object) Available image styles configuration
                                     wide: { // (object) Image style configuration. Key is used as a class name added to an image, when the style is selected (.medium-insert-images-wide)
-                                        label: '<span class="fa fa-align-justify"></span>', // (string) A label for a style
+                                        label: '<span class="icon-img-align-center"></span>', // (string) A label for a style
                                         added: function ($el) {}, // (function) Callback function called after the style was selected. A parameter $el is a current active paragraph (.medium-insert-active)
                                         removed: function ($el) {} // (function) Callback function called after a different style was selected and this one was removed. A parameter $el is a current active paragraph (.medium-insert-active)
                                     },
                                     left: {
-                                        label: '<span class="fa fa-align-left"></span>'
+                                        label: '<span class="icon-img-align-left"></span>'
                                     },
                                     right: {
-                                        label: '<span class="fa fa-align-right"></span>'
+                                        label: '<span class="icon-img-align-right"></span>'
                                     },
-                                    // grid: {
-                                    //     label: '<span class="fa fa-th"></span>'
-                                    // },
                                     full: {
-                                        label: '<span class="fa fa-align-justify"></span>'
+                                        label: '<span class="icon-img-align-full"></span>'
                                     }
                                 },
                                 actions: { // (object) Actions for an optional second toolbar
