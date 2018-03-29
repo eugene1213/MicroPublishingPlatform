@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from octo.models import UsePoint
-from column.models import Post
+from column.models import Post, PreAuthorPost
 
 import re
 
@@ -99,6 +99,7 @@ class PublishPointAdmin(admin.ModelAdmin):
     list_display_links = ['type', 'point']
 
 
+
 @admin.register(PointHistory)
 class PointHistoryAdmin(admin.ModelAdmin):
     list_per_page = 20
@@ -114,7 +115,13 @@ class PointHistoryAdmin(admin.ModelAdmin):
         return False
 
 
+@admin.register(PreAuthorPost)
+class PreAuthorPostAdmin(admin.ModelAdmin):
+    list_per_page = 20
+    list_display = ['author', 'title', 'main_content', 'price', 'author_is_active', 'created_date', 'cover_image']
 
+    def author_is_active(self, instance):
+        return instance.author.is_active
 
-
-
+    author_is_active.short_description = '인증 상태'
+    author_is_active.admin_order_field = 'author__is_active'

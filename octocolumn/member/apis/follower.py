@@ -48,7 +48,7 @@ class Follower(APIView):
                              })
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            raise exceptions.ValidationError({"detail": "Abnormal connected"}, status.HTTP_402_PAYMENT_REQUIRED)
 
 
 # 1
@@ -70,7 +70,7 @@ class Waiting(APIView):
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            raise exceptions.ValidationError({"detail": "Abnormal connected"}, status.HTTP_402_PAYMENT_REQUIRED)
 
 
 # 1
@@ -92,7 +92,7 @@ class BookmarkView(APIView):
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            raise exceptions.ValidationError({"detail": "Abnormal connected"}, status.HTTP_402_PAYMENT_REQUIRED)
 
 
 # 1
