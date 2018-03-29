@@ -29,7 +29,7 @@ __all__ = (
     'IsBuyPost',
     'PostListView',
     'PostMoreListView',
-    # 'BookmarkListView'
+    'BookmarkListView'
 )
 
 
@@ -221,7 +221,7 @@ class PostListView(APIView):
         lists = []
         for i in post:
             content = i.main_content
-            rm_content = self.remove_tag(content)[0:1000]
+            rm_content = self.remove_tag(content)[0:300]
             user = User.objects.filter(pk=i.author_id).get()
 
             serializer = PostSerializer(i)
@@ -412,27 +412,30 @@ class AuthorResult(APIView):
             return Response({"author": False}, status=status.HTTP_200_OK)
 
 
-# class BookmarkListView(generics.ListAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     pagination_class = PostPagination
-#     serializer_class = PostSerializer
-#
-#     def list(self, request, *args, **kwargs):
-#         try:
-#             user = self.request.user
-#             bookmarks = Bookmark.objects.filter(user=user)
-#             # post = Post.objects.filter()
-#             print(bookmarks)
-#
-#             page = self.paginate_queryset(post)
-#             serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-#
-#             if page is not None:
-#                 serializer = PostMoreSerializer(page, context={'request': request}, many=True)
-#                 return self.get_paginated_response(serializer.data)
-#             return Response(serializer.data)
-#         except ObjectDoesNotExist:
-#             return Response('', 200)
-#
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request)
+# 1
+# 북마크 리스트 API
+# /api/column/bookmarkList/
+class BookmarkListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        list = []
+        try:
+            post = User.objects.filter(pk=self.request.user.id).get().bookmark_user_relation.all()
+            for i in post:
+                list.append(i.post)
+
+            page = self.paginate_queryset(list)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)

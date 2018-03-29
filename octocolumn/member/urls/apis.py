@@ -65,7 +65,7 @@ urlpatterns = [
     url(r'^author-apply', apis.AuthorApply.as_view(), name='apply'),
 
     # 2차 비밀번호 관련
-    url(r'^create-sp', SecondPasswordCreateView.as_view(), name='create-sp'),
-    url(r'^validation-sp', ValidationSecondPassword.as_view(), name='validation-sp')
+    url(r'^createSp', SecondPasswordCreateView.as_view(), name='create-sp'),
+    url(r'^validationSp', ValidationSecondPassword.as_view(), name='validation-sp')
 
 ]
