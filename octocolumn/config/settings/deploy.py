@@ -60,7 +60,7 @@ AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
 AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['s3_bucket_name']
 AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
 AWS_QUERYSTRING_AUTH = False
-AWS_CLOUDFRONT_DOMAIN = 'static.octocolumn.com'
+AWS_CLOUDFRONT_DOMAIN = 'https://static.octocolumn.com'
 AWS_HEADERS = {'Cache-Control': 'max-age=86400', }
 
 S3_USE_SIGV4 = True
@@ -84,10 +84,10 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # AWS Static Settings
 STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
-        custom_domain=AWS_CLOUDFRONT_DOMAIN,
-        staticfiles_location=STATICFILES_LOCATION,
-    )
+# STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+#         custom_domain=AWS_CLOUDFRONT_DOMAIN,
+#         staticfiles_location=STATICFILES_LOCATION,
+#     )
 # base static
 # STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # STATIC_URL = '/static/'
@@ -104,10 +104,10 @@ STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
 DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
 
-MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
-    custom_domain=AWS_CLOUDFRONT_DOMAIN,
-    mediafiles_location=MEDIAFILES_LOCATION,
-)
+# MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
+#     custom_domain=AWS_CLOUDFRONT_DOMAIN,
+#     mediafiles_location=MEDIAFILES_LOCATION,
+# )
 
 
 # Database
