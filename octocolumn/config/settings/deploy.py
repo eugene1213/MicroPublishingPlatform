@@ -6,8 +6,8 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
-# ALLOWED_HOSTS = '*'
+# ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
+ALLOWED_HOSTS = '*'
 
 
 # WSGI application
@@ -60,7 +60,7 @@ AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
 AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['s3_bucket_name']
 AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
 AWS_QUERYSTRING_AUTH = False
-AWS_CLOUDFRONT_DOMAIN = 'https://static.octocolumn.com'
+AWS_CLOUDFRONT_DOMAIN = 'static.octocolumn.com'
 AWS_HEADERS = {'Cache-Control': 'max-age=86400', }
 
 S3_USE_SIGV4 = True
@@ -200,13 +200,13 @@ LOGGING = {
         }
 }
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SECURE_HSTS_SECONDS = 31536000
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#
+# SECURE_HSTS_SECONDS = 31536000
+#
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#
+# SECURE_SSL_REDIRECT = True
 
 CSRF_COOKIE_SECURE = True
 
