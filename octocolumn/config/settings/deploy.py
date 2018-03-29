@@ -6,8 +6,8 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
-# ALLOWED_HOSTS = '*'
+# ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
+ALLOWED_HOSTS = '*'
 
 
 # WSGI application
@@ -84,10 +84,10 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # AWS Static Settings
 STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
-        custom_domain=AWS_CLOUDFRONT_DOMAIN,
-        staticfiles_location=STATICFILES_LOCATION,
-    )
+# STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+#         custom_domain=AWS_CLOUDFRONT_DOMAIN,
+#         staticfiles_location=STATICFILES_LOCATION,
+#     )
 # base static
 # STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # STATIC_URL = '/static/'
@@ -104,10 +104,10 @@ STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
 DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
 
-MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
-    custom_domain=AWS_CLOUDFRONT_DOMAIN,
-    mediafiles_location=MEDIAFILES_LOCATION,
-)
+# MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
+#     custom_domain=AWS_CLOUDFRONT_DOMAIN,
+#     mediafiles_location=MEDIAFILES_LOCATION,
+# )
 
 
 # Database
@@ -200,13 +200,13 @@ LOGGING = {
         }
 }
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SECURE_HSTS_SECONDS = 31536000
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#
+# SECURE_HSTS_SECONDS = 31536000
+#
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#
+# SECURE_SSL_REDIRECT = True
 
 CSRF_COOKIE_SECURE = True
 
