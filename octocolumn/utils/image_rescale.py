@@ -20,14 +20,14 @@ def profile_image_resizing(content_file, margin):
             area = (int(200 * size), 0, int(200 * size) + 200, 200)
             img = img.crop(area)
             img.resize((200, 200), Image.HAMMING)
-            img.save(img_io, format='JPEG', quality=300)
+            img.save(img_io, format='JPEG', quality=70)
             img_content = ContentFile(img_io.getvalue(), 'profile.jpeg')
             return img_content
         elif height == 200:
             area = (int(200 * size), 0, int(200 * size) + 200, 200)
             img.crop(area)
             img = img.crop(area)
-            img.save(img_io, format='JPEG', quality=100)
+            img.save(img_io, format='JPEG', quality=70)
             img_content = ContentFile(img_io.getvalue(), 'profile.jpeg')
             return img_content
         else:
@@ -51,14 +51,14 @@ def profile_image_resizing(content_file, margin):
             img.thumbnail((200, int(height - height * rescale_ratio)))
             area = (0, int(200 * size), 200, int(200 * size) + 200)
             img = img.crop(area)
-            img.save(img_io, format='JPEG', quality=100)
+            img.save(img_io, format='JPEG', quality=70)
             img_content = ContentFile(img_io.getvalue(), 'profile.jpeg')
             return img_content
         elif width == 200:
             area = (0, int(200 * size), 200, int(200 * size) + 200)
             img.crop(area)
             img = img.crop(area)
-            img.save(img_io, format='JPEG', quality=100)
+            img.save(img_io, format='JPEG', quality=70)
             img_content = ContentFile(img_io.getvalue(), 'profile.jpeg')
             return img_content
         else:
@@ -68,7 +68,7 @@ def profile_image_resizing(content_file, margin):
             img.crop(area)
             print(2)
             img = img.crop(area)
-            img.save(img_io, format='JPEG', quality=700)
+            img.save(img_io, format='JPEG', quality=70)
             img_content = ContentFile(img_io.getvalue(), 'profile.jpeg')
             return img_content
 
@@ -77,6 +77,6 @@ def image_quality_down(content_file):
     img = Image.open(content_file)
     img = img.convert("RGB")
     img_io = BytesIO()
-    img.save(img_io, format='JPEG', quality=85)
+    img.save(img_io, format='JPEG', quality=70)
     img_content = ContentFile(img_io.getvalue(), 'image.jpeg')
     return img_content
