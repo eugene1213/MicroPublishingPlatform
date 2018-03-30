@@ -16,7 +16,7 @@ from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
-from utils.image_rescale import profile_image_resizing
+from utils.image_rescale import profile_image_resizing, image_quality_down
 
 __all__ = (
     'ProfileImageUpload',
@@ -210,11 +210,11 @@ class UserCoverImageUpload(generics.CreateAPIView):
         user = self.request.user
         size = self.request.data['margin']
         cover_file_obj = self.base64_content(self.request.data['img'], size)
-        # resizing_image = image_quality_down(cover_file_obj)
+        resizing_image = image_quality_down(cover_file_obj)
 
         try:
             profile_image = ProfileImage.objects.filter(user=user).get()
-            profile_image.cover_image = cover_file_obj
+            profile_image.cover_image = resizing_image
             profile_image.save()
             serializer = ProfileImageSerializer(profile_image)
             if serializer:

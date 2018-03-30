@@ -129,6 +129,7 @@ class TempFileUpload(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         user = self.request.user
         file_obj = self.request.FILES['files[]']
+        print()
 
         temp_file = TempFile.objects.create(author=user, file=file_obj)
         # 예외처리
