@@ -1,4 +1,7 @@
-# from django import forms
+from distutils import errors
+
+from django import forms
+from member.models import Author
 # from common.utils import send_email
 # from . import errors
 # class AccountActionForm(forms.Form):
@@ -36,8 +39,26 @@
 #             )
 #     return account, action
 #
-# class DepositForm(AccountActionForm):
-#     amount = forms.IntegerField(
+
+
+class AuthorIsActive(forms.Form):
+    def form_action(self, author_post):
+        is_author = author_post.author.author
+        is_author.is_active = True
+        is_author.save()
+        return is_author
+
+    def save(self, author_post):
+        try:
+            author = self.form_action(author_post)
+        except errors.Error as e:
+            error_message = str(e)
+            self.add_error(None, error_message)
+            raise
+        return author
+
+
+# amount = forms.IntegerField(
 #         min_value=Account.MIN_DEPOSIT,
 #         max_value=Account.MAX_DEPOSIT,
 #         required=True,
@@ -58,14 +79,3 @@
 #         'comment',
 #         'send_email',
 #     )
-#     def form_action(self, account, user):
-#         return Account.deposit(
-#             id=account.pk,
-#             user=account.user,
-#             amount=self.cleaned_data['amount'],
-#             deposited_by=user,
-#             reference=self.cleaned_data['reference'],
-#             reference_type=self.cleaned_data['reference_type'],
-#             comment=self.cleaned_data['comment'],
-#             asof=timezone.now(),
-#         )

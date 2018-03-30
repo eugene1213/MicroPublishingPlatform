@@ -23,7 +23,7 @@ def mobile(request):
     else:
         return False
 
-@never_cache
+
 def index(request):
     if mobile(request):
         return render_to_response('mobile/main_m.html', )
@@ -37,7 +37,6 @@ def index(request):
     return render_to_response("view/main.html",)
 
 
-@never_cache
 def write(request, temp_id=None):
     if mobile(request):
         return redirect('views:index')
@@ -51,7 +50,6 @@ def write(request, temp_id=None):
     return redirect('views:index')
 
 
-@never_cache
 def read(request, post_id=None):
     if mobile(request):
         return redirect('views:index')
@@ -64,7 +62,6 @@ def read(request, post_id=None):
         return redirect('views:index')
     # return redirect('views:index')
 
-@never_cache
 def profile(request):
     if mobile(request):
         return redirect('views:index')

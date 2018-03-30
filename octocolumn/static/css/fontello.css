@@ -64,12 +64,10 @@
 .icon-star-half_empty:before { content: '\f024'; } /* '' */
 .icon-bookmark:before { 
     content: '\e800';
-    zoom: 200%;
     margin-top: -16px; 
 } /* '' */
 .icon-bookmark-empty:before { 
     content: '\f097';
-    zoom: 200%;
     margin-top: -16px;
 } /* '' */
 .icon-trash:before { content: '\f1f8'; } /* '' */
