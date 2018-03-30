@@ -2,6 +2,7 @@ import base64
 import re
 
 from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import status, generics, mixins, exceptions
@@ -202,6 +203,8 @@ class PostListView(APIView):
                     }
 
     def bookmark_status(self, post):
+        if not self.request.user.is_authenticated:
+            return False
         try:
             Bookmark.objects.filter(user=self.request.user, post=post).get()
             return True
