@@ -66,7 +66,6 @@ class AuthorApply(generics.GenericAPIView,
         first_point = UsePoint.objects.filter(type='first_user').get()
         if result:
 
-            preview_file_obj = self.base64_content(self.request.data['preview'])
             cover_file_obj = self.base64_content(self.request.data['cover'])
 
             # 임시저장 파일이 없을 경우
@@ -84,7 +83,7 @@ class AuthorApply(generics.GenericAPIView,
             post = PreAuthorPost.objects.create(author=user, title=temp.title,
                                                 main_content=temp.main_content,
                                                 price=data['price'],
-                                                preview_image=preview_file_obj,
+                                                preview=self.request.data['preview'],
                                                 cover_image=cover_file_obj,
 
                                        )
