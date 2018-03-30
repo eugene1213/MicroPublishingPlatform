@@ -3,7 +3,6 @@ from distutils import errors
 from django.conf.urls import url
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
-from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.html import format_html
 from rest_framework.authtoken.models import Token
@@ -127,7 +126,7 @@ class PointHistoryAdmin(admin.ModelAdmin):
 class PreAuthorPostAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = ['author', 'title', 'main_content', 'price', 'author_is_active', 'created_date', 'author_actions',
-                    'cover_image']
+                    ]
 
     def author_is_active(self, instance):
         return instance.author.author.is_active

@@ -1,6 +1,8 @@
 from distutils import errors
 
 from django import forms
+
+from column.models import PreAuthorPost, Post
 from member.models import Author
 # from common.utils import send_email
 # from . import errors
@@ -44,9 +46,14 @@ from member.models import Author
 class AuthorIsActive(forms.Form):
     def form_action(self, author_post):
         is_author = author_post.author.author
+        post = PreAuthorPost.objects.filter(author=author_post.author).all()
+        if post is not None:
+            for i in post:
+                Post.objects.create(author=i.author, main_content=i.main_content, price=i.price, preview=i.preview,
+                                    title=i.title)
         is_author.is_active = True
         is_author.save()
-        return is_author
+        return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
 
     def save(self, author_post):
         try:
