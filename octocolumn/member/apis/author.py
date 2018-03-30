@@ -40,17 +40,7 @@ class AuthorApply(generics.GenericAPIView,
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
             return data
-        raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
-
-    def search_tag(self, post, tag):
-        search_tag = tag.split(',')
-        if len(search_tag) > 5:
-            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
-
-        for i in search_tag:
-            SearchTag.objects.create(post=post, tag=i)
-
-        return True
+        raise exceptions.ValidationError({'detail': 'eEmpty image'}, status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED)
 
     def first_point(self):
         return UsePoint.objects.filter(type='first_user').get().point
@@ -59,7 +49,7 @@ class AuthorApply(generics.GenericAPIView,
     def search_tag(self, post, tag):
         search_tag = tag.split(',')
         if len(search_tag) > 5:
-            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
+            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, status.HTTP_406_NOT_ACCEPTABLE)
 
         for i in search_tag:
             SearchTag.objects.create(post=post, tag=i)
@@ -81,14 +71,14 @@ class AuthorApply(generics.GenericAPIView,
 
             # 임시저장 파일이 없을 경우
             if data['temp_id'] == '':
-                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
+                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, status.HTTP_406_NOT_ACCEPTABLE)
             try:
                 temp = Temp.objects.filter(id=data['temp_id']).get()
             except ObjectDoesNotExist:
-                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
+                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, status.HTTP_406_NOT_ACCEPTABLE)
             # 포인트가 모자르다면 에러발생
             if first_point.point > user.point:
-                raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
+                raise exceptions.NotAcceptable({"detail": "There is not enough points."}, status.HTTP_406_NOT_ACCEPTABLE)
 
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경
             post = PreAuthorPost.objects.create(author=user, title=temp.title,
@@ -103,13 +93,13 @@ class AuthorApply(generics.GenericAPIView,
 
             # 태그 추가 에외처리
             if not self.search_tag(post=post, tag=self.request.data['tag']):
-                raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+                raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, status.HTTP_406_NOT_ACCEPTABLE)
 
             # 템프파일 삭제 예외처리
             try:
                 Temp.objects.filter(id=data['temp_id']).delete()
             except ObjectDoesNotExist:
-                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
+                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, status.HTTP_406_NOT_ACCEPTABLE)
 
             # 포인트 내역 추가 예외처리 완료
             point_history = PointHistory.objects.publish(user=self.request.user, point=self.first_point(), post=post,
@@ -124,7 +114,7 @@ class AuthorApply(generics.GenericAPIView,
             if serializer:
                 return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
             else:
-                raise exceptions.ValidationError({'detail': 'Already added'}, 400)
+                raise exceptions.ValidationError({'detail': 'Already added'}, status.HTTP_406_NOT_ACCEPTABLE)
 
         else:
-                raise exceptions.ValidationError({'detail': 'Already attempted author'}, 400)
+                raise exceptions.ValidationError({'detail': 'Already attempted author'}, status.HTTP_406_NOT_ACCEPTABLE)

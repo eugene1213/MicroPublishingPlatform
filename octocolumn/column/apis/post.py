@@ -284,9 +284,6 @@ class PostMoreListView(generics.ListAPIView):
         return self.list(request)
 
 
-
-
-
 class PostLikeToggleView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -379,18 +376,23 @@ class PostPreReadView(APIView):
 
 
 class IsBuyPost(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
+        user = self.request.user
         post = Post.objects.filter(id=param).get()
         try:
-            BuyList.objects.filter(user=self.request.user, post=post).get()
+            BuyList.objects.filter(user=user, post=post).get()
             return Response({"detail": {
                 "isBuy": True
             }}, status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
+            if post.author == user:
+                return Response({"detail": {
+                    "isBuy": True
+                }}, status=status.HTTP_200_OK)
             return Response({"detail": {
                 "isBuy": False,
             }},
