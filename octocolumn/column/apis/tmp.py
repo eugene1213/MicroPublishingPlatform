@@ -10,6 +10,7 @@ from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
 
 from member.models import Author as AuthorModel, User
+from utils.image_rescale import image_quality_down
 
 __all__ = (
     'TempCreateView',
@@ -129,9 +130,9 @@ class TempFileUpload(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         user = self.request.user
         file_obj = self.request.FILES['files[]']
-        print()
+        resizing_image = image_quality_down(file_obj)
 
-        temp_file = TempFile.objects.create(author=user, file=file_obj)
+        temp_file = TempFile.objects.create(author=user, file=resizing_image)
         # 예외처리
         if not temp_file:
             raise exceptions.ValidationError({"detail": "Upload Failed"})
