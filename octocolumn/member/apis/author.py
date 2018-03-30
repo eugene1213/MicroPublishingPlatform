@@ -12,6 +12,7 @@ from column.serializers import PostSerializer, PreAuthorPostSerializer
 from member.models import Author as AuthorModel, User, PointHistory
 from member.serializers import AuthorSerializer
 from octo.models import UsePoint
+from utils.image_rescale import image_quality_down
 
 __all__ = (
     'AuthorApply',
@@ -67,6 +68,7 @@ class AuthorApply(generics.GenericAPIView,
         if result:
 
             cover_file_obj = self.base64_content(self.request.data['cover'])
+            resizing_image = image_quality_down(cover_file_obj)
 
             # 임시저장 파일이 없을 경우
             if data['temp_id'] == '':
@@ -78,13 +80,14 @@ class AuthorApply(generics.GenericAPIView,
             # 포인트가 모자르다면 에러발생
             if first_point.point > user.point:
                 raise exceptions.NotAcceptable({"detail": "There is not enough points."}, status.HTTP_406_NOT_ACCEPTABLE)
+            print(data['price'])
 
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경
             post = PreAuthorPost.objects.create(author=user, title=temp.title,
                                                 main_content=temp.main_content,
                                                 price=data['price'],
-                                                preview=self.request.data['preview'],
-                                                cover_image=cover_file_obj,
+                                                preview=data['preview'],
+                                                cover_image=resizing_image,
 
                                        )
             # 클로즈 베타 끝나고 -> PreAuthorpost 변경
