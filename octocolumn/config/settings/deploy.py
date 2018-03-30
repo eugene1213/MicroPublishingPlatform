@@ -53,6 +53,14 @@ INSTALLED_APPS = [
 
 ]
 
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config_secret_deploy['django']['email']['host']
+EMAIL_HOST_USER = config_secret_deploy['django']['email']['host_user']
+EMAIL_HOST_PASSWORD = config_secret_deploy['django']['email']['host_password']
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 # AWS settings
 AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
 AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
