@@ -43,7 +43,7 @@ class PostBuy(APIView):
 
             buy_list = BuyList.objects.create(user=user, post=post_queryset)
 
-            sell_list = SellList.objects.creaet(user=user, post=post_queryset)
+            sell_list = SellList.objects.create(user=user, post=post_queryset)
 
             if buy_list and sell_list:
                 post_queryset.buy_count += 1
