@@ -44,7 +44,7 @@
 .mainfeed .main_hr{
 	width: 945px;
 	height: 2px;
-	background: #000000;
+	background: #2A292A;
 	display: block;
 	float: left;
 	margin-top: 11px;
@@ -154,6 +154,11 @@
 	border-radius: 50%;
 	overflow: hidden;
 	background-size: 100%;
+
+	img {
+		width: 100%;
+		height: 100%;
+	}
 }
 .mainfeed .feedbox1 .fb1_txt .profile_box .profile_name{
 	width: 176px;
