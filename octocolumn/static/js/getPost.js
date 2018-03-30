@@ -6,6 +6,9 @@ $(document).ready(function(){
 
     hidingHeader();
 
+    $(window).resize(function() {
+        coverImgController();
+    });
     $.ajax({
         url: "/api/column/post-view/"+post_id,
         async: false,

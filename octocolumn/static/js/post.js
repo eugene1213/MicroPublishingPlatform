@@ -152,8 +152,10 @@ function isAuthor() {
 /* 작가신청 */
 function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url) {
     
+    var preview = creatPreviewElements();
+
     $.ajax({
-        url: "/api/member/author-apply/",
+        url: "/api/member/authorApply/",
         async: false,
         type: 'POST',
         xhrFields: {
@@ -164,7 +166,7 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
         data: JSON.stringify({
             "temp_id" : temp_id,
             "cover" : cover_img,
-            "preview" : preview_img,
+            "preview" : preview.outerHTML,
             "tag" : tag,
             "code" : code,
             "price" : price,
@@ -180,11 +182,11 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
             
             console.log(error);
 
-            if(error.responseJSON.detail == "Already attempted author") {
+            // if(error.responseJSON == "Already attempted author") {
 
-                $(".modal-success-wrap").show();
-                localStorage.setItem("temp_id", '');
-            }
+            //     $(".modal-success-wrap").show();
+            //     localStorage.setItem("temp_id", '');
+            // }
         }
     });
 }
