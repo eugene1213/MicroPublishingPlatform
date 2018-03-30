@@ -700,6 +700,7 @@
 	left: 100px;
 	top: 106px;
 	overflow: hidden;
+	background-size: 100%;
 }
 .flip .arrow_box_1 .card_profile_img_wrap > img {
 	width: 100%
