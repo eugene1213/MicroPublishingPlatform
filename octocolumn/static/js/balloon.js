@@ -27,7 +27,7 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
         var followers = data[i-1].post.author.follower_count;
         var follow_status = data[i-1].post.author.follow_status;
 
-        console.log(follow_status)
+        console.log(data)
         if(follow_status) {
             $(".btn-follow").text("Following");
         }
@@ -39,9 +39,10 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
         }
         var whichProfile = $(this).attr('id');
         var authorName = $("#" + whichProfile + "+ .profile_name").text();
-        var profileImage = $("#" + whichProfile + " > img").attr("src");
+        var profileImage = $("#" + whichProfile).css("background-image");
 
-        $(".card_profile_img").attr("src",profileImage);
+        console.log(profileImage)
+        $(".card_profile_img_wrap").css("background-image",profileImage);
 
         $(".card_background_img").css("background","url(" +data[i-1].post.author.img.cover_image+ ")")
 

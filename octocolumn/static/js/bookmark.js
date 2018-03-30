@@ -26,6 +26,11 @@ $(document).ready(function() {
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
     });
+    $(".profile_mark").click(function(e){
+        
+        var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
+        bookmark(bookmark_id);
+    });
 });
 
 function getRecent(url){
