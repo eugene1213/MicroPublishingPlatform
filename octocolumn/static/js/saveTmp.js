@@ -15,7 +15,6 @@ $(document).ready(function(){
     $(".modal-extend > .btn-no").click(function(){
         $(".modal-extend-wrap").hide();
     });
-    
 
     title2header("write");
     saveHandler();
@@ -75,6 +74,7 @@ function saveTmp(auto){
 }
 /* 임시저장 이벤트 리스너 */
 function saveHandler(){
+
     $(document).keyup(function(event) {     // 자동저장
 
         if($(event.target).hasClass('editable')||$(event.target).hasClass('title')) {
@@ -94,11 +94,6 @@ function saveHandler(){
     });
                                             // 저장 버튼 클릭시
     $(".btn-save").click(function(event) {
-
-        saveTmp(false);
-    });
-                                            // 발행 버튼 클릭시 (미리보기 블러이미지 생성과 동시에 진행됨)
-    $(".btn-publish-final").click(function(){
 
         saveTmp(false);
     });
