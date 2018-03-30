@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django_user_agents',
     'django_s3_storage',
     # 'azure',
-
     'ipware',
 
     'rest_framework',
