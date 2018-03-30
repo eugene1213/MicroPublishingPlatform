@@ -84,6 +84,11 @@ class PreAuthorPost(models.Model):
     preview = models.TextField(null=True)
     price = models.PositiveIntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True)
+    cover_image = models.ImageField('포스트커버 이미지',
+                                    upload_to=cover_image_user_directory_path,
+                                    blank=True,
+                                    null=True
+                                    )
 
     class Meta:
         ordering = ['-created_date', ]
