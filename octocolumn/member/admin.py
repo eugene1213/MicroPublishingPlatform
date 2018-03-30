@@ -1,8 +1,16 @@
+from distutils import errors
+
+from django.conf.urls import url
 from django.contrib.auth.models import Group
+from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
+from django.urls import reverse
+from django.utils.html import format_html
 from rest_framework.authtoken.models import Token
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+from member.forms import AuthorIsActive
 from octo.models import UsePoint
 from column.models import Post, PreAuthorPost
 
@@ -118,10 +126,61 @@ class PointHistoryAdmin(admin.ModelAdmin):
 @admin.register(PreAuthorPost)
 class PreAuthorPostAdmin(admin.ModelAdmin):
     list_per_page = 20
-    list_display = ['author', 'title', 'main_content', 'price', 'author_is_active', 'created_date', 'cover_image']
+    list_display = ['author', 'title', 'main_content', 'price', 'author_is_active', 'created_date', 'author_actions',
+                    'cover_image']
 
     def author_is_active(self, instance):
-        return instance.author.is_active
+        return instance.author.author.is_active
 
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            url(
+                r'^(?P<author_post_pk>.+)/active/$',
+                self.admin_site.admin_view(self.process_isactive),
+                name='author-isactive',
+            )
+        ]
+        return custom_urls + urls
+
+    def author_actions(self, obj):
+        return format_html(
+            '<a class="button" href="{}">인증</a>',
+            reverse('admin:author-isactive', args=[obj.pk]),
+        )
+
+    def process_isactive(self, request, author_post_pk, *args, **kwargs):
+        return self.process_action(
+            request=request,
+            author_post_pk=author_post_pk,
+            action_form=AuthorIsActive,
+            action_title='신청완료',
+        )
+
+    def process_action(
+            self,
+            request,
+            author_post_pk,
+            action_form,
+            action_title
+    ):
+        author = self.get_object(request, author_post_pk)
+        if request.method != 'GET':
+            form = action_form()
+        else:
+            form = action_form(request.POST)
+            if form.is_valid():
+                try:
+                    form.save(author)
+                except errors.Error as e:
+                    # If save() raised, the form will a have a non
+                    # field error containing an informative message.
+                    pass
+                else:
+                    return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
+        return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
+
+    author_actions.shortdescription = '완료'
+    author_actions.allow_tags = '완료'
     author_is_active.short_description = '인증 상태'
     author_is_active.admin_order_field = 'author__is_active'
