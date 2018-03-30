@@ -152,6 +152,8 @@ function isAuthor() {
 /* 작가신청 */
 function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url) {
     
+    var preview = creatPreviewElements();
+
     $.ajax({
         url: "/api/member/author-apply/",
         async: false,
@@ -164,7 +166,7 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
         data: JSON.stringify({
             "temp_id" : temp_id,
             "cover" : cover_img,
-            "preview" : preview_img,
+            "preview" : preview.outerHTML,
             "tag" : tag,
             "code" : code,
             "price" : price,
