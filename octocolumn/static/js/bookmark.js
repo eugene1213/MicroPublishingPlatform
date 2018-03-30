@@ -60,7 +60,9 @@ function getRecent(url){
                 var created_date = json.results[i].created_date;
                 var username = json.results[i].author.username;
                 var profile_image = json.results[i].author.img.profile_image;
-
+                var bookmarkElement = '';
+                json.results[i].bookmark_status ? bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark"></div>' : bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark-empty"></div>';
+                
                 usernameArray.push(username);
                 var str =  '<div class="feedbox4 feedbox" id="card_'+ i +'">              \
                                 <div class="fb1_img profile-image-upload-wrap" style="background-image:url(\''+ cover_img +'\')" id="'+ post_id+'"></div>           \
@@ -76,7 +78,7 @@ function getRecent(url){
                                         <div class="profile_name">'+ username +'</div>                 \
                                         <div class="profile_date">'+ created_date +'</div>             \
                                         <div class="profile_readtime">'+ readTime +' min read</div>    \
-                                        <div class="profile_mark"></div>\
+                                        <div class="profile_mark">'+bookmarkElement+'</div>\
                                     </div>                              \
                                 </div>                                  \
                             </div>';
