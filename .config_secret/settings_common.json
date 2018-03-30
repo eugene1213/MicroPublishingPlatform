@@ -1,12 +1,7 @@
 {
   "django":{
     "secret_key":"3c7upz*f)k7-c8jm(fdcfe!086^xp$#zk3dzc5k68lanuufb-q",
-    "allowed_hosts":"*",
-    "email": {
-      "host": "smtp.gmail.com",
-      "host_user": "develop@octocolumn.com",
-      "host_password": "devocto1234"
-    }
+    "allowed_hosts":"*"
   },
   "accounts":{
     "facebook":{

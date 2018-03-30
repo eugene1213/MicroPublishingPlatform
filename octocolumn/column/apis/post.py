@@ -17,6 +17,7 @@ from member.models import Author as AuthorModel, User, PointHistory, BuyList, Pr
 from member.models.user import Relation, WaitingRelation, Bookmark
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
+from utils.image_rescale import image_quality_down
 from ..models import Post
 from ..serializers import PostSerializer, PostMoreSerializer
 
@@ -106,6 +107,7 @@ class PostCreateView(generics.GenericAPIView,
         data = self.request.data
 
         cover_file_obj = self.base64_content(self.request.data['cover'])
+        resizing_image = image_quality_down(cover_file_obj)
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
@@ -136,7 +138,7 @@ class PostCreateView(generics.GenericAPIView,
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],
-                                           cover_image=cover_file_obj,
+                                           cover_image=resizing_image,
                                            preview=data['preview']
                                            )
                 serializer = PostSerializer(post)
