@@ -6,7 +6,7 @@ from rest_framework import generics, mixins, exceptions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from column.models import Temp, PreAuthorPost, Post, SearchTag
+from column.models import Temp, PreAuthorPost, Post, SearchTag, PreSearchTag
 
 from column.serializers import PostSerializer, PreAuthorPostSerializer
 from member.models import Author as AuthorModel, User, PointHistory
@@ -53,7 +53,7 @@ class AuthorApply(generics.GenericAPIView,
             raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, status.HTTP_406_NOT_ACCEPTABLE)
 
         for i in search_tag:
-            SearchTag.objects.create(post=post, tag=i)
+            PreSearchTag.objects.create(post=post, tag=i)
 
         return True
 
@@ -64,7 +64,6 @@ class AuthorApply(generics.GenericAPIView,
 
         author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
-        first_point = UsePoint.objects.filter(type='first_user').get()
         if result:
 
             cover_file_obj = self.base64_content(self.request.data['cover'])
@@ -77,12 +76,7 @@ class AuthorApply(generics.GenericAPIView,
                 temp = Temp.objects.filter(id=data['temp_id']).get()
             except ObjectDoesNotExist:
                 raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, status.HTTP_406_NOT_ACCEPTABLE)
-            # 포인트가 모자르다면 에러발생
-            if first_point.point > user.point:
-                raise exceptions.NotAcceptable({"detail": "There is not enough points."}, status.HTTP_406_NOT_ACCEPTABLE)
-            print(data['price'])
 
-            # 클로즈 베타 끝나고 -> PreAuthorpost 변경
             post = PreAuthorPost.objects.create(author=user, title=temp.title,
                                                 main_content=temp.main_content,
                                                 price=data['price'],
@@ -103,14 +97,6 @@ class AuthorApply(generics.GenericAPIView,
             except ObjectDoesNotExist:
                 raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, status.HTTP_406_NOT_ACCEPTABLE)
 
-            # 포인트 내역 추가 예외처리 완료
-            point_history = PointHistory.objects.publish(user=self.request.user, point=self.first_point(), post=post,
-                                                         history=temp.title)
-            if not point_history:
-                raise exceptions.ValidationError({'detail': 'Upload Failed'})
-
-            user.point -= self.first_point()
-            user.save()
             # 태그를 추가하고 태그 추가 실패
 
             if serializer:
@@ -119,4 +105,4 @@ class AuthorApply(generics.GenericAPIView,
                 raise exceptions.ValidationError({'detail': 'Already added'}, status.HTTP_406_NOT_ACCEPTABLE)
 
         else:
-                raise exceptions.ValidationError({'detail': 'Already attempted author'}, status.HTTP_406_NOT_ACCEPTABLE)
+            raise exceptions.ValidationError({'detail': 'Already attempted author'}, status.HTTP_406_NOT_ACCEPTABLE)

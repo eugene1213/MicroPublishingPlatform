@@ -62,7 +62,7 @@ urlpatterns = [
     url(r'^(?P<user_pk>\d+)/waiting/$', Waiting.as_view(), name='waiting'),
 
     # api:author 신청
-    url(r'^author-apply', apis.AuthorApply.as_view(), name='apply'),
+    url(r'^authorApply', apis.AuthorApply.as_view(), name='apply'),
 
     # 2차 비밀번호 관련
     url(r'^createSp', SecondPasswordCreateView.as_view(), name='create-sp'),

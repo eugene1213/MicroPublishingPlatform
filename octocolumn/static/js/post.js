@@ -155,7 +155,7 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
     var preview = creatPreviewElements();
 
     $.ajax({
-        url: "/api/member/author-apply/",
+        url: "/api/member/authorApply/",
         async: false,
         type: 'POST',
         xhrFields: {

@@ -3,6 +3,7 @@ from django.db import models
 __all__ = (
     'Tag',
     'SearchTag',
+    'PreSearchTag',
 )
 
 
@@ -15,6 +16,14 @@ class Tag(models.Model):
 
 class SearchTag(models.Model):
     post = models.ForeignKey('column.Post')
+    tag = models.CharField(max_length=255)
+
+    def __str__(self):
+        return 'Post({}), Tag({})'.format(self.post, self.tag)
+
+
+class PreSearchTag(models.Model):
+    post = models.ForeignKey('column.PreAuthorPost')
     tag = models.CharField(max_length=255)
 
     def __str__(self):
