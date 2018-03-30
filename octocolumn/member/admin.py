@@ -88,9 +88,9 @@ class PostAdmin(admin.ModelAdmin):
         verbose_name = '작가'
         verbose_name_plural = f'{verbose_name} 목록'
 
-    def remove_tag(self, post):
+    def remove_tag(self, obj):
         cleaner = re.compile('<.*?>')
-        clean_text = re.sub(cleaner, '', post)
+        clean_text = re.sub(cleaner, '', obj)
         return clean_text
 
     def content_size(self, post):
@@ -125,8 +125,24 @@ class PointHistoryAdmin(admin.ModelAdmin):
 @admin.register(PreAuthorPost)
 class PreAuthorPostAdmin(admin.ModelAdmin):
     list_per_page = 20
-    list_display = ['author', 'title', 'main_content', 'price', 'author_is_active', 'created_date', 'author_actions',
+    list_display = ['author', 'title', 'content_size', 'price', 'author_is_active', 'created_date', 'author_actions',
                     ]
+
+    fieldsets = (
+        ['기본 정보', {
+            'fields': ('author',),
+        }],
+        ['컬럼 정보', {
+            'fields': ('title', 'main_content',),
+        }],
+        ['구매 정보', {
+            'fields': ('price', 'created_date')
+        }]
+
+    )
+
+    readonly_fields = ['author', 'created_date']
+
 
     def author_is_active(self, instance):
         return instance.author.author.is_active
@@ -178,6 +194,17 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
                 else:
                     return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
         return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
+
+    def remove_tag(self, obj):
+        cleaner = re.compile('<.*?>')
+        clean_text = re.sub(cleaner, '', obj)
+        return clean_text
+
+    def content_size(self, post):
+        clean_text = self.remove_tag(post.main_content)
+        return mark_safe('<u>{}</u>글자'.format(len(clean_text)))
+
+    content_size.short_description = '글자수'
 
     author_actions.shortdescription = '완료'
     author_actions.allow_tags = '완료'
