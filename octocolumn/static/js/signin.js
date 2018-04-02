@@ -44,12 +44,13 @@ function signin_api() {
         },
         error: function(error) {
             if(error.status == 401) {
+                var errMsgTitle = 'Sign in Failed';
                 var errMsg = '이메일과 비밀번호를 확인해 주시기바랍니다.';
               // alertBoxFocus('이메일과 비밀번호를 확인해 주시기바랍니다.',401)
             }
             modal({
                 type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
-                title: 'Sign in Failed', //Modal Title
+                title: errMsgTitle, //Modal Title
                 text: errMsg, //Modal HTML Content
                 size: 'normal', //Modal Size (normal | large | small)
                 buttons: [{
