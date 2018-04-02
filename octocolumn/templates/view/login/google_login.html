@@ -18,8 +18,8 @@
         console.log("Email: " + profile.getEmail());
 
         // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        window.location.href ='/api/member/googleLogin/' + id_token
+        var id_token = googleUser.getAuthResponse().access_token;
+        window.location.href ='/api/member/googleLogin/' + access_token
       };
     </script>
   </body>

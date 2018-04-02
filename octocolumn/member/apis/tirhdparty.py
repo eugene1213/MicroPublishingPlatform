@@ -28,14 +28,12 @@ class GoogleLogin(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
-        token = self.kwargs.get('token')
-        print(token
-              )
 
         class DebugTokenInfo(NamedTuple):
-            aud: str
             azp: str
+            aud: str
             sub: str
+            hd: str
             email: str
             email_verified: bool
             at_hash: str
@@ -50,16 +48,16 @@ class GoogleLogin(APIView):
             locale: str
 
         def get_debug_token_info(token):
-            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
-            return DebugTokenInfo(**idinfo)
+            id_info = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            return DebugTokenInfo(**id_info)
 
         debug_token_info = get_debug_token_info(token)
 
         if debug_token_info.iss not in ['accounts.google.com', 'https://accounts.google.com']:
-            raise APIException('페이스북 토큰의 사용자와 전달받은 facebook_user_id가 일치하지 않음')
+            raise APIException('구글 토큰의 사용자와 전달받은 google_user_id가 일치하지 않음')
 
         if not debug_token_info.email_verified:
-            raise APIException('페이스북 토큰이 유효하지 않음')
+            raise APIException('구글 토큰이 유효하지 않음')
 
         user_id = debug_token_info.sub
 
@@ -68,17 +66,15 @@ class GoogleLogin(APIView):
         if not userinfo == 0:
             raise APIException('Already exists this email')
 
-        user = GoogleBackend.authenticate(google_user_id=user_id)
-
+        user = GoogleBackend.authenticate(user_id=user_id)
         if not user:
             user = User.objects.create_google_user(
                 username=debug_token_info.email,
-                first_name=debug_token_info.given_name,
-                last_name=debug_token_info.family_name,
+                nickname=debug_token_info.name,
                 social_id=f'g_{user_id}',
             )
         else:
-            user =User.objects.filter(social_id=f'g_{user_id}')
+            user =User.objects.filter(social_id=f'g_{user_id}').get()
 
         data = {
             'user': UserSerializer(user).data,
