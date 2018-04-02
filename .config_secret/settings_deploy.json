@@ -40,7 +40,7 @@
         "token_uri":"https://accounts.google.com/o/oauth2/token",
         "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
         "client_secret":"BxMM6QruwY0FH53z1YHva",
-        "javascript_origins":["https://www.octocolumn.com"]
+        "javascript_origins":["http://localhost:8000"]
     }
   }
 }
