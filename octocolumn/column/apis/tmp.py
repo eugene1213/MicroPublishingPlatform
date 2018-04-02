@@ -79,6 +79,7 @@ class TempCreateView(generics.GenericAPIView,
         if self.request.data.get('temp_id') is None:
             raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
+
         if data['temp_id'] is not '':
             Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(title=data['title'],
                                                                                      main_content=data['main_content'],
@@ -94,6 +95,8 @@ class TempCreateView(generics.GenericAPIView,
             if not self.check_post_count(user):
                 raise exceptions.ValidationError({"detail": "This account exceeded the number of articles you could write"},
                                                  400)
+
+
             temp = self.queryset.create(author=user, title=data['title'], main_content=data['main_content'])
 
             # 예외처리
