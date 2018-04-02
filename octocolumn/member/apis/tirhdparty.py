@@ -28,7 +28,8 @@ class GoogleLogin(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
-
+        token = self.kwargs.get('token')
+        
         class DebugTokenInfo(NamedTuple):
             azp: str
             aud: str
