@@ -19,11 +19,12 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}">
-
-	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-
-    <script src="{% static 'js/signin.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.modal.css' %}"/>    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.modal.theme-atlant.css' %}" />
+    <script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'js/signin.js' %}"></script>
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script>
     var googleUser = {};
@@ -40,37 +41,63 @@
       });
     };
     function attachSignin(element) {
-        console.log(element.id);
         auth2.attachClickHandler(element, {},
             function(googleUser) {
                 // Useful data for your client-side scripts:
                 var profile = googleUser.getBasicProfile();
-                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-                console.log('Full Name: ' + profile.getName());
-                console.log('Given Name: ' + profile.getGivenName());
-                console.log('Family Name: ' + profile.getFamilyName());
-                console.log("Image URL: " + profile.getImageUrl());
-                console.log("Email: " + profile.getEmail());
 
                 // The ID token you need to pass to your backend:
                 var id_token = googleUser.getAuthResponse().id_token;
                 $.ajax({
-                        url: '/api/member/googleLogin/' + id_token,
-                        async: false,
-                        type: 'GET',
-                        dataType: 'json',
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function(json) {
-                            window.location.href = '/';
-                        },
-                        error: function(err) {
-                            console.log(err);
+                    url: '/api/member/googleLogin/' + id_token,
+                    async: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function(json) {
+                        window.location.href = '/';
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        var errMsgTitle = '';
+                        var errMsg = '';
+                        if(err.status == 406){
+                            errMsgTitle = 'Sign in Failed';
+                            errMsg = '이미 가입한 이메일입니다.<br /> \'Sign in with email\' 버튼으로 로그인 해주세요.';
+                        } else {
+                            errMsgTitle = 'Error';
+                            errMsg = '죄송합니다.<br /> 예상치 못한 에러가 발생했습니다.<br /> 다른 방법으로 로그인해주세요.';
                         }
-                    });
+                        modal({
+                            type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+                            title: errMsgTitle, //Modal Title
+                            text: errMsg, //Modal HTML Content
+                            size: 'normal', //Modal Size (normal | large | small)
+                            center: true, //Center Modal Box?
+                            autoclose: false, //Auto Close Modal Box?
+                            callback: null, //Callback Function after close Modal (ex: function(result){alert(result);})
+                            onShow: function(r) {}, //After show Modal function
+                            closeClick: true, //Close Modal on click near the box
+                            closable: true, //If Modal is closable
+                            theme: 'atlant', //Modal Custom Theme
+                            animate: false, //Slide animation
+                            background: 'rgba(0,0,0,0.35)', //Background Color, it can be null
+                            zIndex: 1050, //z-index
+                            template: '<div class="modal-box"><div class="modal-inner"><div class="modal-title"><a class="modal-close-btn"></a></div><div class="modal-text"></div></div></div>',
+                            _classes: {
+                                box: '.modal-box',
+                                boxInner: ".modal-inner",
+                                title: '.modal-title',
+                                content: '.modal-text',
+                                closebtn: '.modal-close-btn'
+                            }
+                        });
+                    }
+                });
             }, function(error) {
-                alert(JSON.stringify(error, undefined, 2));
+                console.log(JSON.stringify(error, undefined, 2));
             }
         );
     }

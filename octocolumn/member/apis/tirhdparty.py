@@ -34,6 +34,7 @@ class GoogleLogin(APIView):
             azp: str
             aud: str
             sub: str
+            hd: str
             email: str
             email_verified: bool
             at_hash: str
@@ -49,7 +50,9 @@ class GoogleLogin(APIView):
 
         def get_debug_token_info(token):
             id_info = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
-            print(id_info)
+            if id_info.get('hd'):
+                return DebugTokenInfo(**id_info)
+            id_info['hd'] = None
             return DebugTokenInfo(**id_info)
 
         debug_token_info = get_debug_token_info(token)
