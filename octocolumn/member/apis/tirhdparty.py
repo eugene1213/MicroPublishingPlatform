@@ -29,7 +29,7 @@ class GoogleLogin(APIView):
 
     def get(self, request, *args, **kwargs):
         token = self.kwargs.get('token')
-        
+
         class DebugTokenInfo(NamedTuple):
             azp: str
             aud: str
@@ -62,13 +62,12 @@ class GoogleLogin(APIView):
 
         user_id = debug_token_info.sub
 
-        userinfo = User.objects.filter(username=debug_token_info.email).count()
-
-        if not userinfo == 0:
-            raise APIException('Already exists this email')
-
         user = GoogleBackend.authenticate(user_id=user_id)
         if not user:
+            userinfo = User.objects.filter(username=debug_token_info.email).count()
+
+            if not userinfo == 0:
+                raise APIException('Already exists this email')
             user = User.objects.create_google_user(
                 username=debug_token_info.email,
                 nickname=debug_token_info.name,
