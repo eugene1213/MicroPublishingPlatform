@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
 from google.auth.transport import requests
 from google.oauth2 import id_token
-from rest_framework import status, exceptions
-from rest_framework.exceptions import APIException
+from rest_framework import status
+from rest_framework.exceptions import APIException, NotAcceptable
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from typing import NamedTuple
@@ -70,7 +70,7 @@ class GoogleLogin(APIView):
             userinfo = User.objects.filter(username=debug_token_info.email).count()
 
             if not userinfo == 0:
-                raise APIException('Already exists this email', status.HTTP_406_NOT_ACCEPTABLE)
+                raise NotAcceptable('Already exists this email')
 
             user = User.objects.create_google_user(
                 username=debug_token_info.email,
@@ -117,12 +117,16 @@ class KakaoLogin(APIView):
 
             return HttpResponseRedirect(redirect_to='/').delete_cookie()
 
-
         user_id = debug_token_info['id']
 
         user = KakaoBackend.authenticate(user_id=user_id)
 
         if not user:
+            userinfo = User.objects.filter(username=debug_token_info.email).count()
+
+            if not userinfo == 0:
+                raise NotAcceptable('Already exists this email')
+            
             user = User.objects.create_kakao_user(
                 username=debug_token_info['kaccount_email'],
                 nickname=debug_token_info['properties']['nickname'],
