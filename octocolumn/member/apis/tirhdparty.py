@@ -70,7 +70,8 @@ class GoogleLogin(APIView):
             userinfo = User.objects.filter(username=debug_token_info.email).count()
 
             if not userinfo == 0:
-                raise APIException('Already exists this email')
+                raise APIException('Already exists this email', status.HTTP_406_NOT_ACCEPTABLE)
+
             user = User.objects.create_google_user(
                 username=debug_token_info.email,
                 nickname=debug_token_info.name,
