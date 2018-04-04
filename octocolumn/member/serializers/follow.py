@@ -38,16 +38,12 @@ class FollowStatusSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         serializer = UserSerializer(obj)
         profile = Profile.objects.filter(user=obj).get()
-        try:
-            author = Author.objects.filter(author=obj).get()
-        except ObjectDoesNotExist:
-            raise NotAcceptable({'detail': 'This Account is not Author'})
 
         data = {
             "username": serializer.data['nickname'],
             "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
-            "intro": author.intro,
-            "blog": author.blog,
+            "intro": profile.intro,
+            "blog": '',
             "achevement": "",
             "instagram": profile.instagram,
             "facebook": profile.facebook,

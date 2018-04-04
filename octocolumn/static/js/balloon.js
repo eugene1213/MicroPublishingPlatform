@@ -15,9 +15,6 @@ function controllBalloonCoord(id){
 }
 
 //마우스 오버되면 풍선을 노출시키고 마우스가 일정 영역 밖으로 이동하면 사라진다.
-$(document).ready(function(){
-    
-});
 
 function popBalloon() { //getPostList.js 에서 호출한다.
 
@@ -52,7 +49,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                 var profileImage = jsons.user.img.profile_image;
                 var coverImage = jsons.user.img.cover_image;
                 var profileIntro = jsons.user.intro;
-                
+
                 $(".card_profile_img_wrap").css("background-image","url(" +profileImage+ ")");
                 $(".card_background_img").css("background","url(" +coverImage+ ")")
                 $(".card_profile_info").text(profileIntro);

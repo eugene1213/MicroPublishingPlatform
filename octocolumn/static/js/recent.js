@@ -7,13 +7,10 @@ $(document).ready(function(){
         
         var post_id = e.target.getAttribute("id");
 
-        console.log(post_id)
         if(post_id > 0){
             
             
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            console.log(card_id);
-            console.log(data.results[card_id]);
             var cover_img = data.results[card_id].cover_image;
             
             var title = data.results[card_id].title;
@@ -30,6 +27,11 @@ $(document).ready(function(){
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
+    });
+    $(".profile_mark").click(function(e){
+        
+        var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
+        bookmark(bookmark_id);
     });
 });
 
@@ -64,6 +66,7 @@ function getRecent(url){
                 var main_content = json.results[i].main_content.substr(0,100);
                 var created_date = json.results[i].created_date;
                 var username = json.results[i].author.username;
+                var author_id = json.results[i].author.author_id;
                 var profile_image = json.results[i].author.img.profile_image;
                 var bookmarkElement = '';
                 json.results[i].bookmark_status ? bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark"></div>' : bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark-empty"></div>';                
@@ -79,7 +82,7 @@ function getRecent(url){
                                         '+ main_content +'              \
                                     </div>                              \
                                     <div class="profile_box">           \
-                                        <div class="profile_img" id="'+username+'" style="background-image:url('+profile_image+')"></div>  \
+                                        <div class="profile_img" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>  \
                                         <div class="profile_name">'+ username +'</div>                 \
                                         <div class="profile_date">'+ created_date +'</div>             \
                                         <div class="profile_readtime">'+ readTime +' min read</div>    \
