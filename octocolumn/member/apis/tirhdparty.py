@@ -126,7 +126,7 @@ class KakaoLogin(APIView):
 
             if not userinfo == 0:
                 raise NotAcceptable('Already exists this email')
-            
+
             user = User.objects.create_kakao_user(
                 username=debug_token_info['kaccount_email'],
                 nickname=debug_token_info['properties']['nickname'],

@@ -8,19 +8,37 @@ from rest_framework.views import APIView
 from column.models import Post
 from member.models import User, ProfileImage, Profile
 from member.models.user import Relation, Bookmark
-from member.serializers import ProfileImageSerializer, ProfileSerializer
+from member.serializers import ProfileImageSerializer, ProfileSerializer, FollowStatusSerializer
 
 __all__ = (
     'Follower',
     'Waiting',
     'BookmarkView',
     'GetUserFollowingCard',
-    'GetUserFollowerCard'
+    'GetUserFollowerCard',
+    'FollowerStatus'
 )
 
 
+class FollowerStatus(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user_pk = self.kwargs.get('user_pk')
+        try:
+            to_user = User.objects.filter(pk=user_pk).get()
+            serializer = FollowStatusSerializer(to_user, context={'request': request})
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
+
+
+
 # 1
-# 기다림 API
+# 팔로워 API
 # URL  /api/member/(?P<user_pk>\d+)/follow/$
 class Follower(APIView):
     permission_classes = (IsAuthenticated,)
@@ -48,7 +66,7 @@ class Follower(APIView):
                              })
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"}, status.HTTP_402_PAYMENT_REQUIRED)
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
 # 1
