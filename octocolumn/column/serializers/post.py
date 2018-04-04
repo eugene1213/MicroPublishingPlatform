@@ -107,6 +107,9 @@ class PostMoreSerializer(serializers.ModelSerializer):
         data = {
             "author_id": serializer.data['pk'],
             "username": serializer.data['nickname'],
+            "following_url": "/api/member/" + str(serializer.data['pk']) + "/followStatus/",
+            "achevement": "",
+            "img": self.image(obj.author)
         }
 
         return data
