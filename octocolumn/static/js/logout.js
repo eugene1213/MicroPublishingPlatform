@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-    currentPage2header();
-    
     $("#logout").click(function(){
         logout();
     });
