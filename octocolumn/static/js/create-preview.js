@@ -58,7 +58,7 @@ $(document).ready(function() {
 /* 설정된 커버 이미지 preview에 출력 */
 function previewCoverImg() {
     var imgSrc = $("#blah").attr("src");
-    $("#preview-cover-img").attr("src", imgSrc);
+    $(".preview-cover-img").css("background-image", 'url('+imgSrc+')');
 
     var imgHeight = $("#preview-cover-img").height();
     // 이미지 높이가 401보다 크면 위,아래 부분을 넘는 만큼 자름

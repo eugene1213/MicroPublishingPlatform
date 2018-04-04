@@ -157,9 +157,9 @@ input, button {
     .preview-wrap .preview .preview-cover-img {
       margin-bottom: 93px;
       height: 401px;
-      overflow: hidden; }
-      .preview-wrap .preview .preview-cover-img img {
-        width: 100%; }
+      overflow: hidden;
+      background-position: 50% 50%;
+      background-size: cover; }
     .preview-wrap .preview .preview-title {
       padding-left: 160px;
       border-bottom: 2px solid #2a292a;
