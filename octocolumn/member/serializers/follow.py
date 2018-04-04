@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.fields import SerializerMethodField
 
-from member.models import ProfileImage, Author
+from member.models import ProfileImage, Author, Profile
 from member.models.user import Relation, User
 from member.serializers import UserSerializer, ProfileImageSerializer, AuthorSerializer
 
@@ -37,6 +37,7 @@ class FollowStatusSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         serializer = UserSerializer(obj)
+        profile = Profile.objects.filter(user=obj).get()
         try:
             author = Author.objects.filter(author=obj).get()
         except ObjectDoesNotExist:
@@ -48,6 +49,9 @@ class FollowStatusSerializer(serializers.ModelSerializer):
             "intro": author.intro,
             "blog": author.blog,
             "achevement": "",
+            "instagram": profile.instagram,
+            "facebook": profile.facebook,
+            "twitter": profile.twitter,
             "img": self.image(obj)
 
         }
