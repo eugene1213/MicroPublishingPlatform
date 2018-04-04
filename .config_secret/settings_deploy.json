@@ -34,13 +34,13 @@
     "secret_code" :"0bef4b65c4ec01eb73703a042812e612 "
   },
     "google":{
-        "client_id":"512110342313-s4n09bgd4ok88kf8nrinmlhpg4i3rr6g.apps.googleusercontent.com",
-        "project_id":"devocto-194301",
+        "client_id":"531490968854-qs7j8doucd7ucomp4vpnffdsgrsh4aac.apps.googleusercontent.com",
+        "project_id":"octocolumn",
         "auth_uri":"https://accounts.google.com/o/oauth2/auth",
         "token_uri":"https://accounts.google.com/o/oauth2/token",
         "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
-        "client_secret":"3HrHu8B8ddTw7YwJ1_UTaeE3",
-        "javascript_origins":["https://www.octocolumn.com"]
+        "client_secret":"BxMM6QruwY0FH53z1YHva",
+        "javascript_origins":["http://localhost:8000"]
     }
   }
 }

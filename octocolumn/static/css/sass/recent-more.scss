@@ -540,7 +540,7 @@
 	line-height: 28px;
 }
 .mainfeed .feedbox4 .fb1_txt .profile_box .profile_readtime{
-	width: 80px;
+	width: 96px;
 	height: 28px;
 	display: block;
 	float: left;
@@ -635,6 +635,7 @@
 	left: 100px;
 	top: 106px;
 	overflow: hidden;
+	background-size: 100%;
 }
 .flip .arrow_box_1 .btn-follow {
 	float: right;
@@ -725,4 +726,5 @@
 	font-weight: 300;
 	line-height: 1.4em;
 	overflow: scroll;
+	word-break: break-word;
 }

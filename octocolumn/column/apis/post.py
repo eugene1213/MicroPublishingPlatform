@@ -173,97 +173,30 @@ class PostCreateView(generics.GenericAPIView,
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
 
 
-class PostListView(APIView):
+################################### 목록  ###############################
+
+class PostListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
+    pagination_class = PostPagination
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
-    def remove_tag(self, post):
-        cleaner = re.compile('<.*?>')
-        clean_text = re.sub(cleaner, '', post)
-        return clean_text
-
-    # 태그 처리 함수
-    def tag(self, post):
-        tag = SearchTag.objects.filter(post=post)
-        tag_serializer = SearchTagSerializer(tag, many=True)
-        if tag_serializer:
-            return tag_serializer.data
-        return None
-
-    def image(self, user):
+    def list(self, request, *args, **kwargs):
         try:
-            img = ProfileImage.objects.filter(user=user).get()
+            post = Post.objects.all().order_by('-created_date')
 
-            return ProfileImageSerializer(img).data
-        except ObjectDoesNotExist:
-            return {
-                "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
-                "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
-                    }
+            page = self.paginate_queryset(post)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
 
-    def bookmark_status(self, post):
-        if not self.request.user.is_authenticated:
-            return False
-        try:
-            Bookmark.objects.filter(user=self.request.user, post=post).get()
-            return True
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
         except ObjectDoesNotExist:
-            return False
-
-    def follower_status(self, user):
-        if self.request.auth is None:
-            return False
-        try:
-            Relation.objects.filter(to_user=user, from_user=self.request.user).get()
-            return True
-        except ObjectDoesNotExist:
-            return False
+            return Response('', 200)
 
     def get(self, request, *args, **kwargs):
-        post = Post.objects.order_by('-created_date')[:5]
-
-        lists = []
-        for i in post:
-            content = i.main_content
-            rm_content = self.remove_tag(content)[0:300]
-            user = User.objects.filter(pk=i.author_id).get()
-
-            serializer = PostSerializer(i)
-            time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-            time2 = datetime.strptime(serializer.data['created_date'].split('T')[1].split('.')[0], '%H:%M:%S')
-            text = self.remove_tag(content)
-            follower_count = Relation.objects.filter(to_user=user).count()
-            tag = self.tag(i)
-
-            data = {
-                "post": {
-                    "post_id": serializer.data['pk'],
-                    "title": serializer.data['title'],
-                    "main_content": rm_content,
-                    "cover_img": serializer.data['cover_image'],
-                    "preview": serializer.data['preview'],
-                    "created_date": time.strftime('%B')[:3] + time.strftime(' %d'),
-                    'created_datetime': time.strftime('%Y.%m.%d') + ' ' + time2.strftime('%H:%M'),
-                    "typo_count": len(text) - text.count(' ') / 2,
-                    "tag": tag,
-                    "bookmark_status": self.bookmark_status(i),
-                    "price": serializer.data['price'],
-                    "author": {
-                        "author_id": serializer.data['author'],
-                        "username": user.nickname,
-                        "follow_status": self.follower_status(user),
-                        "follower_count": follower_count,
-                        "following_url": "/api/member/" + str(user.pk) + "/follow/",
-                        "achevement": "",
-                        "img": self.image(user)
-
-                    }
-                }
-            }
-            lists.append(data)
-
-        return Response(lists, status=status.HTTP_200_OK)
+        return self.list(request)
 
 
 class PostMoreListView(generics.ListAPIView):

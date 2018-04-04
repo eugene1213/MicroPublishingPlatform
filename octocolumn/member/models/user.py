@@ -40,12 +40,11 @@ class UserManager(BaseUserManager):
         return user
 
     #
-    def create_facebook_user(self, user_info):
+    def create_facebook_user(self, username, nickname, social_id):
         user = self.model(
-            username=user_info['id'],
-            first_name=user_info['first_name'],
-            last_name=user_info['last_name'],
-            social_id=user_info['social_id']
+            username=username,
+            nickname=nickname,
+            social_id=social_id,
         )
         user.user_type = 'f'
         user.set_unusable_password()
@@ -53,12 +52,11 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_google_user(self, user_info):
+    def create_google_user(self, username,nickname,social_id):
         user = self.model(
-            username=user_info['username'],
-            first_name=user_info['first_name'],
-            last_name=user_info['last_name'],
-            social_id=user_info['social_id']
+            username=username,
+            nickname=nickname,
+            social_id=social_id,
         )
         user.user_type = 'g'
         user.set_unusable_password()

@@ -24,15 +24,15 @@ class FacebookBackend:
 
 
 class GoogleBackend:
-    def authenticate(self, user_id):
+    def authenticate(user_id):
         try:
             return User.objects.get(social_id=f'g_{user_id}')
         except User.DoesNotExist:
             return None
 
-    def get_user(self, user_id):
+    def get_user(user_pk):
         try:
-            return User.objects.get(pk=user_id)
+            return User.objects.get(pk=user_pk)
         except User.DoesNotExist:
             return None
 
@@ -44,9 +44,9 @@ class KakaoBackend:
         except User.DoesNotExist:
             return None
 
-    def get_user(self, user_id):
+    def get_user(user_pk):
         try:
-            return User.objects.get(pk=user_id)
+            return User.objects.get(pk=user_pk)
         except User.DoesNotExist:
             return None
 

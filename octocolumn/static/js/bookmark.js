@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var data = getRecent("/api/column/bookmarkList/");
-    popBalloon(data);
+    popBalloon();
 
     $(document).click(function(e){
         
@@ -10,12 +10,13 @@ $(document).ready(function() {
         if(post_id > 0){
 
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            var cover_img = data[card_id-1].post.cover_img;
-            var title = data[card_id-1].post.title;
-            var date = data[card_id-1].post.created_datetime;
-            var author = data[card_id-1].post.author;
-            var tag = data[card_id-1].post.tag;
-            var price = data[card_id-1].post.price;
+            var cover_img = data.results[card_id].cover_image;
+            
+            var title = data.results[card_id].title;
+            var date = data.results[card_id].created_datetime;
+            var author = data.results[card_id].author;
+            var tag = data.results[card_id].tag;
+            var price = data.results[card_id].price;
 
             var readtime = $("#card_" + card_id + " .profile_readtime").text();
 
@@ -64,6 +65,7 @@ function getRecent(url){
                 var main_content = json.results[i].main_content.substr(0,100);
                 var created_date = json.results[i].created_date;
                 var username = json.results[i].author.username;
+                var author_id = json.results[i].author.author_id;                
                 var profile_image = json.results[i].author.img.profile_image;
                 var bookmarkElement = '';
                 json.results[i].bookmark_status ? bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark"></div>' : bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark-empty"></div>';
@@ -79,7 +81,7 @@ function getRecent(url){
                                         '+ main_content +'              \
                                     </div>                              \
                                     <div class="profile_box">           \
-                                        <div class="profile_img profile-image-upload-wrap"><img id="'+ username +'" src="'+ profile_image +'" alt="프로필 사진"></div>  \
+                                        <div class="profile_img" id="author_'+ author_id +'" style="background-image:url('+profile_image+')"></div>  \
                                         <div class="profile_name">'+ username +'</div>                 \
                                         <div class="profile_date">'+ created_date +'</div>             \
                                         <div class="profile_readtime">'+ readTime +' min read</div>    \

@@ -195,10 +195,8 @@ input, button {
             margin-bottom: 93px;
             height: 401px;
             overflow: hidden;
-
-            img {
-                width: 100%;
-            }
+            background-position: 50% 50%;
+            background-size: cover;
         }
         .preview-title {
             padding-left: 160px;

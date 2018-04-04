@@ -21,6 +21,7 @@ $(document).ready(function() {
         // },100)
         $(".arrow-box").hide();
         $(".css-arrow").css("transform","rotate(360deg)");
+        saveTmp(false); // 임시저장
     });
     $(".cancel-publish").click(function(){
         $(".preview-wrap").hide();
@@ -50,14 +51,14 @@ $(document).ready(function() {
     $(".preview-br-list-wrap .octo-code").keyup(function (e){
         focusJump(e);
     });
-    saveTmp(false); // 임시저장
+    
     countTitle();   // 제목 글자수 체크
 }); // $(document).ready(function()
 
 /* 설정된 커버 이미지 preview에 출력 */
 function previewCoverImg() {
     var imgSrc = $("#blah").attr("src");
-    $("#preview-cover-img").attr("src", imgSrc);
+    $(".preview-cover-img").css("background-image", 'url('+imgSrc+')');
 
     var imgHeight = $("#preview-cover-img").height();
     // 이미지 높이가 401보다 크면 위,아래 부분을 넘는 만큼 자름
