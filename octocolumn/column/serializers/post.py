@@ -1,15 +1,14 @@
 import re
-from datetime import datetime
 
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from rest_framework.fields import SerializerMethodField, CurrentUserDefault
+from rest_framework.fields import SerializerMethodField
 
 from column.models import Temp, SearchTag
 from column.models import TempFile
 
 from member.models import ProfileImage
-from member.models.user import Relation, Bookmark
+from member.models.user import Bookmark
 from member.serializers import UserSerializer, ProfileImageSerializer
 from ..serializers.comment import CommentSerializer
 from ..models import Post
@@ -75,12 +74,6 @@ class MyPublishPostSerializer(serializers.ModelSerializer):
 
 class PostMoreSerializer(serializers.ModelSerializer):
     # 아래 코드가 동작하도록 CommentSerializer를 구현
-    def follower_status(self, data):
-        try:
-            Relation.objects.filter(to_user=data, from_user=self.context.get('request').user).get()
-            return True
-        except ObjectDoesNotExist:
-            return False
 
     def image(self, user):
         try:
@@ -114,12 +107,6 @@ class PostMoreSerializer(serializers.ModelSerializer):
         data = {
             "author_id": serializer.data['pk'],
             "username": serializer.data['nickname'],
-            "follow_status": self.follower_status(obj.author),
-            "follower_count": Relation.objects.filter(to_user=obj.author).count(),
-            "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
-            "achevement": "",
-            "img": self.image(obj.author)
-
         }
 
         return data
@@ -133,11 +120,13 @@ class PostMoreSerializer(serializers.ModelSerializer):
         return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
 
     def get_bookmark_status(self, obj):
-        try:
-            Bookmark.objects.filter(user=self.context.get('request').user, post=obj).get()
-            return True
-        except ObjectDoesNotExist:
-            return False
+        if self.context.get('request').user.is_authenticated:
+            try:
+                Bookmark.objects.filter(user=self.context.get('request').user, post=obj).get()
+                return True
+            except ObjectDoesNotExist:
+                return False
+        return False
 
     my_comment = CommentSerializer(read_only=True)
     comments = CommentSerializer(read_only=True, many=True)
@@ -147,7 +136,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     main_content = SerializerMethodField()
     author = SerializerMethodField()
     created_date = SerializerMethodField()
-    bookmark_status =SerializerMethodField()
+    bookmark_status = SerializerMethodField()
 
     class Meta:
         model = Post
