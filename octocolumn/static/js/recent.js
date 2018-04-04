@@ -1,21 +1,26 @@
 $(document).ready(function(){
     
     var data = getRecent("/api/column/postRecentMore/");
-    popBalloon(data);
+    popBalloon();
 
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");
 
+        console.log(post_id)
         if(post_id > 0){
-
+            
+            
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            var cover_img = data[card_id-1].post.cover_img;
-            var title = data[card_id-1].post.title;
-            var date = data[card_id-1].post.created_datetime;
-            var author = data[card_id-1].post.author;
-            var tag = data[card_id-1].post.tag;
-            var price = data[card_id-1].post.price;
+            console.log(card_id);
+            console.log(data.results[card_id]);
+            var cover_img = data.results[card_id].cover_image;
+            
+            var title = data.results[card_id].title;
+            var date = data.results[card_id].created_datetime;
+            var author = data.results[card_id].author;
+            var tag = data.results[card_id].tag;
+            var price = data.results[card_id].price;
 
             var readtime = $("#card_" + card_id + " .profile_readtime").text();
 

@@ -3,7 +3,8 @@
 function controllBalloonCoord(id){
     //마우스 오버된 사진의 좌표를 구해서 풍선 위치를 잡아준다.
 
-    var coord = $("#"+id).offset();
+    var coord = $(id).offset();
+    console.log(id)
 
     $(".arrow_box_1").css("left", coord.left-112);
     $(".arrow_box_2").css("left", coord.left-112);
@@ -18,76 +19,86 @@ $(document).ready(function(){
     
 });
 
-function popBalloon(data) { //getPostList.js 에서 호출한다.
+function popBalloon() { //getPostList.js 에서 호출한다.
 
-    $(".profile_img").mouseenter(function(){
+    $(".profile_img").mouseenter(function(e){
 
-        var parents_id = $(this).parents().parents().parents().attr("id");  //mouseenter 이벤트가 발생한 요소의 3번째 부모의 id
-        var i = parents_id.replace('card_','');
-        var followers = data[i-1].post.author.follower_count;
-        var follow_status = data[i-1].post.author.follow_status;
-        var author_id = data[i-1].post.author.author_id;
-        console.log(data)
-        if(follow_status) {
-            $(".btn-follow").text("Following");
-        }
-        $(".num_of_followers").text(followers);
-
-        if(!$(this).attr("id")){
-            var ranId = Math.ceil(Math.random()*99999999);
-            $(this).attr("id",ranId);
-        }
-        var whichProfile = $(this).attr('id');
-        var authorName = $("#" + whichProfile + "+ .profile_name").text();
-        var profileImage = $("#" + whichProfile).css("background-image");
-
-        console.log(profileImage)
-        $(".card_profile_img_wrap").css("background-image",profileImage);
-
-        $(".card_background_img").css("background","url(" +data[i-1].post.author.img.cover_image+ ")")
-
-        // $(".card_profile_img").load(function(e){
-        //     loadCropImage(".card_profile_img");
-        // });
-
-        $(".card_profile_name").text(authorName);
+        var pk = $(this).attr("id").replace('author_','');
         
-        controllBalloonCoord(whichProfile);
+        $.ajax({
+            url: "/api/member/"+ pk +"/followStatus/",
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            success: function(jsons) {
+    
+                console.log(jsons);
+    
+                var followers = jsons.follower_count;
+                var follow_status = jsons.follow_status;
+                var author_id = pk;
 
-        $(".arrow_box_1").show();
+                if(follow_status) {
+                    $(".btn-follow").text("Following");
+                }
+                $(".num_of_followers").text(followers);
         
-        $(".more-info").click(function(){
-            
-            $( ".arrow_box_1" ).hide();
-            $( ".arrow_box_2" ).show();
-        });
-
-        $(".more-info2").click(function(){
-
-            $( ".arrow_box_2" ).hide();
-            $( ".arrow_box_1" ).show();
-        });
-
-        //창 크기가 변화하면 위치 재조정
-        $(window).resize(function(){
-
-            controllBalloonCoord(whichProfile);
-        });
-
-        $(document).mousemove(function(pointerCoord){
-            var x = pointerCoord.pageX;     // 마우스 좌표
-            var y = pointerCoord.pageY;
-
-            //마우스가 일정 좌표를 벗어나면 말풍선이 사라진다.
-            if(x > XY.left + 190 || x < XY.left - 130 || y > XY.top + 80 || y < XY.top - 330) {
-
-                $(".arrow_box_1").hide();
-                $(".arrow_box_2").hide();
+                // if(!$(this).attr("id")){
+                //     var ranId = Math.ceil(Math.random()*99999999);
+                //     $(this).attr("id",ranId);
+                // }
+                var whichProfile = $(this).attr('id');
+                var authorName = jsons.user.username;
+                var profileImage = jsons.user.img.profile_image;
+                var coverImage = jsons.user.img.cover_image;
+                var profileIntro = jsons.user.intro;
+                
+                $(".card_profile_img_wrap").css("background-image","url(" +profileImage+ ")");
+                $(".card_background_img").css("background","url(" +coverImage+ ")")
+                $(".card_profile_info").text(profileIntro);
+                $(".card_profile_name").text(authorName);
+                
+                controllBalloonCoord(e.target);
+        
+                $(".arrow_box_1").show();
+                
+                $(".more-info").click(function(){
+                    
+                    $( ".arrow_box_1" ).hide();
+                    $( ".arrow_box_2" ).show();
+                });
+        
+                $(".more-info2").click(function(){
+        
+                    $( ".arrow_box_2" ).hide();
+                    $( ".arrow_box_1" ).show();
+                });
+        
+                //창 크기가 변화하면 위치 재조정
+                $(window).resize(function(){
+        
+                    controllBalloonCoord(whichProfile);
+                });
+        
+                $(document).mousemove(function(pointerCoord){
+                    var x = pointerCoord.pageX;     // 마우스 좌표
+                    var y = pointerCoord.pageY;
+        
+                    //마우스가 일정 좌표를 벗어나면 말풍선이 사라진다.
+                    if(x > XY.left + 190 || x < XY.left - 130 || y > XY.top + 80 || y < XY.top - 330) {
+        
+                        $(".arrow_box_1").hide();
+                        $(".arrow_box_2").hide();
+                    }
+                });
+        
+                $(".btn-follow").unbind("click").click(function(e){
+                    follow(author_id);
+                });
+            },
+            error: function(error) {
+                console.log(error);
             }
-        });
-
-        $(".btn-follow").unbind("click").click(function(e){
-            follow(author_id);
         });
     });
 }

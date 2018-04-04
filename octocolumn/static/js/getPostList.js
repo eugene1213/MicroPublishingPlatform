@@ -15,18 +15,17 @@ function getData(){
 
             console.log(jsons);
 
-            data = jsons;
-            
             post = jsons.results;
+            data = post;
 
-            console.log(post);
             for(var i=1; i<=post.length; i++){
                 var readTime = Math.round(post[i-1].typo_count / 500);                               // 1분/500자 반올림
 
-                $("#card_"+i+" .fb1_img").attr("id", post[i-1].post_id);
-                $("#card_"+i+" .fb1_txt_1").attr("id", post[i-1].post_id);
-                $("#card_"+i+" .fb1_txt_2").attr("id", post[i-1].post_id);
-                $("#card_"+i+" .profile_mark > div").attr("id", "bookmark_"+post[i-1].post_id);
+                $("#card_"+i+" .fb1_img").attr("id", post[i-1].pk);
+                $("#card_"+i+" .fb1_txt_1").attr("id", post[i-1].pk);
+                $("#card_"+i+" .fb1_txt_2").attr("id", post[i-1].pk);
+                $("#card_"+i+" .profile_img").attr("id", "author_"+post[i-1].author.author_id);
+                $("#card_"+i+" .profile_mark > div").attr("id", "bookmark_"+post[i-1].pk);
 
                 // $("#card_"+i+" .fb1_img > img").attr("src",json[i-1].post.cover_img);
                 $("#card_"+i+" .fb1_img").css("background","url("+post[i-1].cover_image+")");        // 커버사진
