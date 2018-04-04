@@ -23,10 +23,10 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
     $(".profile_img").mouseenter(function(){
 
         var parents_id = $(this).parents().parents().parents().attr("id");  //mouseenter 이벤트가 발생한 요소의 3번째 부모의 id
-        var i = parents_id.substr(5,1);
+        var i = parents_id.replace('card_','');
         var followers = data[i-1].post.author.follower_count;
         var follow_status = data[i-1].post.author.follow_status;
-
+        var author_id = data[i-1].post.author.author_id;
         console.log(data)
         if(follow_status) {
             $(".btn-follow").text("Following");
@@ -87,7 +87,7 @@ function popBalloon(data) { //getPostList.js 에서 호출한다.
         });
 
         $(".btn-follow").unbind("click").click(function(e){
-            follow(i);
+            follow(author_id);
         });
     });
 }

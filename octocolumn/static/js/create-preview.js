@@ -21,6 +21,7 @@ $(document).ready(function() {
         // },100)
         $(".arrow-box").hide();
         $(".css-arrow").css("transform","rotate(360deg)");
+        saveTmp(false); // 임시저장
     });
     $(".cancel-publish").click(function(){
         $(".preview-wrap").hide();
@@ -50,7 +51,7 @@ $(document).ready(function() {
     $(".preview-br-list-wrap .octo-code").keyup(function (e){
         focusJump(e);
     });
-    saveTmp(false); // 임시저장
+    
     countTitle();   // 제목 글자수 체크
 }); // $(document).ready(function()
 

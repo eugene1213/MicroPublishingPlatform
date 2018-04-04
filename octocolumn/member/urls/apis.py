@@ -5,7 +5,8 @@ from member import apis
 from member.apis import Login, SignUp, FacebookLogin, ValidationSecondPassword, SecondPasswordCreateView, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
-    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView
+    GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView, \
+    FollowerStatus
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -44,7 +45,7 @@ urlpatterns = [
 
     # follower
     url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
-
+    url(r'^(?P<user_pk>\d+)/followStatus/$', FollowerStatus.as_view(), name='follower-status'),
     url(r'^getUserFollowerCard/', include([
             url(r'^$', GetUserFollowerCard.as_view(), name="follower"),
             url(r'^(?P<count>\w+)$', GetUserFollowerCard.as_view(), name="follower")])),

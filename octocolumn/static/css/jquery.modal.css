@@ -126,6 +126,8 @@
     font-size: 14px;
     padding: 18px 15px;
     overflow-y: auto;
+    color: #ffffff;
+    font-weight: 100;
 }
 
 #modal-window .modal-box img {
