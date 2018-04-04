@@ -38,28 +38,33 @@ a:hover {
     font-style: thin;
     font-weight: 100;
     src: url('font/SpoqaHanSansThin.woff') format('woff');
+    font-display: fallback;    
 }
 @font-face {
     font-family: 'SpoqaHanSansLight';
     font-style: light;
     font-weight: 200;
     src: url('font/SpoqaHanSansLight.woff') format('woff');
+    font-display: fallback;    
 }
 @font-face {
     font-family: 'SpoqaHanSansRegular';
     font-style: regular;
     font-weight: 300;
     src: url('font/SpoqaHanSansRegular.woff') format('woff');
+    font-display: fallback;    
 }
 @font-face {
     font-family: 'SpoqaHanSansBold';
     font-style: bold;
     font-weight: 400;
     src: url('font/SpoqaHanSansBold.woff') format('woff');
+    font-display: fallback;    
 }
 @font-face {
     font-family: 'Akzidenz';
     font-style: bold;
     font-weight: 400;
     src: url('font/Akzidenz.ttf') format('woff');
+    font-display: fallback;    
 }
