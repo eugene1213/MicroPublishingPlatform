@@ -1,22 +1,22 @@
 from django.contrib.auth.hashers import make_password, check_password
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import exceptions, generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from member.models import User, OtherPassword
-from member.serializers import SecondPasswordSerializer
+from member.models import User, OctoCode
+from member.serializers import OctoCodeSerializer
 
 __all__ =(
-    'SecondPasswordCreateView',
-    'ValidationSecondPassword'
+    'OctoCodeView',
 )
 
 
-class SecondPasswordCreateView(generics.CreateAPIView):
+class OctoCodeView(APIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = SecondPasswordSerializer
-    queryset = OtherPassword.objects.all()
+    serializer_class = OctoCodeSerializer
+    queryset = OctoCode.objects.all()
 
     def get_queryset(self):
         if self.request.user.is_authenticated():
@@ -24,46 +24,46 @@ class SecondPasswordCreateView(generics.CreateAPIView):
         else:
             raise exceptions.NotAuthenticated()
 
-    def validate_password(self, data):
-        second_password = data
+    def validate_code(self, data):
 
-        if int(second_password) is not int:
-            raise exceptions.ValidationError({"detail":'패스워드는 숫자만 입력하셔야 합니다.'})
+        # 형태가 integer인지 체크
+        try:
+            code = int(data)
 
-        if len(second_password) is not 4:
-            raise exceptions.ValidationError({"detail":'패스워드는 4자리만 입력하셔야 합니다.'})
-        return data
+        except ValueError:
+            raise exceptions.ValidationError({"detail": 'password is only numeric character'})
+
+        if len(data) is not 4:
+            raise exceptions.ValidationError({"detail": 'password is only 4 character'})
+        return code
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        numeric_password = self.validate_password(self.request.data['second_password'])
-        password = make_password(numeric_password, None, 'PBKDF2')
+        data = self.request.data['code']
 
-        serializer = SecondPasswordSerializer(OtherPassword.objects.create(user=user, second_password=password))
+        try:
+            octo_code = OctoCode.objects.filter(user=user).get().octo_code
 
-        if serializer:
-            return Response({"detail": serializer.validated_data}, status=status.HTTP_201_CREATED)
-        else:
-            return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "This account does not have octo_code"})
 
+        code = self.validate_code(data)
 
-class ValidationSecondPassword(APIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = SecondPasswordSerializer
-    queryset = OtherPassword.objects.all()
+        if code == octo_code:
+            return Response({"detail": True}, status=status.HTTP_202_ACCEPTED)
+        raise exceptions.AuthenticationFailed({"detail": "OctoCode is not valid"})
 
-    def post(self, request):
+    def put(self, request,*args, **kwargs):
         user = self.request.user
-        numeric_password = self.request.data['second_password']
+        data = self.request.data['code']
 
-        user_data = OtherPassword.objects.filter(user=user)
+        code = self.validate_code(data)
 
-        if user_data.error_count >= 5:
-            return Response({"detail": "The number of errors exceeded"}, status=status.HTTP_401_UNAUTHORIZED)
+        if code:
+            OctoCode.objects.create(user=user, octo_code=code)
+            return Response({"detail":True}, status=status.HTTP_201_CREATED)
 
-        if not check_password(numeric_password, user_data.second_password):
-            OtherPassword.objects.increase(user=user)
-            return Response({"detail": "Failed Credential"}, status=status.HTTP_401_UNAUTHORIZED)
-        return Response({"detail": "Success Credential"}, status=status.HTTP_200_OK)
+
+
 
 

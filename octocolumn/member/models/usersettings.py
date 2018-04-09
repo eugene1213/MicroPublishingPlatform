@@ -2,20 +2,20 @@ from django.db import models
 from django.db.models import F
 
 __all__ = (
-    'OtherPassword',
-    'UserSetting'
+    'OctoCode',
+    # 'UserSetting'
 )
 
 
-class OtherPassword(models.Model):
-    user = models.ForeignKey('User', null=True)
-    second_password = models.CharField(max_length=255)
+class OctoCode(models.Model):
+    user = models.ForeignKey('member.User', null=True)
+    octo_code = models.CharField(max_length=255)
     error_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return '{} : {}'.format(
             self.user,
-            self.second_password,
+            self.octo_code,
             self.error_count
         )
 
@@ -29,12 +29,13 @@ class OtherPassword(models.Model):
         user.error_count = 0
         user.save()
 
-
-class UserSetting(models.Model):
-    user = models.ForeignKey('User', null=True)
-
-    def __str__(self):
-        return '{} : {}'.format(
-            self.user,
-        )
+#
+# class UserSetting(models.Model):
+#     user = models.ForeignKey('member.User', null=True)
+#
+#     def __str__(self):
+#         return '{} : {}'.format(
+#             self.user,
+#             self.octo_code
+#         )
 

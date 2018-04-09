@@ -28,6 +28,8 @@ MIDDLEWARE = [
 
 # Application definition
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
