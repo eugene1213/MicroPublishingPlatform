@@ -35,7 +35,7 @@ class OctoCodeView(APIView):
 
         if len(data) is not 4:
             raise exceptions.ValidationError({"detail": 'password is only 4 character'})
-        return code
+        return data
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
@@ -57,11 +57,19 @@ class OctoCodeView(APIView):
         user = self.request.user
         data = self.request.data['code']
 
+        try:
+            octo_code = OctoCode.objects.filter(user=user).get().octo_code
+            raise exceptions.ValidationError({"detail": "Already Exist code"})
+        except ObjectDoesNotExist:
+            pass
+
         code = self.validate_code(data)
 
         if code:
-            OctoCode.objects.create(user=user, octo_code=code)
-            return Response({"detail":True}, status=status.HTTP_201_CREATED)
+            if OctoCode.objects.create(user=user, octo_code=code):
+                return Response({"detail": True}, status=status.HTTP_201_CREATED)
+
+
 
 
 

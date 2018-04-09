@@ -8,7 +8,7 @@ __all__ = (
 
 
 class OctoCode(models.Model):
-    user = models.ForeignKey('member.User', null=True)
+    user = models.OneToOneField('member.User', null=True)
     octo_code = models.CharField(max_length=255)
     error_count = models.PositiveIntegerField(default=0)
 
