@@ -48,8 +48,18 @@ $(document).ready(function() {
         });
     });
     // octo-code 입력시 포커스 자동 이동
-    $(".preview-br-list-wrap .octo-code").keyup(function (e){
-        focusJump(e);
+    $(".preview-br-list-wrap .octo-code").keypress(function (e){
+
+        if( e.keyCode < 48 || e.keyCode > 57 ) return false;
+        else focusJump(e);
+    });
+    $('#octo-code-4').keypress(function(e) {
+
+        var octoCode = $('#octo-code-1').val() + $('#octo-code-2').val() + $('#octo-code-3').val() + $('#octo-code-4').val();
+        if( (e.keyCode < 48 || e.keyCode > 57) && octoCode.length == 4) {
+
+            octoCodeValidate(octoCode);
+        }
     });
     
     countTitle();   // 제목 글자수 체크
@@ -74,9 +84,31 @@ function focusJump(e) {
     var id = $(e.target).attr('id');
     var idNum = id.replace("octo-code-","");
 
-    if($(e.target).attr("id")==('octo-code-' + idNum) && idNum !="5" && $(e.target).val() != '') {
+    if($(e.target).attr("id")==('octo-code-' + idNum) && idNum !="5") {
+
         $("#octo-code-" + (++idNum)).focus();
     }
+}
+function octoCodeValidate(octoCode) {
+
+    $.ajax({
+        url: "/api/member/octoCode/",
+        async: false,
+        type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
+        dataType: 'json',
+        data: JSON.stringify({
+            "code" : octoCode
+        }),
+        success: function(json) {
+            console.log(json);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
 }
 
 /* 발행 미리보기에 글의 정보들을 출력 */
