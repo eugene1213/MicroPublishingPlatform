@@ -8,21 +8,21 @@ function title2header(read_or_write){            // 글 읽기,쓰기 페이지�
             if($(".title").text() != "") {
 
                 titleText = $(".title").text();
-                $(".btn-logo").text(titleText);
+                $("header > span").text(titleText);
 
                 headerController();
 
-            } else $(".btn-logo").text("octocolumn");
+            } else $("header > span").text("octocolumn");
         });
     } else if(read_or_write == "read"){                           // 글읽기 모드
         if($(".read_wrap > h2").text() != "") {
             
             titleText = $(".read_wrap > h2").text();
-            $(".btn-logo").text(titleText);
+            $("header > span").text(titleText);
 
             headerController();
 
-        } else $(".btn-logo").text("octocolumn");
+        } else $("header > span").text("octocolumn");
     }
 }
 function hidingHeader(){            // 글읽기 페이지에서 스크롤다운 시 헤더 로고가 사라진다.
@@ -50,15 +50,23 @@ function hidingHeader(){            // 글읽기 페이지에서 스크롤다운
     
             if (st > lastScrollTop && st > navbarHeight){
                 // Scroll Down
-                $(".header").slideUp();
+                $("header").slideUp();
+                $("#nav-container").slideUp();    
+                $(".btn-point").slideUp();                
+                $(".profile-img").slideUp();                                
+                $("#profile-container").slideUp();                
     
             } else {
                 // Scroll Up
                 if(st + $(window).height() < $(document).height()) {
-                    $(".header").slideDown();
+                    $("header").slideDown();
+                    $("#nav-container").slideDown();
+                    $(".btn-point").slideDown();                    
+                    $(".profile-img").slideDown();                    
+                    $("#profile-container").slideDown();                    
+                    
                 }
             }
-        
         lastScrollTop = st;
     }
 }

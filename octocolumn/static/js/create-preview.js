@@ -12,7 +12,7 @@ $(document).ready(function() {
         $("#tmp").replaceWith("<div id='tmp'>" + $(".editable").html() + "</div>");
         $(".preview-wrap").show();
         $(".container").css("position", "fixed");
-
+        if($(".container").width() < 960) $(".container").css({"left": "50%","margin-left": $(".container").width()/(-2)});
         // dom2img();                              // 미리보기 이미지 렌더링
         previewCoverImg();                      // 설정된 커버이미지 미리보기에 출력
         previewContentInfo();                   // 설정된 값들 미리보기에 출력
@@ -25,11 +25,12 @@ $(document).ready(function() {
     });
     $(".cancel-publish").click(function(){
         $(".preview-wrap").hide();
-        $(".container").css("position", "static");
+        $(".container").css({"position": "static","left":"","margin-left":""});
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
-        $(".container").css("position", "static");
+        $(".container").css({"position": "static","left":"","margin-left":""});
+        
     });
 
     /* read time 계산기 */
@@ -46,20 +47,6 @@ $(document).ready(function() {
                 $(".read-time").replaceWith("<div class=\"read-time\">" + time + " min read</div>");
             }
         });
-    });
-    // octo-code 입력시 포커스 자동 이동
-    $(".preview-br-list-wrap .octo-code").keypress(function (e){
-
-        if( e.keyCode < 48 || e.keyCode > 57 ) return false;
-        else focusJump(e);
-    });
-    $('#octo-code-4').keypress(function(e) {
-
-        var octoCode = $('#octo-code-1').val() + $('#octo-code-2').val() + $('#octo-code-3').val() + $('#octo-code-4').val();
-        if( (e.keyCode < 48 || e.keyCode > 57) && octoCode.length == 4) {
-
-            octoCodeValidate(octoCode);
-        }
     });
     
     countTitle();   // 제목 글자수 체크
@@ -88,27 +75,6 @@ function focusJump(e) {
 
         $("#octo-code-" + (++idNum)).focus();
     }
-}
-function octoCodeValidate(octoCode) {
-
-    $.ajax({
-        url: "/api/member/octoCode/",
-        async: false,
-        type: 'POST',
-        xhrFields: {
-            withCredentials: true
-        },
-        dataType: 'json',
-        data: JSON.stringify({
-            "code" : octoCode
-        }),
-        success: function(json) {
-            console.log(json);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
 }
 
 /* 발행 미리보기에 글의 정보들을 출력 */

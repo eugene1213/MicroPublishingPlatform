@@ -26,11 +26,13 @@
         color: #004b8d;
         cursor: pointer;
     }
-    p, h1, blockquote, h2 {
+    p, blockquote, h1, h2 {
         display: block;
         width: 952px;
         margin: auto;
         line-height: 2em;
+    }
+    p, blockquote {
         font-weight: 300;
     }
     b {

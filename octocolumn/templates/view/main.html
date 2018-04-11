@@ -8,7 +8,7 @@
 	<meta name="format-detection" content="telephone=no">
 	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
 	<meta name="description" content="octocolumn" />
-	<meta name="keyworads" content="octocolumn">
+	<meta name="keywords" content="octocolumn">
 	<meta name="copyright" content="octocolumn"/>
 	<meta name="theme-color" content="#2a292a">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -17,29 +17,16 @@
     <title>octocolumn</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
-	<!-- JS -->
-	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-	<script src="{% static 'js/script.js' %}"></script>
-	<script src="{% static 'js/script2.js' %}"></script>
-	<script src="{% static 'js/getPostList.js' %}"></script>
-	<script src="{% static 'js/balloon.js' %}"></script>
-	<script src="{% static 'js/checkOwnPost.js' %}"></script>
-	<script src="{% static 'js/request-buy.js' %}"></script>
-	<script src="{% static 'js/drag-n-crop.js' %}"></script>
-    <script src="{% static 'js/checkBookMark.js' %}"></script>
-	<script src="{% static 'js/main.js' %}"></script>
-
-
 	<!--jQuery-->
-
-
+	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+	
 	<!--구글 태그 매니저-->
 	<!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':-->
 	<!--new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],-->
@@ -313,5 +300,14 @@
 	<!-- //flip -->
 	{% include 'view/modal-signin.html' %}
 	{% include 'view/modal-preview.html' %}
+	<!-- JS -->
+	<script src="{% static 'js/script2.js' %}"></script>
+	<script src="{% static 'js/getPostList.js' %}"></script>
+	<script src="{% static 'js/balloon.js' %}"></script>
+	<script src="{% static 'js/checkOwnPost.js' %}"></script>
+	<script src="{% static 'js/request-buy.js' %}"></script>
+	<script src="{% static 'js/drag-n-crop.js' %}"></script>
+	<script src="{% static 'js/checkBookMark.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

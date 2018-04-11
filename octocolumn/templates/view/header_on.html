@@ -1,10 +1,4 @@
 	{% load static %}
-	<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
 	<header tabindex="0"><span onclick="window.location.href='/'">octocolumn</span></header>
     <div id="nav-container">
         <div class="bg"></div>
@@ -19,7 +13,7 @@
                 <li><a href="">Feed</a></li>
                 <li><a href="">Purchased Posts</a></li>
                 <li><a href="/bookmark/">Bookmarks</a></li>
-                <li><a href="">Brand Page</a></li>
+                <!-- <li><a href="">Brand Page</a></li> -->
                 <li class="divline"></li>
                 <li><a href="/write/">New Story</a></li>
 				<li><a href="/shop/">Point Shop</a></li>
@@ -55,15 +49,15 @@
             </ul>
         </div>
 	</div>
-	<div class="btn-search">
+	<!-- <div class="btn-search">
 		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
-	</div>
+	</div> -->
 	<div class="btn-point">
 		<div class="point">0p</div>
 	</div>
-	<div class="btn-notice">
+	<!-- <div class="btn-notice">
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
-	</div>
+	</div> -->
 	<div class="profile-img" id="header-profile-image"></div>
     <div id="profile-container" onclick='window.location.href = "/profile/"'>
     	<div class="profile-text"></div>
@@ -78,3 +72,8 @@
 	<div class="btn-notice">
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
+	<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>

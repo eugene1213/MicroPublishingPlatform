@@ -10,14 +10,14 @@
     <link rel="icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon" />
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">    
-    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/common2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sass/write.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor/dist/css/medium-editor.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/default.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
@@ -29,19 +29,6 @@
     <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/jquery.iframe-transport.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-    <!-- <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script> -->
-    <script type="text/javascript" src="{% static 'js/saveTmp.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/create-preview.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/cover-image.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/post.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/temp-loader.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/spin.js' %}"></script>
 </head>
     <body>
         {% if login %}
@@ -346,16 +333,8 @@
                     </div>
                     <div class="preview-br-list-wrap">
                         <span class="preview-br-list">가격</span>
-                        <span id="previewPrice" class="preview-br-list price-set-decimal">100</span>
+                        <span id="previewPrice" class="preview-br-list price-set-decimal">0</span>
                         <span>point</span>
-                    </div>
-                    <div class="preview-br-list-wrap">
-                        <span class="preview-br-list">octo-code</span>
-                        <input type="text" class="octo-code" id="octo-code-1" maxlength="1" required>
-                        <input type="text" class="octo-code" id="octo-code-2" maxlength="1" required>
-                        <input type="text" class="octo-code" id="octo-code-3" maxlength="1" required>
-                        <input type="text" class="octo-code" id="octo-code-4" maxlength="1" required>
-                        <button class="find-octo-code-button">octo-code 찾기</button>
                     </div>
                     <div class="preview-br-list-wrap preview-agreement-wrap">
                         <span class="preview-br-list"></span>
@@ -418,5 +397,18 @@
                 <div class="btn-confirm">별말씀을요.</div>
             </div>
         </div>
+        <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+        <!-- <script type="text/javascript" src="{% static 'js/noisyType.js' %}"></script> -->
+        <script type="text/javascript" src="{% static 'js/saveTmp.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/progress-bar.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/tag-editor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/create-preview.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/cover-image.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/post.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/temp-loader.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/spin.js' %}"></script>
     </body>
 </html>

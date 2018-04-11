@@ -16,22 +16,14 @@
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<title>octocolumn</title>
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/common2.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/profile.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/flip-card.css' %}">
 	<!-- JS -->
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="{% static 'js/invite.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>	
-	<script type="text/javascript" src="{% static 'js/get-profile.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/getUserCard.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
 </head>
 <body>
 	<div class="mBg"></div>
@@ -267,11 +259,6 @@
 						<div class="info-hr"></div>
 						<div class="btn-set-info" id="btnSetPassword">변경</div>
 					</div>
-					<div class="infoTitle">
-						<span>octo-code</span>
-						<div class="info-hr"></div>
-						<div class="btn-set-info" id="btnSetOctoCode">변경</div>
-					</div>
 					<!-- <div class="infoTitle">
 						<span>자동충전</span>
 						<div class="info-hr"></div>
@@ -329,7 +316,12 @@
 		</div>
 
 	</div><!-- class="profile_allWrap" -->
-
-
+	<script type="text/javascript" src="{% static 'js/invite.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>	
+	<script type="text/javascript" src="{% static 'js/get-profile.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/getUserCard.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
 </body>
 </html>

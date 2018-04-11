@@ -65,6 +65,7 @@ $(document).ready(function(){
         // $(".profile-userInfo").addClass("currentView");
         // $(".profile-infomations").not(".currentView").hide();
     });
+/* start 계정 정보 */
     $(".profile_tab5").click(function(){
         
         $(".active").removeClass("active");
@@ -75,6 +76,8 @@ $(document).ready(function(){
         $(".profile-privateInfo").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
     });
+/* end 계정 정보 */
+/* start 내 글 */
     $(".profile_tab6").click(function(){
 
         $(".active").removeClass("active");
@@ -87,6 +90,7 @@ $(document).ready(function(){
         $(".profile_history").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
     });
+/* end 내 글 */
 
     $(".pro_his_tit1").addClass("on");
 
@@ -544,6 +548,23 @@ function getPointHistory() {
                 $(".point-history-wrap").append(str);
             }
             $("#point-amount").text(havePoint);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+function setOctoCode(octoCode) {
+
+    $.ajax({
+        url: "/api/member/octoCode/",
+        async: false,
+        type: 'PUT',
+        dataType: 'json',
+        data: { code: octoCode },
+        success: function(jsons) {
+            
+            
         },
         error: function(error) {
             console.log(error);
