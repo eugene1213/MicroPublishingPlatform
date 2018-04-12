@@ -12,11 +12,11 @@ from column.serializers import CommentSerializer
 __all__ = (
     'CommentListView',
     'CommentLikeToggleView',
-    'CommentCreateView'
+    'CommentView'
 )
 
 
-class CommentCreateView(APIView):
+class CommentView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CommentSerializer
 
@@ -57,6 +57,37 @@ class CommentCreateView(APIView):
             else:
                 return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
 
+    def put(self, request):
+        user = self.request.user
+        data = self.request.data
+        try:
+            comment = Comment.objects.filter(pk=data['comment_id']).get()
+
+            if comment.author == user:
+                comment.content = data['content']
+                comment.save()
+                return Response({"detail": "success"}, status=status.HTTP_200_OK)
+            raise exceptions.ValidationError({"detail": "this is not your comment"})
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
+    def delete(self, request):
+        user = self.request.user
+        data = self.request.data
+        try:
+            comment = Comment.objects.filter(pk=data['comment_id']).get()
+
+            if comment.author == user:
+                if comment.children().count() is not 0:
+                    comment.content = "deleted content"
+                    comment.save()
+                    return Response({"detail": "success"}, status=status.HTTP_200_OK)
+                comment.delete()
+                return Response({"detail": "deleted"}, status=status.HTTP_204_NO_CONTENT)
+            raise exceptions.ValidationError({"detail": "this is not your comment"})
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
 
 class CommentListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
@@ -71,10 +102,10 @@ class CommentListView(generics.ListAPIView):
             queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()
 
             page = self.paginate_queryset(queryset)
-            serializer = CommentSerializer(page, many=True)
+            serializer = CommentSerializer(page, context={'request': request}, many=True)
 
             if page is not None:
-                serializer = CommentSerializer(page, many=True)
+                serializer = CommentSerializer(page, context={'request': request},  many=True)
                 return self.get_paginated_response(serializer.data)
 
             return Response(serializer.data)
@@ -103,3 +134,5 @@ class CommentLikeToggleView(APIView):
             return Response({'created': 'deleted'})
         except ObjectDoesNotExist:
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
+
+

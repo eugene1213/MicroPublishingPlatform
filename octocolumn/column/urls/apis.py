@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
-    CommentListView, CommentCreateView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
+    CommentListView, CommentView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
     CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView
 
 urlpatterns = [
@@ -39,7 +39,7 @@ urlpatterns = [
 
     # 코멘트 관련
     url(r'^(?P<post_pk>\d+)/commentList/$', CommentListView.as_view(), name='comment-view'),
-    url(r'^comment-create/$', CommentCreateView.as_view(), name='comment-create-view'),
+    url(r'^comment/$', CommentView.as_view(), name='comment-create-view'),
     url(r'^(?P<comment_pk>\d+)/comment-like/$', CommentLikeToggleView.as_view(), name='comment-create-view'),
 
     # 임시저장
