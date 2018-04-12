@@ -24,12 +24,6 @@ class Post(models.Model):
     buy_count = models.PositiveIntegerField(default=0)
     price = models.IntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True)
-    my_comment = models.OneToOneField(
-        'Comment',
-        blank=True,
-        null=True,
-        related_name='+'
-    )
     like_users = models.ManyToManyField(
         'member.User',
         related_name='like_posts',
@@ -57,13 +51,6 @@ class Post(models.Model):
         time.sleep(2)
         self.like_count = self.like_users.count()
         self.save()
-
-    @property
-    def comments(self):
-        """my_comment를 제외한 Comment역참조 쿼리셋"""
-        if self.my_comment:
-            return self.comment_set.exclude(pk=self.my_comment.pk)
-        return self.comment_set.all()
 
 
 class PostLike(models.Model):

@@ -44,10 +44,10 @@ $(document).ready(function(){
         },
         error: function(error) {
             console.log(error);
-            window.location.href = "/"
+            // window.location.href = "/"
         }
     });
-
+    getComment(post_id);
     title2header("read");
 });
 function coverImgController(){
