@@ -96,7 +96,6 @@ class CommentListView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         param = self.kwargs.get('post_pk')
-
         try:
             post = Post.objects.filter(pk=param).get()
             queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()

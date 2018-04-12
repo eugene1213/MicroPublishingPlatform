@@ -10,7 +10,6 @@ from column.models import TempFile
 from member.models import ProfileImage
 from member.models.user import Bookmark
 from member.serializers import UserSerializer, ProfileImageSerializer
-from ..serializers.comment import CommentSerializer
 from ..models import Post
 
 
@@ -26,54 +25,38 @@ __all__ = (
 
 
 class PostSerializer(serializers.ModelSerializer):
-    my_comment = CommentSerializer(read_only=True)
-    comments = CommentSerializer(read_only=True, many=True)
 
     class Meta:
         model = Post
         fields = (
             'pk',
             'author',
-            'my_comment',
             'title',
             'created_date',
             'price',
             'main_content',
             'preview',
-            'comments',
             'cover_image',
         )
-        read_only_fields = (
-            'author',
-            'my_comment',
-        )
+
 
 
 class MyPublishPostSerializer(serializers.ModelSerializer):
-    my_comment = CommentSerializer(read_only=True)
-    comments = CommentSerializer(read_only=True, many=True)
 
     class Meta:
         model = Post
         fields = (
             'pk',
             'author',
-            'my_comment',
             'title',
             'created_date',
             'price',
             'preview',
-            'comments',
             'cover_image',
-        )
-        read_only_fields = (
-            'author',
-            'my_comment',
         )
 
 
 class PostMoreSerializer(serializers.ModelSerializer):
-    # 아래 코드가 동작하도록 CommentSerializer를 구현
 
     def image(self, user):
         try:
@@ -131,8 +114,6 @@ class PostMoreSerializer(serializers.ModelSerializer):
                 return False
         return False
 
-    my_comment = CommentSerializer(read_only=True)
-    comments = CommentSerializer(read_only=True, many=True)
     created_datetime = SerializerMethodField()
     typo_count = SerializerMethodField()
     tag = SerializerMethodField()
@@ -147,22 +128,17 @@ class PostMoreSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'main_content',
-            'my_comment',
             'title',
             'created_date',
             'created_datetime',
             'tag',
             'price',
-            'comments',
             'cover_image',
             'preview',
             'typo_count',
             'bookmark_status'
         )
-        read_only_fields = (
-            'author',
-            'my_comment',
-        )
+
 
     # def to_representation(self, instance):
     #     ret = super().to_representation(instance)
@@ -179,15 +155,9 @@ class PostListSerializer(serializers.ModelSerializer):
             'pk',
             'author',
             'main_content',
-            'my_comment',
             'title',
             'created_date',
-            'comments',
             'cover_image',
-        )
-        read_only_fields = (
-            'author',
-            'my_comment',
         )
 
 
@@ -230,7 +200,6 @@ class TempFileSerializer(serializers.ModelSerializer):
 
 
 class PreAuthorPostSerializer(serializers.ModelSerializer):
-    # 아래 코드가 동작하도록 CommentSerializer를 구현
 
     class Meta:
         model = Post
