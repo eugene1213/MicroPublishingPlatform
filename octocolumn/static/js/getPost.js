@@ -48,6 +48,12 @@ $(document).ready(function(){
         }
     });
     getComment(post_id);
+    $('.more').mouseenter(function(e){
+        $(e.target).children('div[class^="more_option_"]').show();
+    });
+    // $('.comment-head').mouseout(function(e){
+    //     $(e.target).children('div[class^="more_option_"]').hide();        
+    // });
     title2header("read");
 });
 function coverImgController(){

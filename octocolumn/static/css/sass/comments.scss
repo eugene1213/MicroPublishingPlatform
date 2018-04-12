@@ -343,76 +343,71 @@ body {
 * more_option
 ========================*/
 .more_option_me {
-   position: absolute;
-   width: 80px;
-   height: 25px;
-   background-color: #2a292a;
-   color: #fff;
-   text-align: center;
-   border-radius: 4px;
-   font-size: 12px;
-   z-index: 1;
-   
-   /* -- Delete when applied -- */
-   position: absolute;
-   right: 142px;
-   top: 42px;
+    display: none;    
+    position: absolute;
+    width: 80px;
+    height: 25px;
+    background-color: #2a292a;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1;
+    right: 6px;
+    top: -16px;
 }
 .more_option_me .more_option_triangle {
-   content: "";
-   position: absolute;
-   top: 100%;
-   left: 38%;
-   border-width: 5px;
-   border-style: solid;
-   border-color: #2a292a transparent transparent transparent;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 38%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #2a292a transparent transparent transparent;
 }
 .more_option_modify {
-   position: absolute;
-   width: 50%;
-   height: 25px;
-   left: 0;
-   top: 0;
-   border-radius: 4px 0 0 4px;
-   padding: 5px;
-   box-sizing: border-box;
-   cursor: pointer;
+    position: absolute;
+    width: 50%;
+    height: 25px;
+    left: 0;
+    top: 0;
+    border-radius: 4px 0 0 4px;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 .more_option_delete {
-   position: absolute;
-   width: 50%;
-   height: 25px;
-   right: 0;
-   top: 0;
-   border-left: 1px solid #fff;
-   border-radius: 0 4px 4px 0;
-   padding: 5px;
-   box-sizing: border-box;
-   cursor: pointer;
+    position: absolute;
+    width: 50%;
+    height: 25px;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #fff;
+    border-radius: 0 4px 4px 0;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 .more_option_delete:hover .more_option_triangle, .more_option_accuse:hover .more_option_triangle {
-   border-color: #999999 transparent transparent transparent;
+    border-color: #999999 transparent transparent transparent;
 }
 .more_option_modify:hover, .more_option_delete:hover, .more_option_accuse:hover {
-   background-color: #999999;
+    background-color: #999999;
 }
 
 .more_option_you {
-   width: 50px;
-   height: 25px;
-   background-color: #2a292a;
-   color: #fff;
-   text-align: center;
-   border-radius: 4px;
-   position: absolute;
-   font-size: 12px;
-   z-index: 1;
-   float: left;
-   
-   /* -- Delete when applied -- */
-   position: absolute;
-   right: 136px;
-   top: 212px;
+    display: none;
+    width: 50px;
+    height: 25px;
+    background-color: #2a292a;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    position: absolute;
+    font-size: 12px;
+    z-index: 1;
+    float: left;
+    top: -16px;
 }
 .more_option_you .more_option_triangle {
    content: "";
