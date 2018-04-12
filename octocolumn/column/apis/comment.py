@@ -90,27 +90,51 @@ class CommentView(APIView):
 
 
 class CommentListView(generics.ListAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = CommentSerializer
     pagination_class = CommentPagination
 
     def list(self, request, *args, **kwargs):
-        param = self.kwargs.get('post_pk')
+        post_pk = self.kwargs.get('post_pk')
+        comment_id = self.kwargs.get('comment_id')
 
-        try:
-            post = Post.objects.filter(pk=param).get()
-            queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()
+        if comment_id is None:
+            try:
+                post = Post.objects.filter(pk=post_pk).get()
+                queryset = Comment.objects.filter(post=post, parent__isnull=True).order_by('-created_date').all()
 
-            page = self.paginate_queryset(queryset)
-            serializer = CommentSerializer(page, context={'request': request}, many=True)
+                page = self.paginate_queryset(queryset)
+                serializer = CommentSerializer(page, context={'request': request}, many=True)
 
-            if page is not None:
-                serializer = CommentSerializer(page, context={'request': request},  many=True)
-                return self.get_paginated_response(serializer.data)
+                if page is not None:
+                    serializer = CommentSerializer(page, context={'request': request},  many=True)
+                    return self.get_paginated_response(serializer.data)
 
-            return Response(serializer.data)
-        except ObjectDoesNotExist:
-            raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
+                return Response(serializer.data)
+            except ObjectDoesNotExist:
+                raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
+
+        else:
+            try:
+                post = Post.objects.filter(pk=post_pk).get()
+                try:
+                    parent = Comment.objects.filter(pk=comment_id).get()
+                    queryset = Comment.objects.filter(post=post, parent=parent).order_by('-created_date').all()
+
+                    page = self.paginate_queryset(queryset)
+                    serializer = CommentSerializer(page, context={'request': request}, many=True)
+
+                    if page is not None:
+                        serializer = CommentSerializer(page, context={'request': request}, many=True)
+                        return self.get_paginated_response(serializer.data)
+
+                    return Response(serializer.data)
+                
+                except ObjectDoesNotExist:
+                    raise exceptions.ValidationError({'detail': 'this parent is not exist'}, 400)
+
+            except ObjectDoesNotExist:
+                raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('post_pk')

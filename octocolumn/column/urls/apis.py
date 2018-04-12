@@ -12,7 +12,7 @@ urlpatterns = [
     # 포스트 구매
     url(r'^post-buy/$', PostBuy.as_view(), name='post-like'),
     # 포스트 읽기
-    url(r'^post-view/(?P<pk>\d+)$', PostReadView.as_view(), name='post-view'),
+    url(r'^postView/(?P<pk>\d+)$', PostReadView.as_view(), name='post-view'),
     url(r'^tempView/', include([
             url(r'^$', TempView.as_view(), name="post-list"),
             url(r'^(?P<page>\w+)$', TempView.as_view(), name="post-list-page")
@@ -38,7 +38,10 @@ urlpatterns = [
     url(r'^isauthor/$', AuthorResult.as_view(), name='post-view'),
 
     # 코멘트 관련
-    url(r'^(?P<post_pk>\d+)/commentList/$', CommentListView.as_view(), name='comment-view'),
+    url(r'^(?P<post_pk>\d+)/commentList/', include([
+            url(r'^$', CommentListView.as_view(), name="post-list"),
+            url(r'^(?P<comment_id>\w+)/$', CommentListView.as_view(), name="post-list-page")
+    ]), name='comment-view'),
     url(r'^comment/$', CommentView.as_view(), name='comment-create-view'),
     url(r'^(?P<comment_pk>\d+)/comment-like/$', CommentLikeToggleView.as_view(), name='comment-create-view'),
 
