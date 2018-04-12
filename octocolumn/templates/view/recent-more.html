@@ -16,23 +16,15 @@
     <title>octocolumn</title>
     <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
     <!-- css -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}" media="none" onload="this.media='all';">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}" media="none" onload="this.media='all';">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/recent-more.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
     <!-- js -->
-	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/recent.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/checkOwnPost.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/request-buy.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>    
+	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>  
 </head>
 <body>
 	{% if login %}
@@ -99,5 +91,12 @@
     <!-- //flip -->
     {% include 'view/modal-signin.html' %}
     {% include 'view/modal-preview.html' %}
+    <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/recent.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/checkOwnPost.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/request-buy.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>  
 </body>
 </html>
