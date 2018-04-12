@@ -1,8 +1,10 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
+from member.models import ProfileImage
+from member.serializers import ProfileImageSerializer
 from ..models import Comment
 
 __all__ = (
@@ -34,12 +36,29 @@ class CommentSerializer(ModelSerializer):
             return False
         return False
 
-    def get_like_url(self, obj):
-        return "/api/column/" + str(obj.pk) + "/comment-like/"
+    def get_image(self, obj):
+        try:
+            image = ProfileImage.objects.filter(user=obj.author).get()
+            serializer = ProfileImageSerializer(image)
+            if serializer:
+                return serializer.data
+            raise exceptions.ValidationError({"detail": "excepted error"})
+        except ObjectDoesNotExist:
+            data = {
+                "image": {
+                    "profile_image": "https://devtestserver.s3.amazonaws.com//media/example/2_x20_.jpeg",
+                    "cover_image": "https://devtestserver.s3.amazonaws.com//media/example/1.jpeg"
+                }
+            }
+            return data
+
+    # def get_like_url(self, obj):
+    #     return "/api/column/" + str(obj.pk) + "/comment-like/"
 
     reply_count = SerializerMethodField()
-    like_url = SerializerMethodField()
+    # like_url = SerializerMethodField()
     my_comment = SerializerMethodField()
+    image = SerializerMethodField()
     username = serializers.CharField(source='author.nickname')
 
     class Meta:
@@ -53,8 +72,8 @@ class CommentSerializer(ModelSerializer):
             'reply_count',
             'my_comment',
             'parent_id',
-            'like_url'
-
+            'image',
+            # 'like_url'
         )
         read_only_fields = (
             'created_date',
