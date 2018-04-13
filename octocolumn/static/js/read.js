@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    
     var current_url = window.location.href;
     var post_id = current_url.split("/");
         post_id = post_id[post_id.length-1];
@@ -9,8 +9,9 @@ $(document).ready(function(){
     $(window).resize(function() {
         coverImgController();
     });
+    // 글 로딩
     $.ajax({
-        url: "/api/column/post-view/"+post_id,
+        url: "/api/column/postView/"+post_id,
         async: false,
         type: 'GET',
         dataType: 'json',
@@ -47,17 +48,53 @@ $(document).ready(function(){
             // window.location.href = "/"
         }
     });
+    // 댓글 로딩
     getComment(post_id);
-    $('.more').mouseenter(function(e){
-        $(e.target).children('div[class^="more_option_"]').show();
+    
+    // 댓글 입력
+    $('.comment_button').click(function() {
+
+        var content = $('.input_comment').val();
+        insertComment('POST', content, post_id, '');
     });
-    // $('.comment-head').mouseout(function(e){
-    //     $(e.target).children('div[class^="more_option_"]').hide();        
-    // });
+    // 대댓글 버튼
+    $('.re-comment').on('click',function(){
+
+    });
+    // 댓글 수정
+    $('.comments-list').delegate('.more_option_modify', 'click', function(e) {
+
+        var commentID = $(e.target).closest('.comment-box').attr('id');
+        $('#'+commentID+'> .comment-content').prop('contenteditable','true');
+        $('#'+commentID+'> .comment-content').focus();
+        $('#'+commentID+' .more').hide();
+        $('#'+commentID).append('<button type="button" class="modify_button">수정</button>');
+    });
+
+    $('.comments-list').delegate('.modify_button','click',function(e) {
+
+        var commentID = $(e.target).closest('.comment-box').attr('id');
+        var content = $('#'+commentID+'> .comment-content').text();
+
+        insertComment('PUT', content, post_id, commentID);
+
+        $('.modify_button').remove();
+        $('#'+commentID+' .more').show();
+        $('#'+commentID+'> .comment-content').prop('contenteditable','false')
+    });
+    // 댓글 삭제
+    $('.comments-list').delegate('.more_option_delete', 'click', function(e) {
+        
+        var commentID = $(e.target).closest('.comment-box').attr('id');
+        console.log(e.target)
+        insertComment('DELETE','' , post_id, commentID);
+    });
+
     title2header("read");
 });
-function coverImgController(){
 
+function coverImgController(){
+    
     var imgHeight = window.innerHeight - $(".read_wrap").height() - 32 - 40;
 
     $(".mainImg").height(imgHeight);

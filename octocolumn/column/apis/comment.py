@@ -42,7 +42,7 @@ class CommentView(APIView):
                 if comment.is_parent:
                     comment.parent = parent_comment
                     comment.save()
-                    return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+                    return Response({"detail": comment.pk}, status=status.HTTP_201_CREATED)
                 raise exceptions.ValidationError({'detail': 'this param is wht'}, 400)
             else:
                 return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
@@ -53,7 +53,7 @@ class CommentView(APIView):
             comment = Comment.objects.create(author=user, content=content, post=post, parent=None)
 
             if comment:
-                return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
+                return Response({"detail": comment.pk}, status=status.HTTP_201_CREATED)
             else:
                 return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
 
