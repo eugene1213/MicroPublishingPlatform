@@ -79,11 +79,8 @@ body {
    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+   background-size: 100%;
    overflow: hidden;
-}
-.comments-list .comment-avatar img, .reply-list .reply-avatar img {
-   width: 100%;
-   height: 100%;
 }
 
 .reply-list .reply-avatar {
@@ -96,6 +93,7 @@ body {
    -webkit-border-radius: 50%;
    -moz-border-radius: 50%;
    border-radius: 50%;
+   background-size: 100%;   
    overflow: hidden;
 }
 
@@ -109,6 +107,63 @@ body {
 /**
 * Comment Box
 ---------------------------*/
+.input_comment {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    height: 81px;
+    width: 768px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    padding: 6px;
+    margin-bottom: 27px;
+    font-size: 12px;
+    position: relative;
+    outline: 0;
+    resize: none;
+}
+.comment_button {
+    position: absolute;
+    width: 50px;
+    height: 81px;
+    right: 0;
+    top: 0;
+    border-radius: 0 4px 4px 0;
+    border: 0;
+    border-left: 2px solid #f9f9f9;
+    background-color: transparent;
+    color: #c6c6c6;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+
+    &:hover {
+        background-color: #2a292a;
+        color: #fff;
+     }
+}
+.modify_button {
+    position: absolute;
+    width: 50px;
+    height: calc(100% - 74px);
+    right: 0;
+    bottom: 34px;
+    border-radius: 0 4px 4px 0;
+    border: 0;
+    border-left: 2px solid #f9f9f9;
+    background-color: transparent;
+    color: #c6c6c6;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+
+    &:hover {
+        background-color: #2a292a;
+        color: #fff;
+    }
+}
 .comments-list .comment-box {
    width: 700px;
    float: right;
@@ -179,6 +234,7 @@ body {
    overflow: hidden;
    padding-bottom: 12px;
 }
+
 .reply-box .reply-head {
    background: #ffffff;
    overflow: hidden;
@@ -255,7 +311,12 @@ body {
    background: #FFF;
    font-size: 12px;
    line-height: 18px;
+   word-break: break-word;
    color: #535353;
+
+    &[contenteditable='true'] {
+        width: 93%;
+    }
 }
 .reply-box .reply-content {
    margin-left: 26px;
@@ -342,77 +403,75 @@ body {
 /** =====================
 * more_option
 ========================*/
+.more:hover div[class^="more_option_"] {
+    opacity: 1;
+}
 .more_option_me {
-   position: absolute;
-   width: 80px;
-   height: 25px;
-   background-color: #2a292a;
-   color: #fff;
-   text-align: center;
-   border-radius: 4px;
-   font-size: 12px;
-   z-index: 1;
-   
-   /* -- Delete when applied -- */
-   position: absolute;
-   right: 142px;
-   top: 42px;
+    opacity: 0;    
+    position: absolute;
+    width: 80px;
+    height: 25px;
+    background-color: #2a292a;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1;
+    right: 6px;
+    top: -16px;
 }
 .more_option_me .more_option_triangle {
-   content: "";
-   position: absolute;
-   top: 100%;
-   left: 38%;
-   border-width: 5px;
-   border-style: solid;
-   border-color: #2a292a transparent transparent transparent;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 38%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #2a292a transparent transparent transparent;
 }
 .more_option_modify {
-   position: absolute;
-   width: 50%;
-   height: 25px;
-   left: 0;
-   top: 0;
-   border-radius: 4px 0 0 4px;
-   padding: 5px;
-   box-sizing: border-box;
-   cursor: pointer;
+    position: absolute;
+    width: 50%;
+    height: 25px;
+    left: 0;
+    top: 0;
+    border-radius: 4px 0 0 4px;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 .more_option_delete {
-   position: absolute;
-   width: 50%;
-   height: 25px;
-   right: 0;
-   top: 0;
-   border-left: 1px solid #fff;
-   border-radius: 0 4px 4px 0;
-   padding: 5px;
-   box-sizing: border-box;
-   cursor: pointer;
+    position: absolute;
+    width: 50%;
+    height: 25px;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #fff;
+    border-radius: 0 4px 4px 0;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 .more_option_delete:hover .more_option_triangle, .more_option_accuse:hover .more_option_triangle {
-   border-color: #999999 transparent transparent transparent;
+    border-color: #999999 transparent transparent transparent;
 }
 .more_option_modify:hover, .more_option_delete:hover, .more_option_accuse:hover {
-   background-color: #999999;
+    background-color: #999999;
 }
 
 .more_option_you {
-   width: 50px;
-   height: 25px;
-   background-color: #2a292a;
-   color: #fff;
-   text-align: center;
-   border-radius: 4px;
-   position: absolute;
-   font-size: 12px;
-   z-index: 1;
-   float: left;
-   
-   /* -- Delete when applied -- */
-   position: absolute;
-   right: 136px;
-   top: 212px;
+    opacity: 0;
+    width: 50px;
+    height: 25px;
+    background-color: #2a292a;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    position: absolute;
+    font-size: 12px;
+    z-index: 1;
+    float: left;
+    top: -16px;
 }
 .more_option_you .more_option_triangle {
    content: "";
