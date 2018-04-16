@@ -153,6 +153,13 @@ $(document).ready(function(){
     });
 
     title2header("read");
+
+    $('.image-loader').imageloader({
+        background: true,
+        callback: function (elm) {
+            $(elm).fadeIn();
+        }
+    });
 });
 
 function coverImgController(){
