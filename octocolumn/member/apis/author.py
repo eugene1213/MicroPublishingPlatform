@@ -90,7 +90,8 @@ class AuthorApply(generics.GenericAPIView,
             try:
                 Temp.objects.filter(id=data['temp_id']).delete()
             except ObjectDoesNotExist:
-                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, status.HTTP_406_NOT_ACCEPTABLE)
+                raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'},
+                                                 status.HTTP_406_NOT_ACCEPTABLE)
 
             # 태그를 추가하고 태그 추가 실패
 
