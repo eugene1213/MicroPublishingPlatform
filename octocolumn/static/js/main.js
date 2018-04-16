@@ -31,4 +31,11 @@ $(document).ready(function() {
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
     });
+
+    $('.image-loader').imageloader({
+        background: true,
+        callback: function (elm) {
+            $(elm).fadeIn();
+        }
+    });
 });
