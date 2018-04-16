@@ -28,11 +28,6 @@ class AuthorApply(generics.GenericAPIView,
     queryset = AuthorModel.objects.all()
     serializer_class = AuthorSerializer
 
-    def get_queryset(self):
-        if self.request.user.is_authenticated():
-            return User.objects.filter(username=self.request.user)
-        else:
-            raise exceptions.NotAuthenticated()
 
     # base64 파일 파일 형태로
     def base64_content(self, image):
@@ -53,7 +48,7 @@ class AuthorApply(generics.GenericAPIView,
             raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, status.HTTP_406_NOT_ACCEPTABLE)
 
         for i in search_tag:
-            PreSearchTag.objects.create(post=post, tag=i)
+            PreSearchTag.objects.select_related('post').create(post=post, tag=i)
 
         return True
 

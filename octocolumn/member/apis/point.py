@@ -18,7 +18,7 @@ class UserPointHistory(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         user = self.request.user
         try:
-            point = PointHistory.objects.filter(user=user).all()
+            point = PointHistory.objects.select_related('user').filter(user=user).all()
 
             page = self.paginate_queryset(point)
             serializer = PointHistorySerializer(page, many=True)

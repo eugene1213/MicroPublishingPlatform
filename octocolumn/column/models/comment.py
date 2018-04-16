@@ -22,6 +22,7 @@ class Comment(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True)
     # html_content = models.TextField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False)
     like_user = models.ManyToManyField(
         'member.User',
         through='CommentLike',

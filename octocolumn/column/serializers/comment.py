@@ -78,6 +78,7 @@ class CommentSerializer(ModelSerializer):
             'my_comment',
             'parent_id',
             'image',
+            'is_deleted'
             # 'like_url'
         )
         read_only_fields = (

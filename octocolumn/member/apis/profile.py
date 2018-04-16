@@ -38,7 +38,7 @@ class ProfileInfo(APIView):
     def post(self, request):
         user = self.request.user
         try:
-            profile = Profile.objects.filter(user=user).get()
+            profile = Profile.objects.select_related('user').filter(user=user).get()
             serializer = ProfileSerializer(profile)
 
             if serializer:
@@ -46,18 +46,19 @@ class ProfileInfo(APIView):
             raise exceptions.ValidationError({"detail": "Abnormal connected"})
         except ObjectDoesNotExist:
             try:
-                profile_image = ProfileImage.objects.filter(user=user).get()
+                profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
 
                 serializer = ProfileImageSerializer(profile_image)
                 return Response({
                     "nickname": user.nickname,
                     "username": user.username,
-                    "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
+                    "waiting":
+                        WaitingRelation.objects.select_related('receive_user__user').filter(receive_user=user).count(),
                     "post_count": Post.objects.filter(author=user).count(),
                     "point": user.point,
                     "intro": "-",
-                    "following": Relation.objects.filter(from_user=user).count(),
-                    "follower": Relation.objects.filter(to_user=user).count(),
+                    "following": Relation.objects.select_related('from_user__user').filter(from_user=user).count(),
+                    "follower": Relation.objects.select_related('to_user__user').filter(to_user=user).count(),
                     "image": serializer.data
                 }, status=status.HTTP_200_OK)
 
@@ -65,12 +66,13 @@ class ProfileInfo(APIView):
                 return Response({
                     "nickname": user.nickname,
                     "username": user.username,
-                    "waiting": WaitingRelation.objects.filter(receive_user=user).count(),
+                    "waiting":
+                        WaitingRelation.objects.select_related('receive_user__user').filter(receive_user=user).count(),
                     "post_count": Post.objects.filter(author=user).count(),
                     "point": user.point,
                     "intro": "-",
-                    "following": Relation.objects.filter(from_user=user).count(),
-                    "follower": Relation.objects.filter(to_user=user).count(),
+                    "following": Relation.objects.select_related('from_user__user').filter(from_user=user).count(),
+                    "follower": Relation.objects.select_related('to__user__user').filter(from_user=user).count(),
                     "image": {
                         "profile_image": "https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg",
                         "cover_image": "https://devtestserver.s3.amazonaws.com/media/example/1.jpeg"
@@ -89,7 +91,7 @@ class ProfileIntroUpdate(APIView):
         data = self.request.data
 
         try:
-            profile = Profile.objects.filter(user=user).get()
+            profile = Profile.objects.select_related('user').filter(user=user).get()
 
             profile.intro = data['userIntro']
             profile.save()
@@ -120,7 +122,7 @@ class ProfileUpdate(APIView):
         data = self.request.data
 
         try:
-            profile = Profile.objects.filter(user=user).get()
+            profile = Profile.objects.select_related('user').filter(user=user).get()
 
             profile.year = data['birthYear']
             profile.month = data['birthMonth']
@@ -172,7 +174,7 @@ class ProfileImageUpload(generics.CreateAPIView):
         resizing_image = profile_image_resizing(profile_file_obj, margin)
 
         try:
-            profile_image = ProfileImage.objects.filter(user=user).get()
+            profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
             profile_image.profile_image = resizing_image
             profile_image.save()
 
@@ -213,7 +215,7 @@ class UserCoverImageUpload(generics.CreateAPIView):
         resizing_image = image_quality_down(cover_file_obj)
 
         try:
-            profile_image = ProfileImage.objects.filter(user=user).get()
+            profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
             profile_image.cover_image = resizing_image
             profile_image.save()
             serializer = ProfileImageSerializer(profile_image)
@@ -259,7 +261,7 @@ class MyTemp(APIView):
         user = self.request.user
 
         try:
-            temp = Temp.objects.filter(author=user).order_by('-created_date').all()
+            temp = Temp.objects.select_related('author__user').filter(author=user).order_by('-created_date').all()
             serializer = MyTempSerializer(temp, many=True)
             if serializer:
                 return Response({"post": serializer.data}, status=status.HTTP_200_OK)
@@ -268,9 +270,3 @@ class MyTemp(APIView):
         except ObjectDoesNotExist:
             return None
 
-
-class InviteUser(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def post(self):
-        user = self.request.user
