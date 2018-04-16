@@ -554,10 +554,11 @@ body.back{
     width: 200px;
     letter-spacing: -0.02em;
 }
-.read .contents .contents_title .picture img{
+.read .contents .contents_title .picture{
     width: 200px;
     height: 200px;
     border-radius: 50%;
+    background-size: 100%;
     overflow: hidden;
     display: block;
     margin-bottom: 16px;
@@ -567,6 +568,7 @@ body.back{
     font-weight: bold;
     text-align: center;
     color: #2a292a;
+    margin-bottom: 24px;
 }
 .read .contents .contents_title .title_name{
     font-size: 12px;

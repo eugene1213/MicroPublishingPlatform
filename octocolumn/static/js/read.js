@@ -21,6 +21,8 @@ $(document).ready(function(){
             var cover_img = json.detail.cover_img;
             var title = json.detail.title;
             var author = json.detail.author.username;
+            var author_image = json.detail.author.image.profile_image;
+            
             var main_content = json.detail.main_content;
             var tagArray = json.detail.tag;
             var created_datetime = json.detail.created_datetime;
@@ -38,6 +40,8 @@ $(document).ready(function(){
             $(".date").text(created_datetime);
             $(".main_content_wrap").append(json.detail.main_content);
             $(".writer > span").text(author);
+            $('.picture').css('background-image','url('+author_image+')');
+            $('.name').text(author);
 
             //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             coverImgController();
