@@ -49,17 +49,41 @@ $(document).ready(function(){
         }
     });
     // 댓글 로딩
-    getComment(post_id);
+    getComment(post_id,'');
     
     // 댓글 입력
     $('.comment_button').click(function() {
 
         var content = $('.input_comment').val();
-        insertComment('POST', content, post_id, '');
-    });
-    // 대댓글 버튼
-    $('.re-comment').on('click',function(){
 
+        content.length > 0 && content.length <= 1500
+        ? insertComment('POST', content, post_id, '')
+        : alert('댓글을 0 ~ 1500 글자 이내로 입력해주세요.')
+    });
+    // 대댓글 펼치는 버튼
+    $('.comments-list').delegate('.re-comment','click',function(e){
+
+        var commentID = $(e.target).closest('.comment-box').attr('id');
+        
+        if($(e.target).closest('.comment-main-level').siblings('.reply-list').css('display') == 'none'){
+
+            getComment(post_id, commentID);
+            $('#'+commentID).closest('.comment-main-level').siblings('.reply-list').show();
+        } else {
+
+            $('#'+commentID+'[class="reply-list"] li .reply-box').remove();
+            $(e.target).closest('.comment-main-level').siblings('.reply-list').hide();
+        }
+    });
+    // 대댓글 입력
+    $('.reply_button').click(function(e) {
+        
+        var content = $(e.target).siblings('.input_reply').val();
+        var commentID = $(e.target).closest('.reply-list').attr('id');
+
+        content.length > 0 && content.length <= 1500        
+        ? insertComment('POST', content, post_id, commentID)
+        : alert('댓글을 0 ~ 1500 글자 이내로 입력해주세요.')        
     });
     // 댓글 수정
     $('.comments-list').delegate('.more_option_modify', 'click', function(e) {
@@ -76,17 +100,51 @@ $(document).ready(function(){
         var commentID = $(e.target).closest('.comment-box').attr('id');
         var content = $('#'+commentID+'> .comment-content').text();
 
-        insertComment('PUT', content, post_id, commentID);
-
-        $('.modify_button').remove();
-        $('#'+commentID+' .more').show();
-        $('#'+commentID+'> .comment-content').prop('contenteditable','false')
+        if(content.length > 0 && content.length <= 1500) {
+            insertComment('PUT', content, post_id, commentID);
+            $('.modify_button').remove();
+            $('#'+commentID+' .more').show();
+            $('#'+commentID+'> .comment-content').prop('contenteditable','false')
+        }else {
+            alert('댓글을 0 ~ 1500 글자 이내로 입력해주세요.');
+        }           
     });
+    // 대댓글 수정
+    $('.reply-list').delegate('.more_option_modify', 'click', function(e) {
+        
+        var commentID = $(e.target).closest('.reply-box').attr('id');
+        $('#'+commentID+'> .reply-content').prop('contenteditable','true');
+        $('#'+commentID+'> .reply-content').focus();
+        $('#'+commentID+' .more').hide();
+        $('#'+commentID).append('<button type="button" class="modify_button">수정</button>');
+    });
+
+    $('.reply-list').delegate('.modify_button','click',function(e) {
+        
+        var commentID = $(e.target).closest('.reply-box').attr('id');
+        var content = $('#'+commentID+'> .reply-content').text();
+
+        if(content.length > 0 && content.length <= 1500) {
+            insertComment('PUT', content, post_id, commentID);
+            $('.modify_button').remove();
+            $('#'+commentID+' .more').show();
+            $('#'+commentID+'> .reply-content').prop('contenteditable','false')
+        }else {
+            alert('댓글을 0 ~ 1500 글자 이내로 입력해주세요.');
+        }           
+    });
+
     // 댓글 삭제
     $('.comments-list').delegate('.more_option_delete', 'click', function(e) {
         
         var commentID = $(e.target).closest('.comment-box').attr('id');
-        console.log(e.target)
+        insertComment('DELETE','' , post_id, commentID);
+    });
+    // 대댓글 삭제
+    $('.reply-list').delegate('.more_option_delete', 'click', function(e) {
+        
+        var commentID = $(e.target).closest('.reply-box').attr('id');
+
         insertComment('DELETE','' , post_id, commentID);
     });
 
