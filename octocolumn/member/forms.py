@@ -56,13 +56,11 @@ class AuthorIsActive(forms.Form):
         return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
 
     def save(self, author_post):
-        try:
-            author = self.form_action(author_post)
-        except errors.Error as e:
-            error_message = str(e)
-            self.add_error(None, error_message)
-            raise
-        return author
+        author = self.form_action(author_post)
+        print(author_post)
+        if author:
+            return author
+        raise ValueError("error")
 
 
 # amount = forms.IntegerField(

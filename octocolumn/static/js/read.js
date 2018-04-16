@@ -76,7 +76,7 @@ $(document).ready(function(){
         }
     });
     // 대댓글 입력
-    $('.reply_button').click(function(e) {
+    $('.comments-list').delegate('.reply_button','click',function(e) {
         
         var content = $(e.target).siblings('.input_reply').val();
         var commentID = $(e.target).closest('.reply-list').attr('id');
