@@ -257,7 +257,15 @@ class PostReadView(APIView):
     def post_exist(self, post_id):
         if Post.objects.filter(pk=post_id).count() == 0:
             raise exceptions.ValidationError({'detail': 'Does not exist post'}, 400)
-        return Post.objects.filter(pk=post_id).get()
+        return Post.objects.select_related('author').filter(pk=post_id).get()
+
+    def bookmark_status(self, post):
+        
+        try:
+            Bookmark.objects.select_related('user').filter(user=self.request.user, post=post).get()
+            return True
+        except ObjectDoesNotExist:
+            return False
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
@@ -274,8 +282,9 @@ class PostReadView(APIView):
                 post.hit += 1
                 post.save()
                 # 작가임
-                user = User.objects.filter(pk=post.author_id).get()
-                profile_image = ProfileImage.objects.filter(user=user).get()
+                bookmark_status = self.bookmark_status(post)
+                user = User.objects.select_related('author').filter(pk=post.author_id).get()
+                profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
                 image_serializer = ProfileImageSerializer(profile_image)
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
                 return Response({
@@ -285,6 +294,7 @@ class PostReadView(APIView):
                         "main_content": serializer.data['main_content'],
                         "title": serializer.data['title'],
                         "tag": self.tag(post),
+                        "bookmark_status":bookmark_status,
                         "author": {
                             "author_id": serializer.data['author'],
                             "username": user.nickname,
