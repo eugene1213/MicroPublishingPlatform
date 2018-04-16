@@ -45,8 +45,10 @@ from member.models import Author
 
 class AuthorIsActive(forms.Form):
     def form_action(self, author_post):
+
         user = author_post.author
         author = Author.objects.filter(author=user).get()
+
         post = PreAuthorPost.objects.filter(author=author_post.author).all()
         if post is not None:
             for i in post:
@@ -58,7 +60,6 @@ class AuthorIsActive(forms.Form):
 
     def save(self, author_post):
         author = self.form_action(author_post)
-        print(author_post)
         if author:
             return author
         raise ValueError("error")
