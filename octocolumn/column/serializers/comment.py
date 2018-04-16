@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.timezone import now
 from rest_framework import serializers, exceptions
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
@@ -55,10 +56,14 @@ class CommentSerializer(ModelSerializer):
     # def get_like_url(self, obj):
     #     return "/api/column/" + str(obj.pk) + "/comment-like/"
 
+    def get_created_date(self, obj):
+        return now().timestamp() - obj.created_date.timestamp()
+
     reply_count = SerializerMethodField()
     # like_url = SerializerMethodField()
     my_comment = SerializerMethodField()
     image = SerializerMethodField()
+    created_date = SerializerMethodField()
     username = serializers.CharField(source='author.nickname')
 
     class Meta:
