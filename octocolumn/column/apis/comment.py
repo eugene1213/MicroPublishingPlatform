@@ -79,7 +79,7 @@ class CommentView(APIView):
 
             if comment.author == user:
                 if comment.children().count() is not 0:
-                    comment.content = "deleted content"
+                    comment.content = "삭제된 댓글입니다."
                     comment.save()
                     return Response({"detail": "success"}, status=status.HTTP_200_OK)
                 comment.delete()
