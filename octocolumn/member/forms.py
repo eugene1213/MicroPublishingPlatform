@@ -45,14 +45,15 @@ from member.models import Author
 
 class AuthorIsActive(forms.Form):
     def form_action(self, author_post):
-        is_author = author_post.author.author
+        user = author_post.author
+        author = Author.objects.filter(author=user).get()
         post = PreAuthorPost.objects.filter(author=author_post.author).all()
         if post is not None:
             for i in post:
                 Post.objects.create(author=i.author, main_content=i.main_content, price=i.price, preview=i.preview,
                                     title=i.title, cover_image=i.cover_image)
-        is_author.is_active = True
-        is_author.save()
+        author.is_active = True
+        author.save()
         return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
 
     def save(self, author_post):
