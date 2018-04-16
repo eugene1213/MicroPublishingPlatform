@@ -260,7 +260,7 @@ class PostReadView(APIView):
         return Post.objects.select_related('author').filter(pk=post_id).get()
 
     def bookmark_status(self, post):
-        
+
         try:
             Bookmark.objects.select_related('user').filter(user=self.request.user, post=post).get()
             return True

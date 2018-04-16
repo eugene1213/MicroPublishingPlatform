@@ -57,13 +57,17 @@ class AuthorApply(generics.GenericAPIView,
         user = self.request.user
         data = self.request.data
 
+        try:
+            self.request.data['cover']
+        except ObjectDoesNotExist:
+            raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, status.HTTP_406_NOT_ACCEPTABLE)
+
+        cover_file_obj = self.base64_content(self.request.data['cover'])
+        resizing_image = image_quality_down(cover_file_obj)
+
         author, result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
 
         if result:
-
-            cover_file_obj = self.base64_content(self.request.data['cover'])
-            resizing_image = image_quality_down(cover_file_obj)
-
             # 임시저장 파일이 없을 경우
             if data['temp_id'] == '':
                 raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, status.HTTP_406_NOT_ACCEPTABLE)
