@@ -8,7 +8,7 @@ function getData(){
     var data = {};
     $.ajax({
         url: "/api/column/postList/",
-        async: true,
+        async: false,
         type: 'GET',
         dataType: 'json',
         success: function(jsons) {
