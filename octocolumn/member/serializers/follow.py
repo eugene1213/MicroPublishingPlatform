@@ -16,7 +16,7 @@ class FollowStatusSerializer(serializers.ModelSerializer):
 
     def image(self, user):
         try:
-            img = ProfileImage.objects.filter(user=user).get()
+            img = ProfileImage.objects.select_related('user').filter(user=user).get()
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             data = {
@@ -26,18 +26,22 @@ class FollowStatusSerializer(serializers.ModelSerializer):
             return data
 
     def get_follow_status(self, obj):
+        user = self.context.get('request').user
+
+        if obj == user:
+            return 2
         try:
-            Relation.objects.filter(to_user=obj, from_user=self.context.get('request').user).get()
+            Relation.objects.select_related('to_user', 'from_user').filter(to_user=obj, from_user=user).get()
             return True
         except ObjectDoesNotExist:
             return False
 
     def get_follower_count(self, obj):
-        return Relation.objects.filter(to_user=obj).count()
+        return Relation.objects.select_related('to_user__user').filter(to_user=obj).count()
 
     def get_user(self, obj):
         serializer = UserSerializer(obj)
-        profile = Profile.objects.filter(user=obj).get()
+        profile = Profile.objects.select_related('user').filter(user=obj).get()
 
         data = {
             "username": serializer.data['nickname'],

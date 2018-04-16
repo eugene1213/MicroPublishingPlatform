@@ -79,7 +79,6 @@ class TempCreateView(generics.GenericAPIView,
         if self.request.data.get('temp_id') is None:
             raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
 
-
         if data['temp_id'] is not '':
             Temp.objects.filter(author=self.request.user, id=data['temp_id']).update(title=data['title'],
                                                                                      main_content=data['main_content'],

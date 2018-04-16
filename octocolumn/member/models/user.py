@@ -182,6 +182,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         relation.delete()
         return False
 
+
         # if user in self.following_users.all():
         #     Relation.objects.filter(
         #         from_user=self,

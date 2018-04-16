@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 # Application definition
@@ -60,7 +61,8 @@ INSTALLED_APPS = [
     'django_extensions',
 
     # 디버깅 툴바
-   'debug_toolbar',
+    'debug_toolbar',
+    'silk',
 
     # 장고 접속 에이전트 체크 라이브러리
     'django_user_agents',

@@ -36,7 +36,6 @@ class FollowerStatus(APIView):
 
 
 
-
 # 1
 # 팔로워 API
 # URL  /api/member/(?P<user_pk>\d+)/follow/$

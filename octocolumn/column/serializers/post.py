@@ -40,7 +40,6 @@ class PostSerializer(serializers.ModelSerializer):
         )
 
 
-
 class MyPublishPostSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -60,7 +59,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
 
     def image(self, user):
         try:
-            img = ProfileImage.objects.filter(user=user).get()
+            img = ProfileImage.objects.select_related('user').filter(user=user).get()
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             data = {
@@ -77,13 +76,13 @@ class PostMoreSerializer(serializers.ModelSerializer):
         clean_text = re.sub(cleaner, '', obj.main_content)
         return len(clean_text) - clean_text.count(' ')/2
 
-    def get_tag(self, obj):
-        tag = SearchTag.objects.filter(post=obj)
-        from column.serializers import SearchTagSerializer
-        tag_serializer = SearchTagSerializer(tag, many=True)
-        if tag_serializer:
-            return tag_serializer.data
-        return None
+    # def get_tag(self, obj):
+    #     tag = SearchTag.objects.select_related('post').filter(post=obj).all()
+    #     from column.serializers import SearchTagSerializer
+    #     tag_serializer = SearchTagSerializer(tag, many=True)
+    #     if tag_serializer:
+    #         return tag_serializer.data
+    #     return None
 
     def get_author(self, obj):
         serializer = UserSerializer(obj.author)
@@ -106,9 +105,10 @@ class PostMoreSerializer(serializers.ModelSerializer):
         return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
 
     def get_bookmark_status(self, obj):
-        if self.context.get('request').user.is_authenticated:
+        user = self.context.get('request').user
+        if user.is_authenticated:
             try:
-                Bookmark.objects.filter(user=self.context.get('request').user, post=obj).get()
+                Bookmark.objects.select_related('user').filter(user=user, post=obj).get()
                 return True
             except ObjectDoesNotExist:
                 return False
@@ -116,7 +116,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
 
     created_datetime = SerializerMethodField()
     typo_count = SerializerMethodField()
-    tag = SerializerMethodField()
+    # tag = SerializerMethodField()
     main_content = SerializerMethodField()
     author = SerializerMethodField()
     created_date = SerializerMethodField()
@@ -131,7 +131,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
             'created_datetime',
-            'tag',
+            # 'tag',
             'price',
             'cover_image',
             'preview',

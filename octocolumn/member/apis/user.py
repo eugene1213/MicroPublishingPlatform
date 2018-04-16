@@ -276,7 +276,7 @@ class UserInfo(APIView):
     def post(self, request):
         serializer = UserSerializer(self.request.user)
         try:
-            profile_image = ProfileImage.objects.filter(user=self.request.user).get()
+            profile_image = ProfileImage.objects.select_related('user').filter(user=self.request.user).get()
             profile_serializer = ProfileImageSerializer(profile_image)
 
             if serializer:
