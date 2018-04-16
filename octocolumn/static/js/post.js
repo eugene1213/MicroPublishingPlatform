@@ -30,7 +30,7 @@ $(document).ready(function(){
 
     $(".done-publish").click(function(){                    // 출판 버튼 누르면 작가인지 판단해서 출판/작가신청 진행. 아래 if문에서 data는 boolean타입
 
-        var cover_img = $("#preview-cover-img").attr("src");
+        var cover_img = $("#blah").attr("src");
         var preview_img = $("#preview-main-content > img").attr("src");
         var tag = '';
             tag = $("#tag_all").text();
