@@ -140,7 +140,7 @@ function insertComment(insertType, content, postID, commentID) {
         data: { 
             'comment_id': commentID,
             'content'   : content,
-            'post_id': postID
+            'post_id'   : postID
         },
         success: function(json) {
 
@@ -205,6 +205,12 @@ function insertComment(insertType, content, postID, commentID) {
                                     <span class="dot"></span>\
                                     <span class="dot"></span>\
                                     <span class="dot"></span>\
+                                </div>\
+                                <div class="more_option_me">\
+                                    <div class="more_option_modify">수정</div>\
+                                    <div class="more_option_delete">삭제\
+                                        <div class="more_option_triangle"></div>\
+                                    </div>\
                                 </div>\
                             </div>\
                             <span>1분전</span>\

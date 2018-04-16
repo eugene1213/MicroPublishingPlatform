@@ -495,7 +495,7 @@ body.back{
         text-align: center;
         color: #2a292a;
         border-bottom: 2px solid #979797;
-        margin-bottom: 70px;
+        margin-bottom: 40px;
         padding-bottom: 5px;
 
         &:after {
@@ -527,7 +527,7 @@ body.back{
 
             img{
                 display: inline-block;
-                margin-left: 45px;
+                margin-left: 24px;
                 height: 20px;
 
                 &:first-child{
@@ -542,7 +542,7 @@ body.back{
     border-bottom: 2px solid #979797;
 }
 .read .contents{
-    padding-bottom: 32px;
+    padding-bottom: 24px;
 }
 .read .contents:after{
     content: '';
@@ -551,25 +551,25 @@ body.back{
 }
 .read .contents .contents_title{
     float: left;
-    width: 304px;
+    width: 200px;
     letter-spacing: -0.02em;
 }
 .read .contents .contents_title .picture img{
-    width: 304px;
-    height: 304px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
     display: block;
     margin-bottom: 16px;
 }
 .read .contents .contents_title .name{
-    font-size: 32px;
+    font-size: 22px;
     font-weight: bold;
     text-align: center;
     color: #2a292a;
 }
 .read .contents .contents_title .title_name{
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
     text-align: center;
     color: #004b8d;
@@ -592,8 +592,10 @@ body.back{
 }
 .read .contents .text{
     float: right;
-    width: 620px;
-    font-size: 24px;
+    width: 680px;
+    max-height: 300px;    
+    overflow-y: scroll;
+    font-size: 16px;
     font-weight: 200;
     color: #2a292a;
     line-height: 1.5em;

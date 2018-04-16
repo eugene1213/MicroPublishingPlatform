@@ -185,11 +185,8 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
         else:
             form = action_form(request.POST)
             if form.is_valid():
-                try:
-                    form.save(author)
-                except errors.Error as e:
-                    # If save() raised, the form will a have a non
-                    # field error containing an informative message.
+                if form.save(author):
+
                     pass
                 else:
                     return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
