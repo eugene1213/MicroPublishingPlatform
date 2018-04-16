@@ -12,7 +12,7 @@ $(document).ready(function(){
     // 글 로딩
     $.ajax({
         url: "/api/column/postView/"+post_id,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {

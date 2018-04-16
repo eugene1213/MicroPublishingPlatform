@@ -263,7 +263,7 @@ function get_profile() {
 
     $.ajax({
         url: "/api/member/getProfileInfo/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         success: function(json) {
@@ -371,7 +371,7 @@ function modifyProfile() {
 
     $.ajax({
         url: "/api/member/updateProfile/",
-        async: false,
+        async: true,
         type: 'POST',
         data: {
             birthYear: birthYear*1,           // 태어난 년도
@@ -408,7 +408,7 @@ function updateUserIntro(userIntro) {
 
     $.ajax({
         url: "/api/member/updateProfileIntro/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         data: {
@@ -465,7 +465,7 @@ function uploadProfileImg(whichImg) {
     }
     $.ajax({
         url: url,
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         contentType: "application/json",
@@ -509,7 +509,7 @@ function getPointHistory() {
 
     $.ajax({
         url: "/api/member/getPointHistory/",
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(jsons) {
@@ -558,7 +558,7 @@ function setOctoCode(octoCode) {
 
     $.ajax({
         url: "/api/member/octoCode/",
-        async: false,
+        async: true,
         type: 'PUT',
         dataType: 'json',
         data: { code: octoCode },

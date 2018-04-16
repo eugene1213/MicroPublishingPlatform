@@ -11,7 +11,7 @@ function getUserCard(followDirection){
     
     $.ajax({
         url: "/api/member/getUser" + followDirection + "Card/" + count,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(jsons) {

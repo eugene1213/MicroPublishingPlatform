@@ -17,7 +17,7 @@ function getUserInfo() {
 
     $.ajax({
         url: "/api/member/userInfo/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         success: function(json) {

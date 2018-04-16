@@ -3,7 +3,7 @@ function bookmark(post_id) {
     
     $.ajax({
         url: "/api/member/"+post_id+"/bookmark/",
-        // async: false,
+        // async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {

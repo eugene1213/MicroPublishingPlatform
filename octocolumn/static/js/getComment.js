@@ -13,7 +13,7 @@ function getComment(post_id, commentID) {
     */
     $.ajax({
         url: url,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
@@ -134,7 +134,7 @@ function insertComment(insertType, content, postID, commentID) {
 
     $.ajax({
         url: "/api/column/comment/",
-        async: false,
+        async: true,
         type: insertType,
         dataType: 'json',
         data: { 
