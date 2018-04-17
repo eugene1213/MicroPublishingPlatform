@@ -46,7 +46,7 @@ function getRecent(url){
 
     $.ajax({
         url: url,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {

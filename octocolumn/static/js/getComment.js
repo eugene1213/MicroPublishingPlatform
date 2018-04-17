@@ -13,7 +13,7 @@ function getComment(post_id, commentID) {
     */
     $.ajax({
         url: url,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
@@ -57,7 +57,7 @@ function getComment(post_id, commentID) {
                     commentStr = '\
                         <li>\
                             <div class="comment-main-level">\
-                                <div class="comment-avatar" style="background-image:url(\''+ profile_img +'\')"></div>\
+                                <div class="comment-avatar image-loader" style="background-image:url(\''+ profile_img +'\')"></div>\
                                 <div id="'+ pk +'" class="comment-box">\
                                     <div class="comment-head">\
                                         <h6 class="comment-name by-author"><a href="">'+ username +'</a></h6>\
@@ -99,7 +99,7 @@ function getComment(post_id, commentID) {
                     commentStr = '\
                         <div id="'+ pk +'" class="reply-box">\
                             <div class="reply-head">\
-                                <div class="reply-avatar" style=\'background-image:url('+ profile_img +')\'></div>\
+                                <div class="reply-avatar image-loader" style=\'background-image:url('+ profile_img +')\'></div>\
                                 <h6 class="reply-name"><a href="">'+ username +'</a></h6>\
                                 <div class="more">\
                                     <div class="more_icon">\
@@ -134,7 +134,7 @@ function insertComment(insertType, content, postID, commentID) {
 
     $.ajax({
         url: "/api/column/comment/",
-        async: false,
+        async: true,
         type: insertType,
         dataType: 'json',
         data: { 
@@ -152,7 +152,7 @@ function insertComment(insertType, content, postID, commentID) {
                 commentStr = '\
                     <li>\
                         <div class="comment-main-level">\
-                            <div class="comment-avatar" style=\'background-image:'+ profile_img +'\'></div>\
+                            <div class="comment-avatar image-loader" style=\'background-image:'+ profile_img +'\'></div>\
                             <div id="'+ json.detail +'" class="comment-box">\
                                 <div class="comment-head">\
                                     <h6 class="comment-name by-author"><a href="">'+ username +'</a></h6>\
@@ -198,7 +198,7 @@ function insertComment(insertType, content, postID, commentID) {
                 commentStr = '\
                     <div id="'+ json.detail +'" class="reply-box">\
                         <div class="reply-head">\
-                            <div class="reply-avatar" style=\'background-image:'+ profile_img +'\'></div>\
+                            <div class="reply-avatar image-loader" style=\'background-image:'+ profile_img +'\'></div>\
                             <h6 class="reply-name"><a href="">'+ username +'</a></h6>\
                             <div class="more">\
                                 <div class="more_icon">\

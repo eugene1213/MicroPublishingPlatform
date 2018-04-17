@@ -32,16 +32,16 @@
 		<!-- <script>window.location.href = "/"</script> -->
 	{% endif %}
 	<div class="read">
-		<div class="mainImg">
+		<div class="mainImg image-loader">
 		</div>
 		<div class="read_wrap">
-			<h2>The Year From Above</h2>
+			<h2><!--제목--></h2>
 			<div class="write">
 				<div class="writer">
-					by <span>Benjamin Rogers</span>
+					by <span><!--작가이름--></span>
 				</div>
 				<div class="date">
-					2017. 12. 18 <span>18:33</span>
+					<!--작성날짜--> <span><!--작성시각--></span>
 				</div>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 			</div>
 			<div class="read_profile">
 				<div class="click">
-					<div class="wait">
+					<!-- <div class="wait">
 						<img src="{% static 'images/icons/read/wtb.png' %}" alt="기다림">
 						기다림
 					</div>
@@ -64,9 +64,9 @@
 							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
 							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
 							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
-						</div><!-- star_click -->
+						</div>
 						평가하기
-					</div>
+					</div> -->
 					<div class="sns">
 						<img src="{% static 'images/icons/read/Fb.png' %}" alt="페이스북">
 						<img src="{% static 'images/icons/read/twt.png' %}" alt="트위터">
@@ -78,21 +78,14 @@
 				<div class="contents_wrap">
 					<div class="contents">
 						<div class="contents_title">
-							<div class="picture">
-								<img src="">
+							<div class="picture image-loader">
 							</div>
-							<div class="name">Benjamin Rogers</div>
-							<div class="title_name">여행 전문가</div>
+							<div class="name"></div>
+							<!-- <div class="title_name">여행 전문가</div> -->
 							<div class="btnFollow">Follow</div>
 						</div>
 						<div class="text">
-							Donec facilisis tortor ut augue lacinia, at viverra est semper.
-							Sed sapien metus, scelerisque nec pharetra id, tempor a tortor.
-							Pellentesque non dignissim neque.
-							Ut porta viverra est, ut dignissim elit elementum ut.
-							Nunc vel rhoncus nibh, ut tincidunt turpis.
-							Integer ac enim pellentesque, adipiscing metus id, pharetra odio.
-							Donec bibendum nunc sit amet tortor scelerisque luctus et sit amet mauris.
+							<!-- 작가 자기소개 -->
 						</div>
 					</div><!-- class="contents" -->
 				</div><!-- class="contents_wrap" -->
@@ -112,5 +105,6 @@
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/read.js' %}"></script>
+	<script src="{% static 'js/jquery.imageloader.js' %}"></script>	
 </body>
 </html>

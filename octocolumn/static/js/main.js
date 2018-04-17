@@ -7,8 +7,8 @@ $(document).ready(function() {
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");
+        
         if(post_id > 0){
-
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
             var cover_img = data[card_id-1].cover_image;
             var title = data[card_id-1].title;
@@ -30,5 +30,12 @@ $(document).ready(function() {
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
+    });
+
+    $('.image-loader').imageloader({
+        background: true,
+        callback: function (elm) {
+            $(elm).fadeIn();
+        }
     });
 });

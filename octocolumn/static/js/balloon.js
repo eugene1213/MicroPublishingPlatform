@@ -24,7 +24,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
         
         $.ajax({
             url: "/api/member/"+ pk +"/followStatus/",
-            async: false,
+            async: true,
             type: 'GET',
             dataType: 'json',
             success: function(jsons) {
@@ -104,7 +104,7 @@ function follow(author_id) {
 
     $.ajax({
         url: "/api/member/"+author_id+"/follow/",
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {

@@ -2,7 +2,7 @@ function invite(email) {
     
     $.ajax({
         url: "/api/member/invite/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         data: {email:email},
