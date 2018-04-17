@@ -56,10 +56,26 @@ class MyPublishPostSerializer(serializers.ModelSerializer):
 
 
 class PostMoreSerializer(serializers.ModelSerializer):
+    def get_all_status(self, obj):
+        user = self.context.get('request').user
+        author_serializer = UserSerializer(obj.author)
+        data = {
+            "img": self.image(obj.author),
+            "created_datetime": obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M'),
+            "created_date":obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d'),
+            "typo_count": self.typo_count(obj),
+            "author_id": author_serializer.data['pk'],
+            "username": author_serializer.data['nickname'],
+            "following_url": "/api/member/" + str(author_serializer.data['pk']) + "/followStatus/",
+            "achevement": "",
+            "main_content": self.main_content(obj),
+            "bookmark_status": self.bookmark_status(obj, user)
+        }
+        return data
 
-    def image(self, user):
+    def image(self, author):
         try:
-            img = ProfileImage.objects.select_related('user').filter(user=user).get()
+            img = ProfileImage.objects.select_related('user').filter(user=author).get()
             return ProfileImageSerializer(img).data
         except ObjectDoesNotExist:
             data = {
@@ -67,11 +83,11 @@ class PostMoreSerializer(serializers.ModelSerializer):
                 'cover_image': 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
             }
             return data
+    #
+    # def get_created_datetime(self,obj):
+    #     return obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M')
 
-    def get_created_datetime(self,obj):
-        return obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M')
-
-    def get_typo_count(self, obj):
+    def typo_count(self, obj):
         cleaner = re.compile('<.*?>')
         clean_text = re.sub(cleaner, '', obj.main_content)
         return len(clean_text) - clean_text.count(' ')/2
@@ -84,28 +100,27 @@ class PostMoreSerializer(serializers.ModelSerializer):
     #         return tag_serializer.data
     #     return None
 
-    def get_author(self, obj):
-        serializer = UserSerializer(obj.author)
-        data = {
-            "author_id": serializer.data['pk'],
-            "username": serializer.data['nickname'],
-            "following_url": "/api/member/" + str(serializer.data['pk']) + "/followStatus/",
-            "achevement": "",
-            "img": self.image(obj.author)
-        }
+    # def get_author(self, obj):
+    #     serializer = UserSerializer(obj.author)
+    #     data = {
+    #         "author_id": serializer.data['pk'],
+    #         "username": serializer.data['nickname'],
+    #         "following_url": "/api/member/" + str(serializer.data['pk']) + "/followStatus/",
+    #         "achevement": "",
+    #         "img": self.image(obj.author)
+    #     }
+    #
+    #     return data
 
-        return data
-
-    def get_main_content(self, obj):
+    def main_content(self, obj):
         cleaner = re.compile('<.*?>')
         clean_text = re.sub(cleaner, '', obj.main_content)
         return clean_text[:300]
 
-    def get_created_date(self, obj):
-        return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
+    # def get_created_date(self, obj):
+    #     return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')
 
-    def get_bookmark_status(self, obj):
-        user = self.context.get('request').user
+    def bookmark_status(self, obj, user):
         if user.is_authenticated:
             try:
                 Bookmark.objects.select_related('user').filter(user=user, post=obj).get()
@@ -114,29 +129,31 @@ class PostMoreSerializer(serializers.ModelSerializer):
                 return False
         return False
 
-    created_datetime = SerializerMethodField()
-    typo_count = SerializerMethodField()
+    # created_datetime = SerializerMethodField()
+    # typo_count = SerializerMethodField()
     # tag = SerializerMethodField()
-    main_content = SerializerMethodField()
-    author = SerializerMethodField()
-    created_date = SerializerMethodField()
-    bookmark_status = SerializerMethodField()
+    # main_content = SerializerMethodField()
+    # author = SerializerMethodField()
+    # created_date = SerializerMethodField()
+    # bookmark_status = SerializerMethodField()
+    all_status = SerializerMethodField()
 
     class Meta:
         model = Post
         fields = (
             'pk',
-            'author',
-            'main_content',
+            # 'author',
+            # 'main_content',
             'title',
-            'created_date',
-            'created_datetime',
+            # 'created_date',
+            # 'created_datetime',
             # 'tag',
             'price',
             'cover_image',
             'preview',
-            'typo_count',
-            'bookmark_status'
+            # 'typo_count',
+            # 'bookmark_status'
+            'all_status',
         )
 
 
