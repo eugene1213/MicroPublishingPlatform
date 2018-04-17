@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 from column.models import Temp, SearchTag
 from column.pagination import PostPagination
 from column.serializers.tag import SearchTagSerializer
-from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage
+from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import Relation, WaitingRelation, Bookmark
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
@@ -283,10 +283,11 @@ class PostReadView(APIView):
                 post.save()
                 # 작가임
                 bookmark_status = self.bookmark_status(post)
-                user = User.objects.select_related('author').filter(pk=post.author_id).get()
+                user = User.objects.filter(pk=post.author_id).get()
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
                 image_serializer = ProfileImageSerializer(profile_image)
                 time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+                profile = Profile.objects.select_related('user').filter(user=user).get()
                 return Response({
                     "detail": {
                         "post_id": serializer.data['pk'],
@@ -294,11 +295,12 @@ class PostReadView(APIView):
                         "main_content": serializer.data['main_content'],
                         "title": serializer.data['title'],
                         "tag": self.tag(post),
-                        "bookmark_status":bookmark_status,
+                        "bookmark_status": bookmark_status,
                         "author": {
                             "author_id": serializer.data['author'],
                             "username": user.nickname,
                             "achevement": "",
+                            "intro": profile.intro,
                             "image": image_serializer.data
                         },
 

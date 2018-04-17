@@ -123,7 +123,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def bookmark_status(self, obj, user):
         if user.is_authenticated:
             try:
-                Bookmark.objects.select_related('user').filter(user=user, post=obj).get()
+                Bookmark.objects.select_related('user', 'post').filter(user=user, post=obj).get()
                 return True
             except ObjectDoesNotExist:
                 return False
