@@ -554,20 +554,3 @@ function getPointHistory() {
         }
     });
 }
-function setOctoCode(octoCode) {
-
-    $.ajax({
-        url: "/api/member/octoCode/",
-        async: true,
-        type: 'PUT',
-        dataType: 'json',
-        data: { code: octoCode },
-        success: function(jsons) {
-            
-            
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
