@@ -261,7 +261,7 @@ class MyTemp(APIView):
         user = self.request.user
 
         try:
-            temp = Temp.objects.select_related('author__user').filter(author=user).order_by('-created_date').all()
+            temp = Temp.objects.select_related('author').filter(author=user).order_by('-created_date').all()
             serializer = MyTempSerializer(temp, many=True)
             if serializer:
                 return Response({"post": serializer.data}, status=status.HTTP_200_OK)

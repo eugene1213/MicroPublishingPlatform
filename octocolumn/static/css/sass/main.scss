@@ -1,17 +1,16 @@
 
 .main-img-container {
-	width: 100%;
+	width: calc(100%-100px);
 	height: 90vh;
 	border: 50px solid transparent;
 	background-color: #fff;
 }
 .main-img-text-container {
 	position: relative;
-	width: 100%;
 	text-align: left;
 	padding: 60px 30px;
 	z-index: 1;
-	top: 300px;
+	top: 280px;
 }
 .main-img-main-text {
 	background-color: #ffffff;
@@ -63,19 +62,28 @@
 }
 .main-img {
 	width: 70%;
-	height: 100vh;
+	height:	100vh;
 	position: absolute;
 	background-image: url('/static/images/example/annawangler.jpg');
 	background-size: cover;
 	background-position: top center;
 	background-repeat: no-repeat;
-	top: 32px;
+	top: 0;
 	right: 0;
 }
 
 @media only screen and (max-width: 860px) {
 	.main-img {
 		width: 100%;
+	}
+	.main-img-main-text {
+		line-height: 72px;		
+	}
+}
+@media only screen and (max-width: 480px) {
+
+	.main-img-sub-text-container {
+		display: none;
 	}
 }
 .fb1_img, .fb1_txt_1, .fb1_txt_2, .profile_img, .profile_name, .profile_mark {

@@ -53,7 +53,7 @@ function saveTmp(auto){
 
     $.ajax({
         url: "/api/column/temp/",
-        async: true,
+        async: false,
         type: 'POST',
         dataType: 'json',
         data: {

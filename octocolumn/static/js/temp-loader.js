@@ -8,7 +8,7 @@ function loadTemp() {
     
     $.ajax({
         url: "/api/column/tempView/" + temp_id,
-        async: true,
+        async: false,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
@@ -21,7 +21,7 @@ function loadTemp() {
     });
     $.ajax({
         url: "/api/member/userInfo/",
-        async: true,
+        async: false,
         type: 'POST',
         dataType: 'json',
         success: function(json) {

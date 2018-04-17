@@ -25,6 +25,8 @@ class FollowerStatus(APIView):
 
     def get(self, request, *args, **kwargs):
         user_pk = self.kwargs.get('user_pk')
+        print(user_pk)
+        print(User.objects.filter(pk=user_pk).get() is not None)
         try:
             to_user = User.objects.filter(pk=user_pk).get()
             serializer = FollowStatusSerializer(to_user, context={'request': request})
