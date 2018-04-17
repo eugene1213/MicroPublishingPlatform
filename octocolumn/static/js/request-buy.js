@@ -14,7 +14,7 @@ function buy(){
 
     $.ajax({
         url: "/api/column/post-buy/",
-        async: true,
+        async: false,
         type: 'POST',
         dataType: 'json',
         data: {

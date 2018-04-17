@@ -241,6 +241,13 @@ li.info span {
 		-webkit-tap-highlight-color: rgba(0,0,0,0);
 	}
 }
+
+@media screen and (max-width: 370px) {
+
+	.point {
+		display: none;
+	}
+}
 .btn-search {
     position: fixed;
     float: left;

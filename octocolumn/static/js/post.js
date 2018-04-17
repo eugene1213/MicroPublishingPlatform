@@ -95,7 +95,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
 
     $.ajax({
         url: "/api/column/post-create/",
-        async: true,
+        async: false,
         type: 'POST',
         xhrFields: {
             withCredentials: true
