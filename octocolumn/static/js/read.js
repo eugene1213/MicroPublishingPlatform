@@ -12,7 +12,7 @@ $(document).ready(function(){
     // 글 로딩
     $.ajax({
         url: "/api/column/postView/"+post_id,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
@@ -111,12 +111,13 @@ $(document).ready(function(){
             $('#'+commentID+'> .comment-content').prop('contenteditable','false')
         }else {
             alert('댓글을 0 ~ 1500 글자 이내로 입력해주세요.');
-        }           
+        }
     });
     // 대댓글 수정
     $('.reply-list').delegate('.more_option_modify', 'click', function(e) {
         
         var commentID = $(e.target).closest('.reply-box').attr('id');
+
         $('#'+commentID+'> .reply-content').prop('contenteditable','true');
         $('#'+commentID+'> .reply-content').focus();
         $('#'+commentID+' .more').hide();
@@ -148,7 +149,6 @@ $(document).ready(function(){
     $('.reply-list').delegate('.more_option_delete', 'click', function(e) {
         
         var commentID = $(e.target).closest('.reply-box').attr('id');
-
         insertComment('DELETE','' , post_id, commentID);
     });
 

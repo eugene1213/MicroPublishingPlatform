@@ -48,13 +48,13 @@ class Follower(APIView):
 
         try:
             to_user = User.objects.filter(pk=user_pk).get()
-            result, relation = Relation.objects.get_or_create(to_user=to_user, from_user=user)
+            result, relation = Relation.objects.select_related('to_user', 'from_user').get_or_create(to_user=to_user, from_user=user)
 
             if relation:
                 return Response({'detail': 'created',
                                  "author": {
                                      "follow_status": True,
-                                     "follower": Relation.objects.filter(from_user=user).count()
+                                     "follower": Relation.objects.select_related('from_user').filter(from_user=user).count()
                                  }
                                  })
             result.delete()

@@ -33,7 +33,7 @@ function get_my_posts(which){    //프로필 페이지에서 자신이 쓴 글�
     }
     $.ajax({
         url: url,
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         success: function(json) {

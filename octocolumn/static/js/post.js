@@ -95,7 +95,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
 
     $.ajax({
         url: "/api/column/post-create/",
-        async: false,
+        async: true,
         type: 'POST',
         xhrFields: {
             withCredentials: true
@@ -126,7 +126,7 @@ function isAuthor() {
     $.ajax({
         url: "/api/column/isauthor/",
         type: 'POST',
-        async: false,
+        async: true,
         xhrFields: {
             withCredentials: true
         },
@@ -156,7 +156,7 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
 
     $.ajax({
         url: "/api/member/authorApply/",
-        async: false,
+        async: true,
         type: 'POST',
         xhrFields: {
             withCredentials: true

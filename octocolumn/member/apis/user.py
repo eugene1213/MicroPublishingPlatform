@@ -274,9 +274,10 @@ class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        serializer = UserSerializer(self.request.user)
+        user = self.request.user
+        serializer = UserSerializer(user)
         try:
-            profile_image = ProfileImage.objects.select_related('user').filter(user=self.request.user).get()
+            profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
             profile_serializer = ProfileImageSerializer(profile_image)
 
             if serializer:

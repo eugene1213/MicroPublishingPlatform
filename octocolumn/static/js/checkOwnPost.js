@@ -3,7 +3,7 @@ function isBought(post_id, cover_img, title, date, author, tag, readtime, price,
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {

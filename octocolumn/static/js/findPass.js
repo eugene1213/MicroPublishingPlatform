@@ -19,7 +19,7 @@ function findPass() {
     var username = $('#username').val();
     $.ajax({
         url: "/api/member/passwordResetEmail/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         data: {
@@ -43,7 +43,7 @@ function resetPass() {
     
     $.ajax({
         url: "/api/member/passwordReset/",
-        async: false,
+        async: true,
         type: 'POST',
         dataType: 'json',
         data: {

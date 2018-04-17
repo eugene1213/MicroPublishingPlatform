@@ -143,7 +143,7 @@ function insertComment(insertType, content, postID, commentID) {
             'post_id'   : postID
         },
         success: function(json) {
-
+            console.log(commentID);
             var profile_img = $('.profile-img').css('background-image');
             var username = $('.profile-text').text();
             var commentStr = '';
@@ -194,7 +194,7 @@ function insertComment(insertType, content, postID, commentID) {
                         </ul>\
                     </li>\
                 ';
-            }else if(insertType == 'POST' && commentID != '') {
+            } else if(insertType == 'POST' && commentID != '') {
                 commentStr = '\
                     <div id="'+ json.detail +'" class="reply-box">\
                         <div class="reply-head">\
@@ -223,20 +223,34 @@ function insertComment(insertType, content, postID, commentID) {
             }
 
             if(insertType == 'POST') {
-                commentID == ''
-                ? $('#comments-list > li:first').after(commentStr)
-                : $('#'+commentID+'[class="reply-list"] > li:first').append(commentStr);
-
-                $('.input_comment').val('');
-                $('.input_reply').val('');
+                if(commentID == ''){
+                    $('#comments-list > li:first').after(commentStr);
+                    $('.input_comment').val('');
+                } else {
+                    $('#'+commentID+'[class="reply-list"] > li:first').append(commentStr);
+                    $('#'+commentID+' .re-comment-count').text($('#'+commentID+' .re-comment-count').text()*1+1);
+                    $('.input_reply').val('');
+                }
             }
             else if (insertType == 'DELETE') {
                 
-                $('#'+commentID+ ' .re-comment-count').length
-                ? ( $('#'+commentID+ ' .re-comment-count').text() != '0'
-                ?   $('#'+commentID+ ' .comment-content').text('삭제된 댓글입니다.')
-                :   $('#'+commentID).parent().parent().remove() )
-                : $('#'+commentID).remove();
+                if($('#'+commentID+ ' .re-comment-count').length){
+
+                    if( $('#'+commentID+ ' .re-comment-count').text() != '0') {
+
+                        $('#'+commentID+ ' .comment-content').text('삭제된 댓글입니다.');
+                    } else {
+
+                        $('#'+commentID).parent().parent().remove();
+                    }
+                } else {
+
+                    var parentID = $('#'+commentID).closest('.reply-list').attr('id');
+                    
+                    $('#'+parentID+' .re-comment-count').text($('#'+parentID+' .re-comment-count').text()*1-1);
+                    $('#'+commentID+' .re-comment-count').text($('#'+commentID+' .re-comment-count').text()*1-1);
+                    $('#'+commentID).remove();                    
+                }
             }
         },
         error: function(error) {

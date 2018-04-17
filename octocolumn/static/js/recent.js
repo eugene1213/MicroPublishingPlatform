@@ -60,16 +60,16 @@ function getRecent(url){
             for(var i in json.results){
 
                 var post_id = json.results[i].pk;
-                var readTime = Math.round(json.results[i].typo_count / 500);                               // 1분/500자 반올림
+                var readTime = Math.round(json.results[i].all_status.typo_count / 500);                               // 1분/500자 반올림
                 var cover_img = json.results[i].cover_image;
                 var title = json.results[i].title;
-                var main_content = json.results[i].main_content.substr(0,100);
-                var created_date = json.results[i].created_date;
-                var username = json.results[i].author.username;
-                var author_id = json.results[i].author.author_id;
-                var profile_image = json.results[i].author.img.profile_image;
+                var main_content = json.results[i].all_status.main_content.substr(0,100);
+                var created_date = json.results[i].all_status.created_date;
+                var username = json.results[i].all_status.username;
+                var author_id = json.results[i].all_status.author_id;
+                var profile_image = json.results[i].all_status.img.profile_image;
                 var bookmarkElement = '';
-                json.results[i].bookmark_status ? bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark"></div>' : bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark-empty"></div>';                
+                json.results[i].all_status.bookmark_status ? bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark"></div>' : bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark-empty"></div>';                
                
                 usernameArray.push(username);
                 var str =  '<div class="feedbox4 feedbox" id="card_'+ i +'">              \
