@@ -142,9 +142,9 @@ class ProfileUpdate(APIView):
 
         except ObjectDoesNotExist:
             if Profile.objects.create(
-                    user=user, year=data['bithYear'], month=data['bithMonth'], day=data['bithDay'], sex=data['sex'],
-                    phone=data['hpNumber'], age=data['age'],job=data['job'], facebook=data['fb'], instagram=data['ins'],
-                    twitter=data['tw'], subjects=data['subject']):
+                    user=user, year=data['birthYear'], month=data['birthMonth'], day=data['birthDay'], sex=data['sex'],
+                    phone=data['hpNumber'], age=data['age'], jobs=data['job'], facebook=data['fb'], instagram=data['ins'],
+                    twitter=data['tw'], subjects=data['subject'], region=data['region'], web=data['web']):
                 return Response(status=status.HTTP_200_OK)
             raise exceptions.ValidationError('Abnormal connectd')
 
