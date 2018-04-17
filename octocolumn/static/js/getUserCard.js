@@ -25,9 +25,12 @@ function getUserCard(followDirection){
                 var followers = jsons[json].follower;
                 var intro = jsons[json].intro;
                 var pk = jsons[json].pk;
+
                 if(followDirection == 'Follower') {
+                    
                     var follow_status = jsons[json].follow_status;
                     var status = 'Follow';
+                    
                     if(follow_status) status += 'ing';
                 }else var status = 'Following';
 
@@ -73,9 +76,6 @@ function getUserCard(followDirection){
                                     </div> \
                                 </div> \
                             </div>';
-                $(".profile-relationship").append(str);
-                $(".profile-relationship").append(str);
-                $(".profile-relationship").append(str);
                 $(".profile-relationship").append(str);
 
                 $(window).scroll(function() { 
