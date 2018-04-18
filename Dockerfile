@@ -42,7 +42,7 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # collectstatic 실행
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
 # manage.py
 #WORKDIR     /srv/app/octocolumn
 
@@ -68,12 +68,12 @@ RUN         cp /srv/app/.config/supervisor/* \
 CMD         supervisord -n
 EXPOSE      80
 
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:certbot/certbot
-RUN apt-get update
-RUN apt-get install dialog apt-utils -y
-RUN apt-get install -y python-certbot-nginx
+#RUN apt-get update
+#RUN apt-get install -y software-properties-common
+#RUN add-apt-repository -y ppa:certbot/certbot
+#RUN apt-get update
+#RUN apt-get install dialog apt-utils -y
+#RUN apt-get install -y python-certbot-nginx
 
 
 # certbot --nginx -d www.octocolumn.com
