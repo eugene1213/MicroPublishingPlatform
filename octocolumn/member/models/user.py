@@ -95,7 +95,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     username = models.EmailField(unique=True)
     social_id = models.CharField(null=True, max_length=255)
-    point = models.IntegerField(default=0)
+    point = models.IntegerField(default=500)
     nickname = models.CharField(max_length=255, null=True)
     full_name = models.CharField(max_length=255, null=True)
     last_name = models.CharField(max_length=255, null=True)
