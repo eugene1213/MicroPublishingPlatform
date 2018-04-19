@@ -11,9 +11,10 @@
 	padding: 60px 30px;
 	z-index: 1;
 	top: 280px;
+	text-shadow: #2a292a 1px 1px 1px;
 }
 .main-img-main-text {
-	background-color: #ffffff;
+	color: #ffffff;
 	font-size: 46px;
 	letter-spacing: 8px;
 	font-weight: 800;
@@ -27,7 +28,7 @@
 	font-size: 14px;
 	line-height: 24px;
 	letter-spacing: 1px;
-	background-color: #FFFFFF;
+	color: #FFFFFF;
 }
 .main-img-btn {
 	position: absolute;
@@ -61,7 +62,7 @@
 	background-color: #555355;
 }
 .main-img {
-	width: 70%;
+	width: 100%;
 	height:	100vh;
 	position: absolute;
 	background-image: url('/static/images/example/annawangler.jpg');

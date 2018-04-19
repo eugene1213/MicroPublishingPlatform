@@ -21,6 +21,7 @@ $(document).ready(function(){
             var cover_img = json.detail.cover_img;
             var title = json.detail.title;
             var author = json.detail.author.username;
+            var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
             
             var main_content = json.detail.main_content;
@@ -42,6 +43,7 @@ $(document).ready(function(){
             $(".writer > span").text(author);
             $('.picture').css('background-image','url('+author_image+')');
             $('.name').text(author);
+            $('.contents_wrap > .contents .text').text(intro);
 
             //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             coverImgController();
@@ -115,7 +117,7 @@ $(document).ready(function(){
     });
     // 대댓글 수정
     $('.reply-list').delegate('.more_option_modify', 'click', function(e) {
-        
+
         var commentID = $(e.target).closest('.reply-box').attr('id');
 
         $('#'+commentID+'> .reply-content').prop('contenteditable','true');

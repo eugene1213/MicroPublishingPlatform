@@ -38,3 +38,37 @@ $(document).ready(function() {
         }
     });
 });
+
+var lastScrollTop = 0;
+var opacity = 0;
+var imgHeight = $('.main-img').height();
+var imgWidth = $('.main-img').width();
+var mainImageTextCoord1 = $('.main-img-main-text').offset().top;
+var mainImageTextCoord2 = $('.main-img-sub-text-container').offset().top;
+var mainImageTextCoord3 = $('.main-img-btn').offset().top;
+
+
+$(window).scroll(function(){
+
+    var st = $(document).scrollTop();
+
+    opacity1 = (mainImageTextCoord1-st)/mainImageTextCoord1;
+    opacity2 = (mainImageTextCoord2-st)/mainImageTextCoord2;
+    opacity3 = (mainImageTextCoord3-st)/mainImageTextCoord3;
+    width = ((imgHeight-st)/imgHeight)*100;
+    $('.main-img-main-text').css('opacity',opacity1);
+    $('.main-img-sub-text-container').css('opacity',opacity2);
+    $('.main-img-btn').css('opacity',opacity3);
+    $('.main-img').css('width',width+'%');    
+    
+    // if (st > lastScrollTop){
+    //     // Scroll Down
+    //     console.log('scroll down');
+    //     $('.main-img-text-container').css('opacity',1)
+    // } else {
+    //     // Scroll Up
+    //     console.log('scroll up');
+    //     $('.main-img-text-container').css('opacity',1)        
+    // }
+    lastScrollTop = st;
+});

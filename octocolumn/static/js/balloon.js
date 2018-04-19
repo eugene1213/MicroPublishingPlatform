@@ -52,7 +52,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
 
                 $(".card_profile_img_wrap").css("background-image","url(" +profileImage+ ")");
                 $(".card_background_img").css("background","url(" +coverImage+ ")")
-                $(".card_profile_info").text(profileIntro);
+                $(".card_profile_info").append(profileIntro);
                 $(".card_profile_name").text(authorName);
                 
                 controllBalloonCoord(e.target);

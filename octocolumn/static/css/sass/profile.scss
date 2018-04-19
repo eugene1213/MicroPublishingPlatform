@@ -508,12 +508,13 @@
 			td {
 				width: 176px;
 				padding-left: 8px;
+				overflow: hidden;
 
 				&:nth-last-child(3) {
 					min-width: 152px;
 				}
 				&:nth-last-child(2) {
-					width: 368px;
+					max: 240px;
 				}
 				&:nth-last-child(1) {
 					width: 16px;
