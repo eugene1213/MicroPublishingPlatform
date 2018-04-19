@@ -1,5 +1,5 @@
 	{% load static %}
-	<header tabindex="0"><span onclick="window.location.href='/'">octocolumn</span></header>
+	<header tabindex="0"><span class="site-name" onclick="window.location.href='/'">octocolumn</span>
     <div id="nav-container">
         <div class="bg"></div>
         <div class="button" tabindex="0">
@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </div>
-        <div id="nav-content" tabindex="0">
+        <div id="nav-content" class="scrollbar-none" tabindex="0">
             <ul>
                 <li><a href="/recent/">Recent Posts</a></li>
                 <li><a href="">Feed</a></li>
@@ -25,24 +25,7 @@
 				<li><a href="http://octocolumn.com/">Rules</a></li>
                 <li class="divline"></li>
                 <li id="logout"><a href="">Sign out</a></li>
-                <li class="info">
-					<span>octocolumn.com<br/>
-						Copyright octocolumn.com<br/>
-						All Rights Reserved<br/>
-						주식회사 옥토칼럼<br/>
-						대표 오정민<br/>
-						사업자등록번호<br/>
-						308-81-44686<br/>
-						통신판매업신고 2017<br/>
-						수원권선 0386<br/>
-						개인정보관리 책임자 오정민<br/>
-						경기도 수원시 권선구 정조로<br/>
-						580-9<br/>
-						연락처<br/>
-						support@octocolumn.com<br/>
-						고객센터 070-4809-7166
-					</span>
-				</li>
+				<li class="info"><span>Copyright octocolumn All Rights Reserved<br>주식회사 옥토칼럼<br>대표 오정민<br>사업자등록번호<br>576-52-00020<br>통신판매업신고<br>2016 수원권선 0350<br>개인정보관리책임자 오정민<br>경기도 수원시 권선구 정조로 580-9<br>mackenzie@octocolumn.com<br>고객센터 070-4809-7166</span></li>
                 <!--
                 <li class="small"><a href="#0">Facebook</a><a href="#0">Instagram</a></li>
                 -->
@@ -52,16 +35,13 @@
 	<!-- <div class="btn-search">
 		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
 	</div> -->
-	<div class="btn-point">
-		<div class="point">0p</div>
-	</div>
 	<!-- <div class="btn-notice">
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
-	<div class="profile-img image-loader" id="header-profile-image"></div>
-    <div id="profile-container" onclick='window.location.href = "/profile/"'>
-    	<div class="profile-text"></div>
-    </div>
+	<div id="profile-container" onclick='window.location.href = "/profile/"'>
+		<span class="profile-text"></span>
+		<div class="profile-img image-loader" id="header-profile-image"></div>
+	</div>
 <!-- 
 	<div class="btn-search">
 		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
@@ -72,6 +52,7 @@
 	<div class="btn-notice">
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
+</header>
 	<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>

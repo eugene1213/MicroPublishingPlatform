@@ -12,9 +12,11 @@ html, body {
 ul {
     list-style: none;
     margin-top: 0;
+    padding: 0;    
 }
-a { 
-    display: block;
+a {
+	color: currentColor;
+	transition: .2s ease-in-out;
 }
 a:link {
     text-decoration: none;
