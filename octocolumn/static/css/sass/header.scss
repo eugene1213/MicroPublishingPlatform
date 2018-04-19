@@ -7,6 +7,7 @@ header {
 	font-weight: 600;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	z-index: 800;
+	min-width: 200px;
 }
 header .site-name {
 	position: relative;
@@ -93,6 +94,7 @@ header .site-name {
 	will-change: transform;
 	contain: paint;
 	overflow: auto;
+	box-sizing: border-box;
 }
 
 #nav-content ul {
@@ -119,7 +121,7 @@ li.info {
 	align-self: center;
 	font-size: 5px;
 	font-weight:100;
-	color: #888;
+	color: #888;	
 }
 #nav-content li:not(.info) + .info {margin-top: auto;}
 #nav-content li a:hover {color: #004b8d;}

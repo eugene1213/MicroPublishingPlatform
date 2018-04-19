@@ -17,6 +17,7 @@ html, body {background-color: #000;}
 }
 main {
 	width: 100%;
+	min-width: 212px;
 	padding: 0;
 	margin: 44px auto 0;
 	flex-direction: column;
@@ -101,17 +102,9 @@ main {
 	right: 0;
 }
 
-@media only screen and (max-width: 860px) {
-	.main-img {
-		width: 100%;
-	}
-	.main-img-main-text {
-		line-height: 72px;		
-	}
-}
 @media only screen and (max-width: 480px) {
 
-	.main-img-sub-text-container {
+	.main-content-sub {
 		display: none;
 	}
 }

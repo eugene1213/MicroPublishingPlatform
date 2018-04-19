@@ -23,7 +23,7 @@ function signin_api() {
 
     $.ajax({
         url: "/api/member/login/",
-        async: true,
+        async: false,
         type: 'POST',
         dataType: 'json',
         xhrFields: {
@@ -83,7 +83,7 @@ function secondInvite() {
 
     $.ajax({
         url: "/api/member/secondInvite/",
-        async: true,
+        async: false,
         type: 'POST',
         dataType: 'json',
         data: {

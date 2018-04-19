@@ -134,7 +134,6 @@
                     // 로그인 창을 띄웁니다.
                     Kakao.Auth.login({
                         success: function(authObj) {
-                            alert(JSON.stringify(authObj));//authObj.access_token
                             $.ajax({
                                 url: "/api/member/kakaoLogin/" + authObj.access_token,
                                 async: false,
