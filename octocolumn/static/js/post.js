@@ -126,7 +126,7 @@ function isAuthor() {
     $.ajax({
         url: "/api/column/isauthor/",
         type: 'POST',
-        async: true,
+        async: false,
         xhrFields: {
             withCredentials: true
         },
@@ -156,7 +156,7 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
 
     $.ajax({
         url: "/api/member/authorApply/",
-        async: true,
+        async: false,
         type: 'POST',
         xhrFields: {
             withCredentials: true

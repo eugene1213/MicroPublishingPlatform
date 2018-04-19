@@ -27,7 +27,6 @@ function getUserInfo() {
             var nickname = json.user.nickname;
             var profile_image = json.profileImg.profile_image;
 
-            $(".btn-point .point").text(point + "p");
             $("#profile-container > .profile-text").text(nickname);
             $("#header-profile-image").css("background-image", "url("+profile_image+")");
         }

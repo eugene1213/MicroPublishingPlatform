@@ -8,7 +8,7 @@ function signup_api(){
 
     $.ajax({
         url: "/api/member/signup/",
-        async: true,
+        async: false,
         type: 'POST',
         dataType: 'json',
         data: {
