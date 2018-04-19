@@ -170,3 +170,6 @@ def google(reqeust):
     return render_to_response('view/login/google_login.html')
 
 
+@never_cache
+def naver_request(request):
+    return render_to_response('naver6bc332ab9aa51989a598805bc6c439d3.html')

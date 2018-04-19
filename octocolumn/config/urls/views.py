@@ -1,8 +1,7 @@
 from django.conf.urls import url, include
-from django.contrib import admin
 
 from config.views import index
-from config.views.index import write
+from config.views.index import write, naver_request
 from config.views.index import recent, bookmark
 from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
@@ -12,6 +11,8 @@ from member.apis import VerifyEmail, InviteVerifyEmail
 
 urlpatterns = [
     url(r'^$', index, name='index'),
+    url(r'^naver6bc332ab9aa51989a598805bc6c439d3.html', naver_request, name='naver'),
+
     url(r'^write/', include([
             url(r'^$', write, name="write"),
             url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
