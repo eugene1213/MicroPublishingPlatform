@@ -42,7 +42,7 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # collectstatic 실행
-RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
 # manage.py
 #WORKDIR     /srv/app/octocolumn
 
@@ -62,11 +62,11 @@ RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py c
 #RUN service ssh start
 ##
 
-RUN         cp /srv/app/.config/supervisor/* \
-                /etc/supervisor/conf.d/
-
-CMD         supervisord -n
-EXPOSE      80
+#RUN         cp /srv/app/.config/supervisor/* \
+#                /etc/supervisor/conf.d/
+#
+#CMD         supervisord -n
+#EXPOSE      80
 
 #RUN apt-get update
 #RUN apt-get install -y software-properties-common
