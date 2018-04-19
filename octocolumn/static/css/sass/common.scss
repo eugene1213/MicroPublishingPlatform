@@ -12,25 +12,23 @@ html, body {
 ul {
     list-style: none;
     margin-top: 0;
+    padding: 0;    
 }
-a { 
-    display: block;
+a {
+	color: currentColor;
+	transition: .2s ease-in-out;
 }
 a:link {
     text-decoration: none;
-    color: #2a292a;
 }
 a:visited {
     text-decoration: none;
-    color: #2a292a;
 }
 a:active {
     text-decoration: none;
-    color: #2a292a;
 }
 a:hover {
     text-decoration: none;
-    color: #2a292a;
 }
 .btn_disabled{
     background-color: grey !important;

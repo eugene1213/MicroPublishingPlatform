@@ -40,14 +40,17 @@ $(document).ready(function() {
 });
 
 var lastScrollTop = 0;
-var opacity = 0;
-var imgHeight = $('.main-img').height();
-var imgWidth = $('.main-img').width();
-var mainImageTextCoord1 = $('.main-img-main-text').offset().top;
-var mainImageTextCoord2 = $('.main-img-sub-text-container').offset().top;
-var mainImageTextCoord3 = $('.main-img-btn').offset().top;
-
-
+var imgHeight = $('.main-content-img').height();
+var imgWidth = $('.main-content-img').width();
+var mainImageTextCoord1 = $('.main-content-title').offset().top;
+var mainImageTextCoord2 = $('.main-content-sub').offset().top;
+var mainImageTextCoord3 = $('.main-content-btn').offset().top;
+var mainImageTextCoord4 = $('.main-content-img').height();
+var opacity1 = 0;
+var opacity2 = 0;
+var opacity3 = 0;
+var opacity4 = 0;
+var width = 0;
 $(window).scroll(function(){
 
     var st = $(document).scrollTop();
@@ -55,11 +58,13 @@ $(window).scroll(function(){
     opacity1 = (mainImageTextCoord1-st)/mainImageTextCoord1;
     opacity2 = (mainImageTextCoord2-st)/mainImageTextCoord2;
     opacity3 = (mainImageTextCoord3-st)/mainImageTextCoord3;
-    width = ((imgHeight-st)/imgHeight)*100;
-    $('.main-img-main-text').css('opacity',opacity1);
-    $('.main-img-sub-text-container').css('opacity',opacity2);
-    $('.main-img-btn').css('opacity',opacity3);
-    $('.main-img').css('width',width+'%');    
+    opacity4 = (mainImageTextCoord4-st*1.5)/mainImageTextCoord4;
+    // width = ((imgHeight-st)/imgHeight)*100;
+    $('.main-content-title').css('opacity',opacity1);
+    $('.main-content-sub').css('opacity',opacity2);
+    $('.main-content-btn').css('opacity',opacity3);
+    $('.main-content-img').css('opacity',opacity4);
+    // $('.main-content-img').css('width',width+'%');    
     
     // if (st > lastScrollTop){
     //     // Scroll Down
@@ -70,5 +75,5 @@ $(window).scroll(function(){
     //     console.log('scroll up');
     //     $('.main-img-text-container').css('opacity',1)        
     // }
-    lastScrollTop = st;
+    // lastScrollTop = st;
 });
