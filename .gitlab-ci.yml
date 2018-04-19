@@ -1,0 +1,29 @@
+stages:
+#  - test
+  - build
+  - deploy
+
+#testcases:
+#    stage: test
+#    script:
+#      - /root/.pyenv/versions/app/bin/pip install -r /srv/app/requirements/requirements.txt
+#      - python manage.py test --noinput
+
+build_docker_image:
+    stage: build
+    script:
+        - docker login -u "joohyon.lee@octocolumn" -p "#bisu103702" 88.99.102.103.nip.io:4567
+        - docker build -t registry.gitlab.com/joohyon.lee/devocto .
+        - docker push registry.gitlab.com/joohyon.lee/devocto
+    tags:
+        - stage
+
+deploy_stage:
+    stage: deploy
+    script:
+        - docker login -u "joohyon.lee@octocolumn" -p "#bisu103702" 88.99.102.103.nip.io:4567
+        - docker pull registry.gitlab.com/joohyon.lee/devocto
+        - docker stop octocolumn || true && docker rm octocolumn || true
+        - docker run --name=octocolumn -p 80:80 443:443 -itd registry.gitlab.com/joohyon.lee/devocto
+    tags:
+        - stage

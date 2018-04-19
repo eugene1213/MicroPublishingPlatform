@@ -5,6 +5,13 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
+#RUN curl "https://github.com/gliderlabs/herokuish/releases/download/v0.4.0/herokuish_0.4.0_linux_x86_64.tgz" \
+#    --silent -L | tar -xzC /bin
+#RUN /bin/herokuish buildpack install \
+#  && ln -s /bin/herokuish /build \
+#  && ln -s /bin/herokuish /start \
+#  && ln -s /bin/herokuish /exec
+
 ENV         LANG C.UTF-8
 
 # 현재경로의 모든 파일들을 컨테이너의 /srv/app폴더에 복사
@@ -42,7 +49,7 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # collectstatic 실행
-RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
 # manage.py
 #WORKDIR     /srv/app/octocolumn
 
