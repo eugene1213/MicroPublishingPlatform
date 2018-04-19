@@ -5,12 +5,12 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
-RUN curl "https://github.com/gliderlabs/herokuish/releases/download/v0.4.0/herokuish_0.4.0_linux_x86_64.tgz" \
-    --silent -L | tar -xzC /bin
-RUN /bin/herokuish buildpack install \
-  && ln -s /bin/herokuish /build \
-  && ln -s /bin/herokuish /start \
-  && ln -s /bin/herokuish /exec
+#RUN curl "https://github.com/gliderlabs/herokuish/releases/download/v0.4.0/herokuish_0.4.0_linux_x86_64.tgz" \
+#    --silent -L | tar -xzC /bin
+#RUN /bin/herokuish buildpack install \
+#  && ln -s /bin/herokuish /build \
+#  && ln -s /bin/herokuish /start \
+#  && ln -s /bin/herokuish /exec
 
 ENV         LANG C.UTF-8
 
