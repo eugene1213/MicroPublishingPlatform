@@ -40,5 +40,6 @@ cryptography
 django-ipware
 django-user-agents
 django-redis-cache
+django-jet
 
 
