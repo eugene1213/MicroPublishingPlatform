@@ -16,7 +16,6 @@ function progressBar(){
                 'width': xPos
             });
             price = Math.round( price / smallestUnit ) * smallestUnit;
-            $(".price-set-decimal").text(price);
         }
     });
 }
