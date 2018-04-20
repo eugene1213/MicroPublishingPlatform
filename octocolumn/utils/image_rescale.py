@@ -66,13 +66,13 @@ def profile_image_resizing(content_file, margin):
             img.thumbnail((200, int(height - height * rescale_ratio)))
             area = (0, int(200 * size), 200, int(200 * size) + 200)
             img.crop(area)
-            print(2)
             img = img.crop(area)
             img.save(img_io, format='JPEG', quality=70)
             img_content = ContentFile(img_io.getvalue(), 'profile.jpeg')
             return img_content
 
 
+# 대다수의 이미지
 def image_quality_down(content_file):
     img = Image.open(content_file)
     img = img.convert("RGB")
