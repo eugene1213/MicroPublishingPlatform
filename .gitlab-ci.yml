@@ -1,4 +1,4 @@
-image: docker.io/jhe702/basebuild
+image: jhe702/basebuild:base
 
 stages:
 #  - test
