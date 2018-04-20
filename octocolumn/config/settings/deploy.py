@@ -6,8 +6,8 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
-# ALLOWED_HOSTS = '*'
+# ALLOWED_HOSTS = ['octocolumn.com', 'www.octocolumn.com', 'm.octocolumn.com']
+ALLOWED_HOSTS = '*'
 
 
 # WSGI application
@@ -209,13 +209,13 @@ print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 #         }
 # }
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SECURE_HSTS_SECONDS = 31536000
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#
+# SECURE_HSTS_SECONDS = 31536000
+#
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#
+# SECURE_SSL_REDIRECT = True
 
 CSRF_COOKIE_SECURE = True
 
