@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 
 from config.views import index
 from config.views.index import write, naver_request
-from config.views.index import recent, bookmark
+from config.views.index import recent, bookmark, buylist, feed
 from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
 from config.views.index import profile
@@ -20,7 +20,9 @@ urlpatterns = [
     url(r'^read/(?P<post_id>\d+)$', read, name='read'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^recent/$', recent, name='recent'),
+    url(r'^buylist/$', buylist, name='buylist'),
     url(r'^bookmark/$', bookmark, name='bookmark'),
+    url(r'^feed/$', feed, name='feed'),
     url(r'^signin/$', signin, name='signin'),
     url(r'^signinForm/$', signinForm, name='signinForm'),
     url(r'^okay/$', okay, name='okay'),
