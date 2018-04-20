@@ -47,6 +47,13 @@ MIDDLEWARE = [
     'silk.middleware.SilkyMiddleware',
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
 # Application definition
 INSTALLED_APPS = [
     'jet.dashboard',
@@ -68,6 +75,8 @@ INSTALLED_APPS = [
     'django_user_agents',
 
     'corsheaders',
+    # compressor
+    'compressor',
 
     # storages
     'storages',
@@ -81,6 +90,15 @@ INSTALLED_APPS = [
     'column',
     'octo'
 
+]
+
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+    # 'compressor.filters.jsmin.SlimItFilter',
+    # 'compressor.filters.cssmin.CSSCompressorFilter',
+    # 'compressor.parser.Html5LibParser',
 ]
 
 # Email
