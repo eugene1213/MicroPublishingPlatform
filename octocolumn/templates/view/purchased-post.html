@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	{% load static %}
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
+	<meta name="description" content="octocolumn" />
+	<meta name="keywords" content="octocolumn">
+	<meta name="copyright" content="octocolumn"/>
+	<meta name="theme-color" content="#2a292a">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="x-rim-auto-match" content="none">
+    <title>octocolumn</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+    <!-- css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/recent-more.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
+    <!-- js -->
+	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>  
+</head>
+<body>
+	{% if login %}
+		{% include 'view/header_on.html' %}
+	{% else %}
+		{% include 'view/header.html' %}
+    {% endif %}
+    <div class="mainfeed">
+        <div class="main_title">
+            <div class="txt1">
+                구매한 글
+            </div>
+            <div class="main_hr"></div>
+            <!-- recent.js -->
+        </div>
+    </div>
+    	<!-- flip -->
+	<div class="flip">
+        <!-- arrow_box -->
+        <div class="arrow_box_1">
+            <div class="card_background_img profile-image-upload-wrap">
+                <div class="card_profile_img_wrap">
+                </div>
+            </div>
+            <div class="wrap-followers">
+                <div class="followers">
+                    Followers
+                </div>
+                <div class="num_of_followers">
+                    K
+                </div>
+            </div>
+            <div class="btn-follow">
+                Follow
+            </div>
+            <div class="card_profile_name">
+                
+            </div>
+            <div class="card_profile_title">
+                
+            </div>
+            <div class="socialbar">
+                <a><img src="{% static 'images/icons/balloon/fb-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/isn-combined-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/t-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/bl-combined-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/inf-combined-shape-copy-2@3x.png' %}" class="more-info"></a>
+            </div>
+        </div>
+        <div class="arrow_box_2">
+            <div class="card_profile_info">
+                Tousled food truck polaroid, salvia bespoke small batch Pinterest Marfa. Fingerstache authentic craft beer, food truck Banksy Carles kale chips hoodie. Trust fund artisan master cleanse fingerstache post-ironic, fashion axe art party Etsy direct trade retro organic. Cliche Shoreditch Odd Future Pinterest, pug disrupt photo booth VHS literally occupy gluten-free polaroid Intelligentsia PBR mustache. Locavore fashion axe chia, iPhone cardigan disrupt Etsy dreamcatcher. Craft beer selvage fanny pack, 8-bit post-ironic keffiyeh iPhone mlkshk pop-up. Pug blog asymmetrical ethnic, stumptown shabby chic chillwave ugh before they sold out.
+            </div>
+            <div class="socialbar">
+                <a><img src="{% static 'images/icons/balloon/fb-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/isn-combined-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/t-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/bl-combined-shape-copy-2@3x.png' %}"></a>
+                <a><img src="{% static 'images/icons/balloon/inf-combined-shape-copy-2@3x.png' %}" class="more-info2"></a>
+            </div>
+        </div>
+        <!-- //arrow_box -->
+    </div>
+    <!-- //flip -->
+    {% include 'view/modal-signin.html' %}
+    {% include 'view/modal-preview.html' %}
+    <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/recent.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/checkOwnPost.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/request-buy.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>  
+</body>
+</html>
