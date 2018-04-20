@@ -1,4 +1,5 @@
-image: jhe702/basebuild:base
+image: gitlab/dind
+
 
 stages:
 #  - test
@@ -8,7 +9,8 @@ stages:
 
 before_script:
   - curl -fsSL https://get.docker.com/
-  - usermod -aG docker $USER
+#  - groupadd docker
+  - usermod -aG docker root
 
 #testcases:
 #    stage: test
@@ -17,10 +19,11 @@ before_script:
 #      - python manage.py test --noinput
 
 job_build:
+#    image: jhe702/basebuild:base
     stage: build
 
     script:
-        - docker login registry.gitlab.com
+        - docker login -u "gitlab-ci-token" -p $CI_JOB_TOKEN registry.gitlab.com
         - docker build -t registry.gitlab.com/joohyon.lee/devocto .
         - docker push registry.gitlab.com/joohyon.lee/devocto
 
@@ -29,11 +32,12 @@ job_build:
 
 
 job_production:
+#    image: jhe702/basebuild:base
     stage: production
     script:
-        - docker login registry.gitlab.com
+        - docker login -u "gitlab-ci-token" -p $CI_JOB_TOKEN registry.gitlab.com
         - docker pull registry.gitlab.com/joohyon.lee/devocto
         - docker stop octocolumn || true && docker rm octocolumn || true
-        - docker run --name=octocolumn -p 80:80 443:443 -itd registry.gitlab.com/joohyon.lee/devocto
+        - docker run --name=octocolumn -p 80:80 -p 443:443 -it registry.gitlab.com/joohyon.lee/devocto
     only:
     - master
