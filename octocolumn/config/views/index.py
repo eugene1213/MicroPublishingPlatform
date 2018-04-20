@@ -101,6 +101,31 @@ def bookmark(request):
     return redirect('views:index')
 
 
+def buylist(request):
+    if mobile(request):
+        return redirect('views:index')
+
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/purchased-post.html", {"login": True})
+            return response
+        return redirect('views:index')
+    return redirect('views:index')
+
+
+def feed(request):
+    if mobile(request):
+        return redirect('views:index')
+
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/feed.html", {"login": True})
+            return response
+        return redirect('views:index')
+    return redirect('views:index')
+
 @never_cache
 def signin(request):
 

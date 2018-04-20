@@ -112,6 +112,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
         }),
         success: function(json) {
             console.log("출판됨");
+            $(".modal-success-wrap").show();            
             localStorage.setItem("temp_id", '');
         },
         error: function(error) {
