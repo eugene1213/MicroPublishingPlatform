@@ -23,7 +23,6 @@ $(document).ready(function(){
             var author = json.detail.author.username;
             var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
-            
             var main_content = json.detail.main_content;
             var tagArray = json.detail.tag;
             var created_datetime = json.detail.created_datetime;
@@ -39,11 +38,11 @@ $(document).ready(function(){
             $(".mainImg").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);
-            $(".main_content_wrap").append(json.detail.main_content);
+            $(".main_content_wrap").html(json.detail.main_content);
             $(".writer > span").text(author);
             $('.picture').css('background-image','url('+author_image+')');
             $('.name').text(author);
-            $('.contents_wrap > .contents .text').text(intro);
+            $('.text').html(intro);
 
             //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             coverImgController();
@@ -61,6 +60,7 @@ $(document).ready(function(){
     $('.comment_button').click(function() {
 
         var content = $('.input_comment').val();
+        console.log(content)
 
         content.length > 0 && content.length <= 1500
         ? insertComment('POST', content, post_id, '')
