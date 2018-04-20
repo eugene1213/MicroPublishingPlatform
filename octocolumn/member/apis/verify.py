@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from member.models import User, Profile, ProfileImage
+from member.models import User, Profile, ProfileImage, InviteUser
 from member.serializers import UserSerializer
 from utils.tokengenerator import account_activation_token
 
@@ -43,11 +43,11 @@ class InviteVerifyEmail(APIView):
 
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
+            user = InviteUser.objects.get(pk=uid)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user is not None and account_activation_token.check_token(user, token):
-            return HttpResponseRedirect(redirect_to='/signinForm/')
+            return HttpResponseRedirect(redirect_to='/signin/')
         else:
             return Response('Activation link is invalid!', status=404)
 
