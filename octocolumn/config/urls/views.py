@@ -17,7 +17,7 @@ urlpatterns = [
             url(r'^$', write, name="write"),
             url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
     ]), name='write'),
-    url(r'^read/(?P<post_id>\d+)$', read, name='read'),
+    url(r'^read/@(?P<author>[-\w]+)/(?P<title>[-\w]+)$', read, name='read'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^recent/$', recent, name='recent'),
     url(r'^buylist/$', buylist, name='buylist'),
@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^verifyChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         VerifyEmail.as_view(), name='verifyChecking'),
 
-    url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)//(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         InviteVerifyEmail.as_view(), name='InviteVerifyEmail'),
 
 ]
