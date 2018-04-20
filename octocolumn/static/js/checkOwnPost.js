@@ -31,17 +31,18 @@ function isBought(post_id, cover_img, title, date, username, readtime, price, pr
                 $(".priceBtn .btn").attr("id","post"+post_id);
 
                 //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
-            
-                $(".preview-wrap").height($("html").height());
+                $(".preview-wrap").height(1500);
                 $(".preview-wrap").show();
-                $("#preview-main-content > img").load(function() {
+                $(document).scrollTop($('#preview').offset().top-100);
+                $(window).scroll(function(){
+                    if($(".preview-wrap").css('display')=='block'){
+                
+                        if($(document).scrollTop()>$('#preview').offset().top+$('#preview').height()-600){
 
-                    if( $("#preview").height() > $("html").height() ) {
-                        $(".preview-wrap").height($("#preview").height() + 256);
-                    }else {
-                        $(".preview-wrap").height($("html").height() + 256);
+                            $(document).scrollTop($('#preview').offset().top+$('#preview').height()-600);
+                        }
                     }
-                });
+                });             
             }
             console.log("isBought: "+json.detail.isBuy);
         },

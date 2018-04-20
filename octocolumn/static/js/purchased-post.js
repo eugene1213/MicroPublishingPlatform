@@ -1,6 +1,6 @@
 $(document).ready(function(){
     
-    var data = getRecent("/api/column/postRecentMore/");
+    var data = getRecent("/api/column/buyList/");
     popBalloon();
 
     $(document).click(function(e){
