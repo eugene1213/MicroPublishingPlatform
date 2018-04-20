@@ -40,6 +40,6 @@ urlpatterns = [
         VerifyEmail.as_view(), name='verifyChecking'),
 
     url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)//(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        InviteVerifyEmail.as_view(), name='inviteChecking'),
+        InviteVerifyEmail.as_view(), name='InviteVerifyEmail'),
 
 ]
