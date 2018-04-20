@@ -21,7 +21,7 @@ job_build:
     stage: build
 
     script:
-        - docker login registry.gitlab.com
+        - docker login -u joohyon.lee@octocolumn -p bisu103702 registry.gitlab.com
         - docker build -t registry.gitlab.com/joohyon.lee/devocto .
         - docker push registry.gitlab.com/joohyon.lee/devocto
 
