@@ -604,7 +604,7 @@
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
                             <h1><br>
-<strong>{{ send_user }}님께서 octocolumn으로&nbsp;초대하셨습니다.</strong></h1>
+<strong>{{ send_users }}님께서 octocolumn으로&nbsp;초대하셨습니다.</strong></h1>
 
 <p><br>
 <span style="font-size:14px">안녕하세요.<br>
@@ -637,7 +637,7 @@ octocolumn에 방문하셔서 중요한 대화를 나누고, 아이디어를 발
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 18px; padding: 16px;">
-                                <a class="mcnButton " title="예, 저도 합류할게요!" href="http://{{ domain }}{% url 'views:InviteVerifyEmail' uidb64=uid token=token %}" target="_blank" style="font-weight: normal;letter-spacing: 4px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">예, 저도 합류할게요!</a>
+                                <a class="mcnButton " title="예, 저도 합류할게요!" href="https://{{ domain }}{% url 'views:InviteVerifyEmail' uidb64=uid token=token %}" target="_blank" style="font-weight: normal;letter-spacing: 4px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">예, 저도 합류할게요!</a>
                             </td>
                         </tr>
                     </tbody>
