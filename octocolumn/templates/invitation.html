@@ -604,11 +604,11 @@
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
                             <h1><br>
-<strong>###님께서 octocolumn으로&nbsp;초대하셨습니다.</strong></h1>
+<strong>{{ send_user }}님께서 octocolumn으로&nbsp;초대하셨습니다.</strong></h1>
 
 <p><br>
 <span style="font-size:14px">안녕하세요.<br>
-###님께서 당신을 octocolumn Closed-Beta에 초대하셨습니다.<br>
+{{ send_user }}님께서 당신을 octocolumn Closed-Beta에 초대하셨습니다.<br>
 octocolumn은 1인 미디어와 KOL(Key Opinion Leader)들을 위한 Micro Publishing Platform입니다.<br>
 우리는 온라인 상의 정제되고 깊이있는 글을&nbsp;한 권의 Micro-book이라는 개념으로 접근했습니다.<br>
 octocolumn은 책을 챕터 단위로 쪼개고, 인터넷에 빠르게 인쇄해서, 저렴한 가격으로 판매하는 플랫폼입니다.<br>
@@ -637,7 +637,7 @@ octocolumn에 방문하셔서 중요한 대화를 나누고, 아이디어를 발
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 18px; padding: 16px;">
-                                <a class="mcnButton " title="예, 저도 합류할게요!" href="https://www.octocolumn.com" target="_blank" style="font-weight: normal;letter-spacing: 4px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">예, 저도 합류할게요!</a>
+                                <a class="mcnButton " title="예, 저도 합류할게요!" href="http://{{ domain }}{% url 'views:InviteVerifyEmail' uidb64=uid token=token %}" target="_blank" style="font-weight: normal;letter-spacing: 4px;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">예, 저도 합류할게요!</a>
                             </td>
                         </tr>
                     </tbody>

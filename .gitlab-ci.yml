@@ -38,6 +38,6 @@ job_production:
         - docker login -u "gitlab-ci-token" -p $CI_JOB_TOKEN registry.gitlab.com
         - docker pull registry.gitlab.com/joohyon.lee/devocto
         - docker stop octocolumn || true && docker rm octocolumn || true
-        - docker run --name=octocolumn -p 80:80 -p 443:443 registry.gitlab.com/joohyon.lee/devocto
+        - docker run --name=octocolumn -p 80:80 registry.gitlab.com/joohyon.lee/devocto
     only:
     - master
