@@ -12,17 +12,14 @@ $(document).ready(function(){
             
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
             var cover_img = data.results[card_id].cover_image;
-            
             var title = data.results[card_id].title;
-            var date = data.results[card_id].created_datetime;
-            var author = data.results[card_id].author;
-            var tag = data.results[card_id].tag;
+            var date = data.results[card_id].all_status.created_datetime
+            var author = data.results[card_id].all_status.username;
             var price = data.results[card_id].price;
-
+            var preview = data.results[card_id].preview;
             var readtime = $("#card_" + card_id + " .profile_readtime").text();
 
-            isBought(post_id, cover_img, title, date, author, tag, readtime, price);
-            
+            isBought(post_id, cover_img, title, date, author, readtime, price, preview);
         }
     });
     $(".btn-cancel-wrap").click(function(){
