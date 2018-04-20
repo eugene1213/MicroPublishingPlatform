@@ -7,7 +7,7 @@ stages:
 
 
 before_script:
-  - curl -fsSL https://get.docker.com/ | sudo sh
+  - curl -fsSL https://get.docker.com/
   - usermod -aG docker $USER
 
 #testcases:
