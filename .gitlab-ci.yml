@@ -9,7 +9,7 @@ stages:
 
 before_script:
   - curl -fsSL https://get.docker.com/
-  - groupadd docker
+#  - groupadd docker
   - usermod -aG docker root
 
 #testcases:
