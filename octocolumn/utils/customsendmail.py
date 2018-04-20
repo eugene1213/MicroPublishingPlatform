@@ -57,7 +57,7 @@ def invite_email_send(user, send_user):
         'domain': 'www.octocolumn.com',
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': invite_token.make_token(user),
-        'send_user': send_user
+        'send_user': send_user.nickname
     })
     to_email = user.email
     email = EmailMultiAlternatives(
