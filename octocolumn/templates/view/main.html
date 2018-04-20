@@ -17,6 +17,8 @@
     <title>octocolumn</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<!-- CSS -->
+{#    {% load compress %}#}
+{#    {% compress css %}#}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">	
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
@@ -24,6 +26,8 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
+{#    {% endcompress %}#}
+
 	<!--jQuery-->
 	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 	
@@ -308,6 +312,9 @@
 	{% include 'view/modal-signin.html' %}
 	{% include 'view/modal-preview.html' %}
 	<!-- JS -->
+{#    {% load compress %}#}
+{#    #}
+{#    {% compress js %}#}
 	<script src="{% static 'js/script2.js' %}"></script>
 	<script src="{% static 'js/getPostList.js' %}"></script>
 	<script src="{% static 'js/balloon.js' %}"></script>
@@ -316,6 +323,8 @@
 	<script src="{% static 'js/drag-n-crop.js' %}"></script>
 	<script src="{% static 'js/checkBookMark.js' %}"></script>
 	<script src="{% static 'js/main.js' %}"></script>
-	<script src="{% static 'js/jquery.imageloader.js' %}"></script>	
+	<script src="{% static 'js/jquery.imageloader.js' %}"></script>
+{#    {% endcompress %}#}
+
 </body>
 </html>
