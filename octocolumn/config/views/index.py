@@ -50,7 +50,7 @@ def write(request, temp_id=None):
     return redirect('views:index')
 
 
-def read(request, post_id=None):
+def read(request, author=None, title=None):
     if mobile(request):
         return redirect('views:index')
 
