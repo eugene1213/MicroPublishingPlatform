@@ -47,7 +47,7 @@ class InviteVerifyEmail(APIView):
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user is not None and account_activation_token.check_token(user, token):
-            return HttpResponseRedirect(redirect_to='/signin/')
+            return HttpResponseRedirect(redirect_to='/signup/')
         else:
             return Response('Activation link is invalid!', status=404)
 
