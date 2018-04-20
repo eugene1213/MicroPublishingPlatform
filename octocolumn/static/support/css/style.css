@@ -1,0 +1,92 @@
+/* -------- content header -------- */
+.header {
+	width: 100%;
+	height: 100%;
+}
+#header-sroll {
+    position: fixed;
+    height: 50vh;
+	background-image: url(../img/jakob-owens-299030.png);
+	background-size: cover;
+	background-position: center center;
+    left: 0;
+    top: 32px;
+    float: left;
+    width: 100%;
+    -ms-transition:     all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+}
+#header-sroll h1 {
+	position: relative;
+	top: 16vh;
+	font-size: 5vh;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 7vh;
+	-ms-transition:     all 0.3s ease-out;
+	-moz-transition:    all 0.3s ease-out;
+	-webkit-transition: all 0.3s ease-out;
+	-o-transition:      all 0.3s ease-out;
+	transition:         all 0.3s ease-out;
+}
+#header-sroll.small {
+    height: 0;
+    line-height: 0;
+}
+#header-sroll.small h1{
+	top: 1vh;
+ 	height: 0;
+	line-height: 0;
+	font-size: 0;
+	opacity: 0;
+}
+
+
+/* -------- content sub -------- */
+.sub {
+	width: 100%;
+    height: 100%;
+	overflow-y: none;
+}
+#sub-sroll {
+    position: fixed;
+    height: 100%;
+    background:#ccc;
+    left: 0;
+    top: 60vh;
+    float: left;
+    width: 100%;
+	overflow: visible;
+	padding-top: 3%;
+    -ms-transition:     all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+}
+#sub-sroll h1 {
+    font-size: 2vw;
+	color: #000000;
+    text-align: center;
+     -ms-transition:    all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+}
+#sub-sroll.small {
+	position: fixed;
+	top: 32px;
+    height: 100%;
+	overflow: scroll;
+	padding: 5% 0;
+	box-sizing:border-box;
+}
+#sub-sroll.small h1{
+    height: 100%;
+    font-size: 2vw;
+	overflow: auto;
+}

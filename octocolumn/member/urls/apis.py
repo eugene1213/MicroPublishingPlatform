@@ -66,6 +66,6 @@ urlpatterns = [
     url(r'^authorApply', apis.AuthorApply.as_view(), name='apply'),
 
     # 2차 비밀번호 관련
-    url(r'^octoCode', OctoCodeView.as_view(), name='create-sp'),
+    # url(r'^octoCode', OctoCodeView.as_view(), name='create-sp'),
 
 ]

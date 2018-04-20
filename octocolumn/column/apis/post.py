@@ -31,7 +31,8 @@ __all__ = (
     'IsBuyPost',
     'PostListView',
     'PostMoreListView',
-    'BookmarkListView'
+    'BookmarkListView',
+    'BuyListView'
 )
 
 
@@ -376,6 +377,61 @@ class BookmarkListView(generics.ListAPIView):
         list = []
         try:
             post = User.objects.filter(pk=self.request.user.id).get().bookmark_user_relation.all()
+            for i in post:
+                list.append(i.post)
+
+            page = self.paginate_queryset(list)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
+
+
+# 구매목록 최신순
+class BuyListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        user = self.request.user
+        list = []
+        try:
+            post = BuyList.objects.select_related('user','post').filter(user=user).all().order_by('-created_at')
+            for i in post:
+                list.append(i.post)
+
+            page = self.paginate_queryset(list)
+            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+
+            if page is not None:
+                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
+
+
+class FeedListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PostPagination
+    serializer_class = PostSerializer
+
+    def list(self, request, *args, **kwargs):
+        user = self.request.user
+        list = []
+        try:
+            post = BuyList.objects.select_related('user', 'post').filter(user=user).all().order_by('-created_at')
             for i in post:
                 list.append(i.post)
 
