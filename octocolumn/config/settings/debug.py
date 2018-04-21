@@ -96,6 +96,7 @@ INSTALLED_APPS = [
 # COMPRESS_CSS_FILTERS = [
 #     'compressor.filters.css_default.CssAbsoluteFilter',
 #     'compressor.filters.cssmin.CSSMinFilter',
+#     # 'compressor.filters.jsmin.JSMinFilter'
 #     # 'compressor.filters.jsmin.SlimItFilter',
 #     # 'compressor.filters.cssmin.CSSCompressorFilter',
 #     # 'compressor.parser.Html5LibParser',
@@ -143,15 +144,15 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'localhost:6379',
-        'OPTIONS': {
-            'DB': 1,
-        },
-    },
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'redis_cache.RedisCache',
+#         'LOCATION': 'localhost:6379',
+#         'OPTIONS': {
+#             'DB': 1,
+#         },
+#     },
+# }
 
 # Storage settings
 STATICFILES_LOCATION = 'static'
