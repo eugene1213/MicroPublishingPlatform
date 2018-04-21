@@ -4,7 +4,8 @@ image: gitlab/dind
 stages:
 #  - test
   - build
-  - production
+  - deploy
+
 
 
 before_script:
@@ -31,9 +32,9 @@ job_build:
     - master
 
 
-job_production:
+job_deploy:
 #    image: jhe702/basebuild:base
-    stage: production
+    stage: deploy
     script:
         - docker login -u "gitlab-ci-token" -p $CI_JOB_TOKEN registry.gitlab.com
         - docker pull registry.gitlab.com/joohyon.lee/devocto
