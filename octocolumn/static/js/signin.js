@@ -31,7 +31,7 @@ function signin_api() {
         },
         data: {
             username: email,
-            password : password
+            password: password
         },
         success: function(json) {
 
