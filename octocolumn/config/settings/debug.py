@@ -47,6 +47,13 @@ MIDDLEWARE = [
     'silk.middleware.SilkyMiddleware',
 ]
 
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#     # other finders..
+#     'compressor.finders.CompressorFinder',
+# )
+
 # Application definition
 INSTALLED_APPS = [
     'jet.dashboard',
@@ -68,6 +75,8 @@ INSTALLED_APPS = [
     'django_user_agents',
 
     'corsheaders',
+    # compressor
+    # 'compressor',
 
     # storages
     'storages',
@@ -82,6 +91,16 @@ INSTALLED_APPS = [
     'octo'
 
 ]
+
+# COMPRESS_ENABLED = False
+# COMPRESS_CSS_FILTERS = [
+#     'compressor.filters.css_default.CssAbsoluteFilter',
+#     'compressor.filters.cssmin.CSSMinFilter',
+#     # 'compressor.filters.jsmin.JSMinFilter'
+#     # 'compressor.filters.jsmin.SlimItFilter',
+#     # 'compressor.filters.cssmin.CSSCompressorFilter',
+#     # 'compressor.parser.Html5LibParser',
+# ]
 
 # Email
 EMAIL_USE_TLS = True
@@ -125,15 +144,15 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'localhost:6379',
-        'OPTIONS': {
-            'DB': 1,
-        },
-    },
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'redis_cache.RedisCache',
+#         'LOCATION': 'localhost:6379',
+#         'OPTIONS': {
+#             'DB': 1,
+#         },
+#     },
+# }
 
 # Storage settings
 STATICFILES_LOCATION = 'static'

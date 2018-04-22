@@ -2,6 +2,7 @@ import re
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
+from django.template import RequestContext
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
@@ -11,6 +12,9 @@ from utils.tokengenerator import account_activation_token
 
 __all__ = (
     'index',
+    'handler404',
+    'handler500'
+
 )
 
 
@@ -178,6 +182,18 @@ def shop(request):
             return response
         return render_to_response("view/shop.html", )
     return render_to_response("view/shop.html",)
+
+
+def handler404(request):
+    response = render_to_response('404.html')
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render_to_response('404.html')
+    response.status_code = 500
+    return response
 
 
 @never_cache

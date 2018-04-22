@@ -15,6 +15,9 @@ urlpatterns = [
 
 ]
 
+handler404 = 'config.views.handler404'
+handler500 = 'config.views.handler500'
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,

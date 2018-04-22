@@ -69,17 +69,21 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ('-id', '-created_date')
     list_filter = (CreatedDateFilter,)
 
-    fieldsets = (
-        ['기본 정보', {
-            'fields': ('author',),
-        }],
-        ['컬럼 정보', {
-            'fields': ('title', 'main_content',),
-        }],
-        ['구매 정보', {
-            'fields': ('hit', 'price', 'created_date', 'buy_count')
-        }]
+    # fieldsets = (
+    #     ['기본 정보', {
+    #         'fields': ('author',),
+    #     }],
+    #     ['컬럼 정보', {
+    #         'fields': ('title', 'main_content',),
+    #     }],
+    #     ['구매 정보', {
+    #         'fields': ('hit', 'price', 'created_date', 'buy_count')
+    #     }]
+    #
+    # )
 
+    fields = (
+        'author', 'main_content', 'hit', 'price', 'created_date'
     )
 
     readonly_fields = ['author', 'hit', 'buy_count', 'created_date']
@@ -128,17 +132,21 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     list_display = ['author', 'title', 'content_size', 'price', 'author_is_active', 'created_date', 'author_actions',
                     ]
 
-    fieldsets = (
-        ['기본 정보', {
-            'fields': ('author',),
-        }],
-        ['컬럼 정보', {
-            'fields': ('title', 'main_content',),
-        }],
-        ['구매 정보', {
-            'fields': ('price', 'created_date')
-        }]
+    # fieldsets = (
+    #     ['기본 정보', {
+    #         'fields': ('author',),
+    #     }],
+    #     ['컬럼 정보', {
+    #         'fields': ('title', 'main_content',),
+    #     }],
+    #     ['구매 정보', {
+    #         'fields': ('price', 'created_date')
+    #     }]
+    #
+    # )
 
+    fields = (
+        'author', 'main_content', 'hit', 'price', 'created_date'
     )
 
     readonly_fields = ['author', 'created_date']
