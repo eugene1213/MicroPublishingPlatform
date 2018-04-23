@@ -1,12 +1,14 @@
 import re
 
-from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 
+from column.models import Post
 from member.models import User
 from utils.tokengenerator import account_activation_token
 
@@ -61,10 +63,24 @@ def read(request, author=None, title=None):
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
-            response = render_to_response("view/read.html", {"login": True})
-            return response
+
+            post_num = title.split('-')
+            if len(post_num) is 1:
+                raise Http404
+
+            if not int(post_num[-1]) % 1 == 0:
+                raise Http404
+
+            try:
+                Post.objects.filter(pk=int(post_num[-1])).get()
+                response = render_to_response("view/read.html", {"login": True})
+                return response
+
+            except ObjectDoesNotExist:
+                raise Http404
         return redirect('views:index')
     # return redirect('views:index')
+
 
 def profile(request):
     if mobile(request):

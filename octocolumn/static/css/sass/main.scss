@@ -135,6 +135,7 @@ main {
 	display: block;
 	text-align: left;
 	line-height: 36px;
+	color: #f9f9f9;
 }
 .mainfeed .txt2{
 	font-size: 16px;
@@ -146,6 +147,7 @@ main {
 	line-height: 36px;
 	opacity: 0.9;
 	cursor: pointer;
+	color: #f9f9f9;	
 }
 .mainfeed .main_hr{
 	width: 945px;
@@ -189,6 +191,7 @@ main {
 	float: left;
 }
 .fb1_img {
+	position: relative;
 	background-position: 50% 50% !important;
     background-size: cover !important;
 }

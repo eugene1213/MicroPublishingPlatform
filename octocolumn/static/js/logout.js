@@ -8,7 +8,7 @@ function logout() {
 
     $.ajax({
         url: "/api/member/logout/",
-        async: true,
+        async: false,
         type: 'POST',
         success: function() {
             window.location.href = "/";

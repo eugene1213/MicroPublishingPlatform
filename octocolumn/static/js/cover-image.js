@@ -6,7 +6,7 @@ $(document).ready(function(){
         $(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
         
         $("#blah").load(function(){
-            
+            btn_activation_checklist();
             var imgHeight = $(".cover-img-wrap").height();
             $(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").height(imgHeight);
         });

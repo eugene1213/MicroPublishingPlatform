@@ -1,23 +1,26 @@
 $(document).ready(function(){
 
     var data = isAuthor();
-    
-    /* 발행버튼 클릭시 발행메뉴 드롭다운 */
+    $('#blah').change(function(){
+        if( $('#blah').attr('src') ){
+            $(".btn-publish-final").removeAttr("disabled");
+            $(".btn-publish-final").removeClass("btn_disabled");
+        }else {
+            $(".btn-publish-final").attr("disabled", "true");
+            $(".btn-publish-final").addClass("btn_disabled");
+        }
+    });
+        
+    /* 출판버튼 클릭시 발행메뉴 드롭다운 */
     $(".btn-publish").click(function(event) {
 
-        if($(".arrow-box").is(":visible")){     // 발행메뉴와 버튼에 화살표 방향 변경
+        if($(".arrow-box").is(":visible")){     // 출판메뉴와 버튼 화살표 방향 변경
 
             $(".arrow-box").hide();
             $(".css-arrow").css("transform","rotate(360deg)");
         } else {
 
-            if( $(".editable").text().length > 543 ){       // 글자 수 체크 후 발행버튼 활성화
-                $(".btn-publish-final").removeAttr("disabled");
-                $(".btn-publish-final").removeClass("btn_disabled");
-            }else{
-                $(".btn-publish-final").attr("disabled", "true");
-                $(".btn-publish-final").addClass("btn_disabled");
-            }
+            btn_activation_checklist();
             
             $(".arrow-box").show();
             $(".css-arrow").css("transform","rotate(180deg)");
@@ -85,6 +88,35 @@ function btn_activation(handler,target){
     }else{
         $(target).attr("disabled", "true");
         $(target).addClass("btn_disabled");
+    }
+}
+/**
+ * 출판하기 버튼이 활성화 되기 위한 조건
+ */
+function btn_activation_checklist() {
+    if( $(".editable").text().length > 543 ){       // 글자 수 체크 후 발행버튼 활성화
+        if( $('.added-tag-wrap').length != 0 ){
+            if( $('#blah').attr('src') ){
+                $('#errMsg').detach();
+                $(".btn-publish-final").removeAttr("disabled");
+                $(".btn-publish-final").removeClass("btn_disabled");
+            }else {
+                $(".btn-publish-final").attr("disabled", "true");
+                $(".btn-publish-final").addClass("btn_disabled");
+                $('#errMsg').detach();
+                $('.btn-publish-final').before('<span id="errMsg" style="font-size:8px;color:#2a292a;opacity:0.5;float:left;margin-left:30px;margin-top:30px;">표지 사진을 설정해 주세요.</span>');       // 분량 미달이면 자동저장x    
+            }
+        }else {
+            $(".btn-publish-final").attr("disabled", "true");
+            $(".btn-publish-final").addClass("btn_disabled");
+            $('#errMsg').detach();
+            $('.btn-publish-final').before('<span id="errMsg" style="font-size:8px;color:#2a292a;opacity:0.5;float:left;margin-left:30px;margin-top:30px;">태그를 한개 이상 설정해 주세요</span>');
+        }
+    }else{
+        $(".btn-publish-final").attr("disabled", "true");
+        $(".btn-publish-final").addClass("btn_disabled");
+        $('#errMsg').detach();
+        $('.btn-publish-final').before('<span id="errMsg" style="font-size:8px;color:#2a292a;opacity:0.5;float:left;margin-left:30px;margin-top:30px;">분량이 부족합니다.</span>');
     }
 }
 

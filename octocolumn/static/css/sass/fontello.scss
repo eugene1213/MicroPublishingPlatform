@@ -85,7 +85,14 @@
 .icon-heart:before { content: '\e80c'; } /* '기다림' */
 .icon-plus-circle:before { content: '\e80d'; } /* '+' */
 .icon-minus-circle:before { content: '\e80e'; } /* '-' */
-.icon-spin5:before { content: '\e838'; } /* '스피너' */
+.icon-spin5:before {
+  content: '\e838';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -13px;
+  margin-top: -13px;
+} /* '스피너' */
 .icon-cancel-circled:before { content: '\f06e'; } /* '태그 삭제버튼' */
 .icon-star:before {
   content: '\e800';
