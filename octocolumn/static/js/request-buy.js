@@ -11,7 +11,8 @@ $(document).ready(function(){
 function buy(){
 
     var post_id = $(".priceBtn .btn").attr("id").replace("post","");
-
+    var author = $('.preview-author').text();
+    var urlTitle = $('.preview-title').text().replace(' ','_').replace('-','_');  
     $.ajax({
         url: "/api/column/post-buy/",
         async: false,
@@ -23,7 +24,7 @@ function buy(){
         success: function(json) {
             console.log("구매됨");
             alert("글을 구매했습니다.");
-            window.location.href = "/read/" + post_id;
+            window.location.href = "/@"+author+'/'+urlTitle+'-'+post_id;
         },
         error: function(error) {
             console.log(error);
