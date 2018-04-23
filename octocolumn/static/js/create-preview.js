@@ -48,7 +48,6 @@ $(document).ready(function() {
             }
         });
     });
-    
     countTitle();   // 제목 글자수 체크
 }); // $(document).ready(function()
 
@@ -197,7 +196,7 @@ function dom2img(){
 
         $("#tmp").replaceWith("<div id=\"tmp\"></div>");                    // blurText()에서 임시로 추가했던 요소 초기화
     }).then(function(){
-        $('.spinner').remove();
+        // $('.spinner').remove();
         $(".preview-wrap").show();
     });
 }

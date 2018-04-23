@@ -11,10 +11,10 @@ $(document).ready(function(){
         }
     });
         
-    /* 발행버튼 클릭시 발행메뉴 드롭다운 */
+    /* 출판버튼 클릭시 발행메뉴 드롭다운 */
     $(".btn-publish").click(function(event) {
 
-        if($(".arrow-box").is(":visible")){     // 발행메뉴와 버튼에 화살표 방향 변경
+        if($(".arrow-box").is(":visible")){     // 출판메뉴와 버튼 화살표 방향 변경
 
             $(".arrow-box").hide();
             $(".css-arrow").css("transform","rotate(360deg)");
