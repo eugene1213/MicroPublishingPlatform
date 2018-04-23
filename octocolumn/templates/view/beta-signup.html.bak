@@ -1,62 +1,75 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-{% load static %}        
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="format-detection" content="telephone=no">
-<meta name="description" content="octocolumn" />
-<meta name="keywords" content="octocolumn">
-<meta name="copyright" content="octocolumn"/>
-<meta name="theme-color" content="#2a292a">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta http-equiv="x-rim-auto-match" content="none">
-<title>octocolumn</title>
-<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
-<!-- core CSS -->
-<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signup.css' %}">
-<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+	{% load static %}
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
+	<meta name="description" content="octocolumn" />
+	<meta name="keywords" content="octocolumn">
+	<meta name="copyright" content="octocolumn"/>
+	<meta name="theme-color" content="#2a292a">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="x-rim-auto-match" content="none">
+	<title>octocolumn</title>
+	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}">
+	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <meta name="google-signin-scope" content="profile email openid">
+    <meta name="google-signin-client_id" content="512110342313-s4n09bgd4ok88kf8nrinmlhpg4i3rr6g.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
-
-<body class="scrollbar-basic welcome-bg">
-<main>
-<!-- wrapper -->
-<div class="signup-container">
-	<div class="signup-title">
-    	<h1>Dive into the sentence</h1>
-        <h3>with octocolumn.</h3>
-    </div>
-	<div class="frame">
-		<div class="form-signup">
-        	<div class="form_title">Sign up</div>
-            <input type="text" name="nickname" id="nickName-signup" placeholder="이름" required>
-			<input type="email" id="email-signup" placeholder="이메일">
-            <input type="password" name="password1" id="password1-signup" placeholder="비밀번호 (영문, 숫자 포함 8자리 이상)" required>
-            <input type="password" name="password2" id="password2-signup" placeholder="비밀번호 재입력" required>
-            
-            <!-- agreement -->
-            <div class="agreement">
-            	<input type="checkbox" class="agree_checkbox">
-                <div class="agree_text">저는 octocolumn의 <span onClick="term()">이용약관</span><!---->과<!----><span onClick="privacy()"> 개인정보취급방침</span>에 동의합니다.</div>
+<body>
+    <form action="/api/member/signup/" method="post">
+        <div class="modal_window signinWith">
+            <!-- form_wrap -->
+            <div class="form_wrap">
+                <div class="name_wrap">
+                    <div class="name">
+                        <span>이름</span>
+                        <input type="text" name="nickname" id="nickName-signup" required>
+                    </div>
+                </div>
+                <span>이메일 주소</span>
+                <input type="text" name="username" id="email-signup" required>
+                <span>비밀번호(영문, 숫자 포함 8자리 이상)</span>
+                <input type="password" name="password1" id="password1-signup" required>
+                <span>비밀번호 재입력</span>
+                <input type="password" name="password2" id="password2-signup" required>
+                <button class="btn_signup btn_disabled" disabled="disabled" onclick="check_email();">
+                    Sign up
+                </button>
+                <div class="agreement">
+                    저는 octocolumn의
+                    <span onclick="term()"> 이용약관</span><!--
+                    -->과<!--
+                    --><span onclick="privacy()"> 개인정보취급방침</span><!--
+                    -->에 동의합니다.
+                    <input type="checkbox" class="agree_checkbox">
+                </div>
             </div>
-            
-            <!-- sign up button -->
-			<button class="btn_signup btn_disabled" disabled="disabled" onClick="check_email();">Sign up</button>
-            
-            <!-- sign in -->
-            <div class="move-signin">
-            	<span>이미 계정이 있다구요?</span>
-                <a onClick="window.location.href='/signin/'">로그인하셔야죠!</a>
+            <!-- //form_wrap -->
+            <div class="signup-wrap">
+                <span>
+                    이미 계정이 있다구요?
+                </span>
+                <a onclick="window.location.href='/signin/'">
+                    로그인하셔야죠!
+                </a>
             </div>
         </div>
-	</div>
-</div>
-</main>
+    </form>
     <!-- modal_window term -->
     <div class="modal_window term">
+        <a class="close_btn" href="javascript:modal_off()">
+            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
+        </a>
         <div class="welcome">
             Term of Service
         </div>
@@ -313,25 +326,7 @@
         </div>
     </div>
     <!-- //modal_window privacy -->
-    <!-- modal_window check_email -->
-    <div class="modal_window check_email">
-        <a class="close_btn" href="javascript:modal_off()">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">
-            Check your inbox
-        </div>
-        <div class="welcome2">
-            <span></span>에 대한 확인 링크를 이메일로 보내 드렸습니다.<br>
-            해당 이메일의 받은 편지함을 열어서, 메일에 포함된 링크를 클릭하여 계정 설정을 완료하세요.<br>
-        </div>
-        <button class="btn_ok" onclick="modal_off()">
-            오케이
-        </button>
-    </div>
-    <!-- //modal_window check_email -->
-<script src="{% static 'js/script3.js' %}"></script>
-<script src="{% static 'js/signin.js' %}"></script>
-<script src="{% static 'js/signup.js' %}"></script>
+    <script src="{% static 'js/script3.js' %}"></script>
+    <script src="{% static 'js/signin.js' %}"></script>
 </body>
 </html>
