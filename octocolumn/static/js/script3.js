@@ -8,6 +8,9 @@ function signinWith(){
     $(".findPass").hide();
     $(".signinWith").show();
 }
+function modal_off(){
+    $(".modal_window").hide();
+}
 function signin(){
     $(".signinWith").hide();
     $(".findPass").hide();
@@ -28,8 +31,6 @@ function signup(){
 }
 function check_email(){
     signup_api();
-    $(".welcome2 > span").text($("#email-signup").val());
-    $(".check_email").show();
 }
 function term(){
     $(".term").show();
