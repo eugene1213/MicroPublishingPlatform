@@ -72,12 +72,20 @@ def read(request, author=None, title=None):
                 raise Http404
 
             try:
-                Post.objects.filter(pk=int(post_num[-1])).get()
+                post = Post.objects.filter(pk=int(post_num[-1])).get()
+                # postTitle = post.title.replace(' ', '-')
+                # postUser = post.author.username.split('@')[0]
+                # print(author != postUser)
+                # # if author != post.author.username and title != postTitle:
+                # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
+                # #                                             str(post.pk)
+                # #                                 )
                 response = render_to_response("view/read.html", {"login": True})
                 return response
-
             except ObjectDoesNotExist:
                 raise Http404
+
+
         return redirect('views:index')
     # return redirect('views:index')
 
