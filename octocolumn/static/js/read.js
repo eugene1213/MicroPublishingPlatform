@@ -20,7 +20,7 @@ $(document).ready(function(){
             console.log(json);
             var cover_img = json.detail.cover_img;
             var title = json.detail.title;
-            var urlTitle = title.replace(' ','_').replace('/-|#|?/gi','_');
+            var urlTitle = title.replace(' ','-').replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,'');
             var author = json.detail.author.username;
             var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
@@ -28,6 +28,10 @@ $(document).ready(function(){
             var tagArray = json.detail.tag;
             var created_datetime = json.detail.created_datetime;
             var post_id = json.detail.post_id;
+            var url = '/@'+ author+'/'+urlTitle+'-'+post_id;
+            var href = 'https://www.octocolumn.com/@'+author+'/'+urlTitle+'-'+post_id;
+
+            history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
 
             for(var i in tagArray) {
                 
@@ -35,7 +39,7 @@ $(document).ready(function(){
         
                 $(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tagText+"</div>");
             }
-            $('.fb-share-button').attr('data-href', 'https://www.octocolumn.com/@'+author+'/'+urlTitle+'-'+post_id)
+            $('.fb-share-button').attr('data-href', href);
             $(".mainImg").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);

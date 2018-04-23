@@ -9,7 +9,8 @@ function isBought(post_id, cover_img, title, date, username, readtime, price, pr
         success: function(json) {
             console.log(json)
             if(json.detail.isBuy) {
-                var urlTitle = title.replace(' ','_').replace('-','_').replace('#','_').replace('?','_');                
+                var urlTitle = title.replace(' ','-').replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,'');
+
                 window.location.href = "/@"+username+'/'+urlTitle+'-'+post_id;
             }else {
                 // var preview_image = json.detail.preview;
