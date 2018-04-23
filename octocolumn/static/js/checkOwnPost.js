@@ -9,7 +9,8 @@ function isBought(post_id, cover_img, title, date, username, readtime, price, pr
         success: function(json) {
             console.log(json)
             if(json.detail.isBuy) {
-                window.location.href = "/read/"+post_id;
+                var urlTitle = title.replace(' ','_').replace('-','_');                
+                window.location.href = "/@"+username+'/'+urlTitle+'-'+post_id;
             }else {
                 // var preview_image = json.detail.preview;
 

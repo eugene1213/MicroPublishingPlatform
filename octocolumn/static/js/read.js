@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     var current_url = window.location.href;
-    var post_id = current_url.split("/");
+    var post_id = current_url.split("-");
         post_id = post_id[post_id.length-1];
 
     hidingHeader();
@@ -20,6 +20,7 @@ $(document).ready(function(){
             console.log(json);
             var cover_img = json.detail.cover_img;
             var title = json.detail.title;
+            var urlTitle = title.replace(' ','_').replace('-','_');
             var author = json.detail.author.username;
             var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
@@ -34,7 +35,7 @@ $(document).ready(function(){
         
                 $(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tagText+"</div>");
             }
-            
+            $('.fb-share-button').attr('data-href', 'https://www.octocolumn.com/@'+author+'/'+urlTitle+'-'+post_id)
             $(".mainImg").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);
