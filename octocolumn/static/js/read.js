@@ -20,7 +20,7 @@ $(document).ready(function(){
             console.log(json);
             var cover_img = json.detail.cover_img;
             var title = json.detail.title;
-            var urlTitle = title.replace(' ','-').replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,'');
+            var urlTitle = title.replace(' ','-').replace(/~|₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|\[|\]|{|}|\\|\||;|:|'|"|,|\.|\/|<|>|\?/g,'');
             var author = json.detail.author.username;
             var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
@@ -31,7 +31,7 @@ $(document).ready(function(){
             var url = '/@'+ author+'/'+urlTitle+'-'+post_id;
             var href = 'https://www.octocolumn.com/@'+author+'/'+urlTitle+'-'+post_id;
 
-            history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
+            if(window.location.href != href) history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
 
             for(var i in tagArray) {
                 
