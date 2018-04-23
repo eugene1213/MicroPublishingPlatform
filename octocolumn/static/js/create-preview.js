@@ -13,7 +13,7 @@ $(document).ready(function() {
         $(".preview-wrap").show();
         $(".container").css("position", "fixed");
         if($(".container").width() < 960) $(".container").css({"left": "50%","margin-left": $(".container").width()/(-2)});
-        // dom2img();                              // 미리보기 이미지 렌더링
+        // dom2img();                           // 미리보기 이미지 렌더링
         previewCoverImg();                      // 설정된 커버이미지 미리보기에 출력
         previewContentInfo();                   // 설정된 값들 미리보기에 출력
 
@@ -62,18 +62,6 @@ function previewCoverImg() {
     if(imgHeight>401){
         var margin = (imgHeight - 401) / 2;
         $("#preview-cover-img").css("margin-top",(-1)*margin+"px");
-    }
-}
-
-/* octo-code 입력시 포커스 자동 이동 */
-function focusJump(e) {
-
-    var id = $(e.target).attr('id');
-    var idNum = id.replace("octo-code-","");
-
-    if($(e.target).attr("id")==('octo-code-' + idNum) && idNum !="5") {
-
-        $("#octo-code-" + (++idNum)).focus();
     }
 }
 

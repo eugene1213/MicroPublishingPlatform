@@ -48,7 +48,7 @@ function saveTmp(auto){
     
     title = $.trim(title);
     if(auto == true){
-        if($(".editable").text().length < 543) return console.log("분량 미달");       // 분량 미달이면 자동저장x
+        if($(".editable").text().length < 543) return false;
     }
 
     $.ajax({

@@ -28,6 +28,7 @@ function tagAppender(e) {
             $(".tag-input").val("");                    // input박스를 비워준다.
         }
     }
+    btn_activation_checklist();
 }
 
 function tagRemover(e) {
@@ -36,4 +37,5 @@ function tagRemover(e) {
         var id = $(e.target).parent().attr("id");
         $("#"+id).remove();
     }
+    btn_activation_checklist();
 }
