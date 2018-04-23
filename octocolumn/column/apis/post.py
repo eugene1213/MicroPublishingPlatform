@@ -184,7 +184,7 @@ class PostListView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         try:
-            post = Post.objects.select_related('author').all().order_by('-created_date')
+            post = Post.objects.select_related('author').all().order_by('-created_date')[0:5]
 
             page = self.paginate_queryset(post)
             serializer = PostMoreSerializer(page, context={'request': request}, many=True)

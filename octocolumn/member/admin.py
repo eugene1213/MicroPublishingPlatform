@@ -151,7 +151,6 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
 
     readonly_fields = ['author', 'created_date']
 
-
     def author_is_active(self, instance):
         return instance.author.author.is_active
 
