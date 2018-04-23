@@ -1,55 +1,55 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html>
 <head>
-	{% load static %}
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
-	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
-	<meta name="description" content="octocolumn" />
-	<meta name="keywords" content="octocolumn" />
-	<meta name="copyright" content="octocolumn" />
-	<meta name="theme-color" content="#2a292a" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta http-equiv="x-rim-auto-match" content="none" />
-	<title>octocolumn</title>
-    <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" />
-    <!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}"/>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
-    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}" />
-    <!-- JS -->
-	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/signin.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>
+{% load static %}
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="octocolumn" />
+<meta name="keywords" content="octocolumn" />
+<meta name="copyright" content="octocolumn" />
+<meta name="theme-color" content="#2a292a" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="x-rim-auto-match" content="none" />
+<title>octocolumn</title>
+<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" />
+<!-- core CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
+
+<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 </head>
-<body>
-    <div class="modal_window signin">
-        <a class="close_btn" href="javascript:modal_off();">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">Sign in with email</div>
-        <div class="welcome2">
-            octocolumn과 연결된 당신의 이메일과 비밀번호를 입력하세요.<br>
-            계정이 없거나, 비밀번호를 잊었다해도 걱정마시구요.<br>
-        </div>
-        <div class="form_wrap">
-            <span>이메일 주소</span>
-            <input type="text" name="username" id="email-signin">
-            <span>비밀번호</span>
-            <input type="password" name="password" id="password-signin">
-            <span></span>
-            <span onclick="window.location.href = '/findPass/'" style="float:right;">비밀번호를 잊었나요?</span>
-            <button onclick="signin_api()">Sign in</button>
-        </div>
-        <div class="signup-wrap">
-            <!-- <span>아직 계정이 없다구요?</span> -->
-            <!-- <a onclick="window.location.href='/signup/'">지금 만드세요!</a> -->
-        </div>
+
+<body class="scrollbar-basic welcome-bg">
+<main>
+<!-- wrapper -->
+<div class="signin-container">
+	<div class="signin-title">
+    	<h1>Sign in with email</h1>
+        <h3>octocolumn과 연결된 당신의 이메일과 비밀번호를 입력하세요.<br>계정이 없거나, 비밀번호를 잊었다해도 걱정마시구요.</h3>
     </div>
+	<div class="frame">
+		<div class="form-signin">
+        	<div class="form_title">Sign in</div>
+            <div class="mid-container">
+                <input type="email" name="username" id="email-signin" placeholder="ID">
+                <input type="password" name="password" id="password-signin" placeholder="Password" required>
+            </div>
+            
+            <!-- sign up button -->
+            <div class="bottom-container">
+                <button onClick="signin_api()" class="btn_signin">Sign in</button>
+                <p onClick="window.location.href = '/findPass/'">Forgot your password?</p>
+            </div>
+		</div>
+	</div>
+</div>
+</main>
+<script type="text/javascript" src="{% static 'js/signin.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>
 </body>
 </html>

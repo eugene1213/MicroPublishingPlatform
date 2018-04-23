@@ -15,7 +15,9 @@ $(document).ready(function(){
         secondInvite();
     });
 });
-
+$(window).keypress(function(e){
+    if(e.keyCode=='13') signin_api();
+});
 function signin_api() {
 
     var email = $("#email-signin").val();
@@ -47,6 +49,9 @@ function signin_api() {
                 var errMsgTitle = 'Sign in Failed';
                 var errMsg = '이메일과 비밀번호를 확인해 주시기바랍니다.';
               // alertBoxFocus('이메일과 비밀번호를 확인해 주시기바랍니다.',401)
+            }else {
+                var errMsgTitle = 'Fatal error';
+                var errMsg = '알 수 없는 에러가 발생했습니다. 고객센터에 문의해주세요.';
             }
             modal({
                 type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)

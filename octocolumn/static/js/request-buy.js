@@ -12,6 +12,7 @@ function buy(){
 
     var post_id = $(".priceBtn .btn").attr("id").replace("post","");
     var author = $('.preview-author').text();
+    var title = $('.preview-title').text();
     var urlTitle = title.replace(' ','-').replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,''); 
     $.ajax({
         url: "/api/column/post-buy/",
