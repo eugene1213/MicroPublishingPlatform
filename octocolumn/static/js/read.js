@@ -20,7 +20,7 @@ $(document).ready(function(){
             console.log(json);
             var cover_img = json.detail.cover_img;
             var title = json.detail.title;
-            var urlTitle = title.replace(' ','_').replace('-','_');
+            var urlTitle = title.replace(' ','_').replace('/-|#|?/gi','_');
             var author = json.detail.author.username;
             var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
