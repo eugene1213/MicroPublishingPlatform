@@ -1,7 +1,3 @@
-$(document).ready(function(){
-
-
-});
 function getData(){
     
     $.ajax({
@@ -42,9 +38,9 @@ function getData(){
                                 <div class="month">'+month+'</div>\
                             </div>\
                         </div>\
-                        <div class="content" id="'+pk+'">\
-                            <h1>'+title+'</h1>\
-                            <p>'+main_content+'</p>\
+                        <div class="content">\
+                            <h1 id="'+pk+'">'+title+'</h1>\
+                            <p id="'+pk+'">'+main_content+'</p>\
                             <div class="meta">\
                                 <div class="icon-comment">0 Comments</div>\
                                 <ul class="tags">\

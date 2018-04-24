@@ -32,18 +32,20 @@ $(document).ready(function() {
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");
-
+        var title = '';
+        var username = '';
+        var readtime = '';
         if(post_id > 0){
-            var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            var cover_img = data[card_id-1].cover_image;
-            var title = data[card_id-1].title;
-            var date = data[card_id-1].all_status.created_datetime;
-            var username = data[card_id-1].all_status.username;
-            var price = data[card_id-1].price;
-            var preview = data[card_id-1].preview;
-            var readtime = $("#card_" + card_id + " .profile_readtime").text();
+            // var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
+            // var cover_img = data[card_id-1].cover_image;
+            // var title = data[card_id-1].title;
+            // var date = data[card_id-1].all_status.created_datetime;
+            // var username = data[card_id-1].all_status.username;
+            // var price = data[card_id-1].price;
+            // var preview = data[card_id-1].preview;
+            // var readtime = $("#card_" + card_id + " .profile_readtime").text();
 
-            isBought(post_id, cover_img, title, date, username, readtime, price, preview);
+            isBought(post_id, title, username, readtime);
             
         }
     });
