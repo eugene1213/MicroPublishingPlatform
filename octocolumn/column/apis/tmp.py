@@ -2,7 +2,7 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import mixins, generics, status, exceptions
-from rest_framework.parsers import  MultiPartParser
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -94,7 +94,6 @@ class TempCreateView(generics.GenericAPIView,
             if not self.check_post_count(user):
                 raise exceptions.ValidationError({"detail": "This account exceeded the number of articles you could write"},
                                                  400)
-
 
             temp = self.queryset.create(author=user, title=data['title'], main_content=data['main_content'])
 

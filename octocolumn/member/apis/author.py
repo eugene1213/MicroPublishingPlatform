@@ -28,7 +28,6 @@ class AuthorApply(generics.GenericAPIView,
     queryset = AuthorModel.objects.all()
     serializer_class = AuthorSerializer
 
-
     # base64 파일 파일 형태로
     def base64_content(self, image):
         if image is not '':
@@ -70,11 +69,14 @@ class AuthorApply(generics.GenericAPIView,
         if result:
             # 임시저장 파일이 없을 경우
             if data['temp_id'] == '':
-                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, status.HTTP_406_NOT_ACCEPTABLE)
+                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'},
+                                               status.HTTP_406_NOT_ACCEPTABLE)
             try:
                 temp = Temp.objects.filter(id=data['temp_id']).get()
+
             except ObjectDoesNotExist:
-                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, status.HTTP_406_NOT_ACCEPTABLE)
+                raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'},
+                                               status.HTTP_406_NOT_ACCEPTABLE)
 
             post = PreAuthorPost.objects.create(author=user, title=temp.title,
                                                 main_content=temp.main_content,
@@ -105,4 +107,6 @@ class AuthorApply(generics.GenericAPIView,
                 raise exceptions.ValidationError({'detail': 'Already added'}, status.HTTP_406_NOT_ACCEPTABLE)
 
         else:
-            raise exceptions.ValidationError({'detail': 'Already attempted author'}, status.HTTP_406_NOT_ACCEPTABLE)
+            raise exceptions.ValidationError({'detail':
+                                                  'Already attempted author'},
+                                             status.HTTP_406_NOT_ACCEPTABLE)
