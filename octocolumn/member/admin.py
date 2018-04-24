@@ -180,10 +180,10 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     # )
 
     fields = (
-        'author', 'main_content', 'hit', 'price', 'created_date'
+        'author', 'price', 'cover_image','author_actions', 'post_download', 'created_date'
     )
 
-    readonly_fields = ['author', 'created_date']
+    readonly_fields = ['author', 'author_actions', 'post_download', 'created_date']
 
     def author_is_active(self, instance):
         return instance.author.author.is_active
@@ -195,9 +195,36 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
                 r'^(?P<author_post_pk>.+)/active/$',
                 self.admin_site.admin_view(self.process_is_active),
                 name='authorIsActive',
+            ),
+            url(
+                r'^(?P<post_pk>.+)/download/$',
+                self.admin_site.admin_view(self.process_download),
+                name='postDownload',
             )
         ]
         return custom_urls + urls
+
+    def post_download(self, obj):
+        return format_html(
+         '<a class="button" href="{}">다운로드</a>',
+            reverse('admin:postDownload', args=[obj.pk]),
+        )
+
+    def process_download(self, request, post_pk, *args, **kwargs):
+        return self.download_action(
+            request=request,
+            post_pk=post_pk,
+        )
+
+    def download_action(self, request, post_pk):
+        main_con = Post.objects.filter(pk=post_pk).get().main_content
+        contents = '<div class="main_content_wrap">' + main_con + '</div>'
+        read_css = \
+            '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/read.css">'
+        sub_css = \
+            '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/sub.css">'
+        response = HttpResponse(read_css + sub_css + contents)
+        return response
 
     def author_actions(self, obj):
         return format_html(
