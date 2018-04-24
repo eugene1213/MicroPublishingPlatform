@@ -5,7 +5,7 @@
     top: 0;
     background-color: rgba(42,41,42,0.5);
     width: 100%;
-    display: none;
+    display: block;
 
     .preview {
         margin: auto;
@@ -87,10 +87,9 @@
             margin-bottom: 93px;
             height: 401px;
             overflow: hidden;
-
-            img {
-                width: 100%;
-            }
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         .preview-title {
             padding-left: 160px;

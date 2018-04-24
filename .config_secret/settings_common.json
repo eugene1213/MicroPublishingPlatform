@@ -9,7 +9,7 @@
     "secret_code" :"0bef4b65c4ec01eb73703a042812e612"
   },
     "google":{
-        "client_id":"531490968854-qs7j8doucd7ucomp4vpnffdsgrsh4aac.apps.googleusercontent.com",
+        "client_id":"556104186701-si5hpqqo9jl066op8rv1rn0vsn0i4u82.apps.googleusercontent.com",
         "project_id":"octocolumn",
         "auth_uri":"https://accounts.google.com/o/oauth2/auth",
         "token_uri":"https://accounts.google.com/o/oauth2/token",

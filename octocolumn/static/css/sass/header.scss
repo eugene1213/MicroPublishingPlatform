@@ -19,6 +19,16 @@ header .site-name {
 	text-align: center;
 	cursor: pointer;
 }
+.beta-logo{
+	position: absolute;
+    top: 6px;
+    left: 54%;
+    width: 24px;
+	height: 20px;
+	background-image: url('/static/images/example/beta-logo.png');
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
 
 /* ============================ */
 /*              nav             */

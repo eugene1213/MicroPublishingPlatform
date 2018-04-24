@@ -22,7 +22,7 @@ function getData(){
                 var author_id = posts[post].all_status.author_id;
                 var cover_image = posts[post].thumbnail;
                 var title = posts[post].title;
-                var main_content = posts[post].all_status.main_content.substr(0,100);
+                var main_content = posts[post].all_status.main_content;
                 var created_date = posts[post].all_status.created_date;
                 var date = created_date.split(' ')[1];
                 var month = created_date.split(' ')[0];

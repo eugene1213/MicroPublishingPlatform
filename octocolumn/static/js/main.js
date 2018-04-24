@@ -32,9 +32,10 @@ $(document).ready(function() {
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");
-        var title = '';
-        var username = '';
-        var readtime = '';
+        var title = $('#'+post_id+',h1').text();
+        var username = $(e.target).closest('.post').children('.user-info').children('h1').text();
+        var readtime = $(e.target).closest('.post').children('.full-right').text();
+        console.log($('#'+post_id+',h1'))
         if(post_id > 0){
             // var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
             // var cover_img = data[card_id-1].cover_image;
