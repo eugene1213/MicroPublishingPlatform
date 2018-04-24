@@ -24,13 +24,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-thirdparty.css' %}">
 <!-- JS -->
 <script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
+
 <script>
 	var googleUser = {};
 	var startApp = function() {
 		gapi.load('auth2', function(){
 		// Retrieve the singleton for the GoogleAuth library and set up the client.
 		auth2 = gapi.auth2.init({
-			client_id: '531490968854-qs7j8doucd7ucomp4vpnffdsgrsh4aac.apps.googleusercontent.com',
+			client_id: '556104186701-si5hpqqo9jl066op8rv1rn0vsn0i4u82.apps.googleusercontent.com',
 			cookiepolicy: 'single_host_origin',
 			scope:'openid'
 			// Request scopes in addition to 'profile' and 'email'
@@ -47,13 +49,16 @@
 				// The ID token you need to pass to your backend:
 				var id_token = googleUser.getAuthResponse().id_token;
 				$.ajax({
-					url: '/api/member/googleLogin/' + id_token,
+					url: '/api/member/googleLogin/',
 					async: false,
-					type: 'GET',
+					type: 'POST',
 					dataType: 'json',
 					xhrFields: {
 						withCredentials: true
 					},
+                    data:{
+					    id_token : id_token,
+                    },
 					success: function(json) {
 						window.location.href = '/';
 					},
@@ -176,8 +181,7 @@
 </div>
 </main>
 <!-- JS -->
-<script src="https://apis.google.com/js/api:client.js"></script>
-<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>    
+<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/signin.js' %}"></script>    
 </body>
 </html>
