@@ -163,6 +163,13 @@ MEDIAFILES_LOCATION = 'media'
 FACEBOOK_APP_ID = config_secret_debug['accounts']['facebook']['app_id']
 FACEBOOK_APP_SECRET_CODE = config_secret_debug['accounts']['facebook']['secret_code']
 
+# Google
+CLIENT_ID = config_secret_debug['accounts']['google']['client_id']
+CLIENT_SECRET = config_secret_debug['accounts']['google']['client_secret']
+REDIRECT_URI = config_secret_debug['accounts']['google']['javascript_origins']
+AUTH_URI = config_secret_debug['accounts']['google']['auth_uri']
+TOKEN_URI = config_secret_debug['accounts']['google']['token_uri']
+
 
 # Celery
 # CELERY_BROKER_URL = 'redis://{}:{}'.format(
