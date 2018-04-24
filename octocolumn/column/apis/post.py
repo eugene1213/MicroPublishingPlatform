@@ -353,8 +353,8 @@ class IsBuyPost(APIView):
                     "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
                     "price": post.price,
                     "preview": post.preview,
-                    "title":post.title,
-                    "username": post.author.nickname,
+                    "title": post.title,
+                    "nickname": post.author.nickname,
 
                 }},
                     status=status.HTTP_200_OK)
