@@ -80,3 +80,33 @@ def image_quality_down(content_file):
     img.save(img_io, format='JPEG', quality=70)
     img_content = ContentFile(img_io.getvalue(), 'image.jpeg')
     return img_content
+
+
+def thumnail_cover_image_resize(content_file):
+    img = Image.open(content_file)
+    img_io = BytesIO()
+
+    height = img.height
+    width = img.width
+
+    if height < 250 and width < 482:
+        img.save(img_io, format='JPEG', quality=99)
+        img_content = ContentFile(img_io.getvalue(), 'thumbnail.jpeg')
+        return img_content
+
+    else:
+        if 480/250 > width/height:
+            besehratio = 482 / width
+            hsize = height * besehratio
+            img = img.resize((482, int(hsize)), Image.ANTIALIAS)
+            img.save(img_io, format='JPEG', quality=99)
+            img_content = ContentFile(img_io.getvalue(), 'thumbnail.jpeg')
+            return img_content
+
+        else:
+            baseratio = 250 / height
+            wsize = width * baseratio
+            img = img.resize((int(wsize), 250), Image.ANTIALIAS)
+            img.save(img_io, format='JPEG', quality=99)
+            img_content = ContentFile(img_io.getvalue(), 'thumbnail.jpeg')
+            return img_content
