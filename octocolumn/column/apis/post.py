@@ -345,7 +345,10 @@ class IsBuyPost(APIView):
             except ObjectDoesNotExist:
                 if post.author == user:
                     return Response({"detail": {
-                        "isBuy": True
+                        "isBuy": True,
+                        "title": post.title,
+                        "nickname": post.author.nickname,
+
                     }}, status=status.HTTP_200_OK)
                 return Response({"detail": {
                     "isBuy": False,
