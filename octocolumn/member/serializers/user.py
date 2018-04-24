@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'nickname',
             'point',
-            # 'is_active',
+            'is_active',
         )
 
 
