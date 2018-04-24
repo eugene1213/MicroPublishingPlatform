@@ -333,27 +333,32 @@ class IsBuyPost(APIView):
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         user = self.request.user
-        post = Post.objects.filter(id=param).get()
         try:
-            BuyList.objects.filter(user=user, post=post).get()
-            return Response({"detail": {
-                "isBuy": True
-            }}, status=status.HTTP_200_OK)
+            post = Post.objects.filter(id=param).get()
 
-        except ObjectDoesNotExist:
-            if post.author == user:
+            try:
+                BuyList.objects.filter(user=user, post=post).get()
                 return Response({"detail": {
                     "isBuy": True
                 }}, status=status.HTTP_200_OK)
-            return Response({"detail": {
-                "isBuy": False,
-                "cover_image":post.cover_image,
-                "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
-                "price": post.price,
-                "preview" : post.preview
 
-            }},
-                status=status.HTTP_200_OK)
+            except ObjectDoesNotExist:
+                if post.author == user:
+                    return Response({"detail": {
+                        "isBuy": True
+                    }}, status=status.HTTP_200_OK)
+                return Response({"detail": {
+                    "isBuy": False,
+                    "cover_image": post.cover_image,
+                    "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
+                    "price": post.price,
+                    "preview": post.preview
+
+                }},
+                    status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            raise exceptions.NotFound()
 
 
 class AuthorResult(APIView):
