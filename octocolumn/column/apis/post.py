@@ -349,7 +349,7 @@ class IsBuyPost(APIView):
                     }}, status=status.HTTP_200_OK)
                 return Response({"detail": {
                     "isBuy": False,
-                    "cover_image": post.cover_image,
+                    "cover_image": str(post.cover_image),
                     "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
                     "price": post.price,
                     "preview": post.preview
