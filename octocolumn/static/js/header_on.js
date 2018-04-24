@@ -1,18 +1,11 @@
 $(document).ready(function(){
-
     getUserInfo();
-
-    $(document).click(function(e){
-        var windowHeight = window.innerHeight;
-        var validLocate = window.innerWidth - $(".btn-user").width()-17;    // 유저버튼 위치
-        
-        if ( e.clientX > validLocate && e.clientY < 30 ){
-            
-            window.location.href = "/profile/"
-        }
+});
+$(function(){
+    $('#header-profile-image').click(function(){
+        $('.account-info').is(":visible")?$('.account-info').hide():$('.account-info').show();
     });
 });
-
 function getUserInfo() {
 
     $.ajax({
@@ -29,6 +22,7 @@ function getUserInfo() {
 
             $("#profile-container > .profile-text").text(nickname);
             $("#header-profile-image").css("background-image", "url("+profile_image+")");
+            $('.point > .text > span').text(point);
         }
     });
 }

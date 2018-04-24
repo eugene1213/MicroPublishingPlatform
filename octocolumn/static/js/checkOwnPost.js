@@ -21,6 +21,42 @@ function isBought(post_id, cover_img, title, date, username, readtime, price, pr
                 // var img = new Image();
                 // img.src = json.detail.preview;
 
+                var previewHtml = '\
+                    <div class="preview-wrap">\
+                        <div class="preview" id="preview">\
+                            <div class="btn-cancel-wrap">\
+                                <div class="btn-cancel"></div>\
+                                <div class="preview_purchaseBtn">구매</div>\
+                            </div>\
+                            <div class="ready2publish">Preview</div>\
+                            <div class="preview-cover-img">\
+                                <img id="preview-cover-img" src="" alt="">\
+                            </div>\
+                            <div class="preview-title"></div>\
+                            <div class="preview-content-info">\
+                                <div class="preview-read-time"></div>\
+                                <div class="preview-by">by</div>\
+                                <div class="preview-author"></div>\
+                                <div class="preview-create-date">2018. 01. 01 00:00</div>\
+                            </div>\
+                            <div class="preview-main-content" id="preview-main-content">\
+                                <!-- <img src="" alt=""> -->\
+                                <div class="previewElementsWrap"></div>\
+                                <!-- preview-image -->\
+                            </div>\
+                            <div class="priceBtn">\
+                                <div class="btn">P로 구매</div>\
+                            </div>\
+                        </div> \
+                    </div>\
+                '
+
+
+
+
+
+
+
                 $("#preview-main-content > .previewElementsWrap").replaceWith(preview);
                 $(".previewElementsWrap").children(":last").css("filter","blur(4px)");
 

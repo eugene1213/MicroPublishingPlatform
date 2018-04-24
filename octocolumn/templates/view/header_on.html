@@ -38,9 +38,31 @@
 	<!-- <div class="btn-notice">
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
-	<div id="profile-container" onclick='window.location.href = "/profile/"'>
+	<div id="profile-container">
 		<span class="profile-text"></span>
 		<div class="profile-img image-loader" id="header-profile-image"></div>
+		<div class="account-info">
+			<ul>
+				<li class="notifications">
+					<div class="icon icon-bell">
+						<div class="badge"></div>
+					</div>
+					<div class="text">Unread Message</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="point">
+					<div class="icon icon-cog"></div>
+					<div class="text"><span> </span>&nbsp;p</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="setting">
+					<div class="icon icon-user"></div>
+					<div class="text">Setting</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="signout">Sign out</li>
+			</ul>
+		</div>
 	</div>
 <!-- 
 	<div class="btn-search">
@@ -53,8 +75,7 @@
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
 </header>
-	<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
