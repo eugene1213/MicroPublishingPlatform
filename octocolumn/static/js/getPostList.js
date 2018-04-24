@@ -53,7 +53,7 @@ function getData(){
                                     <div class="user-pic image-loader" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>\
                                     <div class="user-info">\
                                         <h1>'+username+'</h1>\
-                                        <p class="full-right">'+readTime+' min read</p>\
+                                        <p class="full-right" id="readtime'+pk+'">'+readTime+' min read</p>\
                                     </div>\
                                 </div>\
                             </div>\

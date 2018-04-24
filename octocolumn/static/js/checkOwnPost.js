@@ -1,5 +1,5 @@
 /* 구매했는지 체크 */
-function isBought(post_id, title, username, readtime) {
+function isBought(post_id, readtime) {
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
@@ -8,8 +8,10 @@ function isBought(post_id, title, username, readtime) {
         dataType: 'json',
         success: function(json) {
             console.log(json)
+            var title = json.detail.title;
+            var username = json.detail.nickname;
             if(json.detail.isBuy) {
-                var urlTitle = title.replace(' ','-').replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,'');
+                var urlTitle = title.replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,'').replace(' ','-');
 
                 window.location.href = "/@"+username+'/'+urlTitle+'-'+post_id;
             }else {
@@ -25,17 +27,17 @@ function isBought(post_id, title, username, readtime) {
                 var previewHtml = '\
                     <div class="preview-wrap">\
                         <div class="preview" id="preview">\
-                            <div class="btn-cancel-wrap">\
+                            <div class="btn-cancel-wrap" onclick="javascript:(function(){$(\'.preview-wrap\').remove();$(\'.page\').css(\'position\', \'static\');})();">\
                                 <div class="btn-cancel"></div>\
-                                <div class="preview_purchaseBtn">구매</div>\
+                                <div class="preview_purchaseBtn" onclick=\'buy();\'>구매</div>\
                             </div>\
                             <div class="ready2publish">Preview</div>\
                             <div class="preview-cover-img" style="background-image:url('+cover_img+')"></div>\
-                            <div class="preview-title"></div>\
+                            <div class="preview-title">'+title+'</div>\
                             <div class="preview-content-info">\
-                                <div class="preview-read-time"></div>\
+                                <div class="preview-read-time">'+readtime+'</div>\
                                 <div class="preview-by">by</div>\
-                                <div class="preview-author"></div>\
+                                <div class="preview-author">'+username+'</div>\
                                 <div class="preview-create-date">'+date+'</div>\
                             </div>\
                             <div class="preview-main-content" id="preview-main-content">\
@@ -44,12 +46,13 @@ function isBought(post_id, title, username, readtime) {
                                 <!-- preview-image -->\
                             </div>\
                             <div class="priceBtn">\
-                                <div class="btn">'+price+'P로 구매</div>\
+                                <div class="btn" id="post'+post_id+'" onclick=\'buy();\'>'+price+'P로 구매</div>\
                             </div>\
                         </div> \
                     </div>\
                 ';
                 $('.page').after(previewHtml);
+                $(".page").css("position", "fixed");
 
 
 

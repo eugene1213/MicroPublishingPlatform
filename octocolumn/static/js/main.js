@@ -32,7 +32,7 @@ $(document).ready(function() {
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");
-        var readtime = $(e.target).closest('.post').children('.full-right').text();
+        var readtime = $('#readtime'+post_id).text();
 
         if(post_id > 0){
             // var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
@@ -52,9 +52,6 @@ $(document).ready(function() {
         
         var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
         bookmark(bookmark_id);
-    });
-    $(".btn-cancel-wrap").click(function(){
-        $(".preview-wrap").hide();
     });
 
     $('.image-loader').imageloader({
