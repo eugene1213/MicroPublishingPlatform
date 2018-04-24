@@ -1,8 +1,8 @@
-from distutils import errors
 
 from django.conf.urls import url
 from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+
 from django.urls import reverse
 from django.utils.html import format_html
 from rest_framework.authtoken.models import Token
@@ -83,14 +83,47 @@ class PostAdmin(admin.ModelAdmin):
     # )
 
     fields = (
-        'author', 'main_content', 'hit', 'price', 'created_date'
+        'author', 'hit', 'price', 'cover_image', 'created_date', 'post_download',
     )
 
-    readonly_fields = ['author', 'hit', 'buy_count', 'created_date']
+    readonly_fields = ['author', 'hit', 'buy_count', 'created_date', 'post_download']
 
     class Meta:
         verbose_name = '작가'
         verbose_name_plural = f'{verbose_name} 목록'
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            url(
+                r'^(?P<post_pk>.+)/download/$',
+                self.admin_site.admin_view(self.process_download),
+                name='postDownload',
+            )
+        ]
+        return custom_urls + urls
+
+    def post_download(self, obj):
+        return format_html(
+         '<a class="button" href="{}">다운로드</a>',
+            reverse('admin:postDownload', args=[obj.pk]),
+        )
+
+    def process_download(self, request, post_pk, *args, **kwargs):
+        return self.download_action(
+            request=request,
+            post_pk=post_pk,
+        )
+
+    def download_action(self, request, post_pk):
+        main_con = Post.objects.filter(pk=post_pk).get().main_content
+        contents = '<div class="main_content_wrap">' + main_con + '</div>'
+        read_css = \
+            '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/read.css">'
+        sub_css = \
+            '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/sub.css">'
+        response = HttpResponse(read_css + sub_css + contents)
+        return response
 
     def remove_tag(self, obj):
         cleaner = re.compile('<.*?>')
@@ -102,6 +135,7 @@ class PostAdmin(admin.ModelAdmin):
         return mark_safe('<u>{}</u>글자'.format(len(clean_text)))
 
     content_size.short_description = '글자수'
+    post_download.allow_tags = True
 
 
 @admin.register(UsePoint)
@@ -159,8 +193,8 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
         custom_urls = [
             url(
                 r'^(?P<author_post_pk>.+)/active/$',
-                self.admin_site.admin_view(self.process_isactive),
-                name='author-isactive',
+                self.admin_site.admin_view(self.process_is_active),
+                name='authorIsActive',
             )
         ]
         return custom_urls + urls
@@ -168,10 +202,10 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     def author_actions(self, obj):
         return format_html(
             '<a class="button" href="{}">인증</a>',
-            reverse('admin:author-isactive', args=[obj.pk]),
+            reverse('admin:authorIsActive', args=[obj.pk]),
         )
 
-    def process_isactive(self, request, author_post_pk, *args, **kwargs):
+    def process_is_active(self, request, author_post_pk, *args, **kwargs):
         return self.process_action(
             request=request,
             author_post_pk=author_post_pk,
