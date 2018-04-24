@@ -76,7 +76,7 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def image(self, author):
         try:
             img = ProfileImage.objects.select_related('user').filter(user=author).get()
-            return ProfileImageSerializer(img).data['profile_image']
+            return {"profile_image" : ProfileImageSerializer(img).data['profile_image']}
         except ObjectDoesNotExist:
             data = {
                 'profile_image': 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
