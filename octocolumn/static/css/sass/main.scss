@@ -609,11 +609,14 @@ a, a:visited {
 	cursor: pointer;
 }
 .container .blog-posts .post .content p {
+	max-height: 80px;
+	overflow: hidden;
 	font-weight: 300;
 	font-size: 0.7rem;
 	line-height: 1.5;
 	margin-bottom: 0.5em;
 	font-family: 'Merriweather', sans-serif;
+	word-break: break-all;
 	cursor: pointer;
 }
 .container .blog-posts .post .content .meta .icon-comment {
