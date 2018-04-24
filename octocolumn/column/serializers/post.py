@@ -61,12 +61,12 @@ class PostMoreSerializer(serializers.ModelSerializer):
         author_serializer = UserSerializer(obj.author)
         data = {
             "img": self.image(obj.author),
-            "created_datetime": obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M'),
-            "created_date":obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d'),
+            # "created_datetime": obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M'),
+            "created_date": obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d'),
             "typo_count": self.typo_count(obj),
             "author_id": author_serializer.data['pk'],
             "username": author_serializer.data['nickname'],
-            "following_url": "/api/member/" + str(author_serializer.data['pk']) + "/followStatus/",
+            # "following_url": "/api/member/" + str(author_serializer.data['pk']) + "/followStatus/",
             "achevement": "",
             "main_content": self.main_content(obj),
             "bookmark_status": self.bookmark_status(obj, user)
@@ -76,11 +76,11 @@ class PostMoreSerializer(serializers.ModelSerializer):
     def image(self, author):
         try:
             img = ProfileImage.objects.select_related('user').filter(user=author).get()
-            return ProfileImageSerializer(img).data
+            return ProfileImageSerializer(img).data['profile_image']
         except ObjectDoesNotExist:
             data = {
                 'profile_image': 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
-                'cover_image': 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
+                # 'cover_image': 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
             }
             return data
     #
@@ -149,7 +149,8 @@ class PostMoreSerializer(serializers.ModelSerializer):
             # 'created_datetime',
             # 'tag',
             'price',
-            'cover_image',
+            # 'cover_image',
+            'thumbnail',
             'preview',
             # 'typo_count',
             # 'bookmark_status'

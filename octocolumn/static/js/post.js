@@ -144,7 +144,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
         }),
         success: function(json) {
             modal({
-                type: 'confirm', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+                type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
                 title: 'Your column has been published', //Modal Title
                 text: '많은 사람들이 읽었으면 좋겠습니다.<br/>좋은 이야기를 들려주셔서 감사드립니다.', //Modal HTML Content
                 size: 'normal', //Modal Size (normal | large | small)
@@ -171,7 +171,7 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
                     boxInner: ".modal-inner",
                     title: '.modal-title',
                     content: '.modal-text',
-                    buttons: ".modal-buttons"
+                    buttons: '.modal-buttons'
                 }
             });
             localStorage.setItem("temp_id", '');

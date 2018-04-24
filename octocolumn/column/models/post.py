@@ -4,7 +4,8 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
-from utils.filepath import cover_image_user_directory_path, preview_image_user_directory_path
+from utils.filepath import cover_image_user_directory_path, preview_image_user_directory_path, \
+    thumbnail_image_user_directory_path
 
 __all__ = (
     'Post',
@@ -32,6 +33,11 @@ class Post(models.Model):
     like_count = models.PositiveIntegerField(default=0)
     cover_image = models.ImageField('포스트커버 이미지',
                                     upload_to=cover_image_user_directory_path,
+                                    blank=True,
+                                    null=True
+                                    )
+    thumbnail = models.ImageField('섬네일 이미지',
+                                    upload_to=thumbnail_image_user_directory_path,
                                     blank=True,
                                     null=True
                                     )
