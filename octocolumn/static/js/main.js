@@ -33,7 +33,7 @@ $(document).ready(function() {
         
         var post_id = e.target.getAttribute("id");
         var title = '';
-        var username = '';
+        var username = 'sdfa';
         var readtime = '';
         if(post_id > 0){
             // var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);

@@ -49,7 +49,7 @@ function isBought(post_id, title, username, readtime) {
                         </div> \
                     </div>\
                 ';
-
+                $('.page').after(previewHtml);
 
 
 
