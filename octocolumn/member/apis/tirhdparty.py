@@ -112,6 +112,7 @@ class KakaoLogin(APIView):
             return r.json()
 
         debug_token_info = get_debug_token_info(token)
+        print(debug_token_info)
 
         if debug_token_info.get('code'):
 
@@ -122,7 +123,7 @@ class KakaoLogin(APIView):
         user = KakaoBackend.authenticate(user_id=user_id)
 
         if not user:
-            userinfo = User.objects.filter(username=debug_token_info.email).count()
+            userinfo = User.objects.filter(username=debug_token_info['kaccount_email']).count()
 
             if not userinfo == 0:
                 raise NotAcceptable('Already exists this email')
