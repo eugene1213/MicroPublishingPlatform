@@ -339,7 +339,9 @@ class IsBuyPost(APIView):
             try:
                 BuyList.objects.filter(user=user, post=post).get()
                 return Response({"detail": {
-                    "isBuy": True
+                    "isBuy": True,
+                    "title": post.title,
+                    "nickname": post.author.nickname,
                 }}, status=status.HTTP_200_OK)
 
             except ObjectDoesNotExist:
