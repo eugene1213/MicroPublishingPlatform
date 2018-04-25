@@ -164,7 +164,15 @@ i {
 	font-weight: 300;
 	color: #fff;
 	background-color: transparent;
-	letter-spacing: 0.11em;
+    letter-spacing: 0.11em;
+    
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+        -webkit-text-fill-color: #fff !important;
+    }
 }
 .form-signin input::placeholder {
 	color: rgba(255,255,255,0.3);

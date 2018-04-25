@@ -1,5 +1,4 @@
 import base64
-import re
 
 from datetime import datetime
 
@@ -15,10 +14,10 @@ from column.models import Temp, SearchTag
 from column.pagination import PostPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
-from member.models.user import Relation, WaitingRelation, Bookmark
+from member.models.user import WaitingRelation, Bookmark
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
-from utils.image_rescale import image_quality_down
+from utils.image_rescale import image_quality_down, thumnail_cover_image_resize
 from ..models import Post
 from ..serializers import PostSerializer, PostMoreSerializer
 
@@ -110,6 +109,7 @@ class PostCreateView(generics.GenericAPIView,
 
         cover_file_obj = self.base64_content(self.request.data['cover'])
         resizing_image = image_quality_down(cover_file_obj)
+        thumbnail_image = thumnail_cover_image_resize(cover_file_obj)
 
         # 1. 작가가 신청되어있는지 확인
         # 2. 작가 활성이 되어있는지를 확인
@@ -141,6 +141,7 @@ class PostCreateView(generics.GenericAPIView,
                                            main_content=temp.main_content,
                                            price=data['price'],
                                            cover_image=resizing_image,
+                                           thumbnail=thumbnail_image,
                                            preview=data['preview']
                                            )
                 serializer = PostSerializer(post)
@@ -332,22 +333,39 @@ class IsBuyPost(APIView):
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         user = self.request.user
-        post = Post.objects.filter(id=param).get()
         try:
-            BuyList.objects.filter(user=user, post=post).get()
-            return Response({"detail": {
-                "isBuy": True
-            }}, status=status.HTTP_200_OK)
+            post = Post.objects.filter(id=param).get()
+
+            try:
+                BuyList.objects.filter(user=user, post=post).get()
+                return Response({"detail": {
+                    "isBuy": True,
+                    "title": post.title,
+                    "nickname": post.author.nickname,
+                }}, status=status.HTTP_200_OK)
+
+            except ObjectDoesNotExist:
+                if post.author == user:
+                    return Response({"detail": {
+                        "isBuy": True,
+                        "title": post.title,
+                        "nickname": post.author.nickname,
+
+                    }}, status=status.HTTP_200_OK)
+                return Response({"detail": {
+                    "isBuy": False,
+                    "cover_image": '/media/' + str(post.cover_image),
+                    "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
+                    "price": post.price,
+                    "preview": post.preview,
+                    "title": post.title,
+                    "nickname": post.author.nickname,
+
+                }},
+                    status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
-            if post.author == user:
-                return Response({"detail": {
-                    "isBuy": True
-                }}, status=status.HTTP_200_OK)
-            return Response({"detail": {
-                "isBuy": False,
-            }},
-                status=status.HTTP_200_OK)
+            raise exceptions.NotFound()
 
 
 class AuthorResult(APIView):

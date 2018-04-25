@@ -156,6 +156,13 @@ DATABASES = {
 #     config_secret_deploy['django']['celery']['broker_port']
 # )
 
+# Google
+CLIENT_ID = config_secret_deploy['accounts']['google']['client_id']
+CLIENT_SECRET = config_secret_deploy['accounts']['google']['client_secret']
+REDIRECT_URI = config_secret_deploy['accounts']['google']['javascript_origins']
+AUTH_URI = config_secret_deploy['accounts']['google']['auth_uri']
+TOKEN_URI = config_secret_deploy['accounts']['google']['token_uri']
+
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 

@@ -27,8 +27,10 @@ __all__ =(
 class GoogleLogin(APIView):
     permission_classes = (AllowAny,)
 
-    def get(self, request, *args, **kwargs):
-        token = self.kwargs.get('token')
+    def post(self, request, *args, **kwargs):
+
+        token = self.request.data['id_token']
+        print(token)
 
         class DebugTokenInfo(NamedTuple):
             azp: str
@@ -96,7 +98,7 @@ class GoogleLogin(APIView):
 
 # 1
 # OAUTH2 KAKAO API
-# URL /api/member/kakao-login/(?P<token>.*)$
+# URL /api/member/kakaoLogin/(?P<token>.*)$
 class KakaoLogin(APIView):
     permission_classes = (AllowAny,)
 
@@ -122,7 +124,7 @@ class KakaoLogin(APIView):
         user = KakaoBackend.authenticate(user_id=user_id)
 
         if not user:
-            userinfo = User.objects.filter(username=debug_token_info.email).count()
+            userinfo = User.objects.filter(username=debug_token_info['kaccount_email']).count()
 
             if not userinfo == 0:
                 raise NotAcceptable('Already exists this email')

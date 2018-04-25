@@ -116,6 +116,9 @@ div {
     }
     .medium-insert-images-full {
         width: 100%;
+        img {
+            width: 100vw;
+        }
     }
 }
 #tmp {

@@ -1,5 +1,5 @@
 	{% load static %}
-	<header tabindex="0"><span class="site-name" onclick="window.location.href='/'">octocolumn</span>
+	<header tabindex="0"><span class="site-name" onclick="window.location.href='/'">octocolumn<div class="beta-logo"></div></span>
     <div id="nav-container">
         <div class="bg"></div>
         <div class="button" tabindex="0">
@@ -38,9 +38,31 @@
 	<!-- <div class="btn-notice">
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
-	<div id="profile-container" onclick='window.location.href = "/profile/"'>
+	<div id="profile-container">
 		<span class="profile-text"></span>
 		<div class="profile-img image-loader" id="header-profile-image"></div>
+		<div class="account-info">
+			<ul>
+				<li class="notifications">
+					<div class="icon icon-bell">
+						<div class="badge"></div>
+					</div>
+					<div class="text">Unread Message</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="point">
+					<div class="icon icon-cog"></div>
+					<div class="text"><span> </span>&nbsp;p</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="setting" onclick="window.location.href='/profile/'">
+					<div class="icon icon-user"></div>
+					<div class="text">Setting</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="signout">Sign out</li>
+			</ul>
+		</div>
 	</div>
 <!-- 
 	<div class="btn-search">
@@ -53,8 +75,27 @@
 		<img src="{% static 'images/icons/header/Shape2.png' %}">
 	</div> -->
 </header>
-	<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<script>
+  	// Initialize Firebase
+  	var config = {
+		apiKey: "AIzaSyCnXsCAt5plwnadoKDCjDva_b4vIotj5P0",
+		authDomain: "octocolumn-cc8db.firebaseapp.com",
+		databaseURL: "https://octocolumn-cc8db.firebaseio.com",
+		projectId: "octocolumn-cc8db",
+		storageBucket: "",
+		messagingSenderId: "407103464119"
+  	};
+  	firebase.initializeApp(config);
+
+  	var notifications = $('.notifications')[0];
+	var dbRef = firebase.database().ref().child('message');
+
+	dbRef.on('value', snap => $('.badge').hide());
+
+	// dbRef.on('value', snap => notifications.value = snap.val());
+</script>

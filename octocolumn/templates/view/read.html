@@ -13,6 +13,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="x-rim-auto-match" content="none">
 	<meta name="theme-color" content="#2a292a">
+	<!--facebook share-->
+	<meta property="og:url"           content="https://www.octocolumn.com/" />
+	<meta property="og:type"          content="book" />
+	<meta property="og:title"         content="title" />
+	<meta property="og:description"   content="description" />
+	<meta property="og:image"         content="https://www.octocolumn.com/" />
+
 	<title>octocolumn</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
@@ -29,7 +36,7 @@
 	{% if login %}
 		{% include 'view/header_on.html' %}
 	{% else %}
-		<!-- <script>window.location.href = "/"</script> -->
+		<script>window.location.href = "/signin/"</script>
 	{% endif %}
 	<div class="read">
 		<div class="mainImg image-loader">

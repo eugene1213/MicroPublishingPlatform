@@ -55,6 +55,21 @@ def cover_image_user_directory_path(instance, filename):
     return path
 
 
+def thumbnail_image_user_directory_path(instance, filename):
+    """ image upload directory setting e.g)
+     images/{year}/{month}/{day}/{username}/{filename}
+     images/2016/7/12/hjh/hjh-2016-07-12-158859.png """
+    now = timezone.now()
+    path = "post-image/cover/{username}/{year}/{month}/{day}/{filename}".format(
+        username=instance.author.pk,
+        year=now.year,
+        month=now.month,
+        day=now.day,
+        filename=set_filename_format(now, instance,
+                                     filename), )
+    return path
+
+
 def preview_image_user_directory_path(instance, filename):
     """ image upload directory setting e.g)
      images/{year}/{month}/{day}/{username}/{filename}
