@@ -79,23 +79,23 @@
 <script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script> -->
 <script>
   	// Initialize Firebase
-  	var config = {
-		apiKey: "AIzaSyCnXsCAt5plwnadoKDCjDva_b4vIotj5P0",
-		authDomain: "octocolumn-cc8db.firebaseapp.com",
-		databaseURL: "https://octocolumn-cc8db.firebaseio.com",
-		projectId: "octocolumn-cc8db",
-		storageBucket: "",
-		messagingSenderId: "407103464119"
-  	};
-  	firebase.initializeApp(config);
+  	// var config = {
+	// 	apiKey: "AIzaSyCnXsCAt5plwnadoKDCjDva_b4vIotj5P0",
+	// 	authDomain: "octocolumn-cc8db.firebaseapp.com",
+	// 	databaseURL: "https://octocolumn-cc8db.firebaseio.com",
+	// 	projectId: "octocolumn-cc8db",
+	// 	storageBucket: "",
+	// 	messagingSenderId: "407103464119"
+  	// };
+  	// firebase.initializeApp(config);
 
-  	var notifications = $('.notifications')[0];
-	var dbRef = firebase.database().ref().child('message');
+  	// var notifications = $('.notifications')[0];
+	// var dbRef = firebase.database().ref().child('message');
 
-	dbRef.on('value', snap => $('.badge').hide());
+	// dbRef.on('value', snap => $('.badge').hide());
 
 	// dbRef.on('value', snap => notifications.value = snap.val());
 </script>
