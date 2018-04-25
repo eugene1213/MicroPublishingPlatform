@@ -2,6 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 from member.models import User, Profile, ProfileImage
+from member.task import SignupEmailTask
 from utils.customsendmail import signup_email_send
 
 __all__=(
@@ -58,13 +59,17 @@ class SignUpSerializer(serializers.ModelSerializer):
         )
 
         if user:
-            email = signup_email_send(user)
-            if not email:
-                raise serializers.ValidationError('이메일 발송에 실패하였습니다.')
+            task = SignupEmailTask
+
+            if task.delay(user.pk):
+                return user
+            else:
+                raise serializers.ValidationError('치명적인 오류입니다')
+
         else:
             raise serializers.ValidationError('이메일을 다시한번 확인해주시기 바랍니다.')
 
-        return user
+
 
     def to_representation(self, instance):
         # serializer된 형태를 결정
