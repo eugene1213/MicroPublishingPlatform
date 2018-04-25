@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 ENV         LANG C.UTF-8
 
 # 현재경로의 모든 파일들을 컨테이너의 /srv/app폴더에 복사
-COPY         . /srv/app
+    COPY         . /srv/app
 # cd /srv/app와 같은 효과
 WORKDIR     /srv/app
 RUN         pyenv local app
@@ -68,6 +68,13 @@ RUN         mkdir -p /var/log/uwsgi/app
 #
 #RUN service ssh start
 ##
+
+RUN wget http://download.redis.io/redis-stable.tar.gz
+RUN tar xvzf redis-stable.tar.gz
+RUN cd redis-stable
+RUN make
+
+RUN redis-server
 
 RUN         cp /srv/app/.config/supervisor/* \
                 /etc/supervisor/conf.d/
