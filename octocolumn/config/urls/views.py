@@ -18,6 +18,7 @@ urlpatterns = [
             url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
     ]), name='write'),
     url(r'^@(?P<author>[-\w]+)/(?P<title>.+)$', read, name='read'),
+    # url(r'^preview/@(?P<author>[-\w]+)/(?P<title>.+)$', preview, name='read'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^recent/$', recent, name='recent'),
     url(r'^buylist/$', buylist, name='buylist'),

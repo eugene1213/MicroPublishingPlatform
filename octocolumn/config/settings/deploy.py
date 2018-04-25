@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'storages',
 
+    'corsheaders',
+
     # 장고 접속 에이전트 체크 라이브러리
     'django_user_agents',
     'django_s3_storage',
@@ -215,7 +217,7 @@ print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 #                 },
 #         }
 # }
-
+#
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SECURE_HSTS_SECONDS = 31536000
@@ -230,12 +232,3 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 SITE_ID = 1
 
-
-CORS_ORIGIN_WHITELIST = (
-
-    'google.com',
-    'hostname.example.com',
-    'localhost:8000',
-    '127.0.0.1:9000'
-    'static.octocolumn.com'
-)
