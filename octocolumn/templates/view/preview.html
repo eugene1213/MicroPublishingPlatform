@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	{% load static %}
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=1280, user-scalable=no, target-densitydpi=medium-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="description" content="octocolumn" />
+	<meta name="keywords" content="octocolumn">
+	<meta name="copyright" content="octocolumn"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="x-rim-auto-match" content="none">
+	<meta name="theme-color" content="#2a292a">
+	<!--facebook share-->
+	<meta property="og:url"           content="https://www.octocolumn.com/" />
+	<meta property="og:type"          content="book" />
+	<meta property="og:title"         content="title" />
+	<meta property="og:description"   content="description" />
+	<meta property="og:image"         content="https://www.octocolumn.com/" />
+
+	<title>octocolumn</title>
+	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/sub.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/comments.css' %}">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">		
+	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+</head>
+<body>
+	{% if login %}
+		{% include 'view/header_on.html' %}
+    {% else %}
+		{% include 'view/header.html' %}
+	{% endif %}
+	<div class="read">
+
+	</div><!-- read -->
+	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/read.js' %}"></script>
+	<script src="{% static 'js/jquery.imageloader.js' %}"></script>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.12';
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+</body>
+</html>

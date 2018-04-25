@@ -2,7 +2,7 @@ function getData(){
     
     $.ajax({
         url: "/api/column/postList/",
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
         success: function(jsons) {
@@ -22,6 +22,7 @@ function getData(){
                 var author_id = posts[post].all_status.author_id;
                 var cover_image = posts[post].thumbnail;
                 var title = posts[post].title;
+                var price = posts[post].price;                
                 var main_content = posts[post].all_status.main_content;
                 var created_date = posts[post].all_status.created_date;
                 var date = created_date.split(' ')[1];
@@ -42,7 +43,7 @@ function getData(){
                             <h1 id="'+pk+'">'+title+'</h1>\
                             <p id="'+pk+'">'+main_content+'</p>\
                             <div class="meta">\
-                                <div class="icon-comment">0 Comments</div>\
+                                <div class="icon-comment">'+price+'P</div>\
                                 <ul class="tags">\
                                     <li></li>\
                                     <li></li>\
