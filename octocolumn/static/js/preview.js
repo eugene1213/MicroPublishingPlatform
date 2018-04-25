@@ -68,9 +68,22 @@ $(document).ready(function(){
         },
         error: function(error) {
             console.log(error);
+        },
+        complete: function() {
+            var descText = $(".read").text().substr(0,100)+'...';
+            $('meta[property="og:description"]').attr('content',descText);
+            coverImgController();
         }
     }).then(function(){
         var descText = $(".read").text().substr(0,100)+'...';
-        $('meta[property="og:description"]').attr('content',descText);   
+        $('meta[property="og:description"]').attr('content',descText);
+        coverImgController();
     });
 });
+
+function coverImgController(){
+    
+    var imgHeight = window.innerHeight - $(".read_wrap").height() - 32 - 40;
+
+    $(".mainImg").height(imgHeight);
+}
