@@ -81,6 +81,16 @@ def read(request, author=None, title=None):
     # return redirect('views:index')
 
 
+def preview(request, author=None, title=None):
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/preview.html", {"login": True})
+            return response
+        return redirect('view/preview.html')
+    return redirect('view/preview.html')
+
+
 def profile(request):
     if request.COOKIES:
         token = request.COOKIES.get('token')

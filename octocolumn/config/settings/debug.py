@@ -174,8 +174,8 @@ TOKEN_URI = config_secret_debug['accounts']['google']['token_uri']
 
 
 # Celery
-BROKER_URL = 'redis://127.0.0.1:6379/0'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+# BROKER_URL = 'redis://127.0.0.1:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 
 # CELERY_BROKER_URL = 'redis://{}:{}'.format(
 #     config_secret_debug['django']['celery']['broker_url'],

@@ -13,12 +13,11 @@ $(document).ready(function(){
             console.log(json)
             var title = json.detail.title;
             var username = json.detail.nickname;
-            var url = '/@'+ author+'/'+urlTitle+'-'+post_id;
-            var href = 'https://www.octocolumn.com'+url;
+            var urlTitle = title.replace(/~|₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|'|"|,|\.|\/|<|>|\?/g,'').replace(/\s/g,'-');
+            var url = '/@'+ username +'/'+urlTitle+'-'+post_id;
+            var href = 'https://www.octocolumn.com/preview'+url;
 
             if(json.detail.isBuy) {
-                var urlTitle = title.replace(/~|₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|'|"|,|\.|\/|<|>|\?/g,'').replace(/\s/g,'-');
-                
                 window.location.href = url;
             }else {
                 // var preview_image = json.detail.preview;
@@ -55,15 +54,15 @@ $(document).ready(function(){
                                     <div class="sns">\
                                         <div class="fb-share-button" data-href="'+href+'" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>\
                                     </div>\
-                                </div><!-- click -->\
-                            </div><!-- "read_profile" -->\
-                        </div><!-- class="read_wrap" -->\
+                                </div>\
+                            </div>\
+                        </div>\
                     ';
                 $('.read').html(previewHtml);
                 
                 $('meta[property="og:url"]').attr('content',href);
                 $('meta[property="og:image"]').attr('content',cover_img);
-                $('meta[property="og:title"]').attr('content',title);
+                $('meta[property="og:title"]').attr('content',urlTitle);
             }
             // console.log("isBought: "+json.detail.isBuy);
         },
