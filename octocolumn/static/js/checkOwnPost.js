@@ -11,8 +11,8 @@ function isBought(post_id, readtime) {
             var title = json.detail.title;
             var username = json.detail.nickname;
             if(json.detail.isBuy) {
-                var urlTitle = title.replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,'').replace(' ','-');
-
+                var urlTitle = title.replace(/~|₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|'|"|,|\.|\/|<|>|\?/g,'').replace(/\s/g,'-');
+                
                 window.location.href = "/@"+username+'/'+urlTitle+'-'+post_id;
             }else {
                 // var preview_image = json.detail.preview;

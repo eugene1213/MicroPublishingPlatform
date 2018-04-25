@@ -52,7 +52,7 @@ $(document).ready(function(){
             $(".writer > span").text(author);
             $('.picture').css('background-image','url('+author_image+')');
             $('.name').text(author);
-            $('.text').html(intro);
+            $('.contents > .text').html(intro);
             var descText = $(".main_content_wrap").text().substr(0,100)+'...';
             $('meta[property="og:description"]').attr('content',descText);
             //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");

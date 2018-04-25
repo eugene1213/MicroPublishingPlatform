@@ -31,9 +31,6 @@ def mobile(request):
 
 
 def index(request):
-    if mobile(request):
-        return render_to_response('mobile/main_m.html', )
-
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -44,9 +41,6 @@ def index(request):
 
 
 def write(request, temp_id=None):
-    if mobile(request):
-        return redirect('views:index')
-
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -57,9 +51,6 @@ def write(request, temp_id=None):
 
 
 def read(request, author=None, title=None):
-    if mobile(request):
-        return redirect('views:index')
-
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -90,10 +81,17 @@ def read(request, author=None, title=None):
     # return redirect('views:index')
 
 
-def profile(request):
-    if mobile(request):
-        return redirect('views:index')
+def preview(request, author=None, title=None):
+    if request.COOKIES:
+        token = request.COOKIES.get('token')
+        if token is not None:
+            response = render_to_response("view/preview.html", {"login": True})
+            return response
+        return redirect('view/preview.html')
+    return redirect('view/preview.html')
 
+
+def profile(request):
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -103,9 +101,8 @@ def profile(request):
     return redirect('views:index')
 
 
+
 def recent(request):
-    if mobile(request):
-        return redirect('views:index')
 
     if request.COOKIES:
         token = request.COOKIES.get('token')
@@ -117,8 +114,6 @@ def recent(request):
 
 
 def bookmark(request):
-    if mobile(request):
-        return redirect('views:index')
 
     if request.COOKIES:
         token = request.COOKIES.get('token')
@@ -130,8 +125,6 @@ def bookmark(request):
 
 
 def buylist(request):
-    if mobile(request):
-        return redirect('views:index')
 
     if request.COOKIES:
         token = request.COOKIES.get('token')
@@ -143,8 +136,6 @@ def buylist(request):
 
 
 def feed(request):
-    if mobile(request):
-        return redirect('views:index')
 
     if request.COOKIES:
         token = request.COOKIES.get('token')

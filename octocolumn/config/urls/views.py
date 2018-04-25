@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 
 from config.views import index
-from config.views.index import write, naver_request
+from config.views.index import write, naver_request, preview
 from config.views.index import recent, bookmark, buylist, feed
 from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
@@ -18,6 +18,7 @@ urlpatterns = [
             url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
     ]), name='write'),
     url(r'^@(?P<author>[-\w]+)/(?P<title>.+)$', read, name='read'),
+    url(r'^preview/@(?P<author>[-\w]+)/(?P<title>.+)$', preview, name='read'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^recent/$', recent, name='recent'),
     url(r'^buylist/$', buylist, name='buylist'),

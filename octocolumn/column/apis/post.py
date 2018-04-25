@@ -328,44 +328,67 @@ class PostPreReadView(APIView):
 
 
 class IsBuyPost(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         user = self.request.user
-        try:
-            post = Post.objects.filter(id=param).get()
-
+        if user.is_authenticated:
             try:
-                BuyList.objects.filter(user=user, post=post).get()
-                return Response({"detail": {
-                    "isBuy": True,
-                    "title": post.title,
-                    "nickname": post.author.nickname,
-                }}, status=status.HTTP_200_OK)
+                post = Post.objects.filter(id=param).get()
+                serializer = PostSerializer(post)
 
-            except ObjectDoesNotExist:
-                if post.author == user:
+                try:
+                    BuyList.objects.filter(user=user, post=post).get()
                     return Response({"detail": {
                         "isBuy": True,
-                        "title": post.title,
+                        "title": serializer.data['title'],
+                        "nickname": post.author.nickname,
+                    }}, status=status.HTTP_200_OK)
+
+                except ObjectDoesNotExist:
+                    if post.author == user:
+                        return Response({"detail": {
+                            "isBuy": True,
+                            "title": serializer.data['title'],
+                            "nickname": post.author.nickname,
+
+                        }}, status=status.HTTP_200_OK)
+                    return Response({"detail": {
+                        "isBuy": False,
+                        "cover_image": serializer.data['cover_image'],
+                        "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
+                        "price": serializer.data['price'],
+                        "preview": serializer.data['preview'],
+                        "title": serializer.data['title'],
                         "nickname": post.author.nickname,
 
-                    }}, status=status.HTTP_200_OK)
+                    }},
+                        status=status.HTTP_200_OK)
+
+            except ObjectDoesNotExist:
+                raise exceptions.NotFound()
+
+        else:
+            try:
+                post = Post.objects.filter(id=param).get()
+                serializer = PostSerializer(post)
+
                 return Response({"detail": {
                     "isBuy": False,
-                    "cover_image": '/media/' + str(post.cover_image),
-                    "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
-                    "price": post.price,
-                    "preview": post.preview,
-                    "title": post.title,
+                    "cover_image": serializer.data['cover_image'],
+                    "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime(
+                        '%H:%M'),
+                    "price": serializer.data['price'],
+                    "preview": serializer.data['preview'],
+                    "title": serializer.data['title'],
                     "nickname": post.author.nickname,
 
                 }},
                     status=status.HTTP_200_OK)
 
-        except ObjectDoesNotExist:
-            raise exceptions.NotFound()
+            except ObjectDoesNotExist:
+                raise exceptions.NotFound()
 
 
 class AuthorResult(APIView):
