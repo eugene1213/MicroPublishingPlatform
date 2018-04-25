@@ -41,10 +41,6 @@ django-ipware
 django-user-agents
 django-redis-cache
 django-jet
-slimit
-lxml
-html5lib
-csscompressor
-brotlipy
+celery[redis]
 
 

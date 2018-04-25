@@ -144,15 +144,17 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'redis_cache.RedisCache',
-#         'LOCATION': 'localhost:6379',
-#         'OPTIONS': {
-#             'DB': 1,
-#         },
-#     },
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        'OPTIONS': {
+            # "PASSWORD": "!devocto1234",
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # 'DB': 1,
+        },
+    },
+}
 
 # Storage settings
 STATICFILES_LOCATION = 'static'
@@ -172,6 +174,9 @@ TOKEN_URI = config_secret_debug['accounts']['google']['token_uri']
 
 
 # Celery
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+
 # CELERY_BROKER_URL = 'redis://{}:{}'.format(
 #     config_secret_debug['django']['celery']['broker_url'],
 #     config_secret_debug['django']['celery']['broker_port']
