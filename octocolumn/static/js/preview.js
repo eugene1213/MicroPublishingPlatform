@@ -3,10 +3,10 @@ $(document).ready(function(){
     var current_url = window.location.href;
     var post_id = current_url.split("-");
         post_id = post_id[post_id.length-1];
-
+        
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
-        async: true,
+        async: false,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
@@ -25,7 +25,7 @@ $(document).ready(function(){
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
 
-                if(window.location.href != href) history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
+                if(window.location.href != href) history.pushState(null,null,'/preview'+url);   // 유저가 임의로 url 변경시 올바른 url로 조정
                 
                 var cover_img = json.detail.cover_image;
                 var preview = json.detail.preview;
@@ -70,6 +70,9 @@ $(document).ready(function(){
         },
         error: function(error) {
             console.log(error);
+        },
+        complete: function(){
+            coverImgController();
         }
     });
 });
