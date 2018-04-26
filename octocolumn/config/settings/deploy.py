@@ -133,21 +133,22 @@ DATABASES = {
     }
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': [
-            "octocolumn-001.rqgefq.0001.apn2.cache.amazonaws.com:6379",
-            "octocolumn-002.rqgefq.0001.apn2.cache.amazonaws.com:6379",
-            "octocolumn-003.rqgefq.0001.apn2.cache.amazonaws.com:6379"
-        ],
-        'OPTIONS': {
-            'DB': 1,
-            'MASTER_CACHE': "octocolumn-001.rqgefq.0001.apn2.cache.amazonaws.com:6379"
-        },
-    },
-}
-
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'redis_cache.RedisCache',
+#         'LOCATION': [
+#             "octocolumn-001.rqgefq.0001.apn2.cache.amazonaws.com:6379",
+#             "octocolumn-002.rqgefq.0001.apn2.cache.amazonaws.com:6379",
+#             "octocolumn-003.rqgefq.0001.apn2.cache.amazonaws.com:6379"
+#         ],
+#         'OPTIONS': {
+#             'DB': 1,
+#             'MASTER_CACHE': "octocolumn-001.rqgefq.0001.apn2.cache.amazonaws.com:6379"
+#         },
+#     },
+# }
+# CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
+BROKER_URL = 'amqp://devocto:devocto1234@13.125.224.253:5672//'
 # CELERY
 # CELERY_BROKER_URL = '{}:{}'.format(
 #     config_secret_deploy['django']['celery']['broker_url'],
