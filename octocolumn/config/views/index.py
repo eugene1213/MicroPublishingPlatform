@@ -76,7 +76,6 @@ def read(request, author=None, title=None):
             except ObjectDoesNotExist:
                 raise Http404
 
-
         return redirect('views:index')
     # return redirect('views:index')
 
@@ -87,10 +86,8 @@ def preview(request, author=None, title=None):
         if token is not None:
             response = render_to_response("view/preview.html", {"login": True})
             return response
-        response = render_to_response("view/preview.html")
-        return response
-    response = render_to_response("view/preview.html")
-    return response
+        return redirect('views:preview')
+    return redirect('views:preview')
 
 
 def profile(request):
