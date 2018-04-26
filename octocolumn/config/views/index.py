@@ -87,8 +87,10 @@ def preview(request, author=None, title=None):
         if token is not None:
             response = render_to_response("view/preview.html", {"login": True})
             return response
-        return redirect('view/preview.html')
-    return redirect('view/preview.html')
+        response = render_to_response("view/preview.html")
+        return response
+    response = render_to_response("view/preview.html")
+    return response
 
 
 def profile(request):
