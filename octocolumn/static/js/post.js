@@ -237,7 +237,37 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
         }),
         success: function(json) {
             console.log("신청됨");
-            $(".modal-success-wrap").show();
+            modal({
+                type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+                title: '', //Modal Title
+                text: '많은 사람들이 읽었으면 좋겠습니다.<br/>좋은 이야기를 들려주셔서 감사드립니다.', //Modal HTML Content
+                size: 'normal', //Modal Size (normal | large | small)
+                buttons: [{
+					text: "별말씀을요.",
+					val: true,
+					onClick: function(e) {
+						window.location.href = '/';
+					}
+				}],
+                center: true, //Center Modal Box?
+                autoclose: false, //Auto Close Modal Box?
+                callback: function(){window.location.href = '/'}, //Callback Function after close Modal (ex: function(result){alert(result);})
+                onShow: function(r) {}, //After show Modal function
+                closeClick: true, //Close Modal on click near the box
+                closable: true, //If Modal is closable
+                theme: 'atlant', //Modal Custom Theme
+                animate: false, //Slide animation
+                background: 'rgba(0,0,0,0.35)', //Background Color, it can be null
+                zIndex: 1050, //z-index
+                template: '<div class="modal-box"><div class="modal-inner"><div class="modal-title"></div><div class="modal-text"><div class="modal-buttons"></div></div></div></div>',
+                _classes: {
+                    box: '.modal-box',
+                    boxInner: ".modal-inner",
+                    title: '.modal-title',
+                    content: '.modal-text',
+                    buttons: '.modal-buttons'
+                }
+            });
             localStorage.setItem("temp_id", '');
         },
         error: function(error) {
