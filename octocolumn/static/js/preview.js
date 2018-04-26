@@ -24,7 +24,7 @@ $(document).ready(function(){
 
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
-                
+
                 if(window.location.href != href) history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
                 
                 var cover_img = json.detail.cover_image;
@@ -54,7 +54,7 @@ $(document).ready(function(){
                             <div class="read_profile">\
                                 <div class="click">\
                                     <div class="sns">\
-                                        <div class="fb-share-button" data-href="'+href+'" data-layout="button" data-size="small" data-mobile-iframe="true"></div>\
+                                        <div class="fb-share-button" data-href="'+href+'" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.octocolumn.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>\
                                     </div>\
                                 </div>\
                             </div>\
