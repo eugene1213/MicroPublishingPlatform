@@ -333,7 +333,7 @@ class IsBuyPost(APIView):
 
     def main_content(self, obj):
         cleaner = re.compile('<.*?>')
-        clean_text = re.sub(cleaner, '', obj.main_content)
+        clean_text = re.sub(cleaner, '', obj)
         return clean_text[:300]
 
     def get(self, request, *args, **kwargs):
