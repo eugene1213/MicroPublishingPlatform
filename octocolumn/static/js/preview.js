@@ -52,7 +52,7 @@ $(document).ready(function(){
                             <div class="read_profile">\
                                 <div class="click">\
                                     <div class="sns">\
-                                        <div class="fb-share-button" data-href="'+href+'" data-layout="button_count" data-size="small" data-mobile-iframe="true"></div>\
+                                        <div class="fb-share-button" data-href="'+href+'" data-layout="button" data-size="small" data-mobile-iframe="true"></div>\
                                     </div>\
                                 </div>\
                             </div>\
