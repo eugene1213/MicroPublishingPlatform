@@ -136,8 +136,7 @@ def profile(request):
     return redirect('views:index')
 
 
-def recent(request):
-
+def more(request, type=None):
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:

@@ -16,29 +16,30 @@
     <title>octocolumn</title>
     <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
     <!-- css -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/recent-more.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
     <!-- js -->
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>  
 </head>
 <body>
+    <div class="page">
 	{% if login %}
 		{% include 'view/header_on.html' %}
 	{% else %}
 		{% include 'view/header.html' %}
     {% endif %}
-    <div class="mainfeed">
-        <div class="main_title">
-            <div class="txt1">
-                최근 글
+        <div class="container">
+            <div class="sub-content-title">
+                All Latest Updated Posts
+                <span class="post-more-view" onclick="window.location.href='/recent/'"></span>
             </div>
-            <div class="main_hr"></div>
-            <!-- recent.js -->
+            <div class="blog-posts">
+                <!--post list-->
+            </div> 	
         </div>
     </div>
     	<!-- flip -->
@@ -89,7 +90,6 @@
         <!-- //arrow_box -->
     </div>
     <!-- //flip -->
-    {% include 'view/modal-signin.html' %}
     <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/recent.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>
@@ -97,5 +97,6 @@
 	<script type="text/javascript" src="{% static 'js/request-buy.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>  
+    <script src="{% static 'js/jquery.imageloader.js' %}"></script>    
 </body>
 </html>
