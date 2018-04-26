@@ -1,13 +1,14 @@
 from django.conf.urls import url, include
 
 from config.views import index
-from config.views.index import write, naver_request, preview
-from config.views.index import recent, bookmark, buylist, feed
+from config.views.index import write, naver_request, preview, more
+from config.views.index import bookmark, buylist, feed
 from config.views.index import signin, signup, signinForm, okay, findPass, kakao, google, facebook, resetPass
 from config.views.index import read
 from config.views.index import profile
 from config.views.index import shop
 from member.apis import VerifyEmail, InviteVerifyEmail
+
 
 urlpatterns = [
     url(r'^$', index, name='index'),
@@ -20,7 +21,8 @@ urlpatterns = [
     url(r'^@(?P<author>[-\w]+)/(?P<title>.+)$', read, name='read'),
     url(r'^preview/@(?P<author>[-\w]+)/(?P<title>.+)$', preview, name='preview'),
     url(r'^profile/$', profile, name='profile'),
-    url(r'^recent/$', recent, name='recent'),
+    url(r'^more/(?P<type>[-\w]+)/$', more, name='more'),
+    # url(r'^recent/$', recent, name='recent'),
     url(r'^buylist/$', buylist, name='buylist'),
     url(r'^bookmark/$', bookmark, name='bookmark'),
     url(r'^feed/$', feed, name='feed'),
