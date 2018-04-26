@@ -11,7 +11,7 @@ $(document).ready(function(){
             
             
             var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            var cover_img = data.results[card_id].cover_image;
+            var cover_img = data.results[card_id].thumbnail;
             var title = data.results[card_id].title;
             var date = data.results[card_id].all_status.created_datetime
             var author = data.results[card_id].all_status.username;
@@ -58,7 +58,7 @@ function getRecent(url){
 
                 var post_id = json.results[i].pk;
                 var readTime = Math.round(json.results[i].all_status.typo_count / 500);                               // 1분/500자 반올림
-                var cover_img = json.results[i].cover_image;
+                var cover_img = json.results[i].thumbnail;
                 var title = json.results[i].title;
                 var main_content = json.results[i].all_status.main_content.substr(0,100);
                 var created_date = json.results[i].all_status.created_date;
