@@ -81,13 +81,49 @@ def read(request, author=None, title=None):
 
 
 def preview(request, author=None, title=None):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
+    token = request.COOKIES.get('token')
+    if token is not None:
+        post_num = title.split('-')
+        if len(post_num) is 1:
+            raise Http404
+
+        if not int(post_num[-1]) % 1 == 0:
+            raise Http404
+
+        try:
+            post = Post.objects.filter(pk=int(post_num[-1])).get()
+            # postTitle = post.title.replace(' ', '-')
+            # postUser = post.author.username.split('@')[0]
+            # print(author != postUser)
+            # # if author != post.author.username and title != postTitle:
+            # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
+            # #                                             str(post.pk)
+            # #                                 )
             response = render_to_response("view/preview.html", {"login": True})
             return response
-        return redirect('views:preview')
-    return redirect('views:preview')
+        except ObjectDoesNotExist:
+            raise Http404
+    else:
+        post_num = title.split('-')
+        if len(post_num) is 1:
+            raise Http404
+
+        if not int(post_num[-1]) % 1 == 0:
+            raise Http404
+
+        try:
+            post = Post.objects.filter(pk=int(post_num[-1])).get()
+            # postTitle = post.title.replace(' ', '-')
+            # postUser = post.author.username.split('@')[0]
+            # print(author != postUser)
+            # # if author != post.author.username and title != postTitle:
+            # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
+            # #                                             str(post.pk)
+            # #                                 )
+            response = render_to_response("view/preview.html", {"login": False})
+            return response
+        except ObjectDoesNotExist:
+            raise Http404
 
 
 def profile(request):
@@ -98,7 +134,6 @@ def profile(request):
             return response
         return redirect('views:index')
     return redirect('views:index')
-
 
 
 def recent(request):
