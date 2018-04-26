@@ -1,29 +1,4 @@
 $(document).ready(function() {
-    // var opts = {
-    //     lines: 12             // The number of lines to draw
-    //   , length: 4             // The length of each line
-    //   , width: 3              // The line thickness
-    //   , radius: 10            // The radius of the inner circle
-    //   , scale: 0.7            // Scales overall size of the spinner
-    //   , corners: 1            // Roundness (0..1)
-    //   , color: '#000'         // #rgb or #rrggbb
-    //   , opacity: 1/4          // Opacity of the lines
-    //   , rotate: 0             // Rotation offset
-    //   , direction: 1          // 1: clockwise, -1: counterclockwise
-    //   , speed: 1              // Rounds per second
-    //   , trail: 100            // Afterglow percentage
-    //   , fps: 20               // Frames per second when using setTimeout()
-    //   , zIndex: 2e9           // Use a high z-index by default
-    //   , className: 'spinner'  // CSS class to assign to the element
-    //   , top: '50%'            // center vertically
-    //   , left: '50%'           // center horizontally
-    //   , shadow: false         // Whether to render a shadow
-    //   , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
-    //   , position: 'absolute'  // Element positioning
-    // }
-    // var target = document.getElementById('spinner');
-    // var spinner = new Spinner(opts).spin(target);
-    // target.appendChild(spinner.el);
 
     var data = getData();
 
@@ -35,15 +10,7 @@ $(document).ready(function() {
         var readtime = $('#readtime'+post_id).text();
 
         if(post_id > 0){
-            // var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            // var cover_img = data[card_id-1].cover_image;
-            // var title = data[card_id-1].title;
-            // var date = data[card_id-1].all_status.created_datetime;
-            // var username = data[card_id-1].all_status.username;
-            // var price = data[card_id-1].price;
-            // var preview = data[card_id-1].preview;
-            // var readtime = $("#card_" + card_id + " .profile_readtime").text();
-
+            
             isBought(post_id, readtime);
             
         }
