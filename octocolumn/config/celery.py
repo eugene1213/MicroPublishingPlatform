@@ -4,7 +4,7 @@ from celery import Celery
 # `celery` 프로그램을 작동시키기 위한 기본 장고 세팅 값을 정한다.
 # from config.settings import DEBUG
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.debug')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 # if DEBUG:
 app = Celery('config', backend='redis', broker='redis://127.0.0.1:6379/0')
