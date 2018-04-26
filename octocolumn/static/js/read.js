@@ -181,3 +181,14 @@ function coverImgController(){
 
     $(".mainImg").height(imgHeight);
 }
+//  우클릭 방지
+$(function() {
+	$(document).on('contextmenu', function() {
+        return false;
+    });
+});
+$(function() {
+	$('.main_content_wrap').on('mousedown', function() {
+        return false;
+    });
+});

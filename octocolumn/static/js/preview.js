@@ -24,7 +24,9 @@ $(document).ready(function(){
 
                 // var tag = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
-
+                
+                if(window.location.href != href) history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
+                
                 var cover_img = json.detail.cover_image;
                 var preview = json.detail.preview;
                 var price = json.detail.price;
@@ -68,16 +70,7 @@ $(document).ready(function(){
         },
         error: function(error) {
             console.log(error);
-        },
-        complete: function() {
-            var descText = $(".read").text().substr(0,100)+'...';
-            $('meta[property="og:description"]').attr('content',descText);
-            coverImgController();
         }
-    }).then(function(){
-        var descText = $(".read").text().substr(0,100)+'...';
-        $('meta[property="og:description"]').attr('content',descText);
-        coverImgController();
     });
 });
 
