@@ -1,4 +1,5 @@
 import base64
+import re
 
 from datetime import datetime
 
@@ -330,6 +331,11 @@ class PostPreReadView(APIView):
 class IsBuyPost(APIView):
     permission_classes = (AllowAny,)
 
+    def main_content(self, obj):
+        cleaner = re.compile('<.*?>')
+        clean_text = re.sub(cleaner, '', obj)
+        return clean_text[:300]
+
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         user = self.request.user
@@ -362,6 +368,8 @@ class IsBuyPost(APIView):
                         "preview": serializer.data['preview'],
                         "title": serializer.data['title'],
                         "nickname": post.author.nickname,
+                        "main_content": self.main_content(post.main_content)
+
 
                     }},
                         status=status.HTTP_200_OK)
@@ -383,6 +391,7 @@ class IsBuyPost(APIView):
                     "preview": serializer.data['preview'],
                     "title": serializer.data['title'],
                     "nickname": post.author.nickname,
+                    "main_content": self.main_content(post.main_content)
 
                 }},
                     status=status.HTTP_200_OK)
