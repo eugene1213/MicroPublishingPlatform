@@ -2,7 +2,7 @@ $(document).ready(function(){
     
     var currentUrl = window.location.href;
     var requestType = currentUrl.split('/');
-        requestType = requestType[requestType.length-1];
+        requestType = requestType[requestType.length-2];
     var requestUrl = '';
 
     switch( requestType ){
