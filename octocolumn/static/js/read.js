@@ -61,7 +61,7 @@ $(document).ready(function(){
         },
         error: function(error) {
             console.log(error);
-            window.location.href = "/preview"+url;
+            // window.location.href = "/";
         }
     });
     // 댓글 로딩
