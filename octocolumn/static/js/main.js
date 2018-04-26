@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var data = getData();
+    getData();
 
     popBalloon();
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
         var readtime = $('#readtime'+post_id).text();
 
         if(post_id > 0){
-            
+
             isBought(post_id, readtime);
             
         }

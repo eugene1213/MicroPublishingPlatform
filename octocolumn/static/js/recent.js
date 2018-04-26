@@ -1,93 +1,120 @@
 $(document).ready(function(){
     
-    var data = getRecent("/api/column/postRecentMore/");
+    var currentUrl = window.location.href;
+    var requestType = currentUrl.split('/');
+        requestType = requestType[requestType.length-1];
+    var requestUrl = '';
+
+    switch( requestType ){
+
+        case 'recent': requestUrl = '/api/column/postRecentMore/';break;
+        case 'bookmark': requestUrl = '/api/column/bookmarkList/';break;
+        case 'buyList': requestUrl = '/api/column/buyList/';break;
+        case 'feed': requestUrl = '/api/column/postRecentMore/';
+
+    }
+    getRecent(requestUrl);
+
     popBalloon();
 
     $(document).click(function(e){
         
         var post_id = e.target.getAttribute("id");
+        var readtime = $('#readtime'+post_id).text();        
 
         if(post_id > 0){
-            
-            
-            var card_id = $("#"+post_id).closest(".feedbox").attr("id").substr(5,1);
-            var cover_img = data.results[card_id].thumbnail;
-            var title = data.results[card_id].title;
-            var date = data.results[card_id].all_status.created_datetime
-            var author = data.results[card_id].all_status.username;
-            var price = data.results[card_id].price;
-            var preview = data.results[card_id].preview;
-            var readtime = $("#card_" + card_id + " .profile_readtime").text();
 
-            isBought(post_id, cover_img, title, date, author, readtime, price, preview);
+            isBought(post_id, readtime);
         }
     });
-    $(".btn-cancel-wrap").click(function(){
-        $(".preview-wrap").hide();
-    });
+    // $(".btn-cancel-wrap").click(function(){
+    //     $(".preview-wrap").hide();
+    // });
     $(".profile_mark").click(function(e){
         
         var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
         bookmark(bookmark_id);
     });
+    $('.image-loader').imageloader({
+        background: true,
+        callback: function (elm) {
+            $('.spinner').remove();
+            $(elm).fadeIn();
+        }
+    });
 });
 
 function getRecent(url){
 
-    var data = {};
-    var count = 0;
-
-    if($(".flip").length != 0){
-
-        count = $(".flip").length;
-    }
-
     $.ajax({
         url: url,
-        async: false,
+        async: true,
         type: 'GET',
         dataType: 'json',
-        success: function(json) {
+        success: function(jsons) {
 
-            data = json;
-            var usernameArray = [];
+            var posts = jsons.results;
+            
+            console.log(jsons)
+            var next = jsons.next;
 
-            console.log(json)
-            next = json.next;
-            for(var i in json.results){
+            var postsHtml = '';
+            var postHtml = '';
+            var rowHtmlOpen = '<div class="row cf">';
+            var rowHtmlClose = '</div>';
 
-                var post_id = json.results[i].pk;
-                var readTime = Math.round(json.results[i].all_status.typo_count / 500);                               // 1분/500자 반올림
-                var cover_img = json.results[i].thumbnail;
-                var title = json.results[i].title;
-                var main_content = json.results[i].all_status.main_content.substr(0,100);
-                var created_date = json.results[i].all_status.created_date;
-                var username = json.results[i].all_status.username;
-                var author_id = json.results[i].all_status.author_id;
-                var profile_image = json.results[i].all_status.img.profile_image;
-                var bookmarkElement = '';
-                json.results[i].all_status.bookmark_status ? bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark"></div>' : bookmarkElement = '<div id="bookmark_' + post_id + '" class="icon-bookmark-empty"></div>';                
+            for(post in posts){
+
+                var postHtml = '';
+                var readTime = Math.round(posts[post].all_status.typo_count / 500);  // 1분/500자 반올림
+                var pk = posts[post].pk;
+                var author_id = posts[post].all_status.author_id;
+                var cover_image = posts[post].thumbnail;
+                var title = posts[post].title;
+                var price = posts[post].price;                
+                var main_content = posts[post].all_status.main_content;
+                var created_date = posts[post].all_status.created_date;
+                var date = created_date.split(' ')[1];
+                var month = created_date.split(' ')[0];
+                var username = posts[post].all_status.username;
+                var profile_image = posts[post].all_status.img.profile_image;
+                var bookmark_status = posts[post].all_status.bookmark_status;
                
-                usernameArray.push(username);
-                var str =  '<div class="feedbox4 feedbox" id="card_'+ i +'">              \
-                                <div class="fb1_img profile-image-upload-wrap" style="background-image:url(\''+ cover_img +'\')" id="'+ post_id+'"></div>           \
-                                <div class="fb1_txt">                   \
-                                    <div class="fb1_txt_1" id="'+ post_id+'">             \
-                                        '+ title +'                     \
-                                    </div>                              \
-                                    <div class="fb1_txt_2" id="'+ post_id+'">             \
-                                        '+ main_content +'              \
-                                    </div>                              \
-                                    <div class="profile_box">           \
-                                        <div class="profile_img" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>  \
-                                        <div class="profile_name">'+ username +'</div>                 \
-                                        <div class="profile_date">'+ created_date +'</div>             \
-                                        <div class="profile_readtime">'+ readTime +' min read</div>    \
-                                        <div class="profile_mark">' + bookmarkElement + '</div>        \
-                                    </div>                              \
-                                </div>                                  \
-                            </div>';
-                $(".main_title").append(str)
+                postHtml += '\
+                <div class="post">\
+                    <div class="image image-loader" id="'+pk+'" style="background-image:url('+cover_image+')">\
+                        <div class="time">\
+                            <div class="date">'+date+'</div>\
+                            <div class="month">'+month+'</div>\
+                        </div>\
+                    </div>\
+                    <div class="content">\
+                        <h1 id="'+pk+'">'+title+'</h1>\
+                        <p id="'+pk+'">'+main_content+'</p>\
+                        <div class="meta">\
+                            <div class="icon-comment">'+price+'P</div>\
+                            <ul class="tags">\
+                                <li></li>\
+                                <li></li>\
+                            </ul>\
+                        </div>\
+                        <div class="user-container">\
+                            <div class="user full-right">\
+                                <div class="user-pic image-loader" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>\
+                                <div class="user-info">\
+                                    <h1>'+username+'</h1>\
+                                    <p class="full-right" id="readtime'+pk+'">'+readTime+' min read</p>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+            ';
+                if(post){
+                    postHtml = postHtml.replace('class="post"','class="post featured"');
+                    postsHtml += postHtml;
+                    postHtml = '';
+                }
                 // $(".main_title").append(str).find("#" + username).load(function(){loadCropImage("#" + username);});
 
                 //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
@@ -96,21 +123,16 @@ function getRecent(url){
                 //     loadCropImage("#" + username);
                 // });
             }
+            $('.blog-posts').append(postsHtml);
+            if(next==null) return $(window).unbind('scroll');
             $(window).scroll(function() { 
                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                    getRecent(next);
+                    if(next!=null) getRecent(next);
                 } 
             });
-            // for( i in usernameArray){
-            //     console.log("#" + usernameArray[i]);
-            //     $("#" + usernameArray[i]).imagesLoaded().then(function(){
-            //         loadCropImage("#" + usernameArray[i]);
-            //     });
-            // }
         },
         error: function(error) {
             console.log(error);
         }
     });
-    return data;
 }
