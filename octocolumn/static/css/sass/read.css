@@ -1,1 +1,91 @@
-body{padding-bottom:100px}.mainImg{padding-top:32px;background-position:50% 50% !important;background-size:cover !important}.main_content_wrap{width:100%;margin:auto;position:relative;word-break:break-word}.main_content_wrap a:link{text-decoration:none}.main_content_wrap a:visited{text-decoration:none}.main_content_wrap a:active{text-decoration:none}.main_content_wrap a:hover{text-decoration:none;color:#004b8d;cursor:pointer}.main_content_wrap p,.main_content_wrap blockquote,.main_content_wrap h1,.main_content_wrap h2{display:block;width:952px;margin:auto;line-height:2em}.main_content_wrap p,.main_content_wrap blockquote{font-weight:300}.main_content_wrap b{width:952px;margin:auto;line-height:2em}.main_content_wrap blockquote{-webkit-margin-before:1em;-webkit-margin-after:1em}.main_content_wrap .medium-insert-buttons-show{display:none}.main_content_wrap .medium-insert-images{width:952px;margin:auto}.main_content_wrap .medium-insert-images img{max-width:100%;margin:0 0 20px 0}.main_content_wrap .medium-insert-images figure{text-align:center}.main_content_wrap .medium-insert-images-wide{width:952px;margin:auto;text-align:center}.main_content_wrap .medium-insert-images-wide img{max-width:100%;margin:0 0 20px 0}.main_content_wrap .medium-insert-images-left{width:952px;margin:auto}.main_content_wrap .medium-insert-images-left img{max-width:53.33%;float:left;margin:0 30px 20px 0}.main_content_wrap .medium-insert-images-right{width:952px;margin:auto}.main_content_wrap .medium-insert-images-right img{max-width:53.33%;float:right;margin:0 0 20px 30px}.main_content_wrap .medium-insert-images-full{width:100%;text-align:center}.preview-tag-wrap{width:784px;margin:auto;margin-bottom:64px;display:flex;flex-wrap:wrap;justify-content:space-between}.preview-tag-wrap .preview-tag{display:inline-block;margin:auto;margin-bottom:16px;height:40px;line-height:40px;padding-right:32px;padding-left:32px;border-radius:4px;box-shadow:0 1px 4px 0 rgba(0,0,0,0.3),0 6px 12px 0 rgba(0,0,0,0.2)}
+body {
+  padding-bottom: 100px; }
+
+.mainImg {
+  padding-top: 32px;
+  background-position: 50% 50% !important;
+  background-size: cover !important; }
+
+.main_content_wrap {
+  width: 100%;
+  margin: auto;
+  position: relative;
+  word-break: break-word; }
+  .main_content_wrap a:link {
+    text-decoration: none; }
+  .main_content_wrap a:visited {
+    text-decoration: none; }
+  .main_content_wrap a:active {
+    text-decoration: none; }
+  .main_content_wrap a:hover {
+    text-decoration: none;
+    color: #004b8d;
+    cursor: pointer; }
+  .main_content_wrap p, .main_content_wrap blockquote, .main_content_wrap h1, .main_content_wrap h2 {
+    display: block;
+    width: 952px;
+    margin: auto;
+    line-height: 2em; }
+  .main_content_wrap p, .main_content_wrap blockquote {
+    font-weight: 300; }
+  .main_content_wrap b {
+    width: 952px;
+    margin: auto;
+    line-height: 2em; }
+  .main_content_wrap blockquote {
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em; }
+  .main_content_wrap .medium-insert-buttons-show {
+    display: none; }
+  .main_content_wrap .medium-insert-images {
+    width: 952px;
+    margin: auto; }
+    .main_content_wrap .medium-insert-images img {
+      max-width: 100%;
+      margin: 0 0 20px 0; }
+    .main_content_wrap .medium-insert-images figure {
+      text-align: center; }
+  .main_content_wrap .medium-insert-images-wide {
+    width: 952px;
+    margin: auto;
+    text-align: center; }
+    .main_content_wrap .medium-insert-images-wide img {
+      max-width: 100%;
+      margin: 0 0 20px 0; }
+  .main_content_wrap .medium-insert-images-left {
+    width: 952px;
+    margin: auto; }
+    .main_content_wrap .medium-insert-images-left img {
+      max-width: 53.33%;
+      float: left;
+      margin: 0 30px 20px 0; }
+  .main_content_wrap .medium-insert-images-right {
+    width: 952px;
+    margin: auto; }
+    .main_content_wrap .medium-insert-images-right img {
+      max-width: 53.33%;
+      float: right;
+      margin: 0 0 20px 30px; }
+  .main_content_wrap .medium-insert-images-full {
+    width: 100%;
+    text-align: center; }
+
+.preview-tag-wrap {
+  width: 784px;
+  margin: auto;
+  margin-bottom: 64px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+  .preview-tag-wrap .preview-tag {
+    display: inline-block;
+    margin: auto;
+    margin-bottom: 16px;
+    height: 40px;
+    line-height: 40px;
+    padding-right: 32px;
+    padding-left: 32px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3), 0 6px 12px 0 rgba(0, 0, 0, 0.2); }
+
+/*# sourceMappingURL=read.css.map */

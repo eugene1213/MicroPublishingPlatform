@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 
 from column.models import Post
+from config.settings import MEDIA_URL
 from member.models import User
 from utils.tokengenerator import account_activation_token
 
@@ -82,6 +83,17 @@ def read(request, author=None, title=None):
 
 def preview(request, author=None, title=None):
     token = request.COOKIES.get('token')
+
+    def main_content(obj):
+        cleaner = re.compile('<.*?>')
+        clean_text = re.sub(cleaner, '', obj)
+        return clean_text[:100]
+
+    # 특수문자 처리
+    def url_exchange(title):
+        url = re.sub('[/~₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|,|\.|\/|<|>|\?/g]', '', title)
+        return url.replace(' ', '-')
+
     if token is not None:
         post_num = title.split('-')
         if len(post_num) is 1:
@@ -99,7 +111,17 @@ def preview(request, author=None, title=None):
             # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
             # #                                             str(post.pk)
             # #                                 )
-            response = render_to_response("view/preview.html", {"login": True})
+            response = render_to_response("view/preview.html", {
+                "login": True,
+                "title": post.title,
+                "main_content": main_content(post.main_content),
+                "cover_image": post.cover_image,
+                "url": 'https://www.octocolumn.com/' + '@' + post.author.nickname + '/' + url_exchange(post.title) +
+                       "-" + post.pk,
+                "preview": post.preview,
+                "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
+                "username": post.author.nickname
+            })
             return response
         except ObjectDoesNotExist:
             raise Http404
@@ -120,7 +142,17 @@ def preview(request, author=None, title=None):
             # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
             # #                                             str(post.pk)
             # #                                 )
-            response = render_to_response("view/preview.html", {"login": False})
+            response = render_to_response("view/preview.html", {
+                "login": False,
+                "title": post.title,
+                "main_content": main_content(post.main_content),
+                "cover_image": post.cover_image,
+                "url": 'https://www.octocolumn.com/'+'@' + post.author.nickname + '/' + url_exchange(post.title) + "-" +
+                str(post.pk),
+                "preview": post.preview,
+                "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
+                "username": post.author.nickname
+                                                                })
             return response
         except ObjectDoesNotExist:
             raise Http404

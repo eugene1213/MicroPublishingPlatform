@@ -12,12 +12,14 @@
 	<meta http-equiv="x-rim-auto-match" content="none" />
 	<meta name="theme-color" content="#2a292a" />
 	<!--facebook share-->
-	<meta property="og:url"           content="" />
-	<meta property="og:type"          content="book" />
-	<meta property="og:title"         content="" />
-	<meta property="og:description"   content="" />
-	<meta property="og:image"         content="" />
-
+	<meta property="og:url" content="{{ url }}" />			<!-- www.octocolumn.com/preview/@{username}/{title}-{post_id} -->
+										 			<!-- {title}에 preview.js line 16 정규표현식 적용 -->
+	<meta property="og:type" content="book" />
+	<meta property="og:title" content="{{ title }}" />			<!-- {title} -->
+										   			<!-- 이 {title}은 정규식 적용x -->
+	<meta property="og:description" content="{{ main_content }}" />	<!-- {main_content} -->
+	<meta property="og:image" content="/media/{{ cover_image }}" />			<!-- {cover_img} -->
+    {{ cover_img }}
 	<title>octocolumn</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
@@ -37,12 +39,43 @@
 
 	{% endif %}
 	<div class="read">
-
-	</div><!-- read -->
+		<div class="mainImg image-loader" style="background-image: url(/media/{{ cover_image }});"><!--url({cover_img})-->
+		</div>
+		<div class="read_wrap">
+			<h2>{{ title }}</h2>
+			<div class="write">
+				<div class="writer">
+					by <span>{{ username }}</span>
+				</div>
+				<div class="date">
+					<!-- {date} -->
+                    {{ created_datetime }}
+				</div>
+			</div>
+		</div>
+		<div class="main_content_wrap">
+            {% autoescape off %}
+			    {{ preview }}
+            {% endautoescape %}
+		</div>
+		<div class="read_wrap">
+			<div class="preview-tag-wrap">
+			</div>
+			<div class="read_profile">
+				<div class="click">
+					<div class="sns">
+						<!--data-href="www.octocolumn.com/preview/@{username}/{title}-{post_id}"-->
+						<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.octocolumn.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //read end -->
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
-	<script src="{% static 'js/jquery.imageloader.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.imageloader.js' %}"></script>
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
