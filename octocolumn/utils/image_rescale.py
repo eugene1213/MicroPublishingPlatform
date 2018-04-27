@@ -85,6 +85,7 @@ def image_quality_down(content_file):
 def thumnail_cover_image_resize(content_file):
     img = Image.open(content_file)
     img_io = BytesIO()
+    img = img.convert("RGB")
 
     height = img.height
     width = img.width
