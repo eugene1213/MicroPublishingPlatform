@@ -43,22 +43,6 @@
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
-.icon-mail:before {
-  content: '\e801'; }
-
-/* '메일' */
-.icon-facebook-rect:before {
-  content: '\f301'; }
-
-/* '페이스북' */
-.icon-googleplus-rect:before {
-  content: '\f309'; }
-
-/* '구글' */
-.icon-comment-alt:before {
-  content: '\e804'; }
-
-/* '카카오' */
 .icon-bookmark:before {
   content: '\e800'; }
 
@@ -67,14 +51,6 @@
   content: '\f097'; }
 
 /* '빈 북마크' */
-.icon-trash-empty:before {
-  content: '\e802'; }
-
-/* '빈 휴지통' */
-.icon-trash:before {
-  content: '\f1f8'; }
-
-/* '휴지통' */
 .icon-television:before {
   content: '\f26c'; }
 
@@ -96,10 +72,6 @@
   content: '\e808'; }
 
 /* '기본' */
-.icon-bell:before {
-  content: '\e809'; }
-
-/* '알림' */
 .icon-floppy:before {
   content: '\e803'; }
 
@@ -124,19 +96,6 @@
   content: '\e80e'; }
 
 /* '-' */
-.icon-spin5:before {
-  content: '\e838';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -13px;
-  margin-top: -13px; }
-
-/* '스피너' */
-.icon-cancel-circled:before {
-  content: '\f06e'; }
-
-/* '태그 삭제버튼' */
 .icon-star:before {
   content: '\e800';
   fill: gold; }

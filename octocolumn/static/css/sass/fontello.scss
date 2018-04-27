@@ -56,14 +56,8 @@
     /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
   }
 
-.icon-mail:before { content: '\e801'; } /* '메일' */
-.icon-facebook-rect:before { content: '\f301'; } /* '페이스북' */
-.icon-googleplus-rect:before { content: '\f309'; } /* '구글' */
-.icon-comment-alt:before { content: '\e804'; } /* '카카오' */
 .icon-bookmark:before { content: '\e800';} /* '북마크' */
 .icon-bookmark-empty:before { content: '\f097';} /* '빈 북마크' */
-.icon-trash-empty:before { content: '\e802'; } /* '빈 휴지통' */
-.icon-trash:before { content: '\f1f8'; } /* '휴지통' */
 .icon-television:before { content: '\f26c'; } /* '풀스크린 이미지' */
 .icon-img-align-center:before { content: '\e805'; } /* '가운데 정렬' */
 .icon-img-align-right:before {
@@ -72,22 +66,13 @@
 } /* '우측 정렬' */
 .icon-img-align-left:before { content: '\e807'; } /* '좌측 정렬' */
 .icon-img-align-full:before { content: '\e808'; } /* '기본' */
-.icon-bell:before { content: '\e809'; } /* '알림' */
+
 .icon-floppy:before { content: '\e803'; } /* '저장' */
 .icon-pencil:before { content: '\e80a'; } /* '수정' */
 .icon-cancel-alt-filled:before { content: '\e80b'; } /* 'x' */
 .icon-heart:before { content: '\e80c'; } /* '기다림' */
 .icon-plus-circle:before { content: '\e80d'; } /* '+' */
 .icon-minus-circle:before { content: '\e80e'; } /* '-' */
-.icon-spin5:before {
-  content: '\e838';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -13px;
-  margin-top: -13px;
-} /* '스피너' */
-.icon-cancel-circled:before { content: '\f06e'; } /* '태그 삭제버튼' */
 .icon-star:before {
   content: '\e800';
   fill: gold;
