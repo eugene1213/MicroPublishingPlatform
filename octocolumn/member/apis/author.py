@@ -79,6 +79,7 @@ class AuthorApply(generics.GenericAPIView,
 
             try:
                 PreAuthorPost.objects.filter(author=user).get()
+                print(2)
                 raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
 
             except ObjectDoesNotExist:
@@ -114,7 +115,7 @@ class AuthorApply(generics.GenericAPIView,
                     else:
                         raise exceptions.ParseError({'detail': 'Already added'})
                 else:
-                    print(5)
+                    print(3)
                     raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
 
         except ObjectDoesNotExist:
@@ -129,7 +130,8 @@ class AuthorApply(generics.GenericAPIView,
                     raise exceptions.PermissionDenied({'detail': 'Already Posted or temp not exist'})
 
                 try:
-                    PreAuthorPost.objects.filter(author=user).all()
+                    PreAuthorPost.objects.filter(author=user).get()
+                    print(6)
                     raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
 
                 except ObjectDoesNotExist:
@@ -164,6 +166,7 @@ class AuthorApply(generics.GenericAPIView,
                         else:
                             raise exceptions.NotAcceptable({'detail': 'Already added'})
                     else:
+                        print(2)
                         raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
 
             raise exceptions.ValidationError({'detail': 'Abnormal connected'})
