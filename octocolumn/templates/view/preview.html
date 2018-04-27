@@ -12,14 +12,14 @@
 	<meta http-equiv="x-rim-auto-match" content="none" />
 	<meta name="theme-color" content="#2a292a" />
 	<!--facebook share-->
-	<meta property="og:url" content="" />			<!-- www.octocolumn.com/preview/@{username}/{title}-{post_id} -->
+	<meta property="og:url" content="{{ url }}" />			<!-- www.octocolumn.com/preview/@{username}/{title}-{post_id} -->
 										 			<!-- {title}에 preview.js line 16 정규표현식 적용 -->
 	<meta property="og:type" content="book" />
-	<meta property="og:title" content="" />			<!-- {title} -->
+	<meta property="og:title" content="{{ title }}" />			<!-- {title} -->
 										   			<!-- 이 {title}은 정규식 적용x -->
-	<meta property="og:description" content="" />	<!-- {main_content} -->
-	<meta property="og:image" content="" />			<!-- {cover_img} -->
-
+	<meta property="og:description" content="{{ main_content }}" />	<!-- {main_content} -->
+	<meta property="og:image" content="/media/{{ cover_image }}" />			<!-- {cover_img} -->
+    {{ cover_img }}
 	<title>octocolumn</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
@@ -39,21 +39,24 @@
 
 	{% endif %}
 	<div class="read">
-		<div class="mainImg image-loader" style="background-image: url();"><!--url({cover_img})-->
+		<div class="mainImg image-loader" style="background-image: url(/media/{{ cover_image }});"><!--url({cover_img})-->
 		</div>
 		<div class="read_wrap">
-			<h2><!-- {title} --></h2>
+			<h2>{{ title }}</h2>
 			<div class="write">
 				<div class="writer">
-					by <span><!-- {username} --></span>
+					by <span>{{ username }}</span>
 				</div>
 				<div class="date">
 					<!-- {date} -->
+                    {{ created_datetime }}
 				</div>
 			</div>
 		</div>
 		<div class="main_content_wrap">
-			<!-- {preview} -->
+            {% autoescape off %}
+			    {{ preview }}
+            {% endautoescape %}
 		</div>
 		<div class="read_wrap">
 			<div class="preview-tag-wrap">
