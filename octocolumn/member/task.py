@@ -17,7 +17,7 @@ class SignupEmailTask(Task):
         mail_subject = 'Octocolumn 이메일 인증.'
         user = User.objects.filter(pk=pk).get()
         message = render_to_string('singup_activation.html', {
-            'user': user,
+            'user': user.nickname,
             'domain': 'www.octocolumn.com',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user),
