@@ -24,6 +24,7 @@ from member.models import User, ProfileImage, ConnectedLog, InviteUser
 from member.models.invitations import InvitationUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
+from member.task import PasswordResetTask, InviteUserTask
 from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.jwt import jwt_token_generator
 from utils.tokengenerator import account_activation_token
@@ -306,7 +307,8 @@ class SendInviteEmail(APIView):
         data = self.request.data
 
         user = InviteUser.objects.create(email=data['email'])
-        email = invite_email_send(user, self.request.user)
+        task = InviteUserTask
+        email = task.delay(user.pk, self.request.user.pk)
         if email:
             return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
         raise APIException({"Email send failed"})
@@ -324,8 +326,9 @@ class PasswordResetSendEmail(APIView):
 
         try:
             user = User.objects.filter(username=data['username']).get()
+            task = PasswordResetTask
 
-            email = password_reset_email_send(user)
+            email = task.delay(user.pk)
 
             if email:
                 return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
