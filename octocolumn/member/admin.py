@@ -9,7 +9,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from member.forms import AuthorIsActive
+from member.forms import AuthorIsActive, PostDraftAction
 from octo.models import UsePoint
 from column.models import Post, PreAuthorPost
 
@@ -164,6 +164,7 @@ class PointHistoryAdmin(admin.ModelAdmin):
 class PreAuthorPostAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = ['author', 'title', 'content_size', 'price', 'author_is_active', 'created_date', 'author_actions',
+                    'author_draft',
                     ]
 
     # fieldsets = (
@@ -197,6 +198,11 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
                 name='authorIsActive',
             ),
             url(
+                r'^(?P<author_post_pk>.+)/draft/$',
+                self.admin_site.admin_view(self.process_is_draft),
+                name='authorDraft',
+            ),
+            url(
                 r'^(?P<post_pk>.+)/download/$',
                 self.admin_site.admin_view(self.process_download),
                 name='postDownload',
@@ -228,8 +234,14 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
 
     def author_actions(self, obj):
         return format_html(
-            '<a class="button" href="{}">인증</a>',
+            '<a class="button" href="{}">Publish</a>',
             reverse('admin:authorIsActive', args=[obj.pk]),
+        )
+
+    def author_draft(self, obj):
+        return format_html(
+            '<a class="button" href="{}">Draft</a>',
+            reverse('admin:authorDraft', args=[obj.pk]),
         )
 
     def process_is_active(self, request, author_post_pk, *args, **kwargs):
@@ -240,7 +252,35 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
             action_title='신청완료',
         )
 
+    def process_is_draft(self, request, author_post_pk, *args, **kwargs):
+        return self.draft_action(
+            request=request,
+            author_post_pk=author_post_pk,
+            action_form=PostDraftAction,
+            action_title='반려',
+        )
+
     def process_action(
+            self,
+            request,
+            author_post_pk,
+            action_form,
+            action_title
+    ):
+        author = self.get_object(request, author_post_pk)
+        if request.method != 'GET':
+            form = action_form()
+        else:
+            form = action_form(request.POST)
+            if form.is_valid():
+                if form.save(author):
+
+                    pass
+                else:
+                    return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
+        return HttpResponseRedirect(redirect_to='/morningCoffee/column/preauthorpost/')
+
+    def draft_action(
             self,
             request,
             author_post_pk,
