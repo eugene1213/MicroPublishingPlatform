@@ -6,40 +6,47 @@
 	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
 	<meta name="description" content="octocolumn" />
-	<meta name="keywords" content="octocolumn">
-	<meta name="copyright" content="octocolumn"/>
+	<meta name="keywords" content="octocolumn" />
+    <meta name="copyright" content="octocolumn"/>
+    <meta name="author" content="eugene"/>    
 	<meta name="theme-color" content="#2a292a">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="x-rim-auto-match" content="none">
 	<title>octocolumn</title>
-	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+	<!-- core CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/forgotPW.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/signin.css' %}">
 	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-    <!-- <script src="{% static 'js/script2.js' %}"></script> -->
 </head>
-<body>
-    <div class="modal_window findPass">
-        <a class="close_btn" href="javascript:modal_off();">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">Reset your password.</div>
-        <div class="welcome2">
-            비밀번호를 재설정합니다.<br>
-            변경하고 싶은 비밀번호를 입력해주세요.<br>
+<body class="scrollbar-basic welcome-bg">        
+    <main>
+        <!-- wrapper -->
+        <div class="findPW-container">
+            <div class="findPW-title">
+                <h1>Forgot your password?</h1>
+                <h3>비밀번호가 기억나지 않으세요?<br>octocolumn에 가입한 이메일 주소를 입력해주세요.<br>해당 이메일을 통해 비밀번호를 재설정할 수 있습니다.</h3>
+            </div>
+            <div class="frame">
+                <div class="form-findPW">
+                    <div class="form_title">Reset password</div>
+                    <div class="mid-container">
+						<input type="password" id='pass1' placeholder="새로운 비밀번호(영문, 숫자 포함 8자리 이상)">
+						<input type="password" id='pass2' placeholder="새로운 비밀번호 재입력">
+                    </div>
+                    
+                    <!-- sign up button -->
+                    <div class="bottom-container">
+                        <button id="btnResetPass">Reset password</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form_wrap">
-            <span>새로운 비밀번호(영문, 숫자 포함 8자리 이상)</span>
-            <input type="password" id='pass1'>
-            <span>새로운 비밀번호 재입력</span>
-            <input type="password" id='pass2'>
-            <button id="btnResetPass">비밀번호 변경</button>
-        </div>
-	</div>
-	<script src="{% static 'js/findPass.js' %}"></script>	
+    </main>
+    <script src="{% static 'js/findPass.js' %}"></script>
+    <script src="{% static 'js/jquery.modal.js' %}"></script>	
 </body>
 </html>

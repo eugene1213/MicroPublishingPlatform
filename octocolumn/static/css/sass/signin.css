@@ -139,6 +139,8 @@ i {
   position: absolute;
   width: 320px;
   bottom: 40px; }
+  .bottom-container p {
+    cursor: pointer; }
 
 .form-signin {
   width: 400px;
