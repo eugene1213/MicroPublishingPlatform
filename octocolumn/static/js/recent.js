@@ -27,10 +27,8 @@ $(document).ready(function(){
             isBought(post_id, readtime);
         }
     });
-    // $(".btn-cancel-wrap").click(function(){
-    //     $(".preview-wrap").hide();
-    // });
-    $(".profile_mark").click(function(e){
+
+    $(".bookmark").click(function(e){
         
         var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
         bookmark(bookmark_id);
@@ -43,7 +41,13 @@ $(document).ready(function(){
         }
     });
 });
+$(function(){
+    $('.container').delegate('.bookmark>span','click',function(e){
 
+        var bookmark_id = $(e.target).closest('.bookmark').attr("id").replace("bookmark_",'');        
+        bookmark(bookmark_id);
+    });
+});
 function getRecent(url){
 
     $.ajax({
@@ -79,7 +83,10 @@ function getRecent(url){
                 var username = posts[post].all_status.username;
                 var profile_image = posts[post].all_status.img.profile_image;
                 var bookmark_status = posts[post].all_status.bookmark_status;
-               
+                var bookmarkClass = 'icon-bookmark';
+
+                bookmark_status ? {/*pass*/} : bookmarkClass += '-empty';
+
                 postHtml += '\
                 <div class="post">\
                     <div class="image image-loader" id="'+pk+'" style="background-image:url('+cover_image+')">\
@@ -99,6 +106,7 @@ function getRecent(url){
                             </ul>\
                         </div>\
                         <div class="user-container">\
+                            <div class="bookmark" id="bookmark_'+pk+'"><span class="'+bookmarkClass+'"></span></div>\
                             <div class="user full-right">\
                                 <div class="user-pic image-loader" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>\
                                 <div class="user-info">\

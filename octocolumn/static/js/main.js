@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
     getData();
-
     popBalloon();
 
     $(document).click(function(e){
@@ -12,13 +11,7 @@ $(document).ready(function() {
         if(post_id > 0){
 
             isBought(post_id, readtime);
-            
         }
-    });
-    $(".profile_mark").click(function(e){
-        
-        var bookmark_id = $(e.target).attr("id").replace("bookmark_",'');
-        bookmark(bookmark_id);
     });
 
     $('.image-loader').imageloader({
@@ -30,9 +23,12 @@ $(document).ready(function() {
     });
 });
 $(function(){
+    $('.container').delegate('.bookmark>span','click',function(e){
 
+        var bookmark_id = $(e.target).closest('.bookmark').attr("id").replace("bookmark_",'');        
+        bookmark(bookmark_id);
+    });
 });
-
 var lastScrollTop = 0;
 var imgHeight = $('.main-content-img').height();
 var imgWidth = $('.main-content-img').width();
@@ -53,21 +49,9 @@ $(window).scroll(function(){
     opacity2 = (mainImageTextCoord2-st)/mainImageTextCoord2;
     opacity3 = (mainImageTextCoord3-st)/mainImageTextCoord3;
     opacity4 = (mainImageTextCoord4-st*1.5)/mainImageTextCoord4;
-    // width = ((imgHeight-st)/imgHeight)*100;
+
     $('.main-content-title').css('opacity',opacity1);
     $('.main-content-sub').css('opacity',opacity2);
     $('.main-content-btn').css('opacity',opacity3);
     $('.main-content-img').css('opacity',opacity4);
-    // $('.main-content-img').css('width',width+'%');    
-    
-    // if (st > lastScrollTop){
-    //     // Scroll Down
-    //     console.log('scroll down');
-    //     $('.main-img-text-container').css('opacity',1)
-    // } else {
-    //     // Scroll Up
-    //     console.log('scroll up');
-    //     $('.main-img-text-container').css('opacity',1)        
-    // }
-    // lastScrollTop = st;
 });

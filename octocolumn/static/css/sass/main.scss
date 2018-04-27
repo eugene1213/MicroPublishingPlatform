@@ -635,7 +635,7 @@ img {
 	height: auto;
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 900px) {
 	.row {
 	  display: block !important;
 	}
@@ -674,6 +674,16 @@ img {
 	width: calc(100% - 32px);
 	height: 30px;
 	bottom: 10px;
+
+	.bookmark {
+		float: left;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.8;
+			zoom: 1.02;
+		}
+	}
 }
 .user {
 	position: relative;

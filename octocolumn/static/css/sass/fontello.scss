@@ -60,14 +60,8 @@
 .icon-facebook-rect:before { content: '\f301'; } /* '페이스북' */
 .icon-googleplus-rect:before { content: '\f309'; } /* '구글' */
 .icon-comment-alt:before { content: '\e804'; } /* '카카오' */
-.icon-bookmark:before { 
-    content: '\e800';
-    margin-top: -16px; 
-} /* '북마크' */
-.icon-bookmark-empty:before { 
-    content: '\f097';
-    margin-top: -16px;
-} /* '빈 북마크' */
+.icon-bookmark:before { content: '\e800';} /* '북마크' */
+.icon-bookmark-empty:before { content: '\f097';} /* '빈 북마크' */
 .icon-trash-empty:before { content: '\e802'; } /* '빈 휴지통' */
 .icon-trash:before { content: '\f1f8'; } /* '휴지통' */
 .icon-television:before { content: '\f26c'; } /* '풀스크린 이미지' */

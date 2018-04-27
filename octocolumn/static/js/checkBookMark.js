@@ -9,7 +9,7 @@ function bookmark(post_id) {
         success: function(json) {
 
             console.log(json);
-            json.detail == 'created' ? $("#bookmark_" +post_id).prop("class","icon-bookmark") : $("#bookmark_"+post_id).prop("class","icon-bookmark-empty");
+            json.detail == 'created' ? $("#bookmark_" +post_id+'> span').prop("class","icon-bookmark") : $("#bookmark_"+post_id+'> span').prop("class","icon-bookmark-empty");
         },
         error: function(error) {
             console.log(error);

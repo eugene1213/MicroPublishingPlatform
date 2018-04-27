@@ -31,6 +31,9 @@ function getData(){
                 var username = posts[post].all_status.username;
                 var profile_image = posts[post].all_status.img.profile_image;
                 var bookmark_status = posts[post].all_status.bookmark_status;
+                var bookmarkClass = 'icon-bookmark';
+                
+                bookmark_status ? {/*pass*/} : bookmarkClass += '-empty';
 
                 postHtml += '\
                     <div class="post">\
@@ -51,6 +54,7 @@ function getData(){
                                 </ul>\
                             </div>\
                             <div class="user-container">\
+                                <div class="bookmark" id="bookmark_'+pk+'"><span class="'+bookmarkClass+'"></span></div>\
                                 <div class="user full-right">\
                                     <div class="user-pic image-loader" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>\
                                     <div class="user-info">\
@@ -73,12 +77,6 @@ function getData(){
                     postHtml = postHtml + rowHtmlClose;
                     postsHtml += postHtml;
                 }
-
-                //$("#card_"+i+" .profile_mark > div").attr("id", "bookmark_"+pk);                      // read time
-
-                //$("#card_"+i+" .profile_img").attr("id", "author_" + json[i-1].post.author.author_id);  // 프로필사진에 id 추가
-
-                //bookmark_status ? $("#card_"+i+" .profile_mark > div").attr("class", "icon-bookmark") : $("#card_"+i+" .profile_mark > div").attr("class", "icon-bookmark-empty");
             }
             $('.blog-posts').html(postsHtml);
         },
