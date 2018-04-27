@@ -1,1 +1,68 @@
-*{-webkit-text-size-adjust:none;font-family:"SpoqaHanSans";background-repeat:no-repeat}html,body{margin:0 auto}ul{list-style:none;margin-top:0;padding:0}a{color:currentColor;transition:.2s ease-in-out}a:link{text-decoration:none}a:visited{text-decoration:none}a:active{text-decoration:none}a:hover{text-decoration:none}.btn_disabled{background-color:grey !important;cursor:default}@font-face{font-family:'SpoqaHanSans';font-style:thin;font-weight:100;src:local("Spoqa Han Sans Thin"),url("../font/SpoqaHanSansThin.woff2") format("woff2"),url("../font/SpoqaHanSansThin.woff") format("woff"),url("../font/SpoqaHanSansThin.ttf") format("truetype");font-display:fallback}@font-face{font-family:'SpoqaHanSans';font-style:light;font-weight:300;src:local("Spoqa Han Sans Light"),url("../font/SpoqaHanSansLight.woff2") format("woff2"),url("../font/SpoqaHanSansLight.woff") format("woff"),url("../font/SpoqaHanSansLight.ttf") format("truetype");font-display:fallback}@font-face{font-family:'SpoqaHanSans';font-style:normal;font-weight:400;src:local("Spoqa Han Sans Regular"),url("../font/SpoqaHanSansRegular.woff2") format("woff2"),url("../font/SpoqaHanSansRegular.woff") format("woff"),url("../font/SpoqaHanSansRegular.ttf") format("truetype");font-display:fallback}@font-face{font-family:'SpoqaHanSans';font-style:bold;font-weight:700;src:local("Spoqa Han Sans Bold"),url("../font/SpoqaHanSansBold.woff2") format("woff2"),url("../font/SpoqaHanSansBold.woff") format("woff"),url("../font/SpoqaHanSansBold.ttf") format("truetype");font-display:fallback}@font-face{font-family:'Akzidenz';font-style:bold;font-weight:400;src:url("../font/Akzidenz.ttf") format("truetype");font-display:fallback}
+* {
+  -webkit-text-size-adjust: none;
+  font-family: "SpoqaHanSans";
+  background-repeat: no-repeat; }
+
+html, body {
+  margin: 0 auto; }
+
+/* div {
+    box-sizing: border-box;
+} */
+ul {
+  list-style: none;
+  margin-top: 0;
+  padding: 0; }
+
+a {
+  color: currentColor;
+  transition: .2s ease-in-out; }
+
+a:link {
+  text-decoration: none; }
+
+a:visited {
+  text-decoration: none; }
+
+a:active {
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: none; }
+
+.btn_disabled {
+  background-color: grey !important;
+  cursor: default; }
+
+@font-face {
+  font-family: 'SpoqaHanSans';
+  font-style: thin;
+  font-weight: 100;
+  src: local("Spoqa Han Sans Thin"), url("../font/SpoqaHanSansThin.woff2") format("woff2"), url("../font/SpoqaHanSansThin.woff") format("woff"), url("../font/SpoqaHanSansThin.ttf") format("truetype");
+  font-display: fallback; }
+@font-face {
+  font-family: 'SpoqaHanSans';
+  font-style: light;
+  font-weight: 300;
+  src: local("Spoqa Han Sans Light"), url("../font/SpoqaHanSansLight.woff2") format("woff2"), url("../font/SpoqaHanSansLight.woff") format("woff"), url("../font/SpoqaHanSansLight.ttf") format("truetype");
+  font-display: fallback; }
+@font-face {
+  font-family: 'SpoqaHanSans';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Spoqa Han Sans Regular"), url("../font/SpoqaHanSansRegular.woff2") format("woff2"), url("../font/SpoqaHanSansRegular.woff") format("woff"), url("../font/SpoqaHanSansRegular.ttf") format("truetype");
+  font-display: fallback; }
+@font-face {
+  font-family: 'SpoqaHanSans';
+  font-style: bold;
+  font-weight: 700;
+  src: local("Spoqa Han Sans Bold"), url("../font/SpoqaHanSansBold.woff2") format("woff2"), url("../font/SpoqaHanSansBold.woff") format("woff"), url("../font/SpoqaHanSansBold.ttf") format("truetype");
+  font-display: fallback; }
+@font-face {
+  font-family: 'Akzidenz';
+  font-style: bold;
+  font-weight: 400;
+  src: url("../font/Akzidenz.ttf") format("truetype");
+  font-display: fallback; }
+
+/*# sourceMappingURL=common.css.map */
