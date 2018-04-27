@@ -3,13 +3,11 @@ import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 
 from column.models import Post
-from config.settings import MEDIA_URL
 from member.models import User
 from utils.tokengenerator import account_activation_token
 
