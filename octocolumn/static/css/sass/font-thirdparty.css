@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: 'comment';
   src: url("../font/comment.eot?96804009");
@@ -44,15 +45,15 @@
 .icon-comment-alt:before {
   content: '\e800'; }
 
-/* '' */
+/* '카톡' */
 .icon-email:before {
   content: '\e801'; }
 
-/* '' */
+/* '메일' */
 .icon-gplus-1:before {
   content: '\f0d5'; }
 
-/* '' */
+/* '구글' */
 .icon-recycle:before {
   content: '\f1b8'; }
 
@@ -60,6 +61,6 @@
 .icon-facebook:before {
   content: '\f30c'; }
 
-/* '' */
+/* '페북' */
 
 /*# sourceMappingURL=font-thirdparty.css.map */

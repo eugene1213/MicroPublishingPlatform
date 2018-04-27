@@ -2,7 +2,7 @@ from distutils import errors
 
 from django import forms
 
-from column.models import PreAuthorPost, Post
+from column.models import PreAuthorPost, Post, Temp
 from member.models import Author
 # from common.utils import send_email
 # from . import errors
@@ -52,8 +52,16 @@ class AuthorIsActive(forms.Form):
         post = PreAuthorPost.objects.filter(author=author_post.author).all()
         if post is not None:
             for i in post:
-                Post.objects.create(author=i.author, main_content=i.main_content, price=i.price, preview=i.preview,
-                                    title=i.title, cover_image=i.cover_image)
+                Post.objects.create(
+                    author=i.author,
+                    main_content=i.main_content,
+                    price=i.price,
+                    preview=i.preview,
+                    title=i.title,
+                    cover_image=i.cover_image,
+                    thumbnail=i.thumbnail,
+
+                )
         author.is_active = True
         author.save()
         return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
@@ -64,6 +72,30 @@ class AuthorIsActive(forms.Form):
             return author
         raise ValueError("error")
 
+
+class PostDraftAction(forms.Form):
+    def form_action(self, author_post):
+
+        user = author_post.author
+        author = Author.objects.filter(author=user).get()
+
+        post = PreAuthorPost.objects.filter(author=author_post.author).all()
+        if post is not None:
+            for i in post:
+                Temp.objects.create(
+                    author=i.author,
+                    main_content=i.main_content,
+                    title=i.title,
+                    )
+
+        author.save()
+        return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
+
+    def save(self, author_post):
+        author = self.form_action(author_post)
+        if author:
+            return author
+        raise ValueError("error")
 
 # amount = forms.IntegerField(
 #         min_value=Account.MIN_DEPOSIT,

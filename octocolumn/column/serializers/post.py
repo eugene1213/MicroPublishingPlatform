@@ -198,7 +198,7 @@ class MyTempSerializer(serializers.ModelSerializer):
     class Meta:
         model = Temp
         fields = (
-            'id',
+            'pk',
             'title',
             'created_date',
             'author'

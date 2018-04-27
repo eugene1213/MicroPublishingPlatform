@@ -3,7 +3,18 @@ $(document).ready(function(){
 });
 $(function(){
     $('#header-profile-image').click(function(){
+        
         $('.account-info').is(":visible")?$('.account-info').hide():$('.account-info').show();
+    });
+    //다른곳 클릭 시 닫힘
+    $(document).mouseup(function(e) {
+        
+        var container = $(".account-info");
+        
+        if (!container.is(e.target) && container.has(e.target).length === 0){
+        
+            container.css("display","none");
+        }	
     });
 });
 function getUserInfo() {

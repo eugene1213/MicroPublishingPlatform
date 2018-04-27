@@ -4,10 +4,9 @@ function controllBalloonCoord(id){
     //마우스 오버된 사진의 좌표를 구해서 풍선 위치를 잡아준다.
 
     var coord = $(id).offset();
-    console.log(id)
 
-    $(".arrow_box_1").css("left", coord.left-112);
-    $(".arrow_box_2").css("left", coord.left-112);
+    $(".arrow_box_1").css("left", coord.left-125);
+    $(".arrow_box_2").css("left", coord.left-125);
     $(".arrow_box_1").css("top",  coord.top -300);
     $(".arrow_box_2").css("top",  coord.top -300);
 
@@ -18,7 +17,7 @@ function controllBalloonCoord(id){
 
 function popBalloon() { //getPostList.js 에서 호출한다.
 
-    $(".profile_img").mouseenter(function(e){
+    $(".page").delegate('.user-pic','mouseenter', function(e){
 
         var pk = $(this).attr("id").replace('author_','');
         
