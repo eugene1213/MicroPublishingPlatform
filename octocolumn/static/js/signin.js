@@ -48,9 +48,6 @@ $(function() {
         $(".forgot").toggleClass("forgot-fade");
 	});
 });
-$(window).keypress(function(e){
-    if(e.keyCode=='13') signin_api();
-});
 function signin_api() {
 
     var email = $("#email-signin").val();

@@ -140,7 +140,11 @@ i {
 .bottom-container {
 	position: absolute;
 	width: 320px;
-	bottom: 40px;
+    bottom: 40px;
+    
+    p {
+        cursor: pointer;
+    }
 }
 .form-signin {
 	width: 400px;
