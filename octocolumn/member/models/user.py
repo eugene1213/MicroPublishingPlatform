@@ -139,6 +139,28 @@ class User(AbstractBaseUser, PermissionsMixin):
         through='Bookmark',
         related_name='bookmark_relation',
     )
+
+    buy_list = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        through='BuyList',
+        related_name='buylist_relation',
+    ),
+
+    sell_list = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        through='SellList',
+        related_name='selllist_relation',
+    ),
+
+    point_history = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        through='PointHistory',
+        related_name='pointhistory_relation_set',
+    ),
+
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
