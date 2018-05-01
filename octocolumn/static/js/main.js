@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
 });
 $(function(){
-    $('.container').delegate('.bookmark>span','click',function(e){
+    $('.container').delegate('.bookmark>i','click',function(e){
 
         var bookmark_id = $(e.target).closest('.bookmark').attr("id").replace("bookmark_",'');        
         bookmark(bookmark_id);
