@@ -193,3 +193,5 @@ venv.bak/
 !.elasticbeanstalk/*.global.yml
 
 \.error_log/
+
+octocolumn/dump\.rdb
