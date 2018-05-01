@@ -27,7 +27,7 @@ class PostBuy(APIView):
         if not self.request.user.is_authenticated:
             raise exceptions.NotAuthenticated()
 
-        post_queryset = Post.objects.filter(id=data['post_id']).get()
+        post_queryset = Post.objects.select_related('author').filter(id=data['post_id']).get()
 
         # 포인트가 적을시에 오류 발생
         if post_queryset.price > user.point:

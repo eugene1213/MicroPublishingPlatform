@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <title>Micro Publishing Platform, octocolumn</title>
 <!-- core CSS -->
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="scss/style.scss">
-<link rel="stylesheet" href="fonts/spoqaHanSans-kr.css">
+{% load static %}
+<link rel="stylesheet" href="{% static 'support/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'support/css/style.css' %}">
+{#<link rel="stylesheet" href="{% static 'support/css/style.scss' %}">#}
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon.css' %}">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
 </head>
 
 <body>
@@ -15,34 +18,12 @@
 <div class="page">
 	<!-- header -->
     <header tabindex="0"><span>Support</span></header>
-    <div id="nav-container">
-        <div class="bg"></div>
-        <div class="button" tabindex="0">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </div>
-        <div id="nav-content" tabindex="0">
-            <ul>
-                <li><a href="about.html">About</a></li>
-                <li><a href="staff_blog.html">Staff Blog</a></li>
-                <li><a href="jobs.html">Jobs</a></li>
-                <li><a href="policies.html">Policies & Laws</a></li>
-                <li><a href="notice.html">Notice</a></li>
-                <li class="divline"></li>
-                <li><a href="help-1.html">Help</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li class="divline"></li>
-                <li><a href="http://octocolumn.com/">octocolumn.com</a></li>
-                <li class="divline"></li>
-                <li><a href="#">Sign out</a></li>
-                <li class="info"><span>Copyright octocolumn All Rights Reserved<br>주식회사 옥토칼럼<br>대표 오정민<br>사업자등록번호<br>576-52-00020<br>통신판매업신고<br>2016 수원권선 0350<br>개인정보관리책임자 오정민<br>경기도 수원시 권선구 정조로 580-9<br>mackenzie@octocolumn.com<br>고객센터 070-4809-7166</span></li>
-                <!--
-                <li class="small"><a href="#0">Facebook</a><a href="#0">Instagram</a></li>
-                -->
-            </ul>
-        </div>
-    </div>
+    {% if login %}
+        {% include 'support/s_header_on.html' %}
+    {% else %}
+        <script>window.location.href = '/signin/'</script>
+        {% include 'support/s_header.html' %}
+    {% endif %}
     <div class="profile-img"></div>
     <div id="profile-container">
     	<div class="profile-text">Joyce Henry</div>
@@ -125,7 +106,6 @@
 	</main>
 </div>
 
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="js/index.js"></script>
+<script src="{% static 'support/js/index.js' %}"></script>
 </body>
 </html>

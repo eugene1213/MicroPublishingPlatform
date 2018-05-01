@@ -170,7 +170,7 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = [
         'author', 'title', 'content_size', 'price', 'author_is_active', 'created_date', 'author_actions',
-                    'author_draft', 'post_download'
+        'author_draft', 'post_download',
                     ]
 
     # fieldsets = (
@@ -187,11 +187,11 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     # )
 
     fields = (
-        'author', 'price', 'cover_image', 'main_content','author_draft', 'author_actions', 'post_download',
+        'author', 'price', 'cover_image', 'main_content', 'author_actions', 'author_draft', 'post_download',
         'created_date'
     )
 
-    readonly_fields = ['author', 'author_actions', 'post_download', 'created_date']
+    readonly_fields = ['author', 'author_actions', 'author_draft','post_download', 'created_date']
 
     def author_is_active(self, instance):
         return instance.author.author.is_active

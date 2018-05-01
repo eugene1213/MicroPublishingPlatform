@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 
+from config.urls import support
 from config.views import index
 from config.views.index import write, naver_request, preview, more
 from config.views.index import bookmark, buylist, feed
@@ -44,5 +45,7 @@ urlpatterns = [
 
     url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         InviteVerifyEmail.as_view(), name='InviteVerifyEmail'),
+
+    url(r'^support/', include(support, namespace='support')),
 
 ]
