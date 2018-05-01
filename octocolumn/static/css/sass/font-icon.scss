@@ -20,7 +20,7 @@
   }
   */
    
-   [class^="icon-"]:before, [class*=" icon-"]:before {
+   [class^="icon-2-"]:before, [class*=" icon-2-"]:before {
     font-family: "icon";
     font-style: normal;
     font-weight: normal;
@@ -56,7 +56,7 @@
   }
    
 
-  .icon-bell:before { content: '\e802'; } /* '' */
-  .icon-cog:before { content: '\e803'; } /* '' */
-  .icon-user:before { content: '\e804'; } /* '' */
-  .icon-right-open-big:before { content: '\e805'; } /* '' */
+  .icon-2-bell:before { content: '\e802'; } /* '' */
+  .icon-2-cog:before { content: '\e803'; } /* '' */
+  .icon-2-user:before { content: '\e804'; } /* '' */
+  .icon-2-right-open-big:before { content: '\e805'; } /* '' */

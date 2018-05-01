@@ -22,13 +22,14 @@ $(document).ready(function(){
             var title = json.detail.title;
             var urlTitle = title.replace(/~|₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|'|"|,|\.|\/|<|>|\?/g,'').replace(/\s/g,'-');
             var author = json.detail.author.username;
+            var urlAuthor = author.replace(/~|₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|'|"|,|\.|\/|<|>|\?/g,'').replace(/\s/g,'-');
             var intro = json.detail.author.intro;
             var author_image = json.detail.author.image.profile_image;
             var main_content = json.detail.main_content;
             var tagArray = json.detail.tag;
             var created_datetime = json.detail.created_datetime;
             var post_id = json.detail.post_id;
-            var url = '/@'+ author+'/'+urlTitle+'-'+post_id;
+            var url = '/@'+ urlAuthor+'/'+urlTitle+'-'+post_id;
             var href = 'https://www.octocolumn.com'+url;
 
             if(window.location.href != href) history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
