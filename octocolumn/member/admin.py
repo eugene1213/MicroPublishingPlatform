@@ -83,7 +83,7 @@ class PostAdmin(admin.ModelAdmin):
     # )
 
     fields = (
-        'author', 'hit', 'price', 'cover_image', 'created_date', 'post_download',
+        'author', 'hit', 'price', 'main_content', 'cover_image', 'created_date', 'post_download',
     )
 
     readonly_fields = ['author', 'hit', 'buy_count', 'created_date', 'post_download']
@@ -116,13 +116,15 @@ class PostAdmin(admin.ModelAdmin):
         )
 
     def download_action(self, request, post_pk):
-        main_con = PreAuthorPost.objects.filter(pk=post_pk).get().main_content
-        contents = '<div class="main_content_wrap">' + main_con + '</div>'
+        post = Post.objects.filter(pk=post_pk).get()
+        cover_image = '<div class="mainImg image-loader" style="background-image: url(&quot;https://static.octocolumn.com/media/'\
+                      + str(post.cover_image) + '); height: 568px;"><!--url({cover_img})--></div>'
+        contents = '<div class="main_content_wrap">' + post.main_content + '</div>'
         read_css = \
             '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/read.css">'
         sub_css = \
             '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/sub.css">'
-        response = HttpResponse(read_css + sub_css + contents)
+        response = HttpResponse(read_css + sub_css + cover_image + contents)
         return response
 
     def remove_tag(self, obj):
@@ -185,7 +187,8 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     # )
 
     fields = (
-        'author', 'price', 'cover_image','author_actions', 'post_download', 'created_date'
+        'author', 'price', 'cover_image', 'main_content','author_draft', 'author_actions', 'post_download',
+        'created_date'
     )
 
     readonly_fields = ['author', 'author_actions', 'post_download', 'created_date']
@@ -216,7 +219,7 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
 
     def post_download(self, obj):
         return format_html(
-         '<a class="button" href="{}">다운로드</a>',
+            '<a class="button" href="{}">다운로드</a>',
             reverse('admin:postDownload', args=[obj.pk]),
         )
 
