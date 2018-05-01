@@ -47,8 +47,10 @@ class PostBuy(APIView):
 
             if buy_list and sell_list:
                 post_queryset.buy_count += 1
+                user = post_queryset.author
+                user.point += post_queryset.price
                 post_queryset.save()
-                post_queryset.author.point += post_queryset.price
+                user.save()
             else:
                 raise exceptions.APIException({"detail": "There is not enough points."}, code=400)
 

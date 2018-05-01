@@ -63,7 +63,7 @@ class AuthorAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_per_page = 20
-    list_display = ['id', 'title', 'created_date', 'author', 'content_size', 'hit', 'buy_count']
+    list_display = ['id', 'title', 'created_date', 'author', 'content_size','post_download', 'hit', 'buy_count']
     list_display_links = ['id', 'title']
     search_fields = ('author__username',)
     ordering = ('-id', '-created_date')
@@ -96,9 +96,9 @@ class PostAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             url(
-                r'^(?P<post_pk>.+)/download/$',
+                r'^(?P<post_pk>.+)/preview/$',
                 self.admin_site.admin_view(self.process_download),
-                name='postDownload',
+                name='adminPreview',
             )
         ]
         return custom_urls + urls
@@ -106,7 +106,7 @@ class PostAdmin(admin.ModelAdmin):
     def post_download(self, obj):
         return format_html(
          '<a class="button" href="{}">다운로드</a>',
-            reverse('admin:postDownload', args=[obj.pk]),
+            reverse('admin:adminPreview', args=[obj.pk]),
         )
 
     def process_download(self, request, post_pk, *args, **kwargs):
