@@ -27,7 +27,7 @@ class PostBuy(APIView):
         if not self.request.user.is_authenticated:
             raise exceptions.NotAuthenticated()
 
-        post_queryset = Post.objects.filter(id=data['post_id']).get()
+        post_queryset = Post.objects.select_related('author').filter(id=data['post_id']).get()
 
         # 포인트가 적을시에 오류 발생
         if post_queryset.price > user.point:
@@ -47,8 +47,10 @@ class PostBuy(APIView):
 
             if buy_list and sell_list:
                 post_queryset.buy_count += 1
+                user = post_queryset.author
+                user.point += post_queryset.price
                 post_queryset.save()
-                post_queryset.author.point += post_queryset.price
+                user.save()
             else:
                 raise exceptions.APIException({"detail": "There is not enough points."}, code=400)
 

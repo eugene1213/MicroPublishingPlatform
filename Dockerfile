@@ -69,12 +69,12 @@ RUN         mkdir -p /var/log/uwsgi/app
 #RUN service ssh start
 ##
 
-RUN wget http://download.redis.io/redis-stable.tar.gz
-RUN tar xvzf redis-stable.tar.gz
-RUN cd redis-stable
-RUN make
-
-RUN redis-server
+#RUN wget http://download.redis.io/redis-stable.tar.gz
+#RUN tar xvzf redis-stable.tar.gz
+#RUN cd redis-stable
+#RUN make
+#
+#RUN redis-server
 
 RUN         cp /srv/app/.config/supervisor/* \
                 /etc/supervisor/conf.d/

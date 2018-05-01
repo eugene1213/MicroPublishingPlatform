@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 
+from config.urls import support
 from config.views import index
 from config.views.index import write, naver_request, preview, more
 from config.views.index import bookmark, buylist, feed
@@ -18,8 +19,8 @@ urlpatterns = [
             url(r'^$', write, name="write"),
             url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
     ]), name='write'),
-    url(r'^@(?P<author>[-\w]+)/(?P<title>.+)$', read, name='read'),
-    url(r'^preview/@(?P<author>[-\w]+)/(?P<title>.+)$', preview, name='preview'),
+    url(r'^@(?P<author>.+)/(?P<title>.+)$', read, name='read'),
+    url(r'^preview/@(?P<author>.+)/(?P<title>.+)$', preview, name='preview'),
     url(r'^profile/$', profile, name='profile'),
     url(r'^more/(?P<type>[-\w]+)/$', more, name='more'),
     # url(r'^recent/$', recent, name='recent'),
@@ -44,5 +45,7 @@ urlpatterns = [
 
     url(r'^inviteChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         InviteVerifyEmail.as_view(), name='InviteVerifyEmail'),
+
+    url(r'^support/', include(support, namespace='support')),
 
 ]

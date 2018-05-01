@@ -13,7 +13,7 @@ urlpatterns = [
     # api:member:login
     url(r'^login/$', Login.as_view(), name='login'),
     url(r'^logout/$', Logout.as_view(), name='logout'),
-    url(r'^signup/$',SignUp.as_view(), name='signup'),
+    url(r'^signup/$', SignUp.as_view(), name='signup'),
     # 비밀번호 찾기
     url(r'^passwordReset/$', PasswordReset.as_view(), name='passwordReset'),
     # 유저정보 요청
