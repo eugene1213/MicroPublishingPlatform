@@ -1,0 +1,98 @@
+	{% load static %}
+    <link rel="stylesheet" href="{% static 'css/sass/header.css' %}">
+	<header tabindex="0"><span class="site-name" onclick="window.location.href='/'">octocolumn<div class="beta-logo"></div></span>
+    <div id="nav-container">
+        <div class="bg"></div>
+        <div class="button" tabindex="0">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div id="nav-content" class="scrollbar-none" tabindex="0">
+            <ul>
+                <li><a href="/support/">About</a></li>
+                <li><a href="/support/staffBlog/">Staff Blog</a></li>
+                <li><a href="/support/jobs/">Jobs</a></li>
+                <li><a href="/support/policies/">Policies & Laws</a></li>
+                <li><a href="/support/notice/">Notice</a></li>
+                <li class="divline"></li>
+                <li><a href="help-1.html">Help</a></li>
+                <li><a href="/support/contact/">Contact</a></li>
+                <li class="divline"></li>
+                <li><a href="/">octocolumn.com</a></li>
+                <li class="divline"></li>
+                <li id="logout">Sign out</li>
+                <li class="info"><span>Copyright octocolumn All Rights Reserved<br>주식회사 옥토칼럼<br>대표 오정민<br>사업자등록번호<br>576-52-00020<br>통신판매업신고<br>2016 수원권선 0350<br>개인정보관리책임자 오정민<br>경기도 수원시 권선구 정조로 580-9<br>mackenzie@octocolumn.com<br>고객센터 070-4809-7166</span></li>
+                <!--
+                <li class="small"><a href="#0">Facebook</a><a href="#0">Instagram</a></li>
+                -->
+            </ul>
+        </div>
+	</div>
+	<!-- <div class="btn-search">
+		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
+	</div> -->
+	<!-- <div class="btn-notice">
+		<img src="{% static 'images/icons/header/Shape2.png' %}">
+	</div> -->
+	<div id="profile-container">
+		<span class="profile-text"></span>
+		<div class="profile-img image-loader" id="header-profile-image"></div>
+		<div class="account-info">
+			<ul>
+				<li class="notifications">
+					<div class="icon icon-bell">
+						<div class="badge"></div>
+					</div>
+					<div class="text">Unread Message</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="point">
+					<div class="icon icon-user"></div>
+					<div class="text"><span> </span>&nbsp;p</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="setting" onclick="window.location.href='/profile/'">
+					<div class="icon icon-cog"></div>
+					<div class="text">Setting</div>
+					<div class="icon-right-open-big"></div>
+				</li>
+				<li class="signout">Sign out</li>
+			</ul>
+		</div>
+	</div>
+<!--
+	<div class="btn-search">
+		<img src="{% static 'images/icons/header/CombinedShape2.png' %}">
+	</div>
+	<div class="btn-point">
+		<div class="point">0p</div>
+	</div>
+	<div class="btn-notice">
+		<img src="{% static 'images/icons/header/Shape2.png' %}">
+	</div> -->
+</header>
+<script type="text/javascript" src="{% static 'js/header_on.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script> -->
+<script>
+  	// Initialize Firebase
+  	// var config = {
+	// 	apiKey: "AIzaSyCnXsCAt5plwnadoKDCjDva_b4vIotj5P0",
+	// 	authDomain: "octocolumn-cc8db.firebaseapp.com",
+	// 	databaseURL: "https://octocolumn-cc8db.firebaseio.com",
+	// 	projectId: "octocolumn-cc8db",
+	// 	storageBucket: "",
+	// 	messagingSenderId: "407103464119"
+  	// };
+  	// firebase.initializeApp(config);
+
+  	// var notifications = $('.notifications')[0];
+	// var dbRef = firebase.database().ref().child('message');
+
+	// dbRef.on('value', snap => $('.badge').hide());
+
+	// dbRef.on('value', snap => notifications.value = snap.val());
+</script>
