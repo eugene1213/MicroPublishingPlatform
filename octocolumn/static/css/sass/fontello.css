@@ -88,14 +88,6 @@
   content: '\e80c'; }
 
 /* '기다림' */
-.icon-plus-circle:before {
-  content: '\e80d'; }
-
-/* '+' */
-.icon-minus-circle:before {
-  content: '\e80e'; }
-
-/* '-' */
 .icon-star:before {
   content: '\e800';
   fill: gold; }

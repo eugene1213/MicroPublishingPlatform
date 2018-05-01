@@ -18,10 +18,10 @@
 <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
 <!-- core CSS -->
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/main.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-preview.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon-btn.css' %}">
 
 <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -72,7 +72,7 @@
         </div>
         
         <!-- Sub content 01 -->
-        <div class="container">
+        <div class="container" id="container">
             <div class="sub-content-title">
                 All Latest Updated Posts
                 <span class="post-more-view" onclick="window.location.href='/more/recent/'"></span>
@@ -253,54 +253,6 @@
     
     </main>
 </div>
-<!-- flip -->
-<div class="flip">
-    <!-- arrow_box -->
-    <div class="arrow_box_1">
-        <div class="card_background_img profile-image-upload-wrap">
-            <div class="card_profile_img_wrap">
-            </div>
-        </div>
-        <div class="wrap-followers">
-            <div class="followers">
-                Followers
-            </div>
-            <div class="num_of_followers">
-                K
-            </div>
-        </div>
-        <div class="btn-follow">
-            Follow
-        </div>
-        <div class="card_profile_name">
-            
-        </div>
-        <div class="card_profile_title">
-            
-        </div>
-        <div class="socialbar">
-            <a><img src="{% static 'images/icons/balloon/fb-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/isn-combined-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/t-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/bl-combined-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/inf-combined-shape-copy-2@3x.png' %}" class="more-info"></a>
-        </div>
-    </div>
-    <div class="arrow_box_2">
-        <div class="card_profile_info">
-
-        </div>
-        <div class="socialbar">
-            <a><img src="{% static 'images/icons/balloon/fb-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/isn-combined-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/t-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/bl-combined-shape-copy-2@3x.png' %}"></a>
-            <a><img src="{% static 'images/icons/balloon/inf-combined-shape-copy-2@3x.png' %}" class="more-info2"></a>
-        </div>
-    </div>
-    <!-- //arrow_box -->
-</div>
-<!-- //flip -->
 <!-- JS -->
 
 <script src="{% static 'js/script2.js' %}"></script>

@@ -14,7 +14,7 @@
   }
 }
 */
-[class^="icon-"]:before, [class*=" icon-"]:before {
+[class^="icon-2-"]:before, [class*=" icon-2-"]:before {
   font-family: "icon";
   font-style: normal;
   font-weight: normal;
@@ -41,19 +41,19 @@
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
-.icon-bell:before {
+.icon-2-bell:before {
   content: '\e802'; }
 
 /* '' */
-.icon-cog:before {
+.icon-2-cog:before {
   content: '\e803'; }
 
 /* '' */
-.icon-user:before {
+.icon-2-user:before {
   content: '\e804'; }
 
 /* '' */
-.icon-right-open-big:before {
+.icon-2-right-open-big:before {
   content: '\e805'; }
 
 /* '' */
