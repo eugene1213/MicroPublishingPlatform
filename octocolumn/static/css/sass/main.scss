@@ -483,6 +483,7 @@ a, a:visited {
 }
 .container {
 	width: 70vw;
+	min-height: 100vh;	
 	padding: 0.5em;
 	max-width: 980px;
 	margin: 0 auto;
