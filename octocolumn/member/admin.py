@@ -163,7 +163,8 @@ class PointHistoryAdmin(admin.ModelAdmin):
 @admin.register(PreAuthorPost)
 class PreAuthorPostAdmin(admin.ModelAdmin):
     list_per_page = 20
-    list_display = ['author', 'title', 'content_size', 'price', 'author_is_active', 'created_date', 'author_actions',
+    list_display = [
+        'author', 'title', 'content_size', 'price', 'author_is_active', 'created_date', 'author_actions',
                     'author_draft',
                     ]
 
@@ -223,7 +224,7 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
         )
 
     def download_action(self, request, post_pk):
-        main_con = Post.objects.filter(pk=post_pk).get().main_content
+        main_con = PreAuthorPost.objects.filter(pk=post_pk).get().main_content
         contents = '<div class="main_content_wrap">' + main_con + '</div>'
         read_css = \
             '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/read.css">'
