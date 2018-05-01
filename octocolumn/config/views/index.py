@@ -92,6 +92,10 @@ def preview(request, author=None, title=None):
         url = re.sub('[/~₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|,|\.|\/|<|>|\?/g]', '', title)
         return url.replace(' ', '-')
 
+    def author_exchange(author):
+        url = re.sub('[/~₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|,|\.|\/|<|>|\?/g]', '', author)
+        return url.replace(' ', '')
+
     if token is not None:
         post_num = title.split('-')
         if len(post_num) is 1:
@@ -114,7 +118,7 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://www.octocolumn.com/' + '@' + post.author.nickname + '/' + url_exchange(post.title) +
+                "url": 'https://www.octocolumn.com/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
                        "-" + str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -145,7 +149,7 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://www.octocolumn.com/'+'@' + post.author.nickname + '/' + url_exchange(post.title) + "-" +
+                "url": 'https://www.octocolumn.com/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
                 str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
