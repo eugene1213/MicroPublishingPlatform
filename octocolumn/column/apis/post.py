@@ -12,12 +12,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag
-from column.pagination import PostPagination
+from column.pagination import PostPagination, PostListPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import WaitingRelation, Bookmark
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
+from utils.error_code import kr_error_code
 from utils.image_rescale import image_quality_down, thumnail_cover_image_resize
 from ..models import Post
 from ..serializers import PostSerializer, PostMoreSerializer
@@ -76,8 +77,12 @@ class PostCreateView(generics.GenericAPIView,
     def search_tag(self, post_id, tag):
         search_tag = tag.split(',')
         if len(search_tag) > 5:
-            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, 200)
-
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
         for i in search_tag:
             SearchTag.objects.create(post_id=post_id, tag=i)
 
@@ -102,7 +107,12 @@ class PostCreateView(generics.GenericAPIView,
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
             return data
-        raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
+        return Response(
+            {
+                "code": 412,
+                "message": kr_error_code(412)
+            }
+            , status=status.HTTP_412_PRECONDITION_FAILED)
 
     def post(self, request):
         user = self.request.user
@@ -122,11 +132,21 @@ class PostCreateView(generics.GenericAPIView,
             if author.is_active:
                 # 임시저장 파일이 없을 경우
                 if data['temp_id'] == '':
-                    raise exceptions.NotAcceptable({'detail': 'Abnormal connected'}, 400)
+                    return Response(
+                        {
+                            "code": 500,
+                            "message": kr_error_code(500)
+                        }
+                        , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 try:
                     temp = Temp.objects.filter(id=data['temp_id']).get()
                 except ObjectDoesNotExist:
-                    raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'}, 400)
+                    return Response(
+                        {
+                            "code": 409,
+                            "message": kr_error_code(409)
+                        }
+                        , status=status.HTTP_409_CONFLICT)
 
                 # 포인트가 모자르다면 에러발생
                 # 정확한 정보를 위해 db의 유저 정보를 가져온다
@@ -136,7 +156,12 @@ class PostCreateView(generics.GenericAPIView,
                 #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
 
                 if self.major_point().point > user_queryset.point:
-                    raise exceptions.NotAcceptable({"detail": "There is not enough points."}, 400)
+                    return Response(
+                        {
+                            "code": 414,
+                            "message": kr_error_code(414)
+                        }
+                        , status=status.HTTP_414_REQUEST_URI_TOO_LONG)
 
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
@@ -149,7 +174,12 @@ class PostCreateView(generics.GenericAPIView,
                 # 태그 추가
                 if data['tag'] != '':
                     if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
-                        raise exceptions.ValidationError({'detail': 'Upload tag Failed'}, 400)
+                        return Response(
+                            {
+                                "code": 413,
+                                "message": kr_error_code(413)
+                            }
+                            , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
                 # 유저 포인트 업데이트
                 user_queryset.point -= self.major_point().point
@@ -161,32 +191,52 @@ class PostCreateView(generics.GenericAPIView,
                 try:
                     Temp.objects.filter(id=data['temp_id']).delete()
                 except ObjectDoesNotExist:
-                    raise exceptions.ValidationError({'detail': 'Already Posted or temp not exist'}, 400)
+                    return Response(
+                        {
+                            "code": 409,
+                            "message": kr_error_code(409)
+                        }
+                        , status=status.HTTP_409_CONFLICT)
 
                 # 태그를 추가하고 태그 추가 실패
 
                 if serializer:
                     return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
                 else:
-                    raise exceptions.ValidationError({'detail': 'Already added'}, 400)
+                    return Response(
+                        {
+                            "code": 408,
+                            "message": kr_error_code(408)
+                        }
+                        , status=status.HTTP_408_REQUEST_TIMEOUT)
             else:
-                raise exceptions.NotAcceptable({"detail": "This Account is Deactive "}, 401)
+                return Response(
+                    {
+                        "code": 405,
+                        "message": kr_error_code(405)
+                    }
+                    , status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         else:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 ################################### 목록  ###############################
 
 class PostListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
-    pagination_class = PostPagination
+    pagination_class = PostListPagination
     serializer_class = PostSerializer
     queryset = Post.objects.all()
 
     def list(self, request, *args, **kwargs):
         try:
-            post = Post.objects.select_related('author').all().order_by('-created_date')[0:5]
+            post = Post.objects.select_related('author').all().order_by('-created_date')[0:10]
 
             page = self.paginate_queryset(post)
             serializer = PostMoreSerializer(page, context={'request': request}, many=True)
@@ -259,7 +309,12 @@ class PostReadView(APIView):
 
     def post_exist(self, post_id):
         if Post.objects.filter(pk=post_id).count() == 0:
-            raise exceptions.ValidationError({'detail': 'Does not exist post'}, 400)
+            return Response(
+                {
+                    "code": 409,
+                    "message": kr_error_code(409)
+                }
+                , status=status.HTTP_409_CONFLICT)
         return Post.objects.select_related('author').filter(pk=post_id).get()
 
     def bookmark_status(self, post):
@@ -311,8 +366,18 @@ class PostReadView(APIView):
 
                     }
                 }, status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({'detail': 'expected error'}, 400)
-        raise exceptions.ValidationError({'detail': False}, 400)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(
+            {
+                "code": 407,
+                "message": kr_error_code(407)
+            }
+            , status=status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED)
 
 
 class PostPreReadView(APIView):
@@ -325,7 +390,12 @@ class PostPreReadView(APIView):
 
         if serializer:
             return Response(serializer.data['preview_image'], status=status.HTTP_200_OK)
-        raise exceptions.ValidationError({'detail': 'expected error'}, 400)
+        return Response(
+            {
+                "code": 500,
+                "message": kr_error_code(500)
+            }
+            , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class IsBuyPost(APIView):
@@ -397,7 +467,12 @@ class IsBuyPost(APIView):
                     status=status.HTTP_200_OK)
 
             except ObjectDoesNotExist:
-                raise exceptions.NotFound()
+                return Response(
+                    {
+                        "code": 404,
+                        "message": kr_error_code(404)
+                    }
+                    , status=status.HTTP_404_NOT_FOUND)
 
 
 class AuthorResult(APIView):
