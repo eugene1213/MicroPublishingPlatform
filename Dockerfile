@@ -76,18 +76,20 @@ RUN         mkdir -p /var/log/uwsgi/app
 #
 #RUN redis-server
 
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:certbot/certbot
+RUN apt-get update
+RUN apt-get install dialog apt-utils -y
+RUN apt-get install -y python-certbot-nginx
+
 RUN         cp /srv/app/.config/supervisor/* \
                 /etc/supervisor/conf.d/
 
+RUN chmod +x run.sh
+
 CMD         supervisord -n
 EXPOSE      80
-
-#RUN apt-get update
-#RUN apt-get install -y software-properties-common
-#RUN add-apt-repository -y ppa:certbot/certbot
-#RUN apt-get update
-#RUN apt-get install dialog apt-utils -y
-#RUN apt-get install -y python-certbot-nginx
 
 
 # certbot --nginx -d www.octocolumn.com

@@ -13,6 +13,8 @@
         margin-bottom: 80px;
         position: relative;
         width: 944px;
+        min-height: 1500px;
+        overflow: auto;
         background-color: #ffffff;
         z-index: 1005;
         border-radius: 8px;
@@ -218,9 +220,11 @@
             
             .btn {
                 display: block;
-                padding: 0px 10px;
+                position: absolute;
+                bottom: 18px;
+                width: 40%;
+                padding: 7px 10px;
                 height: 26px;
-                line-height: 24px;
                 text-align: center;
                 border-radius: 4px;
                 color: #fff;

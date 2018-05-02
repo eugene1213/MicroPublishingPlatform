@@ -115,11 +115,25 @@ header .site-name {
 	color: #FFFFFF;
 }
 
-#nav-content li a {
-	padding: 10px 5px;
-	display: block;
-	text-transform: none;
-	transition: color .1s;
+#nav-content li {
+
+	&:hover {
+		cursor: pointer;
+		color: #004b8d;
+	}
+	&:not(.info) + .info {
+		margin-top: auto;
+	}
+	a {
+		padding: 10px 5px;
+		display: block;
+		text-transform: none;
+		transition: color .1s;
+
+		&:hover {
+			color: #004b8d;
+		}
+	}
 }
 
 li.divline {
@@ -134,8 +148,6 @@ li.info {
 	font-weight:100;
 	color: #888;	
 }
-#nav-content li:not(.info) + .info {margin-top: auto;}
-#nav-content li a:hover {color: #004b8d;}
 /* --
 #nav-content li:not(.small) + .small {margin-top: auto;}
 .small {

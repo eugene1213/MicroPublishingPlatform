@@ -42,7 +42,7 @@ class UsePointFilter(admin.SimpleListFilter):
             date = datetime.date.today() + datetime.timedelta(days=i)
             display_str = '{0} [{1}]'.format(
                 date,
-                PointHistory.objects.filter(created_at__date=date, point_use_type='p').aggregate(
+                PointHistory.objects.filter(created_at__date=date, point_use_type='구매').aggregate(
                     total=Coalesce(Sum('point'), 0))['total']
             )
             display_str += ' - 오늘' if i==0 else ''

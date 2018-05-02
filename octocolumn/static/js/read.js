@@ -45,7 +45,7 @@ $(document).ready(function(){
             $('meta[property="og:title"]').attr('content',title);
             
             
-            $('.fb-share-button').attr('data-href', href);
+            $('.fb-share-button').attr('data-href', 'https://www.octocolumn.com/preview'+url);
             $(".mainImg").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);
@@ -71,7 +71,7 @@ $(document).ready(function(){
     // 댓글 입력
     $('.comment_button').click(function() {
 
-        var content = $('.input_comment').val();
+        var content = $('.input_comment').val().replace(/\n/g,"<br />");
         console.log(content)
 
         content.length > 0 && content.length <= 1500
@@ -96,7 +96,7 @@ $(document).ready(function(){
     // 대댓글 입력
     $('.comments-list').delegate('.reply_button','click',function(e) {
         
-        var content = $(e.target).siblings('.input_reply').val();
+        var content = $(e.target).siblings('.input_reply').val().replace(/\n/g,"<br />");
         var commentID = $(e.target).closest('.reply-list').attr('id');
 
         content.length > 0 && content.length <= 1500        
