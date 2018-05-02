@@ -117,7 +117,7 @@ class PostAdmin(admin.ModelAdmin):
 
     def download_action(self, request, post_pk):
         post = Post.objects.filter(pk=post_pk).get()
-        cover_image = '<div class="mainImg image-loader" style="background-image: url(&quot;https://static.octocolumn.com/media/'\
+        cover_image = '<div class="mainImg image-loader" style="background-image: url(https://static.octocolumn.com/media/'\
                       + str(post.cover_image) + '); height: 568px;"><!--url({cover_img})--></div>'
         contents = '<div class="main_content_wrap">' + post.main_content + '</div>'
         read_css = \
