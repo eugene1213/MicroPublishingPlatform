@@ -21,7 +21,7 @@ function getComment(post_id, commentID) {
             var results = json.results;
 
             for(result in results) {
-                console.log(results[result])
+
                 var content = results[result].content;                  // 내용
                 var created_date = results[result].created_date;        // 작성일시 타임스탬프
                 var date = '';
