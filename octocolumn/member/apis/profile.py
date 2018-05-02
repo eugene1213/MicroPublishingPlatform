@@ -79,8 +79,8 @@ class ProfileInfo(APIView):
                     "following": Relation.objects.select_related('from_user', 'to_user').filter(from_user=user).count(),
                     "follower": Relation.objects.select_related('to_user', 'from_user').filter(to_user=user).count(),
                     "image": {
-                        "profile_image": "/media/example/2_x20_.jpeg",
-                        "cover_image": "/media/example/1.jpeg"
+                        "profile_image": "https://static.octocolumn.com/media/example/2_x20_.jpeg",
+                        "cover_image": "https://static.octocolumn.com/media/example/1.jpeg"
                     }
                 }, status=status.HTTP_200_OK)
 
