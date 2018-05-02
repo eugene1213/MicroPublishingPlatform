@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from column.models import Comment, Post
 from column.pagination import CommentPagination
 from column.serializers import CommentSerializer
+from utils.error_code import kr_error_code
 
 __all__ = (
     'CommentListView',
@@ -43,7 +44,12 @@ class CommentView(APIView):
                     comment.parent = parent_comment
                     comment.save()
                     return Response({"detail": comment.pk}, status=status.HTTP_201_CREATED)
-                raise exceptions.ValidationError({'detail': 'this param is wht'}, 400)
+                return Response(
+                    {
+                        "code": 422,
+                        "message": kr_error_code(422)
+                    }
+                    , status=status.HTTP_422_UNPROCESSABLE_ENTITY)
             else:
                 return Response({"detail": "Already added."}, status=status.HTTP_200_OK)
 
@@ -68,10 +74,25 @@ class CommentView(APIView):
                     comment.content = data['content']
                     comment.save()
                     return Response({"detail": "success"}, status=status.HTTP_200_OK)
-                raise exceptions.ValidationError({"detail": "this comment is deleted"})
-            raise exceptions.ValidationError({"detail": "this is not your comment"})
+                return Response(
+                    {
+                        "code": 423,
+                        "message": kr_error_code(423)
+                    }
+                    , status=status.HTTP_423_LOCKED)
+            return Response(
+                {
+                    "code": 402,
+                    "message": kr_error_code(402)
+                }
+                , status=status.HTTP_402_PAYMENT_REQUIRED)
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request):
         user = self.request.user
@@ -88,9 +109,19 @@ class CommentView(APIView):
                     return Response({"detail": "success"}, status=status.HTTP_200_OK)
                 comment.delete()
                 return Response({"detail": "deleted"}, status=status.HTTP_204_NO_CONTENT)
-            raise exceptions.ValidationError({"detail": "this is not your comment"})
+            return Response(
+                {
+                    "code": 402,
+                    "message": kr_error_code(402)
+                }
+                , status=status.HTTP_402_PAYMENT_REQUIRED)
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class CommentListView(generics.ListAPIView):
@@ -116,7 +147,12 @@ class CommentListView(generics.ListAPIView):
 
                 return Response(serializer.data)
             except ObjectDoesNotExist:
-                raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
+                return Response(
+                    {
+                        "code": 409,
+                        "message": kr_error_code(409)
+                    }
+                    , status=status.HTTP_409_CONFLICT)
 
         else:
             try:
@@ -135,15 +171,30 @@ class CommentListView(generics.ListAPIView):
                     return Response(serializer.data)
                 
                 except ObjectDoesNotExist:
-                    raise exceptions.ValidationError({'detail': 'this parent is not exist'}, 400)
+                    return Response(
+                        {
+                            "code": 423,
+                            "message": kr_error_code(423)
+                        }
+                        , status=status.HTTP_423_LOCKED)
 
             except ObjectDoesNotExist:
-                raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
+                return Response(
+                    {
+                        "code": 409,
+                        "message": kr_error_code(409)
+                    }
+                    , status=status.HTTP_409_CONFLICT)
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('post_pk')
         if param == '':
-            raise exceptions.ValidationError({'detail': 'this param is wht'}, 400)
+            return Response(
+                {
+                    "code": 422,
+                    "message": kr_error_code(422)
+                }
+                , status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
         return self.list(request)
 
@@ -161,6 +212,11 @@ class CommentLikeToggleView(APIView):
                 return Response({'detail': 'created'})
             return Response({'created': 'deleted'})
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

@@ -16,6 +16,7 @@ from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileSerializer
+from utils.error_code import kr_error_code
 from utils.image_rescale import profile_image_resizing, image_quality_down
 
 __all__ = (
@@ -43,11 +44,16 @@ class ProfileInfo(APIView):
 
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except ObjectDoesNotExist:
             try:
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
-
+                print(1)
                 serializer = ProfileImageSerializer(profile_image)
                 return Response({
                     "nickname": user.nickname,
@@ -71,8 +77,8 @@ class ProfileInfo(APIView):
                     "post_count": Post.objects.filter(author=user).count(),
                     "point": user.point,
                     "intro": "-",
-                    "following": Relation.objects.select_related('from_user__user').filter(from_user=user).count(),
-                    "follower": Relation.objects.select_related('to__user__user').filter(from_user=user).count(),
+                    "following": Relation.objects.select_related('from_user').filter(from_user=user).count(),
+                    "follower": Relation.objects.select_related('to_user').filter(to_user=user).count(),
                     "image": {
                         "profile_image": "https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg",
                         "cover_image": "https://devtestserver.s3.amazonaws.com/media/example/1.jpeg"
@@ -100,7 +106,12 @@ class ProfileIntroUpdate(APIView):
             # 데이터를 직렬화 시켜 프린트
             if serializer:
                 return Response('', status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except ObjectDoesNotExist:
             update = Profile.objects.create(user=user, intro=data['userIntro'])
@@ -108,7 +119,12 @@ class ProfileIntroUpdate(APIView):
 
             if serializer:
                 return Response('', status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -146,7 +162,12 @@ class ProfileUpdate(APIView):
                     phone=data['hpNumber'], age=data['age'], jobs=data['job'], facebook=data['fb'], instagram=data['ins'],
                     twitter=data['tw'], subjects=data['subject'], region=data['region'], web=data['web']):
                 return Response(status=status.HTTP_200_OK)
-            raise exceptions.ValidationError('Abnormal connectd')
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -164,7 +185,12 @@ class ProfileImageUpload(generics.CreateAPIView):
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name=margin+'.'+ext)
             return data
-        raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
+        return Response(
+            {
+                "code": 412,
+                "message": kr_error_code(412)
+            }
+            , status=status.HTTP_412_PRECONDITION_FAILED)
 
     #파일 업로드
     def post(self, request, *args, **kwargs):
@@ -181,14 +207,24 @@ class ProfileImageUpload(generics.CreateAPIView):
             serializer = ProfileImageSerializer(profile_image)
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
         except ObjectDoesNotExist:
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
                                                                             profile_image=resizing_image))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
 
 # 1
@@ -206,7 +242,12 @@ class UserCoverImageUpload(generics.CreateAPIView):
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name=size+'.'+ext)
             return data
-        raise exceptions.ValidationError({'detail': 'eEmpty image'}, 400)
+        return Response(
+            {
+                "code": 412,
+                "message": kr_error_code(412)
+            }
+            , status=status.HTTP_412_PRECONDITION_FAILED)
 
     def post(self, request,*args,**kwargs):
         user = self.request.user
@@ -221,14 +262,24 @@ class UserCoverImageUpload(generics.CreateAPIView):
             serializer = ProfileImageSerializer(profile_image)
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
         except ObjectDoesNotExist:
             serializer = ProfileImageSerializer(ProfileImage.objects.create(user=user,
                                                                             cover_image=cover_file_obj))
             if serializer:
                 return Response({"fileUpload": serializer.data}, status=status.HTTP_201_CREATED)
-            raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
 
 # 1
@@ -245,7 +296,12 @@ class PublishPost(APIView):
             serializer = MyPublishPostSerializer(post, many=True)
             if serializer:
                 return Response({"join_date": user.created_at, "post": serializer.data}, status=status.HTTP_200_OK)
-            raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except ObjectDoesNotExist:
             return None
@@ -265,7 +321,12 @@ class MyTemp(APIView):
             serializer = MyTempSerializer(temp, many=True)
             if serializer:
                 return Response({"post": serializer.data}, status=status.HTTP_200_OK)
-            raise exceptions.APIException({"detail": "Abnormal connected"}, 400)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except ObjectDoesNotExist:
             return None

@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import generics, exceptions
+from rest_framework import generics, exceptions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -11,6 +11,9 @@ from member.serializers.point import PointHistorySerializer
 # 1
 # 유저의 포인트 사용내역을 가져오는 API
 # URL /api/member/getPointHistory/
+from utils.error_code import kr_error_code
+
+
 class UserPointHistory(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     pagination_class = PointHistoryPagination
@@ -30,7 +33,12 @@ class UserPointHistory(generics.ListAPIView):
 
             return Response(serializer.data)
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({'detail': 'this post not exist'}, 400)
+            return Response(
+                {
+                    "code": 409,
+                    "message": kr_error_code(409)
+                }
+                , status=status.HTTP_409_CONFLICT)
 
     def get(self, request, *args, **kwargs):
         return self.list(request)
