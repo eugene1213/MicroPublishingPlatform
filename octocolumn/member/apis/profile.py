@@ -53,7 +53,7 @@ class ProfileInfo(APIView):
         except ObjectDoesNotExist:
             try:
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
-
+                print(1)
                 serializer = ProfileImageSerializer(profile_image)
                 return Response({
                     "nickname": user.nickname,
@@ -77,8 +77,8 @@ class ProfileInfo(APIView):
                     "post_count": Post.objects.filter(author=user).count(),
                     "point": user.point,
                     "intro": "-",
-                    "following": Relation.objects.select_related('from_user__user').filter(from_user=user).count(),
-                    "follower": Relation.objects.select_related('to__user__user').filter(from_user=user).count(),
+                    "following": Relation.objects.select_related('from_user').filter(from_user=user).count(),
+                    "follower": Relation.objects.select_related('to_user').filter(to_user=user).count(),
                     "image": {
                         "profile_image": "https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg",
                         "cover_image": "https://devtestserver.s3.amazonaws.com/media/example/1.jpeg"

@@ -146,10 +146,11 @@ class GetUserFollowingCard(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         count = self.kwargs.get('count')
-        if count:
+        if count != 0:
             # 내가 팔로워하는 유저
-            follower = Relation.objects.filter(from_user=user)[int(count):int(count)+4]
-            if follower.count() != 0:
+            follower = Relation.objects.filter(from_user=user)[int(count):int(count) + 4]
+
+            if follower.count != 0:
 
                 list = []
                 for i in follower:
@@ -169,8 +170,8 @@ class GetUserFollowingCard(ListAPIView):
                         }
 
                         list.append(data)
+                        pass
 
-                        return Response(list, status=status.HTTP_200_OK)
                     except ObjectDoesNotExist:
                             try:
                                 profile_image = ProfileImage.objects.filter(user=i.to_user).get()
@@ -188,7 +189,7 @@ class GetUserFollowingCard(ListAPIView):
 
                                     }
                                     list.append(data)
-                                    return Response(list, status=status.HTTP_200_OK)
+                                    pass
                                 return Response(
                                     {
                                         "code": 500,
@@ -202,47 +203,84 @@ class GetUserFollowingCard(ListAPIView):
                                         "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
-                                        "profile_img": 'example/2_x20_.jpeg',
-                                        "cover_img": 'example/1.jpeg'
+                                        "profile_img": 'media/example/2_x20_.jpeg',
+                                        "cover_img": 'media/example/1.jpeg'
 
                                     }
                                     list.append(data)
-                                    return Response(list, status=status.HTTP_200_OK)
+                                    pass
+                return Response(list, status=status.HTTP_200_OK)
 
             else:
                 return Response({}, status=status.HTTP_200_OK)
 
         else:
-            follower = Relation.objects.filter(from_user=user)[0:4].get()
+            follower = Relation.objects.filter(from_user=user)[0:4].all()
 
-            list = []
+            if follower.count != 0:
 
-            for i in follower:
-                try:
-                    profile = Profile.objects.filter(user=i.to_user).get()
-                    profile_serializer = ProfileSerializer(profile)
+                list = []
+                for i in follower:
+                    try:
 
-                    data = {
-                            "follower": Relation.objects.filter(to_user=i.to_user).count(),
-                            "nickname": i.to_user.nickname,
-                            "intro": profile_serializer.data['intro'],
-                            "profile_img": profile_serializer.data['image']['profile_image'],
-                            "cover_img": profile_serializer.data['image']['cover_image']
+                        profile = Profile.objects.filter(user=i.to_user).get()
+                        profile_serializer = ProfileSerializer(profile)
 
+                        data = {
+                                "pk": i.to_user.id,
+                                "follower": Relation.objects.filter(to_user=i.to_user).count(),
+                                "nickname": i.to_user.nickname,
+                                "intro": profile_serializer.data['intro'],
+                                "profile_img": profile_serializer.data['image']['profile_image'],
+                                "cover_img": profile_serializer.data['image']['cover_image']
 
-                    }
-                    list.append(data)
-
-                    return Response(list, status=status.HTTP_200_OK)
-                except ObjectDoesNotExist:
-                    return Response(
-                        {
-                            "code": 403,
-                            "message": kr_error_code(403)
                         }
-                        , status=status.HTTP_403_FORBIDDEN)
 
-            return Response({},200)
+                        list.append(data)
+                        pass
+
+                    except ObjectDoesNotExist:
+                            try:
+                                profile_image = ProfileImage.objects.filter(user=i.to_user).get()
+
+                                serializer = ProfileImageSerializer(profile_image)
+
+                                if serializer:
+                                    data = {
+                                        "pk": i.to_user.id,
+                                        "follower": Relation.objects.filter(to_user=i.to_user).count(),
+                                        "nickname": i.to_user.nickname,
+                                        "intro": '-',
+                                        "profile_img": serializer.data['profile_image'],
+                                        "cover_img": serializer.data['cover_image']
+
+                                    }
+                                    list.append(data)
+                                    pass
+                                return Response(
+                                    {
+                                        "code": 500,
+                                        "message": kr_error_code(500)
+                                    }
+                                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                            except ObjectDoesNotExist:
+
+                                    data = {
+                                        "pk": i.to_user.id,
+                                        "follower": Relation.objects.filter(to_user=i.to_user).count(),
+                                        "nickname": i.to_user.nickname,
+                                        "intro": '-',
+                                        "profile_img": 'media/example/2_x20_.jpeg',
+                                        "cover_img": 'media/example/1.jpeg'
+
+                                    }
+                                    list.append(data)
+                                    pass
+                return Response(list, status=status.HTTP_200_OK)
+
+            else:
+                return Response({}, status=status.HTTP_200_OK)
+            # return Response({},200)
 
 
 # 1
@@ -262,7 +300,7 @@ class GetUserFollowerCard(ListAPIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         count = self.kwargs.get('count')
-        if count:
+        if count != 0:
 
             follower = Relation.objects.filter(to_user=user)[int(count):int(count)+4]
             if follower.count() != 0:
@@ -286,8 +324,7 @@ class GetUserFollowerCard(ListAPIView):
                         }
 
                         list.append(data)
-
-                        return Response(list, status=status.HTTP_200_OK)
+                        pass
                     except ObjectDoesNotExist:
                             try:
                                 profile_image = ProfileImage.objects.filter(user=i.from_user).get()
@@ -306,7 +343,7 @@ class GetUserFollowerCard(ListAPIView):
 
                                     }
                                     list.append(data)
-                                    return Response(list, status=status.HTTP_200_OK)
+                                    pass
                                 return Response(
                                     {
                                         "code": 500,
@@ -326,7 +363,9 @@ class GetUserFollowerCard(ListAPIView):
 
                                     }
                                     list.append(data)
-                                    return Response(list, status=status.HTTP_200_OK)
+                                    pass
+
+                return Response(list, status=status.HTTP_200_OK)
 
             else:
                 return Response({}, status=status.HTTP_200_OK)
@@ -334,35 +373,72 @@ class GetUserFollowerCard(ListAPIView):
         else:
             follower = Relation.objects.filter(to_user=user)[0:4].get()
 
-            list = []
+            if follower.count() != 0:
 
-            for i in follower:
-                try:
-                    profile = Profile.objects.filter(user=i.from_user).get()
-                    profile_serializer = ProfileSerializer(profile)
+                list = []
+                for i in follower:
+                    try:
 
-                    data = {
+                        profile = Profile.objects.filter(user=i.from_user).get()
+                        profile_serializer = ProfileSerializer(profile)
+
+                        data = {
+                            "pk": i.from_user.id,
                             "follower": Relation.objects.filter(from_user=i.from_user).count(),
                             "nickname": i.from_user.nickname,
-                            "intro": profile_serializer.data['intro'],
                             "follow_status": self.follower_status(i.from_user),
+                            "intro": profile_serializer.data['intro'],
                             "profile_img": profile_serializer.data['image']['profile_image'],
                             "cover_img": profile_serializer.data['image']['cover_image']
 
-
-                    }
-                    list.append(data)
-
-                    return Response(list, status=status.HTTP_200_OK)
-                except ObjectDoesNotExist:
-                    return Response(
-                        {
-                            "code": 403,
-                            "message": kr_error_code(403)
                         }
-                        , status=status.HTTP_403_FORBIDDEN)
 
-            return Response({},200)
+                        list.append(data)
+                        pass
+                    except ObjectDoesNotExist:
+                        try:
+                            profile_image = ProfileImage.objects.filter(user=i.from_user).get()
+
+                            serializer = ProfileImageSerializer(profile_image)
+
+                            if serializer:
+                                data = {
+                                    "pk": i.from_user.id,
+                                    "follower": Relation.objects.filter(from_user=i.from_user).count(),
+                                    "nickname": i.from_user.nickname,
+                                    "follow_status": self.follower_status(i.from_user),
+                                    "intro": '-',
+                                    "profile_img": serializer.data['profile_image'],
+                                    "cover_img": serializer.data['cover_image']
+
+                                }
+                                list.append(data)
+                                pass
+                            return Response(
+                                {
+                                    "code": 500,
+                                    "message": kr_error_code(500)
+                                }
+                                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                        except ObjectDoesNotExist:
+
+                            data = {
+                                "pk": i.from_user.id,
+                                "follower": Relation.objects.filter(from_user=i.from_user).count(),
+                                "nickname": i.from_user.nickname,
+                                "follow_status": self.follower_status(i.from_user),
+                                "intro": '-',
+                                "profile_img": 'example/2_x20_.jpeg',
+                                "cover_img": 'example/1.jpeg'
+
+                            }
+                            list.append(data)
+                            pass
+
+                return Response(list, status=status.HTTP_200_OK)
+
+            else:
+                return Response({}, status=status.HTTP_200_OK)
 
 
 
