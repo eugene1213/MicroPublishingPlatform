@@ -34,7 +34,9 @@ body {
     line-height: 2em; }
   .main_content_wrap blockquote {
     -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em; }
+    -webkit-margin-after: 1em;
+    font-style: italic;
+    color: #555; }
   .main_content_wrap .medium-insert-buttons-show {
     display: none; }
   .main_content_wrap .medium-insert-images {

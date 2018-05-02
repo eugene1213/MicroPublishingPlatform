@@ -140,14 +140,11 @@ class TempFileUpload(generics.CreateAPIView):
 
         serializer = TempFileSerializer(temp_file)
         if serializer:
-            return Response(
-            {
-                "files['0']":
-                    {
-                        "id": serializer.data['id'],
-                        "file": {
-                            "url": serializer.data['file']
-                        }
+            return Response({"files":
+                {
+                    "id": serializer.data['id'],
+                    "file": {
+                        "url": serializer.data['file']
                     }
             }
           , status=status.HTTP_201_CREATED)
