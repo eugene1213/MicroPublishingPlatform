@@ -13,6 +13,7 @@ from column.serializers import PostSerializer, PreAuthorPostSerializer
 from member.models import Author as AuthorModel, User, PointHistory
 from member.serializers import AuthorSerializer
 from octo.models import UsePoint
+from utils.error_code import kr_error_code
 from utils.image_rescale import image_quality_down, thumnail_cover_image_resize
 
 __all__ = (
@@ -36,7 +37,12 @@ class AuthorApply(generics.GenericAPIView,
             ext = format.split('/')[-1]
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
             return data
-        raise exceptions.ValidationError({'detail': 'eEmpty image'}, status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED)
+        return Response(
+            {
+                "code": 410,
+                "message": kr_error_code(410)
+            }
+            , status=status.HTTP_410_GONE)
 
     def first_point(self):
         return UsePoint.objects.filter(type='first_user').get().point
@@ -45,7 +51,12 @@ class AuthorApply(generics.GenericAPIView,
     def search_tag(self, post, tag):
         search_tag = tag.split(',')
         if len(search_tag) > 5:
-            raise exceptions.ValidationError({'detail': 'You can`t add up to 5'}, status.HTTP_406_NOT_ACCEPTABLE)
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
         for i in search_tag:
             PreSearchTag.objects.select_related('post').create(post=post, tag=i)
@@ -60,7 +71,12 @@ class AuthorApply(generics.GenericAPIView,
         try:
             self.request.data['cover']
         except ObjectDoesNotExist:
-            raise exceptions.NotAcceptable({'detail': 'Abnormal connected'})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         cover_file_obj = self.base64_content(self.request.data['cover'])
         resizing_image = image_quality_down(cover_file_obj)
@@ -69,18 +85,32 @@ class AuthorApply(generics.GenericAPIView,
             author = AuthorModel.objects.filter(author=user).get()
             # 임시저장 파일이 없을 경우
             if data['temp_id'] == '':
-                raise exceptions.NotAcceptable({'detail': 'Abnormal connected'})
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
+                    }
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
             try:
                 temp = Temp.objects.filter(id=data['temp_id']).get()
 
             except ObjectDoesNotExist:
-                raise exceptions.PermissionDenied({'detail': 'Already Posted or temp not exist'})
+                return Response(
+                    {
+                        "code": 409,
+                        "message": kr_error_code(409)
+                    }
+                    , status=status.HTTP_409_CONFLICT)
 
             try:
                 PreAuthorPost.objects.filter(author=user).get()
-                print(2)
-                raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
+                return Response(
+                    {
+                        "code": 415,
+                        "message": kr_error_code(415)
+                    }
+                    , status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
             except ObjectDoesNotExist:
 
@@ -99,40 +129,73 @@ class AuthorApply(generics.GenericAPIView,
 
                     # 태그 추가 에외처리
                     if not self.search_tag(post=created, tag=self.request.data['tag']):
-                        raise exceptions.PermissionDenied({'detail': 'Upload tag Failed'})
+                        return Response(
+                            {
+                                "code": 413,
+                                "message": kr_error_code(413)
+                            }
+                            , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
                     # 템프파일 삭제 예외처리
                     try:
                         Temp.objects.filter(id=data['temp_id']).delete()
 
                     except ObjectDoesNotExist:
-                        raise exceptions.PermissionDenied({'detail': 'Already Posted or temp not exist'})
+                        return Response(
+                            {
+                                "code": 409,
+                                "message": kr_error_code(409)
+                            }
+                            , status=status.HTTP_409_CONFLICT)
 
                 # 태그를 추가하고 태그 추가 실패
 
                     if serializer:
                         return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
                     else:
-                        raise exceptions.ParseError({'detail': 'Already added'})
+                        return Response(
+                            {
+                                "code": 409,
+                                "message": kr_error_code(409)
+                            }
+                            , status=status.HTTP_409_CONFLICT)
                 else:
-                    print(3)
-                    raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
+                    return Response(
+                        {
+                            "code": 415,
+                            "message": kr_error_code(415)
+                        }
+                        , status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
         except ObjectDoesNotExist:
             result = AuthorModel.objects.get_or_create(author=user, intro=data['intro'], blog=data['blog'])
             if result:
                 if data['temp_id'] == '':
-                    raise exceptions.PermissionDenied({'detail': 'Abnormal connected'})
+                    return Response(
+                        {
+                            "code": 500,
+                            "message": kr_error_code(500)
+                        }
+                        , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 try:
                     temp = Temp.objects.filter(id=data['temp_id']).get()
 
                 except ObjectDoesNotExist:
-                    raise exceptions.PermissionDenied({'detail': 'Already Posted or temp not exist'})
+                    return Response(
+                        {
+                            "code": 409,
+                            "message": kr_error_code(409)
+                        }
+                        , status=status.HTTP_409_CONFLICT)
 
                 try:
                     PreAuthorPost.objects.filter(author=user).get()
-                    print(6)
-                    raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
+                    return Response(
+                        {
+                            "code": 415,
+                            "message": kr_error_code(415)
+                        }
+                        , status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
                 except ObjectDoesNotExist:
 
@@ -150,24 +213,48 @@ class AuthorApply(generics.GenericAPIView,
 
                         # 태그 추가 에외처리
                         if not self.search_tag(post=created, tag=self.request.data['tag']):
-                            raise exceptions.NotAcceptable({'detail': 'Upload tag Failed'})
+                            return Response(
+                                {
+                                    "code": 413,
+                                    "message": kr_error_code(413)
+                                }
+                                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
                         # 템프파일 삭제 예외처리
                         try:
                             Temp.objects.filter(id=data['temp_id']).delete()
 
                         except ObjectDoesNotExist:
-                            raise exceptions.NotAcceptable({'detail': 'Already Posted or temp not exist'})
+                            return Response(
+                                {
+                                    "code": 409,
+                                    "message": kr_error_code(409)
+                                }
+                                , status=status.HTTP_409_CONFLICT)
 
                         # 태그를 추가하고 태그 추가 실패
 
                         if serializer:
                             return Response({"detail": "Successfully added."}, status=status.HTTP_201_CREATED)
                         else:
-                            raise exceptions.NotAcceptable({'detail': 'Already added'})
+                            return Response(
+                                {
+                                    "code": 409,
+                                    "message": kr_error_code(409)
+                                }
+                                , status=status.HTTP_409_CONFLICT)
                     else:
-                        print(2)
-                        raise exceptions.NotAcceptable({'detail': 'Already processing author is_active'})
+                        return Response(
+                            {
+                                "code": 415,
+                                "message": kr_error_code(415)
+                            }
+                            , status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
-            raise exceptions.ValidationError({'detail': 'Abnormal connected'})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

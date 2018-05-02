@@ -9,6 +9,7 @@ from column.models import Post
 from member.models import User, ProfileImage, Profile
 from member.models.user import Relation, Bookmark
 from member.serializers import ProfileImageSerializer, ProfileSerializer, FollowStatusSerializer
+from utils.error_code import kr_error_code
 
 __all__ = (
     'Follower',
@@ -25,17 +26,24 @@ class FollowerStatus(APIView):
 
     def get(self, request, *args, **kwargs):
         user_pk = self.kwargs.get('user_pk')
-        print(user_pk)
-        print(User.objects.filter(pk=user_pk).get() is not None)
         try:
             to_user = User.objects.filter(pk=user_pk).get()
             serializer = FollowStatusSerializer(to_user, context={'request': request})
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
-
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -67,7 +75,12 @@ class Follower(APIView):
                              })
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"})
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -89,7 +102,12 @@ class Waiting(APIView):
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"}, status.HTTP_402_PAYMENT_REQUIRED)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -111,7 +129,12 @@ class BookmarkView(APIView):
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:
-            raise exceptions.ValidationError({"detail": "Abnormal connected"}, status.HTTP_402_PAYMENT_REQUIRED)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -166,7 +189,12 @@ class GetUserFollowingCard(ListAPIView):
                                     }
                                     list.append(data)
                                     return Response(list, status=status.HTTP_200_OK)
-                                raise exceptions.ValidationError('Abnormal connected')
+                                return Response(
+                                    {
+                                        "code": 500,
+                                        "message": kr_error_code(500)
+                                    }
+                                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                             except ObjectDoesNotExist:
 
                                     data = {
@@ -207,7 +235,12 @@ class GetUserFollowingCard(ListAPIView):
 
                     return Response(list, status=status.HTTP_200_OK)
                 except ObjectDoesNotExist:
-                    raise exceptions.ValidationError({"detail": "must Register Profile"})
+                    return Response(
+                        {
+                            "code": 403,
+                            "message": kr_error_code(403)
+                        }
+                        , status=status.HTTP_403_FORBIDDEN)
 
             return Response({},200)
 
@@ -274,7 +307,12 @@ class GetUserFollowerCard(ListAPIView):
                                     }
                                     list.append(data)
                                     return Response(list, status=status.HTTP_200_OK)
-                                raise exceptions.ValidationError('Abnormal connected')
+                                return Response(
+                                    {
+                                        "code": 500,
+                                        "message": kr_error_code(500)
+                                    }
+                                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                             except ObjectDoesNotExist:
 
                                     data = {
@@ -317,7 +355,12 @@ class GetUserFollowerCard(ListAPIView):
 
                     return Response(list, status=status.HTTP_200_OK)
                 except ObjectDoesNotExist:
-                    raise exceptions.ValidationError({"detail": "must Register Profile"})
+                    return Response(
+                        {
+                            "code": 403,
+                            "message": kr_error_code(403)
+                        }
+                        , status=status.HTTP_403_FORBIDDEN)
 
             return Response({},200)
 

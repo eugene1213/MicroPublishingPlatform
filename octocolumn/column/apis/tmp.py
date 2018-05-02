@@ -10,6 +10,7 @@ from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
 
 from member.models import Author as AuthorModel
+from utils.error_code import kr_error_code
 from utils.image_rescale import image_quality_down
 
 __all__ = (
@@ -34,16 +35,31 @@ class TempView(APIView):
                 serializer = TempSerializer(temp)
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
-                raise exceptions.ValidationError({"detail":"Abnormal connnectd"})
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
+                    }
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except ObjectDoesNotExist:
-                raise exceptions.ValidationError({"detail": "Do not have temp"})
+                return Response(
+                    {
+                        "code": 415,
+                        "message": kr_error_code(415)
+                    }
+                    , status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
         else:
             try:
                 temp = Temp.objects.filter(author=user).order_by('-created_date')[:1].get()
                 serializer = TempSerializer(temp)
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
-                raise exceptions.ValidationError({"detail": "Abnormal connnectd"})
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
+                    }
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except ObjectDoesNotExist:
                 return Response('', 200)
 
@@ -92,21 +108,35 @@ class TempCreateView(generics.GenericAPIView,
         else:
             # 임시 저장 할 수있는 게시물 제한
             if not self.check_post_count(user):
-                raise exceptions.ValidationError({"detail": "This account exceeded the number of articles you could write"},
-                                                 400)
+                return Response(
+                    {
+                        "code": 417,
+                        "message": kr_error_code(417)
+                    }
+                    , status=status.HTTP_417_EXPECTATION_FAILED)
 
             temp = self.queryset.create(author=user, title=data['title'], main_content=data['main_content'])
 
             # 예외처리
             if not temp:
-                raise exceptions.ValidationError({"detail": "Critical Error"}, 406)
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
+                    }
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
             serializer = self.get_serializer(temp)
             if serializer:
                 return Response({"temp": {
                     "temp_id": serializer.data['id'],
                 }}, status=status.HTTP_201_CREATED)
-            raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     # 임시저장 삭제
     def delete(self, request):
@@ -114,10 +144,20 @@ class TempCreateView(generics.GenericAPIView,
         data = self.request.data
         # request.data 에 temp_id 없을시 에러 발생
         if self.request.data.get('temp_id') is None:
-            raise exceptions.ValidationError({"detail": "Abnormal Connected"}, 406)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         if data['temp_id'] is '':
-            raise exceptions.ValidationError({"detail": "Temp does not exist."})
+            return Response(
+                {
+                    "code": 409,
+                    "message": kr_error_code(409)
+                }
+                , status=status.HTTP_409_CONFLICT)
         return self.queryset.filter(author=user).delete(id=data['temp_id'])
 
 
@@ -136,7 +176,12 @@ class TempFileUpload(generics.CreateAPIView):
         temp_file = TempFile.objects.create(author=user, file=resizing_image)
         # 예외처리
         if not temp_file:
-            raise exceptions.ValidationError({"detail": "Upload Failed"})
+            return Response(
+                {
+                    "code": 410,
+                    "message": kr_error_code(410)
+                }
+                , status=status.HTTP_410_GONE)
 
         serializer = TempFileSerializer(temp_file)
         if serializer:
@@ -151,7 +196,12 @@ class TempFileUpload(generics.CreateAPIView):
                     }
             }
         , status=status.HTTP_201_CREATED)
-        raise exceptions.APIException({"detail": "Upload Failed"}, 400)
+        return Response(
+            {
+                "code": 410,
+                "message": kr_error_code(410)
+            }
+            , status=status.HTTP_410_GONE)
 
 
 # 1

@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from column.models import Post
 from member.models import User, PointHistory, BuyList, SellList
+from utils.error_code import kr_error_code
 
 __all__ = (
     'PostBuy',
@@ -25,13 +26,23 @@ class PostBuy(APIView):
         data = self.request.data
         user = self.request.user
         if not self.request.user.is_authenticated:
-            raise exceptions.NotAuthenticated()
+            return Response(
+                {
+                    "code": 401,
+                    "message": kr_error_code(401)
+                }
+            , status=status.HTTP_401_UNAUTHORIZED)
 
         post_queryset = Post.objects.select_related('author').filter(id=data['post_id']).get()
 
         # 포인트가 적을시에 오류 발생
         if post_queryset.price > user.point:
-            raise exceptions.APIException({"detail": "There is not enough points."}, code=400)
+            return Response(
+                {
+                    "code": 414,
+                    "message": kr_error_code(414)
+                }
+                , status=status.HTTP_414_REQUEST_URI_TOO_LONG)
 
         # 구매한 기록이 있는지를 확인
         if self.buylist_duplicate(post_queryset):
@@ -52,12 +63,22 @@ class PostBuy(APIView):
                 post_queryset.save()
                 user.save()
             else:
-                raise exceptions.APIException({"detail": "There is not enough points."}, code=400)
+                return Response(
+                    {
+                        "code": 414,
+                        "message": kr_error_code(414)
+                    }
+                    , status=status.HTTP_414_REQUEST_URI_TOO_LONG)
 
             # 구매횟수 증가 업데이트
 
             return Response({"detail": "Success buy."}, status=status.HTTP_200_OK)
 
-        raise exceptions.APIException({"detail": "Failed buy."}, 400)
+        return Response(
+            {
+                "code": 416,
+                "message": kr_error_code(416)
+            }
+            , status=status.HTTP_416_REQUESTED_RANGE_NOT_SATISFIABLE)
 
 
