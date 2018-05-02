@@ -1,0 +1,221 @@
+.welcome-bg {
+	background-color: #fff;
+}
+
+/* ============================ */
+/*         page-signin          */
+/* ============================ */
+.signin-title {
+	width: 100%;
+	text-align: center;
+	color: #2a292a;
+}
+.signin-title h1 {
+	font-size: 40px;
+}
+.signin-title h3 {
+	font-size: 14px;
+	line-height: 18px;
+	font-weight: 100;
+	margin-top: 10px;
+}
+.frame {
+	position: relative;
+	width: 640px;
+	height: 400px;
+	background-color: #fff;
+	margin: 50px auto;
+	border-radius: 5px;
+	box-shadow: 0px 5px 50px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	transition: all .3s ease;
+	display: flex;
+}
+
+.form_title {
+	color: #2a292a;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 20px;
+	letter-spacing: 0;
+}
+.form_sub {
+	color: #2a292a;
+	font-size: 11px;
+	font-weight: 300;
+	line-height: 15px;
+	margin-top: 10px;
+	letter-spacing: 0;
+}
+.signin-container {
+	width: 100%;
+	margin: 0 auto;
+	display: inline-block;
+}
+.main-container {
+	position: relative;
+	width: 100%;
+	margin-bottom: 10px;
+}
+.bottom-container {
+	position: relative;
+	width: 100%;
+}
+.bottom-container p {
+	line-height: 1;
+	text-align: center;
+	margin-top: 4px;
+}
+.bottom-container span {
+	color: rgba(42,41,42,0.8);
+	font-size: 10px;
+	font-weight: 300;
+	line-height: 12px;
+	cursor: pointer;
+}
+.bottom-container span:hover {
+	color: #2a292a;
+}
+.img-container {
+	width: 260px;
+	height: 100%;
+	background-image: url(kaleb-nimz-899-unsplash.jpg);
+	background-position: center center;
+	background-size: cover;
+}
+.img-container:after {
+	content: "";
+	position: absolute;
+	width: 260px;
+	height: 400px;
+	background: linear-gradient(180deg, rgba(0,0,0,.3) 0, transparent 50%);
+	top: 0;
+	left: 0;
+}
+.form-signin {
+	width: 380px;
+	height: 400px;
+	color: #2a292a;
+	font-size: 10px;
+	font-weight: 10;
+	line-height: 26px;
+	letter-spacing: 1px;
+	padding: 20px;
+	position: relative;
+	transition: all .3s ease;
+}
+.form-signin input {
+	width: 100%;
+	height: 30px;
+	border: 0;
+	border-bottom: 1px solid rgba(42,41,42,0.3);
+	font-size: 13px;
+	font-weight: 300;
+	color: #2a292a;
+	background-color: transparent;
+	letter-spacing: 0.11em;
+	margin-bottom: 6px;
+}
+.form-signin input::placeholder {
+	color: rgba(42,41,42,0.3);
+	font-size: 10px;
+}
+.form-signin input:focus {
+	outline: 0;
+	border-bottom: 1px solid #2a292a;
+	transition: 0.6s all ease;
+}
+
+/* submit button */
+.bottom-container button {
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	border: none;
+	outline: 0;
+	background-color: rgba(42,41,42,0.3);
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	z-index: 3;
+	cursor: pointer;
+	transition: 0.3s all ease;
+	position: relative;
+}
+.bottom-container button:hover {
+	background-color: #2a292a;
+}
+
+/* social login button */
+.btn-signin {
+	width: 100%;
+	height: 36px;
+	border-radius: 5px;
+	background-color: #fff;
+	border: none;
+	outline: 0;
+	color: rgba(42,41,42,0.3);
+	font-size: 14px;
+	font-weight: 200;
+	letter-spacing: 1px;
+	text-align: center;
+	position: relative;
+	display: inline-block;
+	margin-bottom: 2px;
+	z-index: 3;
+	cursor: pointer;
+	display: flex;
+	box-shadow: 0 1px 0px rgba(42,41,42,0.1);
+}
+.btn-signin:hover {
+	background-color: #fff;
+	box-shadow: 0 1px 0px rgba(42,41,42,0.5);
+	transition: 0.3s all ease;
+}
+
+.btn-signin:hover .signwith-text {
+	color: rgba(64,63,64,0.8);
+	transition: all .3s ease;
+}
+
+.signwith-icon {
+	width: 60px;
+	height: 100%;
+	font-size: 16px;
+	line-height: 40px;
+	text-align: center;
+	opacity: 0.5;
+}
+.btn-signin:hover .signwith-icon {
+	transition: all .3s ease;
+	opacity: 1;
+}
+.signwith-text {
+	width: 100%;
+	font-size: 14px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.btn_wrap {
+	position: absolute;
+	width: 340px;
+	bottom: 20px;
+}
+.btn_wrap p {
+	text-align: center;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.facebook:hover .icon-facebook {
+	color: #3b5998;
+}
+.google:hover .icon-gplus-1 {
+	color: #df4b37;
+}
+.kakao:hover .icon-comment-alt {
+	color: #ffcd00;
+}

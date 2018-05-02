@@ -8,17 +8,19 @@ function getUserCard(followDirection){
 
         count = $(".flip").length;
     }
-    
     $.ajax({
+        beforeSend: function(){
+            if(count==$('#'+followDirection).text()*1) return $(window).unbind('scroll');            
+        },
         url: "/api/member/getUser" + followDirection + "Card/" + count,
         async: true,
         type: 'GET',
         dataType: 'json',
         success: function(jsons) {
+            console.log(jsons);
             
-            for( json in jsons) {
+            for(json in jsons) {
 
-                console.log(jsons[json]);
                 var cover_img = jsons[json].cover_img;
                 var profile_img = jsons[json].profile_img;
                 var nickname = jsons[json].nickname;
@@ -77,12 +79,18 @@ function getUserCard(followDirection){
                                 </div> \
                             </div>';
                 $(".profile-relationship").append(str);
-
                 $(window).scroll(function() { 
                     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                        getUserCard(followDirection);
+                        if($('#'+followDirection).text()*1 != count) getUserCard(followDirection);
                     } 
                 });
+            }
+            if(followDirection=='Follower') {
+                $('.tab:contains(Follower)').addClass('zoom');
+                $('.tab:contains(Following)').removeClass('zoom');
+            }else{
+                $('.tab:contains(Following)').addClass('zoom');
+                $('.tab:contains(Follower)').removeClass('zoom');
             }
         },
         error: function(error) {
@@ -91,7 +99,7 @@ function getUserCard(followDirection){
     });
 
     $(".profile-relationship").delegate('.more-info', 'click', function(e){
-        console.log(123)
+
         $(e.target).closest('.arrow_box_1').hide();
         $(e.target).closest('.arrow_box_1').siblings(".arrow_box_2").show();
     });

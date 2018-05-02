@@ -450,19 +450,6 @@ body.back{
 .read .date span{
     padding-left: 16px;
 }
-.read .read_wrap p{
-    font-size: 24px;
-    color: #2a292a;
-    font-weight: 200;
-    letter-spacing: -0.02em;
-    margin-bottoM: 40px;
-}
-.read .read_wrap p.last{
-    margin-bottoM: 90px;
-}
-.read .read_wrap > img{
-    margin-bottom: 40px;
-}
 .read .tag{
     margin-bottom: 100px;
 }
@@ -1547,3 +1534,12 @@ body.back{
     font-size: 24px;
 }
   /* preview end */
+
+.gradient {
+    width: 100%;
+    min-height: 400px;
+    position: absolute;
+    z-index: 10;
+    bottom: 0px;
+    background: linear-gradient( to top, #f9f9f9, transparent );
+}

@@ -93,14 +93,14 @@ function getData(){
                         </div>\
                     </div>\
                 ';
-                if(post==0){
+                if(post==0 || post==5){
                     postHtml = postHtml.replace('class="post"','class="post featured"');
                     postsHtml += postHtml;
                     postHtml = '';
-                }else if(post==1 || post==3){
+                }else if(post==1 || post==3 || post==6 || post==8){
                     postHtml = rowHtmlOpen + postHtml;
                     postsHtml += postHtml;
-                }else if(post==2 || post==4){
+                }else if(post==2 || post==4 || post==7 || post==9){
                     postHtml = postHtml + rowHtmlClose;
                     postsHtml += postHtml;
                 }

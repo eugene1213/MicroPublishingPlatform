@@ -530,9 +530,19 @@
     .profile-relationship .relationship-tab-wrap .tab {
       float: left;
       width: 76px;
-      padding-bottom: 4px; }
+      padding-bottom: 4px;
+      opacity: 0.5; }
+      .profile-relationship .relationship-tab-wrap .tab:hover {
+        cursor: pointer;
+        color: #004b8d;
+        opacity: 1 !important; }
     .profile-relationship .relationship-tab-wrap + .flip {
       clear: both; }
+
+.zoom {
+  opacity: 1 !important;
+  zoom: 1.1;
+  color: #004b8d; }
 
 .profile-privateInfo {
   width: 608px;
@@ -628,7 +638,7 @@
   color: #054E8F;
   font-size: 16px;
   background: #fff;
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
   cursor: pointer; }
 
