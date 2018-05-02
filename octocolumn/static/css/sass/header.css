@@ -123,11 +123,18 @@ header .site-name {
   flex-direction: column;
   color: #FFFFFF; }
 
+#nav-content li:hover {
+  cursor: pointer;
+  color: #004b8d; }
+#nav-content li:not(.info) + .info {
+  margin-top: auto; }
 #nav-content li a {
   padding: 10px 5px;
   display: block;
   text-transform: none;
   transition: color .1s; }
+  #nav-content li a:hover {
+    color: #004b8d; }
 
 li.divline {
   border: 0.5px solid #888;
@@ -139,12 +146,6 @@ li.info {
   font-size: 5px;
   font-weight: 100;
   color: #888; }
-
-#nav-content li:not(.info) + .info {
-  margin-top: auto; }
-
-#nav-content li a:hover {
-  color: #004b8d; }
 
 /* --
 #nav-content li:not(.small) + .small {margin-top: auto;}
