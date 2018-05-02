@@ -430,7 +430,8 @@ a {
 .flip {
   position: absolute;
   top: -304px;
-  left: -125px; }
+  left: -125px;
+  z-index: 900; }
   .flip .arrow_box_1 {
     border: 1px solid rgba(0, 75, 141, 0.97);
     width: 280px;
@@ -581,7 +582,10 @@ a {
     display: flex;
     justify-content: space-around; }
     .flip .socialbar a i {
-      cursor: pointer; }
+      cursor: pointer;
+      opacity: 0.3; }
+    .flip .socialbar a[href^="http"] i {
+      opacity: 1; }
   .flip .card_profile_info {
     width: 200px;
     height: 184px;

@@ -55,25 +55,25 @@ function getUserCard(followDirection){
                                     </div> \
                                     <div class="card_profile_title"> \
                                     </div> \
-                                    <div class="socialbar"> \
-                                        <a><img src="/static/images/icons/balloon/fb-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/t-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info"></a> \
-                                    </div> \
+                                    <div class="socialbar">\
+                                        <a><i class="iconbtn-facebook"></i></a>\
+                                        <a><i class="iconbtn-twitter-bird"></i></a>\
+                                        <a><i class="iconbtn-instagram-filled"></i></a>\
+                                        <a><i class="iconbtn-globe"></i></a>\
+                                        <a><i class="iconbtn-info-circled-alt more-info"></i></a>\
+                                    </div>\
                                 </div> \
                                 <div class="arrow_box_2"> \
                                     <div class="card_profile_info"> \
                                         '+ intro +' \
                                     </div> \
-                                    <div class="socialbar"> \
-                                        <a><img src="/static/images/icons/balloon/fb-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/isn-combined-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/t-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/bl-combined-shape-copy-2@3x.png"></a> \
-                                        <a><img src="/static/images/icons/balloon/inf-combined-shape-copy-2@3x.png" class="more-info2"></a> \
-                                    </div> \
+                                    <div class="socialbar">\
+                                        <a><i class="iconbtn-facebook"></i></a>\
+                                        <a><i class="iconbtn-twitter-bird"></i></a>\
+                                        <a><i class="iconbtn-instagram-filled"></i></a>\
+                                        <a><i class="iconbtn-globe"></i></a>\
+                                        <a><i class="iconbtn-info-circled-alt more-info2"></i></a>\
+                                    </div>\
                                 </div> \
                             </div>';
                 $(".profile-relationship").append(str);
@@ -90,15 +90,15 @@ function getUserCard(followDirection){
         }
     });
 
-    $(".more-info").click(function(e){
-
-        $(e.target).parent().parent().parent().hide();
-        $(e.target).parent().parent().parent().parent().children(".arrow_box_2").show();
+    $(".profile-relationship").delegate('.more-info', 'click', function(e){
+        console.log(123)
+        $(e.target).closest('.arrow_box_1').hide();
+        $(e.target).closest('.arrow_box_1').siblings(".arrow_box_2").show();
     });
 
-    $(".more-info2").click(function(e){
+    $(".profile-relationship").delegate('.more-info2', 'click', function(e){
 
-        $(e.target).parent().parent().parent().hide();
-        $(e.target).parent().parent().parent().parent().children(".arrow_box_1").show();
+        $(e.target).closest('.arrow_box_2').hide();
+        $(e.target).closest('.arrow_box_2').siblings(".arrow_box_1").show();
     });
 }

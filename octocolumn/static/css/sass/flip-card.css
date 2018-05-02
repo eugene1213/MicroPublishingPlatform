@@ -1,1 +1,121 @@
-.flip{float:left}.flip:nth-child(2n-2){margin-right:40px}.flip .arrow_box_1{border:1px solid #ffffff;width:280px;height:281px;position:relative;margin-top:32px;left:0;background-color:#ffffff;border-radius:10px;box-shadow:0 2px 4px 0 rgba(0,0,0,0.5)}.flip .arrow_box_1 .card_background_img{float:left;width:281px;height:144px;margin-left:-2px;margin-top:-1px;border-top-left-radius:10px;border-top-right-radius:10px;background-size:100%;background-image:url(https://unsplash.imgix.net/45/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=857f07b76abac23a7fb7161cc7b12a46)}.flip .arrow_box_1 .wrap-followers{float:left;width:56px;height:38px;margin-top:5px;margin-left:20px}.flip .arrow_box_1 .followers{float:left;width:56px;height:12px;font-size:8px;line-height:12px;text-align:center;color:#2a292a}.flip .arrow_box_1 .num_of_followers{float:left;width:56px;height:26px;font-size:16px;line-height:26px;text-align:center;color:#2a292a}.flip .arrow_box_1 .card_profile_img{position:absolute;width:76px;height:76px;border:1px solid #ffffff;border-radius:50%;left:101px;top:106px}.flip .arrow_box_1 .btn-follow{float:right;width:64px;height:24px;margin-right:10px;margin-top:5px;font-size:8px;line-height:24px;text-align:center;color:#cc1c3b;font-weight:bold;background-color:#ffffff;border:solid 1px #cc1c3b;border-radius:4px;cursor:pointer}.flip .arrow_box_1 .card_profile_name{float:left;width:280px;height:34px;margin-top:8px;line-height:34px;font-size:24px;color:#2a292a;font-weight:bold;text-align:center}.flip .arrow_box_1 .card_profile_title{float:left;width:280px;height:20px;line-height:13px;font-size:8px;color:#2a292a;text-align:center}.flip .arrow_box_2{border:1px solid #c2e1f5;width:280px;height:281px;position:relative;margin-top:32px;display:none;left:0;background-color:rgba(250,250,250,0.97);border-radius:10px}.flip .socialbar{float:left;width:170px;margin-left:72px;margin-top:0px;height:14.7px}.flip .socialbar a img{float:left;height:14.7px;margin-right:20px;cursor:pointer}.flip .card_profile_info{width:200px;height:184px;margin:40px;margin-bottom:24px;font-size:8px}
+.flip {
+  float: left; }
+  .flip:nth-child(2n-2) {
+    margin-right: 40px; }
+  .flip .arrow_box_1 {
+    border: 1px solid #ffffff;
+    width: 280px;
+    height: 281px;
+    position: relative;
+    margin-top: 32px;
+    left: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5); }
+    .flip .arrow_box_1 .card_background_img {
+      float: left;
+      width: 281px;
+      height: 144px;
+      margin-left: -2px;
+      margin-top: -1px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background-size: 100%;
+      background-image: url(https://unsplash.imgix.net/45/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg?q=75&w=1080&h=1080&fit=max&fm=jpg&auto=format&s=857f07b76abac23a7fb7161cc7b12a46); }
+    .flip .arrow_box_1 .wrap-followers {
+      float: left;
+      width: 56px;
+      height: 38px;
+      margin-top: 5px;
+      margin-left: 20px; }
+    .flip .arrow_box_1 .followers {
+      float: left;
+      width: 56px;
+      height: 12px;
+      font-size: 8px;
+      line-height: 12px;
+      text-align: center;
+      color: #2a292a; }
+    .flip .arrow_box_1 .num_of_followers {
+      float: left;
+      width: 56px;
+      height: 26px;
+      font-size: 16px;
+      line-height: 26px;
+      text-align: center;
+      color: #2a292a; }
+    .flip .arrow_box_1 .card_profile_img {
+      position: absolute;
+      width: 76px;
+      height: 76px;
+      border: 1px solid #ffffff;
+      border-radius: 50%;
+      left: 101px;
+      top: 106px; }
+    .flip .arrow_box_1 .btn-follow {
+      float: right;
+      width: 64px;
+      height: 24px;
+      margin-right: 10px;
+      margin-top: 5px;
+      font-size: 8px;
+      line-height: 24px;
+      text-align: center;
+      color: #cc1c3b;
+      font-weight: bold;
+      background-color: #ffffff;
+      border: solid 1px #cc1c3b;
+      border-radius: 4px;
+      cursor: pointer; }
+    .flip .arrow_box_1 .card_profile_name {
+      float: left;
+      width: 280px;
+      height: 34px;
+      margin-top: 8px;
+      line-height: 34px;
+      font-size: 24px;
+      color: #2a292a;
+      font-weight: bold;
+      text-align: center; }
+    .flip .arrow_box_1 .card_profile_title {
+      float: left;
+      width: 280px;
+      height: 20px;
+      line-height: 13px;
+      font-size: 8px;
+      color: #2a292a;
+      text-align: center; }
+  .flip .arrow_box_2 {
+    border: 1px solid #c2e1f5;
+    width: 280px;
+    height: 281px;
+    position: relative;
+    margin-top: 32px;
+    display: none;
+    left: 0;
+    background-color: rgba(250, 250, 250, 0.97);
+    border-radius: 10px; }
+  .flip .socialbar {
+    width: 60%;
+    float: left;
+    font-size: 14px;
+    margin: 0 50px 0 55px;
+    display: flex;
+    justify-content: space-around; }
+    .flip .socialbar a i {
+      cursor: pointer;
+      opacity: 0.3; }
+    .flip .socialbar a[href^="http"] i {
+      opacity: 1; }
+  .flip .card_profile_info {
+    width: 200px;
+    height: 184px;
+    margin: 40px;
+    margin-bottom: 24px;
+    font-size: 8px;
+    font-weight: 300;
+    line-height: 1.4em;
+    overflow: scroll;
+    word-break: break-word; }
+
+/*# sourceMappingURL=flip-card.css.map */

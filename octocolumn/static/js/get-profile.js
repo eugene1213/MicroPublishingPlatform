@@ -6,7 +6,7 @@ $(document).ready(function(){
         
         $(".active").removeClass("active");
         $(this).addClass("active");
-                                                    // 개인정보 탭 클릭 시 보여줄 팔로잉 목록 호출
+                                                    // 개인정보 탭 클릭 시 보여줄 목록 호출
         $(".profile-userInfo").css("display","flex");
         $(".currentView").removeClass("currentView");
         $(".profile-userInfo").addClass("currentView");
@@ -18,7 +18,7 @@ $(document).ready(function(){
         $(this).addClass("active");
 
         $(".point-history-wrap tr").not("#tr-header").remove();
-        getPointHistory();                          // 포인트내역 탭 클릭 시 보여줄 팔로잉 목록 호출
+        getPointHistory();                          // 포인트내역 탭 클릭 시 보여줄 목록 호출
 
         $(".profile-point-history").show();
         $(".currentView").removeClass("currentView");
@@ -213,14 +213,16 @@ $(document).ready(function(){
             $(".btn-modify > img").attr("src","https://devtestserver.s3.amazonaws.com/media/example/save.svg");
             $(".btn-modify").addClass("btn-save");
         
-            $('td[contenteditable="true"]').keypress(function(event) {
+            $("td[contenteditable=\"true\"]").keypress(function(event) {
                 
-                if (event.which == 13)
-                    return false;
+                if (event.which == 13) return false;
             });
-            $("td[contenteditable=\"true\"]").focus(function(){
-                console.log('asf');
+            $("td[contenteditable=\"true\"]").not(".private-table :contains(facebook) + td").not(".private-table :contains(instagram) + td").not(".private-table :contains(twitter) + td").focus(function(){
+
                 $(this).text('');
+            });
+            $(".private-table :contains(웹사이트) + td[contenteditable=\"true\"],.private-table :contains(facebook) + td[contenteditable=\"true\"],.private-table :contains(instagram) + td[contenteditable=\"true\"],.private-table :contains(twitter) + td[contenteditable=\"true\"]").focus(function(){
+                $(this).text('https://');
             });
             if($(".base-table :contains(태어난 년도) + td").text() != ''){
                 $(".base-table :contains(태어난 년도) + td").text($(".base-table :contains(태어난 년도) + td").text().replace('년',''));
