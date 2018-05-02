@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from column.models import Temp, TempFile
 from column.serializers.post import TempSerializer, TempFileSerializer
 
-from member.models import Author as AuthorModel, User
+from member.models import Author as AuthorModel
 from utils.image_rescale import image_quality_down
 
 __all__ = (
@@ -140,14 +140,17 @@ class TempFileUpload(generics.CreateAPIView):
 
         serializer = TempFileSerializer(temp_file)
         if serializer:
-            return Response({"files":
-                {
-                    "id": serializer.data['id'],
-                    "file": {
-                        "url": serializer.data['file']
+            return Response(
+            {
+                "files":
+                    {
+                        "id": serializer.data['id'],
+                        "file": {
+                            "url": serializer.data['file']
+                        }
                     }
-                }
-            }, status=status.HTTP_201_CREATED)
+            }
+        , status=status.HTTP_201_CREATED)
         raise exceptions.APIException({"detail": "Upload Failed"}, 400)
 
 
