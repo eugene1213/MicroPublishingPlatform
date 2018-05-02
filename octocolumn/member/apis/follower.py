@@ -203,8 +203,8 @@ class GetUserFollowingCard(ListAPIView):
                                         "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
-                                        "profile_img": '/media/example/2_x20_.jpeg',
-                                        "cover_img": '/media/example/1.jpeg'
+                                        "profile_img": 'https://static.octocolumn.com/media/example/2_x20_.jpeg',
+                                        "cover_img": 'https://static.octocolumn.com/media/example/1.jpeg'
 
                                     }
                                     list.append(data)
@@ -270,8 +270,8 @@ class GetUserFollowingCard(ListAPIView):
                                         "follower": Relation.objects.filter(to_user=i.to_user).count(),
                                         "nickname": i.to_user.nickname,
                                         "intro": '-',
-                                        "profile_img": '/media/example/2_x20_.jpeg',
-                                        "cover_img": '/media/example/1.jpeg'
+                                        "profile_img": 'https://static.octocolumn.com/media/example/2_x20_.jpeg',
+                                        "cover_img": 'https://static.octocolumn.com/media/example/1.jpeg'
 
                                     }
                                     list.append(data)
@@ -358,8 +358,8 @@ class GetUserFollowerCard(ListAPIView):
                                         "nickname": i.from_user.nickname,
                                         "follow_status": self.follower_status(i.from_user),
                                         "intro": '-',
-                                        "profile_img": '/media/example/2_x20_.jpeg',
-                                        "cover_img": '/media/example/1.jpeg'
+                                        "profile_img": 'https://static.octocolumn.com/media/example/2_x20_.jpeg',
+                                        "cover_img": 'https://static.octocolumn.com/media/example/1.jpeg'
 
                                     }
                                     list.append(data)
@@ -428,8 +428,8 @@ class GetUserFollowerCard(ListAPIView):
                                 "nickname": i.from_user.nickname,
                                 "follow_status": self.follower_status(i.from_user),
                                 "intro": '-',
-                                "profile_img": '/media/example/2_x20_.jpeg',
-                                "cover_img": '/media/example/1.jpeg'
+                                "profile_img": 'https://static.octocolumn.com/media/example/2_x20_.jpeg',
+                                "cover_img": 'https://static.octocolumn.com/media/example/1.jpeg'
 
                             }
                             list.append(data)
