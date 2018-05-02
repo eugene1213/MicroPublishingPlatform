@@ -45,7 +45,7 @@ $(document).ready(function(){
             $('meta[property="og:title"]').attr('content',title);
             
             
-            $('.fb-share-button').attr('data-href', href);
+            $('.fb-share-button').attr('data-href', 'https://www.octocolumn.com/preview'+url);
             $(".mainImg").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
             $(".date").text(created_datetime);
