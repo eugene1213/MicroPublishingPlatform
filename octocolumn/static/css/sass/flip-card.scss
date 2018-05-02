@@ -111,26 +111,30 @@
         border-radius: 10px;
     }
     .socialbar {
-        float: left;
-        width: 170px;
-        margin-left: 72px;
-        margin-top: 0px;
-        height: 14.7px;
-
-        a {
-            img{
-                float: left;
-                height: 14.7px;
-                margin-right: 20px;
-                cursor: pointer;
-            }
-        }
-    }
+		width: 60%;
+		float: left;
+		font-size: 14px;
+		margin: 0 50px 0 55px;
+		display: flex;
+		justify-content: space-around;
+		
+		a i {
+			cursor: pointer;
+			opacity: 0.3;
+		}
+		a[href^="http"] i {
+			opacity: 1;
+		}
+	}
     .card_profile_info {
         width: 200px;
-        height: 184px;
-        margin: 40px;
-        margin-bottom: 24px;
-        font-size: 8px;
+		height: 184px;
+		margin: 40px;
+		margin-bottom: 24px;
+		font-size: 8px;
+		font-weight: 300;
+		line-height: 1.4em;
+		overflow: scroll;
+		word-break: break-word;
     }
 }

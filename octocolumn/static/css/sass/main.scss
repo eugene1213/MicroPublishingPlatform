@@ -454,6 +454,7 @@ border-color: rgba(#333,.85);
 	position: absolute;
     top: -304px;
 	left: -125px;
+	z-index: 900;
 	
 	.arrow_box_1 {
 		border: 1px solid rgba(0, 75, 141, 0.97);
@@ -624,9 +625,13 @@ border-color: rgba(#333,.85);
 		margin: 0 50px 0 55px;
 		display: flex;
 		justify-content: space-around;
-
+		
 		a i {
 			cursor: pointer;
+			opacity: 0.3;
+		}
+		a[href^="http"] i {
+			opacity: 1;
 		}
 	}
 	.card_profile_info {
