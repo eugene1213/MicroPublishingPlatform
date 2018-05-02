@@ -39,12 +39,21 @@ $(document).ready(function(){
         $(".profile-infomations").not(".currentView").hide();
 
         $('.tab:contains(Following)').click(function(){
-            $(".flip").remove();
-            getUserCard("Following");
+            if($(this).hasClass('zoom')){
+                return;
+            }else{
+                $(".flip").detach();            
+                getUserCard("Following");
+            }
         });
         $('.tab:contains(Follower)').click(function(){
-            $(".flip").remove();
-            getUserCard("Follower");
+
+            if($(this).hasClass('zoom')){
+                return;
+            }else{
+                $(".flip").detach();     
+                getUserCard("Follower");
+            }
         });
         // $("#1:contains(Following)").click().bind(function(){
         //     var user_id = $(e.target).attr("id");
@@ -92,28 +101,28 @@ $(document).ready(function(){
     });
 /* end 내 글 */
 
-    $(".pro_his_tit1").addClass("on");
+    $(".pro_his_tit1").addClass("zoom");
 
     $(".pro_his_tit2").click(function(){
 
-        if($(".pro_his_tit1").hasClass("on")){
+        if($(".pro_his_tit1").hasClass("zoom")){
             $(".history_date2").remove();
             $(".history_date3").remove();
             get_my_posts("temp");
         }
-        $(".pro_his_tit1").removeClass("on");
-        $(".pro_his_tit2").addClass("on");
+        $(".pro_his_tit1").removeClass("zoom");
+        $(".pro_his_tit2").addClass("zoom");
         
     });
     $(".pro_his_tit1").click(function(){
         
-        if($(".pro_his_tit2").hasClass("on")){
+        if($(".pro_his_tit2").hasClass("zoom")){
             $(".history_date2").remove();
             $(".history_date3").remove();
             get_my_posts("post");
         }
-        $(".pro_his_tit2").removeClass("on");
-        $(".pro_his_tit1").addClass("on");
+        $(".pro_his_tit2").removeClass("zoom");
+        $(".pro_his_tit1").addClass("zoom");
 
         
     });
@@ -274,8 +283,8 @@ function get_profile() {
             $(".content_title1 > span").text(username);
             $(".profile_con_icon").text(waiting);
             $("#profileIntro").html(userIntro);
-            $("#following").text(following);
-            $("#follower").text(follower);
+            $("#Following").text(following);
+            $("#Follower").text(follower);
             $("#posts").text(posts);
             $("#email").text(email);
 

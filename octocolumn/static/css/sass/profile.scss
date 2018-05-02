@@ -619,11 +619,23 @@
 			float: left;
 			width: 76px;
 			padding-bottom: 4px;
+			opacity: 0.5;
+
+			&:hover {
+				cursor: pointer;
+				color: #004b8d;
+				opacity: 1 !important;
+			}
 		}
 		& + .flip {
 			clear: both;
 		}
 	}
+}
+.zoom {
+	opacity: 1 !important;
+	zoom: 1.1;
+	color: #004b8d;
 }
 .profile-privateInfo {
 	width: 608px;
@@ -741,7 +753,7 @@
 	color: #054E8F;
 	font-size: 16px;
 	background: #fff;
-	font-weight: 400;
+	font-weight: 300;
 	text-align: center;
 	cursor: pointer;
 }

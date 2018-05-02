@@ -14,8 +14,6 @@ function popBalloon() { //getPostList.js 에서 호출한다.
             dataType: 'json',
             success: function(jsons) {
     
-                console.log(jsons);
-    
                 var followers = jsons.follower_count;
                 var follow_status = jsons.follow_status;
                 var author_id = pk;
@@ -108,8 +106,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                 $(document).mousemove(function(pointerCoord){
                     var x = pointerCoord.pageX;     // 마우스 좌표
                     var y = pointerCoord.pageY;
-        
-                    console.log(x+'/'+y+'/'+XY.left+'/'+XY.top)
+
                     //마우스가 일정 좌표를 벗어나면 말풍선이 사라진다.
                     if(x > XY.left + 190 || x < XY.left - 130 || y > XY.top + 80 || y < XY.top - 330) {
         
@@ -139,7 +136,6 @@ function follow(author_id) {
         dataType: 'json',
         success: function(json) {
 
-            console.log(json.author.follow_status);
             if(json.author.follow_status){
                 
                 $(".btn-follow").text("Following");
