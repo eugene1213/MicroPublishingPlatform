@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     get_profile();                                  // profile 페이지 첫 로딩 시 데이터 받아옴
 
-    $(".profile_tab1").click(function(){
+    $(".profile_tab1").unbind('click').click(function(){
         
         $(".active").removeClass("active");
         $(this).addClass("active");
@@ -12,7 +12,7 @@ $(document).ready(function(){
         $(".profile-userInfo").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
     });
-    $(".profile_tab2").click(function(){
+    $(".profile_tab2").unbind('click').click(function(){
         
         $(".active").removeClass("active");
         $(this).addClass("active");
@@ -25,7 +25,7 @@ $(document).ready(function(){
         $(".profile-point-history").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
     });
-    $(".profile_tab3").click(function(){
+    $(".profile_tab3").unbind('click').click(function(){
 
         $(".flip").remove();
         $(".active").removeClass("active");
@@ -38,7 +38,7 @@ $(document).ready(function(){
         $(".profile-relationship").addClass("currentView");
         $(".profile-infomations").not(".currentView").hide();
 
-        $('.tab:contains(Following)').click(function(){
+        $('.tab:contains(Following)').unbind('click').click(function(){
             if($(this).hasClass('zoom')){
                 return;
             }else{
@@ -46,7 +46,7 @@ $(document).ready(function(){
                 getUserCard("Following");
             }
         });
-        $('.tab:contains(Follower)').click(function(){
+        $('.tab:contains(Follower)').unbind('click').click(function(){
 
             if($(this).hasClass('zoom')){
                 return;
