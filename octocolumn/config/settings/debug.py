@@ -27,7 +27,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-
 # Debug Mode so True
 DEBUG = True
 ALLOWED_HOSTS = config_secret_debug['django']['allowed_hosts']
