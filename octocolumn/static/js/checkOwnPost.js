@@ -26,6 +26,7 @@ function isBought(post_id, readtime, bookmark_status) {
                 var date = json.detail.created_datetime;
                 var ribbonClassName = '';
                 if(bookmark_status) ribbonClassName = ' marked';
+                
                 var previewHtml = '\
                     <div id="preview-container">\
                         <div class="preview-content">\
@@ -56,7 +57,7 @@ function isBought(post_id, readtime, bookmark_status) {
                                     </ul>\
                                 </div>\
                             </div>\
-                            <div class="purchase-btn" onclick=\'buy();\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
+                            <div class="purchase-btn" onclick=\'buy('+post_id+');\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
                         </div>\
                     </div>\
                 ';

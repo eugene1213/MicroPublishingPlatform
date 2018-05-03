@@ -1,13 +1,3 @@
-$(document).ready(function(){
-
-    $(".priceBtn .btn").click(function() {
-        buy();
-    });
-    $(".preview_purchaseBtn").click(function(){
-        buy();
-    });
-});
-
 function buy(){
 
     var current_url = window.location.href;
@@ -33,7 +23,6 @@ function buy(){
             post_id: post_id
         },
         success: function(json) {
-            console.log("구매됨");
             alert("글을 구매했습니다.");
             window.location.href = "/@"+author+'/'+urlTitle+'-'+post_id;
         },
