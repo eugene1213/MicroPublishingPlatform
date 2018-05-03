@@ -38,10 +38,10 @@
 		<div class="mainImg image-loader" style="background-image: url(/media/{{ cover_image }});">
 		</div>
 		<div class="read_wrap">
-			<div class="preview-title">{{ title }}</div>
+			<div class="preview-title" id="preview-title">{{ title }}</div>
 			<div class="write">
 				<div class="writer">
-					by <span class="preview-author">{{ username }}</span>
+					by <span class="preview-author" id="preview-author">{{ username }}</span>
 				</div>
 				<div class="date">
                     {{ created_datetime }}

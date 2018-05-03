@@ -17,15 +17,19 @@ function isBought(post_id, readtime, bookmark_status) {
             }else {
                 // var preview_image = json.detail.preview;
 
-                // var tag = json.detail.tag;  //미구현
+                var tags = json.detail.tag;  //미구현
                 // var reply = json.detail.reply; //미구현
-
+                var tagsHtml = '';
+                for(i in tags){
+                    tagsHtml += '<li>'+tags[i].tag+'</li>';
+                }
                 var cover_img = json.detail.cover_image;
                 var preview = json.detail.preview;
                 var price = json.detail.price;
                 var date = json.detail.created_datetime;
                 var ribbonClassName = '';
                 if(bookmark_status) ribbonClassName = ' marked';
+
                 var previewHtml = '\
                     <div id="preview-container">\
                         <div class="preview-content">\
@@ -36,10 +40,10 @@ function isBought(post_id, readtime, bookmark_status) {
                             </div>\
                             <div class="preview-cover-img" style="background-image:url('+cover_img+')"></div>\
                             <div class="column-preview">\
-                                <div class="column-title">'+title+'</div>\
+                                <div class="column-title" id="preview-title">'+title+'</div>\
                                 <div class="columnist-info">\
                                     <div class="columnist-name">\
-                                        by <span class="user-name"><i>'+username+'</i></span>\
+                                        by <span class="user-name"><i id="preview-author">'+username+'</i></span>\
                                     </div>\
                                     <div class="date-published">'+date+'</div>\
                                     <div class="column-read-time">\
@@ -52,11 +56,11 @@ function isBought(post_id, readtime, bookmark_status) {
                                 <div class="column-tags">\
                                     <p>Tags</p>\
                                     <ul>\
-                                        <li></li>\
+                                        '+tagsHtml+'\
                                     </ul>\
                                 </div>\
                             </div>\
-                            <div class="purchase-btn" onclick=\'buy();\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
+                            <div class="purchase-btn" onclick=\'buy('+post_id+');\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
                         </div>\
                     </div>\
                 ';
