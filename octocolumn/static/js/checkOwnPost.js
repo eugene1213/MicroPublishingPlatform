@@ -1,5 +1,5 @@
 /* 구매했는지 체크 */
-function isBought(post_id, readtime) {
+function isBought(post_id, readtime, bookmark_status) {
 
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
@@ -24,14 +24,15 @@ function isBought(post_id, readtime) {
                 var preview = json.detail.preview;
                 var price = json.detail.price;
                 var date = json.detail.created_datetime;
-
+                var ribbonClassName = '';
+                if(bookmark_status) ribbonClassName = ' marked';
                 var previewHtml = '\
                     <div id="preview-container">\
                         <div class="preview-content">\
-                            <div class="ribbon"></div>\
-                            <div class="close"></div>\
+                            <div class="ribbon'+ribbonClassName+'" onclick="bookmark('+post_id+',true);"></div>\
+                            <div class="close" onclick="javascript:(function(){$(\'#preview-container\').remove();$(\'.page\').css(\'position\', \'static\');})();"></div>\
                             <div class="warning-phrase">\
-                            이 칼럼의 프리뷰가 마음에 드셨다면 구매 후 완독하여주세요.\
+                                이 칼럼의 프리뷰가 마음에 드셨다면 구매 후 완독하여주세요.\
                             </div>\
                             <div class="preview-cover-img" style="background-image:url('+cover_img+')"></div>\
                             <div class="column-preview">\
@@ -54,33 +55,34 @@ function isBought(post_id, readtime) {
                                         <li></li>\
                                     </ul>\
                                 </div>\
-                                <div class="rating">\
-                                    <input id="star5" name="rating" type="radio" value="5"/>\
-                                    <label for="star5" class="full"></label>\
-                                    <input id="star4.5" name="rating" type="radio" value="4.5"/>\
-                                    <label for="star4.5" class="half"></label>\
-                                    <input id="star3" name="rating" type="radio" value="3"/>\
-                                    <label for="star3" class="full"></label>\
-                                    <input id="star3.5" name="rating" type="radio" value="3.5"/>\
-                                    <label for="star3.5" class="half"></label>\
-                                    <input id="star2" name="rating" type="radio" value="2"/>\
-                                    <label for="star2" class="full"></label>\
-                                    <input id="star2.5" name="rating" type="radio" value="2.5"/>\
-                                    <label for="star2.5" class="half"></label>\
-                                    <input id="star1" name="rating" type="radio" value="1"/>\
-                                    <label for="star1" class="full"></label>\
-                                    <input id="star1.5"  name="rating" type="radio" value="1.5"/>\
-                                    <label for="star1.5" class="half"></label>\
-                                    <input id="star0"  name="rating" type="radio" value="0"/>\
-                                    <label for="star0" class="full"></label>\
-                                    <input id="star0.5"  name="rating" type="radio" value="0.5"/>\
-                                    <label for="star0.5" class="half"></label>\
-                                </div>\
                             </div>\
-                            <div class="purchase-btn"><span class="column-price">'+price+'</span>Point로 구매하기</div>\
+                            <div class="purchase-btn" onclick=\'buy();\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
                         </div>\
                     </div>\
                 ';
+
+            //     <div class="rating">\
+            //     <input id="star5" name="rating" type="radio" value="5"/>\
+            //     <label for="star5" class="full iconbtn-star-full"></label>\
+            //     <input id="star4.5" name="rating" type="radio" value="4.5"/>\
+            //     <label for="star4.5" class="half iconbtn-star-half"></label>\
+            //     <input id="star3" name="rating" type="radio" value="3"/>\
+            //     <label for="star3" class="full iconbtn-star-full"></label>\
+            //     <input id="star3.5" name="rating" type="radio" value="3.5"/>\
+            //     <label for="star3.5" class="half iconbtn-star-half"></label>\
+            //     <input id="star2" name="rating" type="radio" value="2"/>\
+            //     <label for="star2" class="full iconbtn-star-full"></label>\
+            //     <input id="star2.5" name="rating" type="radio" value="2.5"/>\
+            //     <label for="star2.5" class="half iconbtn-star-half"></label>\
+            //     <input id="star1" name="rating" type="radio" value="1"/>\
+            //     <label for="star1" class="full iconbtn-star-full"></label>\
+            //     <input id="star1.5"  name="rating" type="radio" value="1.5"/>\
+            //     <label for="star1.5" class="half iconbtn-star-half"></label>\
+            //     <input id="star0"  name="rating" type="radio" value="0"/>\
+            //     <label for="star0" class="full iconbtn-star-full"></label>\
+            //     <input id="star0.5"  name="rating" type="radio" value="0.5"/>\
+            //     <label for="star0.5" class="half iconbtn-star-half"></label>\
+            // </div>\
                 // var previewHtml = '\
                 //     <div class="preview-wrap">\
                 //         <div class="preview" id="preview">\
