@@ -29,7 +29,7 @@ $(function(){
     $('.container').delegate('.bookmark>i','click',function(e){
 
         var bookmark_id = $(e.target).closest('.bookmark').attr("id").replace("bookmark_",'');        
-        bookmark(bookmark_id,'false');
+        bookmark(bookmark_id,false);
     });
 });
 var lastScrollTop = 0;
