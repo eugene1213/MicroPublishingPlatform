@@ -49,6 +49,9 @@ $(function() {
 	});
 });
 function signin_api() {
+    var current_url = window.location.href;
+    var tmpStr = current_url.split("/");
+        isPreviewPage = tmpStr[tmpStr.length-3]=='preview';
 
     var email = $("#email-signin").val();
     var password = $("#password-signin").val();
@@ -72,7 +75,8 @@ function signin_api() {
             }else {
                 localStorage.setItem("id","");
             }
-            window.location.href = "/";
+            if(isPreviewPage) window.location.href = current_url;
+            else window.location.href = "/";
         },
         error: function(error) {
             if(error.status == 401) {

@@ -7,11 +7,17 @@ $(document).ready(function(){
 
     switch( requestType ){
 
-        case 'recent': requestUrl = '/api/column/postRecentMore/';break;
-        case 'bookmark': requestUrl = '/api/column/bookmarkList/';break;
-        case 'buyList': requestUrl = '/api/column/buyList/';break;
+        case 'recent': requestUrl = '/api/column/postRecentMore/';
+            $('.sub-content-title').text('All Latest Updated Posts');
+            break;
+        case 'bookmark': requestUrl = '/api/column/bookmarkList/';
+            $('.sub-content-title').text('All Your Bookmarked Posts');        
+            break;
+        case 'buyList': requestUrl = '/api/column/buyList/';
+            $('.sub-content-title').text('All Your Purchased Posts');
+            break;
         case 'feed': requestUrl = '/api/column/postRecentMore/';
-
+            $('.sub-content-title').text('All Latest Updated Posts That You May Like');
     }
     getRecent(requestUrl);
 
