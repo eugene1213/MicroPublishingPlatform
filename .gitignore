@@ -5,7 +5,8 @@
 settings_debug.json
 # **/.config/
 **/migrations/**
-**/.media/*
+**/.media/post-image/*
+**/.media/profile/*
 **/.static_root/*
 celery.py
 
