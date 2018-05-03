@@ -24,65 +24,92 @@ function isBought(post_id, readtime) {
                 var preview = json.detail.preview;
                 var price = json.detail.price;
                 var date = json.detail.created_datetime;
+
                 var previewHtml = '\
-                    <div class="preview-wrap">\
-                        <div class="preview" id="preview">\
-                            <div class="btn-cancel-wrap" onclick="javascript:(function(){$(\'.preview-wrap\').remove();$(\'.page\').css(\'position\', \'static\');})();">\
-                                <div class="btn-cancel"></div>\
-                                <div class="preview_purchaseBtn" onclick=\'buy();\'>구매</div>\
+                    <div id="preview-container">\
+                        <div class="preview-content">\
+                            <div class="ribbon"></div>\
+                            <div class="close"></div>\
+                            <div class="warning-phrase">\
+                            이 칼럼의 프리뷰가 마음에 드셨다면 구매 후 완독하여주세요.\
                             </div>\
-                            <div class="ready2publish">Preview</div>\
                             <div class="preview-cover-img" style="background-image:url('+cover_img+')"></div>\
-                            <div class="preview-title">'+title+'</div>\
-                            <div class="preview-content-info">\
-                                <div class="preview-read-time">'+readtime+'</div>\
-                                <div class="preview-by">by</div>\
-                                <div class="preview-author">'+username+'</div>\
-                                <div class="preview-create-date">'+date+'</div>\
+                            <div class="column-preview">\
+                                <div class="column-title">'+title+'</div>\
+                                <div class="columnist-info">\
+                                    <div class="columnist-name">\
+                                        by <span class="user-name"><i>'+username+'</i></span>\
+                                    </div>\
+                                    <div class="date-published">'+date+'</div>\
+                                    <div class="column-read-time">\
+                                        <span class="read-time">'+readtime+' min</span> read\
+                                    </div>\
+                                </div>\
+                                <div class="column-content">\
+                                '+preview+'\
+                                </div>\
+                                <div class="column-tags">\
+                                    <p>Tags</p>\
+                                    <ul>\
+                                        <li></li>\
+                                    </ul>\
+                                </div>\
+                                <div class="rating">\
+                                    <input id="star5" name="rating" type="radio" value="5"/>\
+                                    <label for="star5" class="full"></label>\
+                                    <input id="star4.5" name="rating" type="radio" value="4.5"/>\
+                                    <label for="star4.5" class="half"></label>\
+                                    <input id="star3" name="rating" type="radio" value="3"/>\
+                                    <label for="star3" class="full"></label>\
+                                    <input id="star3.5" name="rating" type="radio" value="3.5"/>\
+                                    <label for="star3.5" class="half"></label>\
+                                    <input id="star2" name="rating" type="radio" value="2"/>\
+                                    <label for="star2" class="full"></label>\
+                                    <input id="star2.5" name="rating" type="radio" value="2.5"/>\
+                                    <label for="star2.5" class="half"></label>\
+                                    <input id="star1" name="rating" type="radio" value="1"/>\
+                                    <label for="star1" class="full"></label>\
+                                    <input id="star1.5"  name="rating" type="radio" value="1.5"/>\
+                                    <label for="star1.5" class="half"></label>\
+                                    <input id="star0"  name="rating" type="radio" value="0"/>\
+                                    <label for="star0" class="full"></label>\
+                                    <input id="star0.5"  name="rating" type="radio" value="0.5"/>\
+                                    <label for="star0.5" class="half"></label>\
+                                </div>\
                             </div>\
-                            <div class="preview-main-content" id="preview-main-content">\
-                                <!-- <img src="" alt=""> -->\
-                                <div class="previewElementsWrap">'+preview+'</div>\
-                                <!-- preview-image -->\
-                            </div>\
-                            <div class="priceBtn">\
-                                <div class="btn" id="post'+post_id+'" onclick=\'buy();\'>'+price+'P로 구매</div>\
-                            </div>\
-                        </div> \
+                            <div class="purchase-btn"><span class="column-price">'+price+'</span>Point로 구매하기</div>\
+                        </div>\
                     </div>\
                 ';
+                // var previewHtml = '\
+                //     <div class="preview-wrap">\
+                //         <div class="preview" id="preview">\
+                //             <div class="btn-cancel-wrap" onclick="javascript:(function(){$(\'.preview-wrap\').remove();$(\'.page\').css(\'position\', \'static\');})();">\
+                //                 <div class="btn-cancel"></div>\
+                //                 <div class="preview_purchaseBtn" onclick=\'buy();\'>구매</div>\
+                //             </div>\
+                //             <div class="ready2publish">Preview</div>\
+                //             <div class="preview-cover-img" style="background-image:url('+cover_img+')"></div>\
+                //             <div class="preview-title">'+title+'</div>\
+                //             <div class="preview-content-info">\
+                //                 <div class="preview-read-time">'+readtime+'</div>\
+                //                 <div class="preview-by">by</div>\
+                //                 <div class="preview-author">'+username+'</div>\
+                //                 <div class="preview-create-date">'+date+'</div>\
+                //             </div>\
+                //             <div class="preview-main-content" id="preview-main-content">\
+                //                 <!-- <img src="" alt=""> -->\
+                //                 <div class="previewElementsWrap">'+preview+'</div>\
+                //                 <!-- preview-image -->\
+                //             </div>\
+                //             <div class="priceBtn">\
+                //                 <div class="btn" id="post'+post_id+'" onclick=\'buy();\'>'+price+'P로 구매</div>\
+                //             </div>\
+                //         </div> \
+                //     </div>\
+                // ';
                 $('.page').after(previewHtml);
-                $(".page").css("position", "fixed");
-
-
-
-
-
-
-                // $("#preview-main-content > .previewElementsWrap").replaceWith(preview);
-                // $(".previewElementsWrap").children(":last").css("filter","blur(4px)");
-
-                // $("#preview-cover-img").attr("src",cover_img);
-                // $(".preview-title").text(title);
-                // $(".preview-create-date").text(date);
-                // $(".preview-read-time").text(readtime);
-                // $(".preview-author").text(username);
-                // $(".priceBtn > .btn").text(price + "P로 구매");
-                // $(".priceBtn .btn").attr("id","post"+post_id);
-
-                //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
-                // $(".preview-wrap").height(1500);
-                // $(".preview-wrap").show();
-                // $(document).scrollTop($('#preview').offset().top-100);
-                // $(window).scroll(function(){
-                //     if($(".preview-wrap").css('display')=='block'){
-                
-                //         if($(document).scrollTop()>$('#preview').offset().top+$('#preview').height()-600){
-
-                //             $(document).scrollTop($('#preview').offset().top+$('#preview').height()-600);
-                //         }
-                //     }
-                // });             
+                $(".page").css("position", "fixed"); 
             }
             // console.log("isBought: "+json.detail.isBuy);
         },
