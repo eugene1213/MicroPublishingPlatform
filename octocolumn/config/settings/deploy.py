@@ -95,10 +95,13 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # AWS Static Settings
 STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
-# STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
-#         custom_domain=AWS_CLOUDFRONT_DOMAIN,
-#         staticfiles_location=STATICFILES_LOCATION,
-#     )
+STATIC_URL = 'https://{custom_domain}/{staticfiles_location}/'.format(
+        custom_domain=AWS_CLOUDFRONT_DOMAIN,
+        staticfiles_location=STATICFILES_LOCATION,
+    )
+
+STATIC_ROOT = STATIC_URL
+
 # base static
 # STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # STATIC_URL = '/static/'
@@ -115,11 +118,12 @@ STATICFILES_LOCATION = 'static'
 DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
 
-# MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
-#     custom_domain=AWS_CLOUDFRONT_DOMAIN,
-#     mediafiles_location=MEDIAFILES_LOCATION,
-# )
+MEDIA_URL = 'https://{custom_domain}/{mediafiles_location}/'.format(
+    custom_domain=AWS_CLOUDFRONT_DOMAIN,
+    mediafiles_location=MEDIAFILES_LOCATION,
+)
 
+MEDIA_ROOT = MEDIA_URL
 
 # Database
 DATABASES = {
@@ -170,55 +174,55 @@ print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
 
-# ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters':
-#         {
-#             'verbose':
-#               {
-#                   'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-#                   'datefmt' : "%d/%b/%Y %H:%M:%S"
-#               },
-#             'simple':
-#                 {
-#                     'format': '%(levelname)s %(message)s'
-#                 },
-#         },
-#     'handlers':
-#         {
-#             'file':
-#                 {
-#                     'level': 'DEBUG',
-#                     'class': 'logging.handlers.RotatingFileHandler',
-#                     'filename': os.path.join(ERROR_DIR, 'debug.txt'),
-#                     'formatter': 'verbose',
-#                     'maxBytes': 1024*1024*10, 'backupCount': 5,
-#                 },
-#         },
-#     'loggers':
-#         {
-#             'django':
-#                 {
-#                     'handlers': ['file'],
-#                     'propagate': True,
-#                     'level':'INFO',
-#                 },
-#             'django.request':
-#                 {
-#                     'handlers':['file'],
-#                     'propagate': False,
-#                     'level':'INFO',
-#                 },
-#             'myAppName':
-#                 {
-#                     'handlers': ['file'],
-#                     'level': 'DEBUG',
-#                 },
-#         }
-# }
-#
+ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters':
+        {
+            'verbose':
+              {
+                  'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+                  'datefmt' : "%d/%b/%Y %H:%M:%S"
+              },
+            'simple':
+                {
+                    'format': '%(levelname)s %(message)s'
+                },
+        },
+    'handlers':
+        {
+            'file':
+                {
+                    'level': 'DEBUG',
+                    'class': 'logging.handlers.RotatingFileHandler',
+                    'filename': os.path.join(ERROR_DIR, 'debug.txt'),
+                    'formatter': 'verbose',
+                    'maxBytes': 1024*1024*10, 'backupCount': 5,
+                },
+        },
+    'loggers':
+        {
+            'django':
+                {
+                    'handlers': ['file'],
+                    'propagate': True,
+                    'level':'INFO',
+                },
+            'django.request':
+                {
+                    'handlers':['file'],
+                    'propagate': False,
+                    'level':'INFO',
+                },
+            'myAppName':
+                {
+                    'handlers': ['file'],
+                    'level': 'DEBUG',
+                },
+        }
+}
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SECURE_HSTS_SECONDS = 31536000
