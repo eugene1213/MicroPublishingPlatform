@@ -10,7 +10,17 @@ $(document).ready(function(){
 
 function buy(){
 
-    var post_id = $(".priceBtn .btn").attr("id").replace("post","");
+    var current_url = window.location.href;
+    var tmpStr = current_url.split("/");
+        isPreviewPage = tmpStr[tmpStr.length-3]=='preview';
+
+    if(isPreviewPage){
+        var post_id = current_url.split("-");
+            post_id = post_id[post_id.length-1];
+    }else {
+        var post_id = $(".priceBtn .btn").attr("id").replace("post","");        
+    }
+
     var author = $('.preview-author').text();
     var title = $('.preview-title').text();
     var urlTitle = title.replace(' ','-').replace(/~|₩|!|@|#|\$|%|\^|&|\*|\(|\)|_|\+|-|=|[|]|\\|\||;|:|'|"|,|.|\/|<|>|\?/g,''); 

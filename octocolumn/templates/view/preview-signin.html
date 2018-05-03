@@ -4,12 +4,12 @@
 <div class="signin-container">
 	<div class="frame">
         <div class="img-container"></div>
-		<form class="form-signin">
+		<div class="form-signin">
         	<div class="form_title">octocolumn에 로그인 해주세요.</div>
             <div class="form_sub">이 흥미로운 이야기를 읽기 위해서는 먼저 로그인을 해야합니다.<br>로그인 후, 칼럼 구매를 진행해주세요!<br>이제 당신에게 투자할 시간입니다.</div>
             <div class="main-container">
                 <input type="email" name="username" id="email-signin" placeholder="ID">
-                <input type="password" name="password" id="password1-signin" placeholder="Password" required>
+                <input type="password" name="password" id="password-signin" placeholder="Password" required>
             </div>
             <!-- find -->
             <div class="bottom-container">
@@ -32,6 +32,7 @@
 					<span class="signwith-text">Continue with Kakao</span>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
+<script type="text/javascript" src="{% static 'js/signin.js' %}"></script>

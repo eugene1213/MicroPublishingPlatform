@@ -1,40 +1,8 @@
-$(document).ready(function(){
-    headerController();
-});
-
 $(window).resize(function (){
-    headerController();
     $(".modal_window").css("left", (window.innerWidth-944)/2 + "px");
     $(".modal_window").css("top", (window.innerHeight-600)/2 + "px");
 });
-// 헤더가 브라우저 크기에 맞게 조정
-function headerController(){
 
-    var windowWidth = window.innerWidth;
-    var W = $('.header-wrap').width();
-    var menuWidth = $('.btn-menu').width();
-    var searchWidth = $('.btn-search').width();
-    var pointWidth = $('.btn-point').width();
-    var noticeWidth = $('.btn-notice').width();
-    var userWidth = $('.btn-user').width();
-    var logoWidth = $("#header-title").width();
-
-    var marginWidth = W - menuWidth - searchWidth - pointWidth - noticeWidth - userWidth - 70;
-    var logoMarginLeft = (windowWidth - 130)/2;
-
-    if(windowWidth < 605 + logoWidth){
-
-        $(".btn-logo-wrap").width(628 + logoWidth);
-        if(logoWidth > 116){
-            $(".header-wrap").css("min-width", 628 + (logoWidth - 116));
-        }else{
-            $(".header-wrap").attr("style","");
-        }
-    }else{
-
-        $(".btn-logo-wrap").width(windowWidth);
-    }
-}
 // 로그인 버튼 클릭시 모달창 온, 오프
 function modal_on(){
     $(".modal_block_wrap").show();
