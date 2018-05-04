@@ -66,9 +66,7 @@ $(document).ready(function(){
         alert("준비중입니다.")
         // $(".active").removeClass("active");
         // $(this).addClass("active");
-
                                                     // 업적 탭 클릭 시 보여줄 팔로잉 목록 호출
-
         // $(".profile-userInfo").css("display","flex");
         // $(".currentView").removeClass("currentView");
         // $(".profile-userInfo").addClass("currentView");
