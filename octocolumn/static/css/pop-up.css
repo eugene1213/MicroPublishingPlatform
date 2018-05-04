@@ -61,11 +61,14 @@
 	font-weight: 800;
 	letter-spacing: 0.5px;
 	color: #004b8d;
+	margin: 15px 0;
+
 }
 .pop-up p {
 	color: #2a292a;
 	font-size: 14px;
 	line-height: 1.2;
+	margin: 15px 0;
 }
 .pop-up .ps {
 	font-size: 12px;
