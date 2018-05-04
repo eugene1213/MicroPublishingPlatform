@@ -10,8 +10,6 @@ function title2header(read_or_write){            // 글 읽기,쓰기 페이지�
                 titleText = $(".title").text();
                 $("header > span").text(titleText);
 
-                headerController();
-
             } else $("header > span").text("octocolumn");
         });
     } else if(read_or_write == "read"){                           // 글읽기 모드
@@ -19,8 +17,6 @@ function title2header(read_or_write){            // 글 읽기,쓰기 페이지�
             
             titleText = $(".read_wrap > h2").text();
             $("header > span").text(titleText);
-
-            headerController();
 
         } else $("header > span").text("octocolumn");
     }
