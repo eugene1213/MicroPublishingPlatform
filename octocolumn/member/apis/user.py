@@ -26,6 +26,7 @@ from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSer
 from member.serializers.user import ChangePasswordSerializer
 from member.task import PasswordResetTask, InviteUserTask
 from utils.customsendmail import invite_email_send, password_reset_email_send
+from utils.error_code import kr_error_code
 from utils.jwt import jwt_token_generator
 from utils.tokengenerator import account_activation_token
 
@@ -278,22 +279,34 @@ class UserInfo(APIView):
     def post(self, request):
         user = self.request.user
         serializer = UserSerializer(user)
-        try:
-            profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
-            profile_serializer = ProfileImageSerializer(profile_image)
+        if user.is_authenticated:
+            try:
+                profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
+                profile_serializer = ProfileImageSerializer(profile_image)
 
-            if serializer:
+                if serializer:
+                    return Response({"user": serializer.data,
+                                     "profileImg": profile_serializer.data},
+                                    status=status.HTTP_200_OK)
+                return Response({"detail": "NO User"})
+
+            except ObjectDoesNotExist:
                 return Response({"user": serializer.data,
-                                 "profileImg": profile_serializer.data},
-                                status=status.HTTP_200_OK)
-            return Response({"detail": "NO User"})
+                                 "profileImg": {
+                                     "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
+                                     "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
+                                 }}, status=status.HTTP_200_OK)
 
-        except ObjectDoesNotExist:
-            return Response({"user": serializer.data,
-                             "profileImg": {
-                                 "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
-                                 "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
-                             }}, status=status.HTTP_200_OK)
+        else:
+            response = Response(
+                {
+                    "code": 402,
+                    "message": kr_error_code(402)
+                }
+                , status=status.HTTP_402_PAYMENT_REQUIRED)
+            response.delete_cookie('token')
+
+            return response
 
 
 # 1
