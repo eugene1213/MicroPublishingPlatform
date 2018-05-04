@@ -288,8 +288,14 @@
 	.medium-insert-images-full {
 		width: 100%;
 	}
+	.gradient {
+		width: 100%;
+		position: absolute;
+		z-index: 10;
+		bottom: 230px;
+		background: linear-gradient( to top, #fff 25%, transparent );
+	}
 }
-
 
 /* Column Tags*/
 .column-preview .column-tags {

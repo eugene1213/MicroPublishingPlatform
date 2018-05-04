@@ -47,11 +47,12 @@ function isBought(post_id, readtime, bookmark_status) {
                                     </div>\
                                     <div class="date-published">'+date+'</div>\
                                     <div class="column-read-time">\
-                                        <span class="read-time">'+readtime+' min</span> read\
+                                        <span class="read-time">'+readtime+'</span>\
                                     </div>\
                                 </div>\
                                 <div class="column-content">\
                                 '+preview+'\
+                                <div class="gradient"></div>\
                                 </div>\
                                 <div class="column-tags">\
                                     <p>Tags</p>\
@@ -121,6 +122,10 @@ function isBought(post_id, readtime, bookmark_status) {
         },
         error: function(error) {
             console.log(error);
+        },
+        complete: function(){
+            var gradientHeight = $('.previewElementsWrap').height();
+            $('.gradient').height(gradientHeight);
         }
     });
 }

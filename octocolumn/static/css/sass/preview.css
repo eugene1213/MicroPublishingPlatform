@@ -241,6 +241,12 @@
       margin: 0 0 20px 30px; }
   .column-preview .column-content .medium-insert-images-full {
     width: 100%; }
+  .column-preview .column-content .gradient {
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    bottom: 230px;
+    background: linear-gradient(to top, #fff 25%, transparent); }
 
 /* Column Tags*/
 .column-preview .column-tags {

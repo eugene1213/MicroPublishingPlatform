@@ -37,27 +37,35 @@ $(document).ready(function(){
         var preview_img = $("#preview-main-content > img").attr("src");
         var tag = '';
             tag = $("#tag_all").text();
-        var code = $("#octo-code-1").val() + $("#octo-code-2").val() + $("#octo-code-3").val() + $("#octo-code-4").val();
         var price = $(".preview-br-list-wrap > .price-set-decimal").text();
         var temp_id = localStorage.getItem("temp_id");
 
         if(data) {
 
-            publish(temp_id, cover_img, preview_img, tag, code, price);
+            if(tag==''){
+                alert('최소 한 개 이상의 태그를 설정해주세요.');
+            }else if(cover_img == '') {
+                alert('표지 사진를 추가해주세요.');
+            }else {
+                publish(temp_id, cover_img, preview_img, tag, price);
+            }
         } else {
 
             $("#authorApply").show();
             $("#preview").hide();
-
-            window.location.href = "#top";
 
             $("#btn-author-apply").unbind('click').click(function(){
         
                 var intro = $(".author-intro").html();
                 var url = $("#inputUrl").val();
 
-                authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url);
-                
+                if(tag==''){
+                    alert('최소 한 개 이상의 태그를 설정해주세요.');
+                }else if(cover_img == '') {
+                    alert('표지 사진를 추가해주세요.');
+                }else {
+                    authorApply(temp_id, cover_img, preview_img, tag, price, intro, url);
+                }
                 $(".btn-confirm").unbind('click').click(function(){
 
                     window.location.href = "/";
@@ -121,11 +129,12 @@ function btn_activation_checklist() {
 }
 
 /* 최종적으로 발행을 결정하면 실행되는 함수*/
-function publish(temp_id, cover_img, preview_img, tag, code, price) {
+function publish(temp_id, cover_img, preview_img, tag, price) {
 
     var preview = creatPreviewElements();
 
     $.ajax({
+
         url: "/api/column/post-create/",
         async: false,
         type: 'POST',
@@ -138,7 +147,6 @@ function publish(temp_id, cover_img, preview_img, tag, code, price) {
             "temp_id" : temp_id,
             "cover" : cover_img,
             "tag" : tag,
-            "code" : code,
             "price" : price,
             "preview" : preview.outerHTML
         }),
@@ -212,7 +220,7 @@ function isAuthor() {
     return data;
 }
 /* 작가신청 */
-function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, url) {
+function authorApply(temp_id, cover_img, preview_img, tag, price, intro, url) {
     
     var preview = creatPreviewElements();
 
@@ -230,13 +238,11 @@ function authorApply(temp_id, cover_img, preview_img, tag, code, price, intro, u
             "cover" : cover_img,
             "preview" : preview.outerHTML,
             "tag" : tag,
-            "code" : code,
             "price" : price,
             "intro" : intro,
             "blog" : url
         }),
         success: function(json) {
-            console.log("신청됨");
             modal({
                 type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
                 title: '', //Modal Title
