@@ -32,7 +32,7 @@ $(document).ready(function(){
             var url = '/@'+ urlAuthor+'/'+urlTitle+'-'+post_id;
             var href = 'https://www.octocolumn.com'+url;
 
-            if(window.location.href != href) history.pushState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
+            if(window.location.href != href) history.replaceState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
 
             for(var i in tagArray) {
                 

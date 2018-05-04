@@ -162,7 +162,7 @@ main {
   height: calc(100vh - 44px);
   position: absolute;
   background-size: cover;
-  background-image: url(../annawangler.jpg);
+  background-image: url(../../images/example/annawangler.jpg);
   background-position: top center;
   background-repeat: no-repeat;
   top: 0;
