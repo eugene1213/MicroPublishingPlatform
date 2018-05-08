@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from column.models import Temp, SearchTag
+from column.models import Temp, SearchTag, PostStar
 from column.pagination import PostPagination, PostListPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
@@ -170,6 +170,8 @@ class PostCreateView(generics.GenericAPIView,
                                            thumbnail=thumbnail_image,
                                            preview=data['preview']
                                            )
+                PostStar.objects.create(post=post)
+
                 serializer = PostSerializer(post)
                 # 태그 추가
                 if data['tag'] != '':
