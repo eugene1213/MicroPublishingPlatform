@@ -190,6 +190,7 @@ a, a:visited {
   color: inherit; }
 
 .container {
+  position: relative;
   width: 70vw;
   min-height: 1500px;
   padding: 0.5em;
@@ -233,6 +234,7 @@ a, a:visited {
 
 .container .blog-posts .post {
   flex: 1;
+  overflow: hidden;
   background: #000;
   height: 200px;
   -moz-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
@@ -429,8 +431,8 @@ a {
 
 .flip {
   position: absolute;
-  top: -304px;
-  left: -125px;
+  top: 0px;
+  left: 0px;
   z-index: 900; }
   .flip .arrow_box_1 {
     border: 1px solid rgba(0, 75, 141, 0.97);

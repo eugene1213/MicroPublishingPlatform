@@ -25,7 +25,9 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/comments.css' %}">	
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">		
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />	
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 </head>
 <body>
@@ -39,7 +41,7 @@
             {{ MEDIA_URL }}
 		</div>
 		<div class="read_wrap">
-			<div class="preview-title" id="preview-title">{{ title }}</div>
+			<h2 class="preview-title" id="preview-title">{{ title }}</h2>
 			<div class="write">
 				<div class="writer">
 					by <span class="preview-author" id="preview-author">{{ username }}</span>

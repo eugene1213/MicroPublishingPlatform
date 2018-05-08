@@ -1,6 +1,88 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/preview-signin.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/sass/thirdparty.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-thirdparty.css' %}">
+<script src="https://apis.google.com/js/api:client.js"></script>
+
+<script>
+	var googleUser = {};
+	var startApp = function() {
+		gapi.load('auth2', function(){
+		// Retrieve the singleton for the GoogleAuth library and set up the client.
+		auth2 = gapi.auth2.init({
+			client_id: '556104186701-si5hpqqo9jl066op8rv1rn0vsn0i4u82.apps.googleusercontent.com',
+			cookiepolicy: 'single_host_origin',
+			scope:'openid'
+			// Request scopes in addition to 'profile' and 'email'
+		});
+		attachSignin(document.getElementById('my-signin2'));
+		});
+	};
+	function attachSignin(element) {
+		auth2.attachClickHandler(element, {},
+			function(googleUser) {
+				// Useful data for your client-side scripts:
+				var profile = googleUser.getBasicProfile();
+
+				// The ID token you need to pass to your backend:
+				var id_token = googleUser.getAuthResponse().id_token;
+				$.ajax({
+					url: '/api/member/googleLogin/',
+					async: false,
+					type: 'POST',
+					dataType: 'json',
+					xhrFields: {
+						withCredentials: true
+					},
+					data:{
+						id_token : id_token,
+					},
+					success: function(json) {
+						window.location.href = '/';
+					},
+					error: function(err) {
+						var errMsgTitle = '';
+						var errMsg = '';
+						if(err.status == 406){
+							errMsgTitle = 'Sign in Failed';
+							errMsg = '이미 가입한 이메일입니다.<br /> \'Sign in with email\' 버튼으로 로그인 해주세요.';
+						} else {
+							errMsgTitle = 'Error';
+							errMsg = '죄송합니다.<br /> 예상치 못한 에러가 발생했습니다.<br /> 다른 방법으로 로그인해주세요.';
+						}
+						modal({
+							type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+							title: errMsgTitle, //Modal Title
+							text: errMsg, //Modal HTML Content
+							size: 'normal', //Modal Size (normal | large | small)
+							center: true, //Center Modal Box?
+							autoclose: false, //Auto Close Modal Box?
+							callback: null, //Callback Function after close Modal (ex: function(result){alert(result);})
+							onShow: function(r) {}, //After show Modal function
+							closeClick: true, //Close Modal on click near the box
+							closable: true, //If Modal is closable
+							theme: 'atlant', //Modal Custom Theme
+							animate: false, //Slide animation
+							background: 'rgba(0,0,0,0.35)', //Background Color, it can be null
+							zIndex: 1050, //z-index
+							template: '<div class="modal-box"><div class="modal-inner"><div class="modal-title"><a class="modal-close-btn"></a></div><div class="modal-text"></div></div></div>',
+							_classes: {
+								box: '.modal-box',
+								boxInner: ".modal-inner",
+								title: '.modal-title',
+								content: '.modal-text',
+								closebtn: '.modal-close-btn'
+							}
+						});
+					}
+				});
+			}, function(error) {
+				console.log(JSON.stringify(error, undefined, 2));
+			}
+		);
+	}
+	startApp();
+</script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <div class="signin-container">
 	<div class="frame">
         <div class="img-container"></div>
@@ -23,14 +105,39 @@
 					<i class="signwith-icon icon-facebook"></i>
 					<span class="signwith-text">Continue with Facebook</span>
 				</div>
-				<div class="btn-signin google">
+				<div class="btn-signin google" id="my-signin2" data-onsuccess="onSignIn" data-theme="dark">
                     <i class="signwith-icon icon-gplus-1"></i>
 					<span class="signwith-text">Continue with Google</span>
 				</div>
-				<div class="btn-signin kakao">
+				<div class="btn-signin kakao" onclick="javascript:loginWithKakao();">
                     <i class="signwith-icon icon-comment-alt"></i>
 					<span class="signwith-text">Continue with Kakao</span>
 				</div>
+				<script type='text/javascript'>
+					//<![CDATA[
+					// 사용할 앱의 JavaScript 키를 설정해 주세요.
+					Kakao.init('9122a1cfdf084dac234748d85896d95a');
+					function loginWithKakao() {
+						// 로그인 창을 띄웁니다.
+						Kakao.Auth.login({
+							success: function(authObj) {
+								$.ajax({
+									url: "/api/member/kakaoLogin/" + authObj.access_token,
+									async: false,
+									type: 'GET',
+									dataType: 'json',
+									success: function() {
+										window.location.href = '/';
+									}
+								});
+							},
+							fail: function(err) {
+								console.log(JSON.stringify(err));
+							}
+						});
+					};
+				//]]>
+				</script>
 			</div>
 		</div>
 	</div>
