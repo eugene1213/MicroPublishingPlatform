@@ -11,7 +11,7 @@ from rest_framework_jwt.settings import api_settings
 
 from config.settings.base import CLIENT_ID
 from member.backends import GoogleBackend, KakaoBackend
-from member.models import User
+from member.models import User, Profile, ProfileImage
 from member.serializers import UserSerializer
 from utils.jwt import jwt_token_generator
 
@@ -79,6 +79,8 @@ class GoogleLogin(APIView):
                 nickname=debug_token_info.name,
                 social_id=f'g_{user_id}',
             )
+            Profile.objects.create(user=user)
+            ProfileImage.objects.create(user=user)
         else:
             user =User.objects.filter(social_id=f'g_{user_id}').get()
 
@@ -134,6 +136,8 @@ class KakaoLogin(APIView):
                 nickname=debug_token_info['properties']['nickname'],
                 social_id=f'k_{user_id}',
             )
+            Profile.objects.create(user=user)
+            ProfileImage.objects.create(user=user)
         else:
             user = User.objects.filter(social_id=f'k_{user_id}').get()
 
