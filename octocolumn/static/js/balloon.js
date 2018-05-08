@@ -5,6 +5,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
 
     $(".page").delegate('.user-pic','mouseenter', function(e){
 
+        console.log($(e.target).offset());
         var pk = $(this).attr("id").replace('author_','');
         
         $.ajax({

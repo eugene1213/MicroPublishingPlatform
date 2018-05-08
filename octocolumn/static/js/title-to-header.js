@@ -13,12 +13,9 @@ function title2header(read_or_write){            // 글 읽기,쓰기 페이지�
             } else $("header > span").text("octocolumn");
         });
     } else if(read_or_write == "read"){                           // 글읽기 모드
-        if($(".read_wrap > h2").text() != "") {
-            
-            titleText = $(".read_wrap > h2").text();
-            $("header > span").text(titleText);
 
-        } else $("header > span").text("octocolumn");
+        titleText = $(".read_wrap > h2").text();
+        $(".site-name").text(titleText);
     }
 }
 function hidingHeader(){            // 글읽기 페이지에서 스크롤다운 시 헤더 로고가 사라진다.

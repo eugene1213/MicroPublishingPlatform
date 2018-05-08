@@ -124,8 +124,8 @@ function isBought(post_id, readtime, bookmark_status) {
             console.log(error);
         },
         complete: function(){
-            var gradientHeight = $('.previewElementsWrap').height();
-            $('.gradient').height(gradientHeight);
+            var contentHeight = $('.previewElementsWrap').height();
+            $('.gradient').height(contentHeight/2);
         }
     });
 }

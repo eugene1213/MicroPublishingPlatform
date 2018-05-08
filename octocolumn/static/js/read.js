@@ -5,6 +5,7 @@ $(document).ready(function(){
         post_id = post_id[post_id.length-1];
 
     hidingHeader();
+    title2header('read');
 
     $(window).resize(function() {
         coverImgController();
