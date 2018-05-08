@@ -20,7 +20,7 @@ from rest_framework_jwt.settings import api_settings
 
 from config import settings
 from member.backends import FacebookBackend
-from member.models import User, ProfileImage, ConnectedLog, InviteUser
+from member.models import User, ProfileImage, ConnectedLog, InviteUser, Profile
 from member.models.invitations import InvitationUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
@@ -205,6 +205,8 @@ class FacebookLogin(APIView):
                 last_name=request.data['last_name'],
                 social_id=f'fb_{request.data["facebook_user_id"]}',
                 )
+            Profile.objects.create(user=user)
+            ProfileImage.objects.create(user=user)
 
         else:
             pass
