@@ -26,14 +26,39 @@ class Star(generics.GenericAPIView):
                 try:
                     buy_list = user.buy_list.filter(post=post).get()
                     if not buy_list.star:
-                        star = PostStar.objects.filter(post=post).get()
-                        star.content += int(data['star'])
-                        star.member_num += 1
-                        buy_list.star = True
-                        buy_list.save()
-                        star.save()
-                        return Response(
-                        )
+                        try:
+                            star = PostStar.objects.filter(post=post).get()
+                            star.content += int(data['star'])
+                            star.member_num += 1
+                            buy_list.star = True
+                            buy_list.save()
+                            star.save()
+                            return Response(
+                                {"detail": "success"}
+                                , status=status.HTTP_200_OK
+
+                            )
+                        except ObjectDoesNotExist:
+                            star = PostStar.objects.create(post=post)
+                            if star:
+                                star.content += int(data['star'])
+                                star.member_num += 1
+                                buy_list.star = True
+                                buy_list.save()
+                                star.save()
+                                return Response(
+                                    {"detail": "success"}
+                                    , status=status.HTTP_200_OK
+
+                                )
+                            return Response(
+                                {
+                                    "code": 500,
+                                    "message": kr_error_code(500)
+                                }
+                                , status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                            )
+
                     return Response(
                         {
                             "code": 431,

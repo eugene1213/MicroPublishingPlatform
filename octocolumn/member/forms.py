@@ -2,7 +2,7 @@ from distutils import errors
 
 from django import forms
 
-from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag
+from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar
 from member.models import Author
 # from common.utils import send_email
 # from . import errors
@@ -62,6 +62,7 @@ class AuthorIsActive(forms.Form):
                     thumbnail=i.thumbnail,
 
                 )
+                PostStar.objects.create(post=i)
                 tag = PreSearchTag.objects.select_related('post').filter(post=i).all()
                 for j in tag:
                     SearchTag.objects.create(post=new_post, tag=j.tag)
