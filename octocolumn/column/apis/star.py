@@ -1,7 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from column.models import Post
 from column.models.star import PostStar
@@ -13,20 +14,20 @@ __all__ = (
 
 
 class Star(generics.GenericAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         user = self.request.user
         data = self.request.data
         post = Post.objects.filter(pk=data['pk']).get()
 
-        if isinstance(data['star'], int):
+        if isinstance(int(data['star']), int):
             if data['star'] >= 0 or data['star'] <= 10:
                 try:
                     buy_list = user.buy_list.filter(post=post).get()
                     if not buy_list.star:
                         star = PostStar.objects.filter(post=post).get()
-                        star.content += data['star']
+                        star.content += int(data['star'])
                         star.member_num += 1
                         buy_list.star = True
                         buy_list.save()
@@ -35,32 +36,52 @@ class Star(generics.GenericAPIView):
                         )
                     return Response(
                         {
-                            "code": 402,
-                            "message": kr_error_code(402)
+                            "code": 431,
+                            "message": kr_error_code(431)
                         }
-                        , status=status.HTTP_402_PAYMENT_REQUIRED
+                        , status=status.HTTP_431_REQUEST_HEADER_FIELDS_TOO_LARGE
                     )
                 except ObjectDoesNotExist:
                     return Response(
                         {
-                            "code": 402,
-                            "message": kr_error_code(402)
+                            "code": 407,
+                            "message": kr_error_code(407)
                         }
                         , status=status.HTTP_402_PAYMENT_REQUIRED
                     )
             return Response(
                 {
-                    "code": 402,
-                    "message": kr_error_code(402)
+                    "code": 424,
+                    "message": kr_error_code(424)
                 }
-                , status=status.HTTP_402_PAYMENT_REQUIRED
+                , status=status.HTTP_424_FAILED_DEPENDENCY
             )
         return Response(
             {
-                "code": 402,
-                "message": kr_error_code(402)
+                "code": 424,
+                "message": kr_error_code(424)
             }
-            , status=status.HTTP_402_PAYMENT_REQUIRED
+            , status=status.HTTP_424_FAILED_DEPENDENCY
+        )
+
+
+class StarView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+
+        data = self.request.data
+        post = Post.objects.filter(pk=data['pk']).get()
+
+        star = PostStar.objects.filter(post=post).get()
+
+        return Response(
+            {
+                "detail":
+                    {
+                        "star": round(star.content/star.member_num)
+                    }
+            }
         )
 
 
