@@ -79,7 +79,7 @@ function getUserCard(followDirection){
                                 </div> \
                             </div>';
                 $(".profile-relationship").append(str);
-                $(window).scroll(function() { 
+                $(window).unbind('scroll').scroll(function() { 
                     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
                         if($('#'+followDirection).text()*1 != count) getUserCard(followDirection);
                     } 
