@@ -73,7 +73,7 @@
 .pop-up .ps {
 	font-size: 12px;
 	line-height: 1.5;
-	opacity: 0.3;
+	opacity: 0.8;
 }
 
 /* close button */
@@ -131,7 +131,7 @@
 		max-width: 215px;
 	}
 	.pop-up.close-pop-up {
-		margin-right: -365px;
+		margin-right: -400px;
 		margin-bottom: 0;
 		bottom: 40px;
 	}
@@ -147,12 +147,12 @@
 	}
 	@-webkit-keyframes slideOut {
 		100% {
-			right: -365px;
+			right: -400px;
 		}
 	}
 	@keyframes slideOut {
 		100% {
-			right: -365px;
+			right: -400px;
 		}
 	}
 }

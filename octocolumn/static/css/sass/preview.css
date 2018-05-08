@@ -181,6 +181,7 @@
 
 /* Coulmn Content*/
 .column-preview .column-content {
+  position: relative;
   padding: 10px 0 20px 0;
   word-break: break-word; }
   .column-preview .column-content .previewElementWrap {
@@ -245,8 +246,8 @@
     width: 100%;
     position: absolute;
     z-index: 10;
-    bottom: 210px;
-    background: linear-gradient(to top, #fff 20%, transparent); }
+    bottom: 0px;
+    background: linear-gradient(to top, #fff 5%, transparent); }
 
 /* Column Tags*/
 .column-preview .column-tags {
