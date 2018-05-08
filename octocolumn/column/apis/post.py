@@ -539,7 +539,7 @@ class BuyListView(generics.ListAPIView):
         user = self.request.user
         list = []
         try:
-            post = BuyList.objects.select_related('user','post').filter(user=user).all().order_by('-created_at')
+            post = BuyList.objects.select_related('user', 'post').filter(user=user).all().order_by('-created_at')
             for i in post:
                 list.append(i.post)
 

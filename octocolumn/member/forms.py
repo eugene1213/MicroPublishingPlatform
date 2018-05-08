@@ -2,7 +2,7 @@ from distutils import errors
 
 from django import forms
 
-from column.models import PreAuthorPost, Post, Temp
+from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag
 from member.models import Author
 # from common.utils import send_email
 # from . import errors
@@ -52,7 +52,7 @@ class AuthorIsActive(forms.Form):
         post = PreAuthorPost.objects.filter(author=author_post.author).all()
         if post is not None:
             for i in post:
-                Post.objects.create(
+                new_post = Post.objects.select_related('author').create(
                     author=i.author,
                     main_content=i.main_content,
                     price=i.price,
@@ -62,6 +62,10 @@ class AuthorIsActive(forms.Form):
                     thumbnail=i.thumbnail,
 
                 )
+                tag = PreSearchTag.objects.select_related('post').filter(post=i).all()
+                for j in tag:
+                    SearchTag.objects.create(post=new_post, tag=j.tag)
+
         author.is_active = True
         author.save()
         return PreAuthorPost.objects.filter(author=author_post.author).all().delete()

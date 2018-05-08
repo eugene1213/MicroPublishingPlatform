@@ -17,6 +17,8 @@ xz-utils tk-dev
 
 RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
+# virtualevn
+# git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 # nginx
 
 
