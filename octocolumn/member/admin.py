@@ -310,6 +310,7 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
             request,
             author_post_pk,
             action_form,
+            action_title
     ):
         author = self.get_object(request, author_post_pk)
         if request.method != 'GET':
