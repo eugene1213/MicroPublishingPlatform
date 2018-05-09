@@ -31,16 +31,16 @@
 	{% else %}
 		{% include 'view/header.html' %}
     {% endif %}
-        <div class="container" id="container">
-            <div class="sub-content-title">
+        <main>
+            <div class="container" id="container">
+                <div class="sub-content-title">
+                </div>
+                <div class="blog-posts">
+                    <!--post list-->
+                </div> 	
             </div>
-            <div class="blog-posts">
-                <!--post list-->
-            </div> 	
-        </div>
-    <!-- flip -->
-	<div class="flip"></div>
-    <!-- //flip -->
+        </main>
+        <div class="profile-card"><div class="flip"></div></div>
     </div>
     <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/recent.js' %}"></script>

@@ -40,7 +40,6 @@
     {% if login %}
         {% include 'view/header_on.html' %}
     {% else %}
-        <script>window.location.href = '/signin/'</script>
         {% include 'view/header.html' %}
     {% endif %}
 	<!-- main content -->
@@ -247,9 +246,7 @@
     </main>
     <div class="profile-card"><div class="flip"></div></div>
 </div>
-
 <!-- JS -->
-
 <script src="{% static 'js/script2.js' %}"></script>
 <script src="{% static 'js/getPostList.js' %}"></script>
 <script src="{% static 'js/balloon.js' %}"></script>
