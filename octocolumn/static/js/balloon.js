@@ -7,8 +7,8 @@ function popBalloon() { //getPostList.js 에서 호출한다.
 
         var coordX = $(e.target).offset().left;
         var coordY = $(e.target).offset().top;
-        $('.flip').css('left',coordX-125);
-        $('.flip').css('top',coordY-300);
+        $('.profile-card').css('left',coordX-125);
+        $('.profile-card').css('top',coordY-300);
         
         var pk = $(this).attr("id").replace('author_','');
         
@@ -88,7 +88,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                             <a><i class="iconbtn-twitter-bird"></i></a>\
                             <a><i class="iconbtn-instagram-filled"></i></a>\
                             <a><i class="iconbtn-globe"></i></a>\
-                            <a><i class="iconbtn-info-circled-alt more-info2"></i></a>\
+                            <a><i class="iconbtn-info-circled-alt more-info"></i></a>\
                         </div>\
                     </div>\
                 ';
@@ -96,14 +96,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                 
                 $(".more-info").click(function(){
                     
-                    $( ".arrow_box_1" ).hide();
-                    $( ".arrow_box_2" ).show();
-                });
-        
-                $(".more-info2").click(function(){
-        
-                    $( ".arrow_box_2" ).hide();
-                    $( ".arrow_box_1" ).show();
+                    $( ".flip" ).toggleClass("turned");
                 });
 
                 var XY = $(e.target).offset();
