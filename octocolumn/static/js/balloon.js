@@ -5,7 +5,11 @@ function popBalloon() { //getPostList.js 에서 호출한다.
 
     $(".page").delegate('.user-pic','mouseenter', function(e){
 
-        console.log($(e.target).offset());
+        var coordX = $(e.target).offset().left;
+        var coordY = $(e.target).offset().top;
+        $('.flip').css('left',coordX-125);
+        $('.flip').css('top',coordY-300);
+        
         var pk = $(this).attr("id").replace('author_','');
         
         $.ajax({
@@ -88,7 +92,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                         </div>\
                     </div>\
                 ';
-                $(e.target).siblings('.flip').html(balloonHtml);
+                $('.flip').html(balloonHtml);
                 
                 $(".more-info").click(function(){
                     
