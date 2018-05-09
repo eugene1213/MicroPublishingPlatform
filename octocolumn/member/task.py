@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 
 from config.celery import app
-from member.models import User, InviteUser
+from member.models import User, InviteUser, PointHistory
 from utils.tokengenerator import account_activation_token, invite_token
 
 
@@ -74,6 +74,18 @@ class InviteUserTask(Task):
         email.send()
 
 
+#
+class MemberPointTask(Task):
+    def run(self, point, message):
+        all_member = User.objects.all()
+        for i in all_member:
+            i.point += int(point)
+            PointHistory.objects.reward(user=i, point=point, history=message)
+
+        return True
+
+
 app.tasks.register(SignupEmailTask)
 app.tasks.register(PasswordResetTask)
 app.tasks.register(InviteUserTask)
+app.tasks.register(MemberPointTask)

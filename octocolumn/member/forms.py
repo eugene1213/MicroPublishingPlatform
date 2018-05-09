@@ -1,6 +1,7 @@
 from distutils import errors
 
 from django import forms
+from django.contrib.admin.helpers import ActionForm
 
 from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar
 from member.models import Author
@@ -123,3 +124,11 @@ class PostDraftAction(forms.Form):
 #         'comment',
 #         'send_email',
 #     )
+
+
+class PointRewardForm(ActionForm):
+    point = forms.IntegerField()
+    message = forms.CharField()
+
+    # def form_action(self, point):
+    #     pass

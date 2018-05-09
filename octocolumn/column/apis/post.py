@@ -448,7 +448,8 @@ class IsBuyPost(APIView):
                         "title": serializer.data['title'],
                         "nickname": post.author.nickname,
                         "main_content": self.main_content(post.main_content),
-                        "tag": self.tag(post)
+                        "tag": self.tag(post),
+                        "point":user.point
 
 
                     }},
@@ -461,7 +462,6 @@ class IsBuyPost(APIView):
             try:
                 post = Post.objects.filter(id=param).get()
                 serializer = PostSerializer(post)
-                tag_serializer = SearchTagSerializer(SearchTag.objects.filter(post=post).all(), many=True)
 
                 return Response({"detail": {
                     "isBuy": False,
@@ -474,6 +474,7 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
+                    "point": user.point
 
                 }},
                     status=status.HTTP_200_OK)
