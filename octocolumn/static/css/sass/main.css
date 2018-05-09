@@ -429,20 +429,42 @@ a {
   background-color: rgba(51, 51, 51, 0.85);
   border-color: rgba(51, 51, 51, 0.85); }
 
+.profile-card {
+  position: relative;
+  width: 280px;
+  height: 281px; }
+
 .flip {
   position: absolute;
   top: 0px;
   left: 0px;
-  z-index: 900; }
+  right: 0px;
+  bottom: 0px;
+  z-index: 900;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s; }
+  .flip.turned {
+    -webkit-transform: rotateY(-180deg) translateZ(1px);
+    transform: rotateY(-180deg) translateZ(1px); }
+  .flip .arrow_box_1, .flip .arrow_box_2 {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    border-radius: 10px;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; }
   .flip .arrow_box_1 {
     border: 1px solid rgba(0, 75, 141, 0.97);
-    width: 280px;
-    height: 281px;
-    position: absolute;
-    display: block;
-    left: 0;
     background-color: rgba(0, 75, 141, 0.97);
-    border-radius: 10px; }
+    -webkit-transform: rotateY(0deg) translateZ(1px);
+    transform: rotateY(0deg) translateZ(1px); }
     .flip .arrow_box_1:after, .flip .arrow_box_1:before {
       top: 100%;
       left: 50%;
@@ -549,14 +571,9 @@ a {
       color: #fff; }
   .flip .arrow_box_2 {
     border: 1px solid #c2e1f5;
-    width: 280px;
-    height: 281px;
-    position: absolute;
-    display: none;
-    left: 0;
     background-color: rgba(250, 250, 250, 0.97);
-    border-radius: 10px;
-    color: #000; }
+    color: #000;
+    transform: rotateY(-180deg) translateZ(1px); }
     .flip .arrow_box_2:after, .flip .arrow_box_2:before {
       top: 100%;
       left: 50%;
@@ -588,6 +605,16 @@ a {
       opacity: 0.3; }
     .flip .socialbar a[href^="http"] i {
       opacity: 1; }
+      .flip .socialbar a[href^="http"] i:hover {
+        background-color: #fafafa;
+        transition: .25s ease-in-out; }
+    .flip .socialbar .more-info {
+      pointer-events: auto;
+      opacity: 1; }
+      .flip .socialbar .more-info:hover {
+        color: #2a292a;
+        background-color: #fafafa;
+        transition: .25s ease-in-out; }
   .flip .card_profile_info {
     width: 200px;
     height: 184px;
@@ -596,7 +623,7 @@ a {
     font-size: 8px;
     font-weight: 300;
     line-height: 1.4em;
-    overflow: scroll;
+    overflow: auto;
     word-break: break-word; }
 
 /*# sourceMappingURL=main.css.map */
