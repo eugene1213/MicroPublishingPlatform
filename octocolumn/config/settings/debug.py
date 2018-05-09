@@ -185,6 +185,8 @@ TOKEN_URI = config_secret_debug['accounts']['google']['token_uri']
 #     config_secret_debug['django']['celery']['broker_port']
 # )
 # print(CELERY_BROKER_URL)
+JET_SIDE_MENU_COMPACT = True
+
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 

@@ -15,7 +15,7 @@ class PointHistoryManager(models.Manager):
             point=point,
             history=history
         )
-        user.point += point
+        user.point += int(point)
         user.save()
         instance.save()
         return instance
@@ -42,7 +42,7 @@ class PointHistoryManager(models.Manager):
             point=point,
             history=history
         )
-        user.point += point
+        user.point += int(point)
         user.save()
         instance.save()
         return instance
@@ -56,7 +56,7 @@ class PointHistoryManager(models.Manager):
             post=post,
             history=history
         )
-        user.point -= point
+        user.point -= int(point)
         user.save()
         instance.save()
         return instance
