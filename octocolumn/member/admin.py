@@ -9,7 +9,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from member.forms import AuthorIsActive, PostDraftAction
+from member.forms import AuthorIsActive, PostDraftAction, PointRewardForm
+from member.task import MemberPointTask
 from octo.models import UsePoint
 from column.models import Post, PreAuthorPost
 
@@ -25,6 +26,12 @@ admin.site.unregister(Token)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_per_page = 20
+    action_form = PointRewardForm
+    actions = [
+        'update_point',
+        'reward_point',
+        'reward_point_all',
+    ]
     list_display = ['username', 'first_name', 'nickname', 'last_name', 'point', 'user_type', 'created_at', 'post_count',
                     'is_active']
     list_display_links = ['username']
@@ -51,6 +58,36 @@ class UserAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+    def update_point(modeladmin, request, queryset):
+        point = request.POST['point']
+        point = int(point)
+        queryset.update(point=point)
+
+        return modeladmin.message_user(request, '리워드 추가완료')
+
+    def reward_point(modeladmin, request, queryset):
+        point = request.POST['point']
+        message = request.POST['message']
+
+        point = int(point)
+        queryset.update(point=point)
+        for i in queryset:
+            PointHistory.objects.reward(user=i, point=point, history=message)
+
+        return modeladmin.message_user(request, '리워드 추가완료')
+
+    def reward_point_all(modeladmin, request, queryset):
+        point = request.POST['point']
+        message = request.POST['message']
+        task = MemberPointTask
+
+        if task.delay(point, message):
+            return modeladmin.message_user(request, '리워드 추가완료')
+        return modeladmin.message_user(request, '리워드 실패')
+
+    reward_point.short_description = '선택 회원 리워드 제공'
+    reward_point_all.short_description = '전체 회원 리워드 제공'
+    update_point.short_description = '회원 포인트 변경'
     post_count.short_description = '포스팅'
 
 
@@ -144,7 +181,6 @@ class PostAdmin(admin.ModelAdmin):
 class PublishPointAdmin(admin.ModelAdmin):
     list_display = ['type', 'point']
     list_display_links = ['type', 'point']
-
 
 
 @admin.register(PointHistory)
@@ -274,7 +310,6 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
             request,
             author_post_pk,
             action_form,
-            action_title
     ):
         author = self.get_object(request, author_post_pk)
         if request.method != 'GET':
