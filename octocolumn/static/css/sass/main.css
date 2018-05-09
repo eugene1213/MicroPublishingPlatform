@@ -623,7 +623,7 @@ a {
     font-size: 8px;
     font-weight: 300;
     line-height: 1.4em;
-    overflow: scroll;
+    overflow: auto;
     word-break: break-word; }
 
 /*# sourceMappingURL=main.css.map */
