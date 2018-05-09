@@ -63,7 +63,7 @@ class AuthorIsActive(forms.Form):
                     thumbnail=i.thumbnail,
 
                 )
-                PostStar.objects.create(post=i)
+                PostStar.objects.create(post=new_post)
                 tag = PreSearchTag.objects.select_related('post').filter(post=i).all()
                 for j in tag:
                     SearchTag.objects.create(post=new_post, tag=j.tag)
