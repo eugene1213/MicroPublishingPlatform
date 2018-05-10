@@ -77,7 +77,7 @@ function signin_api() {
                 localStorage.setItem("id","");
             }
             if(isPreviewPage) window.location.href = current_url;
-            else window.location.href = "/";
+            else window.location.href = current_url;
         },
         error: function(error) {
             console.log(error)
