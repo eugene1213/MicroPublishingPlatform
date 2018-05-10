@@ -61,12 +61,11 @@ function isBought(post_id, readtime, bookmark_status) {
                                     </ul>\
                                 </div>\
                             </div>\
-                            <div class="balance">보유 포인트: '+point+'P</div>\
                             <div class="purchase-btn" onclick=\'buy('+post_id+');\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
                         </div>\
                     </div>\
                 ';
-
+                //<div class="balance">보유 포인트: '+point+'P</div>\
             //     <div class="rating">\
             //     <input id="star5" name="rating" type="radio" value="5"/>\
             //     <label for="star5" class="full iconbtn-star-full"></label>\

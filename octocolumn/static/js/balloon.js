@@ -9,6 +9,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
         var coordY = $(e.target).offset().top;
         $('.profile-card').css('left',coordX-125);
         $('.profile-card').css('top',coordY-300);
+        $(".profile-card").show();
         
         var pk = $(this).attr("id").replace('author_','');
         
@@ -93,7 +94,6 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                     </div>\
                 ';
                 $('.flip').html(balloonHtml);
-                
                 $(".more-info").click(function(){
                     
                     $( ".flip" ).toggleClass("turned");
@@ -110,6 +110,8 @@ function popBalloon() { //getPostList.js 에서 호출한다.
         
                         $(".arrow_box_1").detach();
                         $(".arrow_box_2").detach();
+                        $(".profile-card").hide();
+                
                         XY = '';
                     }
                 });
