@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
     CommentListView, CommentView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
-    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star
+    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star, PaymentInfo
 
 urlpatterns = [
     # 포스트 생성
@@ -42,6 +42,9 @@ urlpatterns = [
 
     # 별점
     url(r'^postStar/$', Star.as_view(), name='postStar'),
+
+    # 결제
+    url(r'^payment/$', PaymentInfo.as_view(), name='payment'),
 
     # 코멘트 관련
     url(r'^(?P<post_pk>\d+)/commentList/', include([
