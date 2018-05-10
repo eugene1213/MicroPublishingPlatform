@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("#btn-signin").click(function() {
         signin_api();
     });
-    $(".mid-container > input").keydown(function(e){
+    $(".signin-main-container > input").keydown(function(e){
         if(e.keyCode == 13){
             if($("#email-signin").val() != "" && $("#password-signin").val() != ""){
                 signin_api();
@@ -11,31 +11,32 @@ $(document).ready(function(){
         }
     });
     $("#btn2ndInvite").unbind('click').click(function(){
-
         secondInvite();
     });
 });
+function modalSignin() {
+    $('.welcome-container').css('display','block');
+    $(".page").css("position", "fixed"); 
+}
 /* 로그인 창 좌우로 넘기기 */
-// $(function() {
-// 	$(".btn").click(function() {
-// 		$(".form-signin").toggleClass("form-signin-left");
-//         $(".form-signup").toggleClass("form-signup-left");
-//         $(".frame").toggleClass("frame-long");
-//         $(".signup-inactive").toggleClass("signup-active");
-//         $(".signin-active").toggleClass("signin-inactive");
-//         $(".forgot").toggleClass("forgot-left");   
-//         $(this).removeClass("idle").addClass("active");
-// 	});
-// });
+function toggle() {
+		$(".form-signin").toggleClass("form-signin-left");
+        $(".form-signup").toggleClass("form-signup-left");
+        $(".frame").toggleClass("frame-long");
+        $(".signup-inactive").toggleClass("signup-active");
+        $(".signin-active").toggleClass("signin-inactive");
+        $(".forgot").toggleClass("forgot-left");   
+        $(this).removeClass("idle").addClass("active");
+}
 
-// $(function() {
-// 	$(".btn-signup").click(function() {
-//         $(".nav").toggleClass("nav-up");
-//         $(".form-signup-left").toggleClass("form-signup-down");
-//         $(".success").toggleClass("success-left"); 
-//         $(".frame").toggleClass("frame-short");
-// 	});
-// });
+$(function() {
+	$(".btn-signup").click(function() {
+        $(".nav").toggleClass("nav-up");
+        $(".form-signup-left").toggleClass("form-signup-down");
+        $(".success").toggleClass("success-left"); 
+        $(".frame").toggleClass("frame-short");
+	});
+});
 
 $(function() {
 	$(".btn-signin").click(function() {
@@ -79,6 +80,7 @@ function signin_api() {
             else window.location.href = "/";
         },
         error: function(error) {
+            console.log(error)
             if(error.status == 401) {
                 var errMsgTitle = 'Sign in Failed';
                 var errMsg = '이메일과 비밀번호를 확인해 주시기바랍니다.';
@@ -137,4 +139,3 @@ function secondInvite() {
         }
     });
 }
-

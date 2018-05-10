@@ -7,7 +7,8 @@
 
   gtag('config', 'UA-118079047-1');
 </script>
-<header tabindex="0"><span onclick="window.location.href='/'">octocolumn</span></header>
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+<header tabindex="0"><span class="site-name" onclick="window.location.href='/'">octocolumn<div class="beta-logo"></div></span>
 <div id="nav-container">
     <div class="bg"></div>
     <div class="button" tabindex="0">
@@ -15,47 +16,23 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </div>
-    <div id="nav-content" tabindex="0">
+    <div id="nav-content" class="scrollbar-none" tabindex="0">
         <ul>
-            <li><a href="">Recent Posts</a></li>
+            <li><a href="/more/recent/">Recent Posts</a></li>
             <li class="divline"></li>
             <li><a href="http://octocolumn.com/">Term of Service</a></li>
             <li><a href="http://octocolumn.com/">Privacy Policy</a></li>
             <li><a href="http://octocolumn.com/">Rules</a></li>
             <li class="divline"></li>
-            <li onclick="modal_on()"><a href="#">Signin/ Signup</a></li>
-            <li class="info">
-                <span>octocolumn.com<br/>
-                    Copyright octocolumn.com<br/>
-                    All Rights Reserved<br/>
-                    주식회사 옥토칼럼<br/>
-                    대표 오정민<br/>
-                    사업자등록번호<br/>
-                    308-81-44686<br/>
-                    통신판매업신고 2017<br/>
-                    수원권선 0386<br/>
-                    개인정보관리 책임자 오정민<br/>
-                    경기도 수원시 권선구 정조로<br/>
-                    580-9<br/>
-                    연락처<br/>
-                    mackenzie@octocolumn.com<br/>
-                    고객센터 070-4809-7166
-                </span>
-            </li>
-            <!--
-            <li class="small"><a href="#0">Facebook</a><a href="#0">Instagram</a></li>
-            -->
+            <li onclick="modalSignin();"><a>Signin/ Signup</a></li>
+            <li class="info"><span>Copyright octocolumn All Rights Reserved<br>주식회사 옥토칼럼<br>대표 오정민<br>사업자등록번호<br>576-52-00020<br>통신판매업신고<br>2016 수원권선 0350<br>개인정보관리책임자 오정민<br>경기도 수원시 권선구 정조로 580-9<br>mackenzie@octocolumn.com<br>고객센터 070-4809-7166</span></li>
         </ul>
     </div>
 </div>
 <!-- <div class="btn-search">
     <img src="{% static 'images/icons/header/CombinedShape2.png' %}">
 </div> -->
-<div class="profile-img"></div>
-<div id="profile-container" onclick="modal_on()">
-    <div class="profile-text" onclick="modal_on()">Signin/Signup</div>
+<div id="profile-container">
+    <div class="profile-text" id="sign" onclick="modalSignin();" style="margin-right:12px;cursor:pointer;">Signin / Signup</div>
 </div>
-<script type="text/javascript" src="{% static 'js/logout.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-{#<script type="text/javascript" src="{% static 'js/header.js' %}"></script>#}
+</header>
