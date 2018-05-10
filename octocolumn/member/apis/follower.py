@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, exceptions
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -22,10 +22,13 @@ __all__ = (
 
 
 class FollowerStatus(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
         user_pk = self.kwargs.get('user_pk')
+
+        user = self.request.user
+
         try:
             to_user = User.objects.filter(pk=user_pk).get()
             serializer = FollowStatusSerializer(to_user, context={'request': request})
@@ -44,6 +47,9 @@ class FollowerStatus(APIView):
                     "message": kr_error_code(500)
                 }
                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
 
 
 # 1

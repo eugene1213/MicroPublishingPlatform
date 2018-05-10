@@ -486,7 +486,7 @@ class IsBuyPost(APIView):
                         "nickname": post.author.nickname,
                         "main_content": self.main_content(post.main_content),
                         "tag": self.tag(post),
-                        "point": '보유 포인트: ' + user.point+'P'
+                        "point": '보유 포인트: ' + str(user.point) +'P'
 
 
                     }},
