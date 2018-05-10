@@ -5,7 +5,6 @@ $(document).ready(function(){
         post_id = post_id[post_id.length-1];
 
     hidingHeader();
-    title2header('read');
 
     $(window).resize(function() {
         coverImgController();
@@ -65,6 +64,8 @@ $(document).ready(function(){
             console.log(error);
             // window.location.href = "/";
         }
+    }).done(function(){
+        title2header('read');
     });
     // 댓글 로딩
     getComment(post_id,'');
