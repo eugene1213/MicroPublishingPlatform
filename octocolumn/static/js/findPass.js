@@ -1,6 +1,5 @@
 $(function(){//email발송
     $("#btnFindPass").unbind('click').click(function(){
-
         findPass();
     });
     $("#email-findPW").keypress(function(e){
@@ -19,8 +18,9 @@ $(function(){//패스워드 리셋
     });
 });
 function findPass() {
-
+    
     var username = $('#email-findPW').val();
+    console.log(username)
     $.ajax({
         url: "/api/member/passwordResetEmail/",
         async: true,

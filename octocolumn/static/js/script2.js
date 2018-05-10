@@ -43,11 +43,6 @@ function signin(){
     }
     $(".signin").show();
 }
-function findPass(){
-    $(".signinWith").hide();
-    $(".signin").hide();
-    $(".findPass").show();
-}
 function signup(){
     $(".signinWith").hide();
     $(".findPass").hide();
@@ -88,18 +83,6 @@ function checkbox(){
         }else if($(".checked").is("#normal")){
             $(".name_wrap > .name > span").text("이름");
             $(".name_wrap > .name > input[type=text]").attr("id","nickName-signup");
-        }
-    });
-}
-function btn_activation(){
-    $(".agree_checkbox").click(function(){
-
-        if($(".agree_checkbox").is(":checked")){
-            $(".btn_signup").removeAttr("disabled");
-            $(".btn_signup").removeClass("btn_disabled");
-        }else{
-            $(".btn_signup").attr("disabled", "true");
-            $(".btn_signup").addClass("btn_disabled");
         }
     });
 }
