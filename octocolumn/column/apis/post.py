@@ -474,7 +474,6 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
-                    "point": user.point
 
                 }},
                     status=status.HTTP_200_OK)
