@@ -85,6 +85,12 @@
 			}
 		}
 	}
+	.balance {
+		text-align: center;
+		opacity: 0.5;
+		font-size: 16px;
+		margin-bottom: 12px;
+	}
 }
 
 /* close button */
@@ -295,12 +301,6 @@
 		z-index: 10;
 		bottom: 20px;
 		background: linear-gradient( to top, #fff 32px, transparent );
-	}
-	.balance {
-		text-align: center;
-		opacity: 0.5;
-		font-size: 16px;
-		margin-bottom: 12px;
 	}
 }
 

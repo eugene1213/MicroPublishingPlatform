@@ -50,3 +50,16 @@ function signup_api(){
         }
     });
 }
+
+$(function(){
+    $(".agree_checkbox").click(function(){
+
+        if($(".agree_checkbox").is(":checked")){
+            $(".btn_signup").removeAttr("disabled");
+            $(".btn_signup").removeClass("btn_disabled");
+        }else{
+            $(".btn_signup").attr("disabled", "true");
+            $(".btn_signup").addClass("btn_disabled");
+        }
+    });
+});

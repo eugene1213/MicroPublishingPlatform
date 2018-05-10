@@ -1,295 +1,200 @@
 {% load static %}
-<script src="{% static 'js/signup.js' %}"></script>
-<script src="{% static 'js/signin.js' %}"></script>
-<meta name="google-signin-scope" content="profile email openid">
-<meta name="google-signin-client_id" content="512110342313-s4n09bgd4ok88kf8nrinmlhpg4i3rr6g.apps.googleusercontent.com">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/find-password.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/modal-signin.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-thirdparty.css' %}">
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/signin.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/signup.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/findPass.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>
+<script src="https://apis.google.com/js/api:client.js"></script>
+
+<script>
+	var googleUser = {};
+	var startApp = function() {
+		gapi.load('auth2', function(){
+		// Retrieve the singleton for the GoogleAuth library and set up the client.
+		auth2 = gapi.auth2.init({
+			client_id: '556104186701-si5hpqqo9jl066op8rv1rn0vsn0i4u82.apps.googleusercontent.com',
+			cookiepolicy: 'single_host_origin',
+			scope:'openid'
+			// Request scopes in addition to 'profile' and 'email'
+		});
+		attachSignin(document.getElementById('my-signin2'));
+		});
+	};
+	function attachSignin(element) {
+		auth2.attachClickHandler(element, {},
+			function(googleUser) {
+				// Useful data for your client-side scripts:
+				var profile = googleUser.getBasicProfile();
+
+				// The ID token you need to pass to your backend:
+				var id_token = googleUser.getAuthResponse().id_token;
+				$.ajax({
+					url: '/api/member/googleLogin/',
+					async: false,
+					type: 'POST',
+					dataType: 'json',
+					xhrFields: {
+						withCredentials: true
+					},
+                    data:{
+					    id_token : id_token,
+                    },
+					success: function(json) {
+						window.location.href = '/';
+					},
+					error: function(err) {
+						var errMsgTitle = '';
+						var errMsg = '';
+						if(err.status == 406){
+							errMsgTitle = 'Sign in Failed';
+							errMsg = '이미 가입한 이메일입니다.<br /> \'Sign in with email\' 버튼으로 로그인 해주세요.';
+						} else {
+							errMsgTitle = 'Error';
+							errMsg = '죄송합니다.<br /> 예상치 못한 에러가 발생했습니다.<br /> 다른 방법으로 로그인해주세요.';
+						}
+						modal({
+							type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+							title: errMsgTitle, //Modal Title
+							text: errMsg, //Modal HTML Content
+							size: 'normal', //Modal Size (normal | large | small)
+							center: true, //Center Modal Box?
+							autoclose: false, //Auto Close Modal Box?
+							callback: null, //Callback Function after close Modal (ex: function(result){alert(result);})
+							onShow: function(r) {}, //After show Modal function
+							closeClick: true, //Close Modal on click near the box
+							closable: true, //If Modal is closable
+							theme: 'atlant', //Modal Custom Theme
+							animate: false, //Slide animation
+							background: 'rgba(0,0,0,0.35)', //Background Color, it can be null
+							zIndex: 1050, //z-index
+							template: '<div class="modal-box"><div class="modal-inner"><div class="modal-title"><a class="modal-close-btn"></a></div><div class="modal-text"></div></div></div>',
+							_classes: {
+								box: '.modal-box',
+								boxInner: ".modal-inner",
+								title: '.modal-title',
+								content: '.modal-text',
+								closebtn: '.modal-close-btn'
+							}
+						});
+					}
+				});
+			}, function(error) {
+				console.log(JSON.stringify(error, undefined, 2));
+			}
+		);
+	}
+	startApp();
+</script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
- <!-- modal_block_wrap -->
- <div class="modal_block_wrap">
-    <!-- modal_window -->
-    <div class="modal_window signinWith">
-        <a class="close_btn" href="javascript:modal_off();">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">
-            Welcome Back
-        </div>
-        <div class="welcome2">
-            다시 오신 것을 환영합니다.<br>
-            당신의 이야기를 쓰고, 사랑하는 작가와 주제를 탐험하고,<br>
-            중요한 이야기를 나눌 수 있도록 로그인하십시오.
-        </div>
-        <div class="btn_wrap">
-            <div class="btn-signin facebook" onclick="alert('준비중 입니다.');">
-                <img src="{% static 'images/icons/modal/fill-42-copy@3x.png' %}">
-                Sign in with Facebook
-            </div>
-            <div class="btn-signin google" onclick="alert('준비중 입니다.');">
-                <img src="{% static 'images/icons/modal/fill-46-copy@3x.png' %}">
-                Sign in with Google
-            </div>
-            <script>
-                  function onSignIn(googleUser) {
-                    // Useful data for your client-side scripts:
-                    var profile = googleUser.getBasicProfile();
 
-                    // The ID token you need to pass to your backend:
-                    var id_token = googleUser.getAuthResponse().id_token;
-                    window.location.href ='/api/member/googleLogin/' + id_token
-                  };
-            </script>
-
-            <div class="btn-signin kakao" id="kakao-btn"  onclick="alert('준비중 입니다.');">
-                <img src="{% static 'images/icons/modal/kakao@2x.png' %}">
-                Sign in with Kakao
-            </div>
-            <script type='text/javascript'>
-              //<![CDATA[
-                // 사용할 앱의 JavaScript 키를 설정해 주세요.
-                Kakao.init('9122a1cfdf084dac234748d85896d95a');
-                // 카카오 로그인 버튼을 생성합니다.
-                Kakao.Auth.createLoginButton({
-                  container: '#kakao-btn',
-                  success: function(authObj) {
-                      window.location.href ='/api/member/kakaoLogin/' + authObj.access_token
-                  },
-                  fail: function(err) {
-                     alert(JSON.stringify(err));
-                  }
-                });
-              //]]>
-            </script>
-            <div class="btn-signin" onclick="signin()">
-                <img src="{% static 'images/icons/modal/group-2@3x.png' %}">
-                Sign in with email
-            </div>
-        </div>
-        <div class="signup-wrap">
-            <span>아직 계정이 없다구요?</span>
-            <a onclick="signup()">지금 만드세요!</a>
-        </div>
+<div class="welcome-container" style="display:none">
+    <div class="bg-wrap"></div>
+    <div class="welcome-title-container">
+        <span class="welcome-title">Welcome</span>
+        <p class="welcome-sub">octocolumn에 오신 것을 환영합니다.<br>당신의 이야기를 쓰고, 사랑하는 작가와 주제를 탐험하고, 중요한 이야기를 나눌 수 있도록 로그인하십시오.</p>
     </div>
-    <!-- //modal_window -->
-    <!-- modal_window signin -->
-    <div class="modal_window signin">
-        <a class="close_btn" href="javascript:modal_off();">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">Sign in with email</div>
-        <div class="welcome2">
-            octocolumn과 연결된 당신의 이메일과 비밀번호를 입력하세요.<br>
-            계정이 없거나, 비밀번호를 잊었다해도 걱정마시구요.<br>
+    <div class="frame">
+        <div class="close" onclick="(function(){$('.welcome-container').hide();$('.page').css('position', 'static');})();"></div>
+        <div class="nav">
+            <ul class="links">
+                <li class="signin-active"><span class="btn" onclick="toggle();">SIGN IN</span></li>
+                <li class="signup-inactive"><span class="btn" onclick="toggle();">SIGN UP</span></li>
+            </ul>
         </div>
-        <div class="form_wrap">
-            <span>이메일 주소</span>
-            <input type="text" name="username" id="email-signin">
-            <span>비밀번호</span>
-            <input type="password" name="password" id="password-signin">
-            <input type="checkbox" id="checkbox-signin">
-            <span>나를 기억해요.</span>
-            <span onclick="findPass()">비밀번호를 잊었나요?</span>
-            <button id="btn-signin">Sign in</button>
-        </div>
-        <div class="signup-wrap">
-            <span>아직 계정이 없다구요?</span>
-            <a onclick="signup()">지금 만드세요!</a>
-        </div>
-        <div class="preview">
-            <!-- <img src="" alt=""> -->
-            <span onclick="signinWith()">이전단계로 돌아가기</span>
-        </div>
-    </div>
-    <!-- //modal_window signin_form -->
-    <!-- modal_window findPass -->
-    <div class="modal_window findPass">
-        <a class="close_btn" href="javascript:modal_off();">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">Forgot your password?</div>
-        <div class="welcome2">
-            비밀번호가 기억나지 않으세요?<br>
-            octocolumn에 가입한 이메일 주소를 입력해주세요.<br>
-            해당 이메일을 통해 비밀번호를 재설정해주세요.<br>
-        </div>
-        <div class="form_wrap">
-            <form action="" class="signin_form">
-                <span>이메일 주소</span>
-                <input type="email">
-                <button>비밀번호 재설정 이메일 받기</button>
-            </form>
-        </div>
-        <div class="signup-wrap">
-            <span>아직 계정이 없다구요?</span>
-            <a onclick="signup()">지금 만드세요!</a>
-        </div>
-        <div class="preview">
-            <!-- <img src="" alt=""> -->
-            <span onclick="signin()">이전단계로 돌아가기</span>
-        </div>
-    </div>
-    <!-- //modal_window findPass -->
-    <!-- modal_window signup -->
-    <div class="modal_window signup">
-        <a class="close_btn" href="javascript:modal_off();">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">Sign up with email</div>
-        <div class="welcome2">
-            일반적인 이용을 위해서라면, 일반 계정을 만들어주세요.<br>
-            비지니스 계정은 brands.octocolumn.com만 이용가능합니다.<br>
-        </div>
-        <!-- form_wrap -->
-        <div class="form_wrap">
-            <div class="check_wrap">
-                <div class="checkbox checked" id="normal">
+        <div ng-app ng-init="checked = false">
+            <div class="form-signin" action="" method="post" name="form">
+                <div class="signin-main-container">
+                    <input type="email" name="username" id="email-signin" placeholder="ID">
+                    <input type="password" name="password" id="password-signin" placeholder="Password" required>
                 </div>
-                <label for="normal">일반 계정</label>
-                <div class="checkbox unchecked" id="business">
+                <div class="signin-sub-container">
+                    <button onClick="signin_api()" class="btn_signin">Sign in</button>
+                    <p onClick="(function(){$('.welcome-container').hide();$('.findpw-container').show();})();">Forgot your password?</p>
                 </div>
-                <label for="business">비지니스 계정</label>
-            </div>
-            <div class="name_wrap">
-                <div class="name">
-                    <span>이름</span>
-                    <input type="text" id="nickName-signup" required>
+                <div class="btn_wrap">
+                    <div class="btn-signin facebook" onClick="alert('준비중입니다.')">
+                        <div class="signwith-icon icon-facebook"></div>
+                        <span class="signwith-text">Sign in with Facebook</span>
+                    </div>
+                    <div class="btn-signin google" id="my-signin2" data-onsuccess="onSignIn" data-theme="dark">
+                        <div class="signwith-icon icon-gplus-1"></div>
+                        <span class="signwith-text">Sign in with Google</span>
+                    </div>
+                    <div class="btn-signin kakao" onclick="javascript:loginWithKakao();">
+                        <div class="signwith-icon icon-comment-alt"></div>
+                        <span class="signwith-text">Sign in with Kakao</span>
+                    </div>
+                    <script type='text/javascript'>
+						//<![CDATA[
+						// 사용할 앱의 JavaScript 키를 설정해 주세요.
+						Kakao.init('9122a1cfdf084dac234748d85896d95a');
+						function loginWithKakao() {
+							// 로그인 창을 띄웁니다.
+							Kakao.Auth.login({
+								success: function(authObj) {
+									$.ajax({
+										url: "/api/member/kakaoLogin/" + authObj.access_token,
+										async: false,
+										type: 'GET',
+										dataType: 'json',
+										success: function() {
+											window.location.href = '/';
+										}
+									});
+								},
+								fail: function(err) {
+									console.log(JSON.stringify(err));
+								}
+							});
+						};
+					//]]>
+					</script>
                 </div>
             </div>
-            <span>이메일 주소</span>
-            <input type="text" id="email-signup" required>
-            <span>비밀번호(영문, 숫자 포함 8자리 이상)</span>
-            <input type="password" id="password1-signup" required>
-            <span>비밀번호 재입력</span>
-            <input type="password" id="password2-signup" required>
-            <button class="btn_signup btn_disabled" disabled="disabled" onclick="check_email();">
-                Sign up
-            </button>
-            <div class="agreement">
-                저는 octocolumn의
-                <span onclick="term()"> 이용약관</span><!--
-                -->과<!--
-                --><span onclick="privacy()"> 개인정보취급방침</span><!--
-                -->에 동의합니다.
-                <input type="checkbox" class="agree_checkbox">
-            </div>
-        </div>
-        <!-- //form_wrap -->
-        <div class="signup-wrap">
-            <span>
-                이미 계정이 있다구요?
-            </span>
-            <a onclick="signinWith()">
-                로그인하셔야죠!
-            </a>
-        </div>
-        <div class="preview">
-            <!-- <img src="" alt=""> -->
-            <span onclick="signinWith()">
-                이전단계로 돌아가기
-            </span>
-        </div>
-    </div>
-    <!-- //modal_window signup -->
-    <!-- modal_window check_email -->
-    <div class="modal_window check_email">
-        <a class="close_btn" href="javascript:modal_off()">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">
-            Check your inbox
-        </div>
-        <div class="welcome2">
-            <span></span>에 대한 확인 링크를 이메일로 보내 드렸습니다.<br>
-            해당 이메일의 받은 편지함을 열어서, 메일에 포함된 링크를 클릭하여 계정 설정을 완료하세요.<br>
-        </div>
-        <button class="btn_ok" onclick="modal_off()">
-            오케이
-        </button>
-    </div>
-    <!-- //modal_window check_email -->
-    <!-- modal_window term -->
-    <div class="modal_window term">
-        <a class="close_btn" href="javascript:modal_off()">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">
-            Term of Service
-        </div>
-        <div class="scroll_wrap">
-            <div class="scrollbar" id="style-1">
-                <div class="force-overflow">
-                    <h2>제1조. 목적</h2>
-                    본 서비스 약관(이하 “약관”이라 합니다)은 옥토칼럼(이하 “회사”라 합니다)이 제공하는<br>
-                    서비스(이용고객 또는 회원이 PC, 휴대형단말기 등 각종 유무선 기기 또는 프로그램을 <br>
-                    통하여 이용할 수 있도록 제공하는 모든 인터넷 서비스를 의미하며, 회사가 공개한 API를<br>
-                    이용하여 제3자가 개발 또는 구축한 프로그램이나 서비스를 통하여 이용 고객 또는<br>
-                    회원에게 제공되는 경우를 포함합니다. 이하 같습니다.)와 관련하여, 회사와 이용고객(또는 회원)간에 서비스의 이용조건 및 절차, 회사와 회원간의 권리·의무 및 책임 사항 <br>
-                    기타 필요한 사항을 규정함을 목적으로 합니다.<br>
-                    
-                    <ol><h2>제2조. 약관의 효력 및 개정</h2></ol>
-                    <li>회사는 본 약관의 내용을 회원이 쉽게 알 수 있도록 초기 서비스 화면에 게시합니다.</li>
-                    <li>회사는 약관의 규제에 관한 법률, 전자거래기본법, 전자상거래 등에서의 소비자보호에</li>
-                    관한 법률, 정보통신망 이용촉진 및 정보보호등에 관한 법률 등 관계 법령에 위배되지 <br>
-                    않는 범위 안에서 이 약관을 개정할 수 있습니다.<br>
-                    <li>회원은 변경된 약관에 동의하지 않을 경우, 서비스 이용 계약을 해지할 수 있습니다.</li>
-                    <li>회사가 제3항에 따라 개정약관을 공지 또는 통지하면서 회원에게 개정약관 적용일까지 거부 의사를 표시하지 않으면 승인한 것으로 본다는 뜻을 명확하게 공지 또는 통지하였음에도 불구하고 회원이 명시적으로 거부 의사를 표시하지 아니한 경우 회원이 개정약관에 동의한 것으로 봅니다.</li>
-                    
-                    <ol><h2>제3조. 용어의 정의</h2>
-                    본 약관에서 사용되는 주요한 용어의 정의는 다음과 같습니다.</ol>
-                    <li value='1'>회원 : 서비스에 개인정보를 제공하여 회원등록을 한 자로서, 회사와 서비스 이용계약을 체결하고 회원 아이디를 부여받은 자를 말합니다.</li>
-                    <li>서비스 약관 : 서비스 이용과 관련하여 회사와 회원 간에 체결하는 계약을 말합니다.</li>
-                    <li>회원 아이디(이하 "ID") : 회원의 식별과 서비스 이용을 위하여 회원이 선정하고 회사가 승인하는 이메일 주소를 말합니다.</li>
-                    <li>비밀번호 : 회원이 부여받은 ID와 일치된 회원임을 확인하고 회원의 권익 보호를 위하여 회원이 선정한 문자와 숫자의 조합을 말합니다.</li>
-                    <li>게시물 : 회원이 서비스에 게시한 부호·문자·음성·음향·영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 말합니다.</li>
+            <div class="form-signup">
+                <input type="text" id="nickName-signup" placeholder="이름" required>
+                <input type="email" id="email-signup" placeholder="이메일">
+                <input type="password" id="password1-signup" placeholder="비밀번호 (영문, 숫자 포함 8자리 이상)" required>
+                <input type="password" id="password2-signup" placeholder="비밀번호 재입력" required>
+                <div class="agreement">
+                    <input type="checkbox" class="agree_checkbox">
+                    <div class="agree_text">저는 octocolumn의 <span onClick="term()">이용약관</span>과<span onClick="privacy()"> 개인정보취급방침</span>에 동의합니다.</div>
                 </div>
+                <button class="btn_signup btn_disabled" disabled="disabled" onClick="check_email();">Sign up</button>
             </div>
-            <button onclick="signup()">
-                확인
-            </button>
         </div>
     </div>
-    <!-- //modal_window term -->
-    <!-- modal_window privacy -->
-    <div class="modal_window privacy">
-        <a class="close_btn" href="javascript:modal_off()">
-            <img src="{% static 'images/icons/modal/combined-shape.png' %}">
-        </a>
-        <div class="welcome">
-            Privacy Policy
-        </div>
-        <div class="scroll_wrap">
-            <div class="scrollbar" id="style-1">
-                <div class="force-overflow">
-                    <h2>제1조. 목적</h2>
-                    본 서비스 약관(이하 “약관”이라 합니다)은 옥토칼럼(이하 “회사”라 합니다)이 제공하는<br>
-                    서비스(이용고객 또는 회원이 PC, 휴대형단말기 등 각종 유무선 기기 또는 프로그램을 <br>
-                    통하여 이용할 수 있도록 제공하는 모든 인터넷 서비스를 의미하며, 회사가 공개한 API를<br>
-                    이용하여 제3자가 개발 또는 구축한 프로그램이나 서비스를 통하여 이용 고객 또는<br>
-                    회원에게 제공되는 경우를 포함합니다. 이하 같습니다.)와 관련하여, 회사와 이용고객(또는 회원)간에 서비스의 이용조건 및 절차, 회사와 회원간의 권리·의무 및 책임 사항 <br>
-                    기타 필요한 사항을 규정함을 목적으로 합니다.<br>
-                    
-                    <ol><h2>제2조. 약관의 효력 및 개정</h2></ol>
-                    <li>회사는 본 약관의 내용을 회원이 쉽게 알 수 있도록 초기 서비스 화면에 게시합니다.</li>
-                    <li>회사는 약관의 규제에 관한 법률, 전자거래기본법, 전자상거래 등에서의 소비자보호에</li>
-                    관한 법률, 정보통신망 이용촉진 및 정보보호등에 관한 법률 등 관계 법령에 위배되지 <br>
-                    않는 범위 안에서 이 약관을 개정할 수 있습니다.<br>
-                    <li>회원은 변경된 약관에 동의하지 않을 경우, 서비스 이용 계약을 해지할 수 있습니다.</li>
-                    <li>회사가 제3항에 따라 개정약관을 공지 또는 통지하면서 회원에게 개정약관 적용일까지 거부 의사를 표시하지 않으면 승인한 것으로 본다는 뜻을 명확하게 공지 또는 통지하였음에도 불구하고 회원이 명시적으로 거부 의사를 표시하지 아니한 경우 회원이 개정약관에 동의한 것으로 봅니다.</li>
-                    
-                    <ol><h2>제3조. 용어의 정의</h2>
-                    본 약관에서 사용되는 주요한 용어의 정의는 다음과 같습니다.</ol>
-                    <li value='1'>회원 : 서비스에 개인정보를 제공하여 회원등록을 한 자로서, 회사와 서비스 이용계약을 체결하고 회원 아이디를 부여받은 자를 말합니다.</li>
-                    <li>서비스 약관 : 서비스 이용과 관련하여 회사와 회원 간에 체결하는 계약을 말합니다.</li>
-                    <li>회원 아이디(이하 "ID") : 회원의 식별과 서비스 이용을 위하여 회원이 선정하고 회사가 승인하는 이메일 주소를 말합니다.</li>
-                    <li>비밀번호 : 회원이 부여받은 ID와 일치된 회원임을 확인하고 회원의 권익 보호를 위하여 회원이 선정한 문자와 숫자의 조합을 말합니다.</li>
-                    <li>게시물 : 회원이 서비스에 게시한 부호·문자·음성·음향·영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 말합니다.</li>
-                </div>
-            </div>
-            <button onclick="signup()">
-                확인
-            </button>
-        </div>
-    </div>
-    <!-- //modal_window privacy -->
 </div>
-<!-- //modal_block_wrap -->
+<div class="findpw-container" style="display:none;">
+    <div class="findpw-title-container">
+        <span class="findpw-title">Find Password</span>
+        <p class="findpw-sub">octocolumn에 가입한 이메일 주소를 입력해주세요.<br>해당 이메일을 통해 비밀번호를 재설정할 수 있습니다.</p>
+    </div>
+    <div class="frame">
+        <div class="close" onclick="(function(){$('.findpw-container').hide();$('.page').css('position', 'static');})();"></div> 
+        <div class="nav">
+            <ul class="links">
+                <li class="resetpw-active"><a class="btn">Reset password</a></li>
+            </ul>
+        </div>
+        <div ng-app ng-init="checked = false">
+
+            <div class="form-resetpw">
+
+                <div class="resetpw-main-container">
+                    <input type="email" id="email-findPW" placeholder="octocolumn에 가입한 이메일 주소">
+                </div>
+                <div class="resetpw-sub-container">
+                    <button id="btnFindPass" class="btn_resetpw">Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
