@@ -27,14 +27,15 @@ class FollowStatusSerializer(serializers.ModelSerializer):
 
     def get_follow_status(self, obj):
         user = self.context.get('request').user
-
-        if obj == user:
-            return 2
-        try:
-            Relation.objects.select_related('to_user', 'from_user').filter(to_user=obj, from_user=user).get()
-            return True
-        except ObjectDoesNotExist:
-            return False
+        if user.is_authenticated:
+            if obj == user:
+                return 2
+            try:
+                Relation.objects.select_related('to_user', 'from_user').filter(to_user=obj, from_user=user).get()
+                return True
+            except ObjectDoesNotExist:
+                return False
+        return False
 
     def get_follower_count(self, obj):
         return Relation.objects.select_related('to_user__user').filter(to_user=obj).count()

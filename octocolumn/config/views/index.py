@@ -8,7 +8,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 
 from column.models import Post
-from member.models import User
+from member.models import User, BuyList
 from utils.tokengenerator import account_activation_token
 
 __all__ = (
@@ -50,33 +50,38 @@ def write(request, temp_id=None):
 
 
 def read(request, author=None, title=None):
-    # if request.COOKIES:
-    #     token = request.COOKIES.get('token')
-    #     if token is not None:
 
-            post_num = title.split('-')
-            if len(post_num) is 1:
-                raise Http404
+    post_num = title.split('-')
+    if len(post_num) is 1:
+        raise Http404
 
-            if not int(post_num[-1]) % 1 == 0:
-                raise Http404
+    if not int(post_num[-1]) % 1 == 0:
+        raise Http404
 
-            try:
-                post = Post.objects.filter(pk=int(post_num[-1])).get()
-                # postTitle = post.title.replace(' ', '-')
-                # postUser = post.author.username.split('@')[0]
-                # print(author != postUser)
-                # # if author != post.author.username and title != postTitle:
-                # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
-                # #                                             str(post.pk)
-                # #                                 )
-                if post.price == 0:
-                    response = render_to_response("view/read.html")
+    try:
+        post = Post.objects.filter(pk=int(post_num[-1])).get()
+
+        if post.price == 0:
+            if request.COOKIES:
+                token = request.COOKIES.get('token')
+                if token is not None:
+                    response = render_to_response("view/read.html", {"login": True})
                     return response
                 response = render_to_response("view/read.html")
                 return response
-            except ObjectDoesNotExist:
-                raise Http404
+            response = render_to_response("view/preview.html")
+            return response
+        else:
+            if request.COOKIES:
+                token = request.COOKIES.get('token')
+                if token is not None:
+                    response = render_to_response("view/read.html", {"login": True})
+                    return response
+                return redirect('views:index')
+            return redirect('views:index')
+
+    except ObjectDoesNotExist:
+        raise Http404
 
         # return redirect('views:index')
     # return redirect('views:index')
