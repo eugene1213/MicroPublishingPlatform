@@ -50,9 +50,9 @@ def write(request, temp_id=None):
 
 
 def read(request, author=None, title=None):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
+    # if request.COOKIES:
+    #     token = request.COOKIES.get('token')
+    #     if token is not None:
 
             post_num = title.split('-')
             if len(post_num) is 1:
@@ -70,12 +70,15 @@ def read(request, author=None, title=None):
                 # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
                 # #                                             str(post.pk)
                 # #                                 )
-                response = render_to_response("view/read.html", {"login": True})
+                if post.price == 0:
+                    response = render_to_response("view/read.html")
+                    return response
+                response = render_to_response("view/read.html")
                 return response
             except ObjectDoesNotExist:
                 raise Http404
 
-        return redirect('views:index')
+        # return redirect('views:index')
     # return redirect('views:index')
 
 
