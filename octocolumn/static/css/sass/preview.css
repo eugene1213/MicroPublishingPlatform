@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* ============================ */
 /*            preview             */
 /* ============================ */
@@ -74,6 +75,8 @@
   opacity: 0.5;
   font-size: 16px;
   margin-bottom: 12px; }
+  .preview-content .balance :contains('로그인 해주세요') {
+    cursor: pointer; }
 
 /* close button */
 .close {

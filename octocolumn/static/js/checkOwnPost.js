@@ -132,6 +132,10 @@ function isBought(post_id, readtime, bookmark_status) {
                 contentHeight = $('.column-content').height();
                 $('.gradient').height(contentHeight);
             });
+            $('.balance :contains(로그인 해주세요)').click(function(){
+                $('#preview-container').remove();
+                modalSignin();
+            });
         }
     });
 }
