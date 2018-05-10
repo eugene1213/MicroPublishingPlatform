@@ -518,7 +518,7 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
-                    "point": '보유 포인트: 로그인 해주세요'
+                    "point": '로그인 해주세요'
 
                 }},
                     status=status.HTTP_200_OK)
