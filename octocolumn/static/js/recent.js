@@ -169,7 +169,7 @@ function getRecent(url){
                 return $('.spinner').remove();   
             }
 
-            $(window).unbind('scroll').scroll(function() { 
+            $(window).unbind('scroll touchmove').on('scroll touchmove',function() { 
                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
                     if(next!=null) getRecent(next);
                 } 
