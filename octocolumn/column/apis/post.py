@@ -256,7 +256,7 @@ class PostListView(generics.ListAPIView):
 
 class PostMoreListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
-    pagination_class = PostPagination
+    pagination_class = PostListPagination
     serializer_class = PostSerializer
 
     def list(self, request, *args, **kwargs):
