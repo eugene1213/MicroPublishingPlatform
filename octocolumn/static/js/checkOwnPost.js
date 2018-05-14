@@ -63,7 +63,7 @@ function isBought(post_id, readtime, bookmark_status) {
                                     </ul>\
                                 </div>\
                             </div>\
-                            <div class="balance">보유 포인트: '+point+'P</div>\
+                            <div class="balance">'+point+'</div>\
                             <div class="purchase-btn" onclick=\'buy('+post_id+');\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
                         </div>\
                     </div>\
@@ -131,6 +131,10 @@ function isBought(post_id, readtime, bookmark_status) {
             $(window).resize(function(){
                 contentHeight = $('.column-content').height();
                 $('.gradient').height(contentHeight);
+            });
+            $('.balance :contains(로그인 해주세요)').click(function(){
+                $('#preview-container').remove();
+                modalSignin();
             });
         }
     });

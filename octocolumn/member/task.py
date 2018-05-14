@@ -41,7 +41,7 @@ class PasswordResetTask(Task):
         mail_subject = 'Octocolumn 비밀번호 변경.'
         message = render_to_string('pw_change.html', {
             'user': user,
-            'domain': 'localhost:8000',
+            'domain': 'www.octocolumn.com',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user),
         })

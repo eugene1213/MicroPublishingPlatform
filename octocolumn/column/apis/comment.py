@@ -125,7 +125,7 @@ class CommentView(APIView):
 
 
 class CommentListView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
     serializer_class = CommentSerializer
     pagination_class = CommentPagination
 

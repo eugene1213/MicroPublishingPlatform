@@ -26,7 +26,10 @@
 <body>
 	{% if login %}
 		{% include 'view/header_on.html' %}
+		<script>var text = "댓글을 입력해주세요."</script>
 	{% else %}
+		{% include 'view/header.html' %}
+		<script>var text = '댓글을 입력하려면 로그인 해주세요.'</script>
 		<!-- <script>window.location.href = "/signin/"</script> -->
 	{% endif %}
 	<div class="read">
@@ -93,7 +96,7 @@
 				<ul id="comments-list" class="comments-list">
 					<li>
 						<div class="input_reply_container">
-							<textarea class="input_comment" placeholder="댓글을 입력해주세요." cols="" rows="1"></textarea>
+							<textarea class="input_comment" placeholder="" cols="" rows="1"></textarea>
 							<button type="button" class="comment_button">입력</button>
 						</div>
 					</li>
@@ -101,6 +104,15 @@
 			</div>
 		</div><!-- class="read_wrap" -->
 	</div><!-- read -->
+	{% if login %}
+	
+	{% else %}
+		{% include 'view/modal-signin.html' %}
+	{% endif %}
+	<script>
+		$('.input_comment').attr('placeholder',text);
+		if(text == '댓글을 입력하려면 로그인 해주세요.') $('.input_comment, .comment_button').css('pointer-events','none');
+	</script>
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/read.js' %}"></script>

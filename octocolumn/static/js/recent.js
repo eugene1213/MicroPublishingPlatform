@@ -169,8 +169,8 @@ function getRecent(url){
                 return $('.spinner').remove();   
             }
 
-            $(window).unbind('scroll').scroll(function() { 
-                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            $(window).unbind('scroll touchmove').on('scroll touchmove',function() { 
+                if ($(window).scrollTop() == $(document).height() - window.innerHeight) {
                     if(next!=null) getRecent(next);
                 } 
             });

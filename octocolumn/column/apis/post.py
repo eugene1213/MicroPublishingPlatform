@@ -291,7 +291,7 @@ class PostLikeToggleView(APIView):
 
 
 class PostReadView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def is_buyed(self, post):
         try:
@@ -334,52 +334,90 @@ class PostReadView(APIView):
 
         serializer = PostSerializer(post)
 
-        # 구매를 했는지를 검사
-        if self.is_buyed(post):
-            # 구매했을때 원본 출력
-            if serializer:
-                # 조회수 증가
-                post.hit += 1
-                post.save()
-                # 작가임
-                bookmark_status = self.bookmark_status(post)
-                user = User.objects.filter(pk=post.author_id).get()
-                profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
-                image_serializer = ProfileImageSerializer(profile_image)
-                time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-                profile = Profile.objects.select_related('user').filter(user=user).get()
-                return Response({
-                    "detail": {
-                        "post_id": serializer.data['pk'],
-                        "cover_img": serializer.data['cover_image'],
-                        "main_content": serializer.data['main_content'],
-                        "title": serializer.data['title'],
-                        "tag": self.tag(post),
-                        "bookmark_status": bookmark_status,
-                        "author": {
-                            "author_id": serializer.data['author'],
-                            "username": user.nickname,
-                            "achevement": "",
-                            "intro": profile.intro,
-                            "image": image_serializer.data
-                        },
+        user = self.request.user
 
-                        'created_datetime': time.strftime('%Y.%m.%d'),
+        # 0 원일 경우
+        if user.is_authenticated:
+            # 0원이아닐경우 체크
+            if self.is_buyed(post):
+                # 구매했을때 원본 출력
+                if serializer:
+                    # 조회수 증가
+                    post.hit += 1
+                    post.save()
+                    # 작가임
+                    bookmark_status = self.bookmark_status(post)
+                    user = User.objects.filter(pk=post.author_id).get()
+                    profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
+                    image_serializer = ProfileImageSerializer(profile_image)
+                    time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+                    profile = Profile.objects.select_related('user').filter(user=user).get()
+                    return Response({
+                        "detail": {
+                            "post_id": serializer.data['pk'],
+                            "cover_img": serializer.data['cover_image'],
+                            "main_content": serializer.data['main_content'],
+                            "title": serializer.data['title'],
+                            "tag": self.tag(post),
+                            "bookmark_status": bookmark_status,
+                            "author": {
+                                "author_id": serializer.data['author'],
+                                "username": user.nickname,
+                                "achevement": "",
+                                "intro": profile.intro,
+                                "image": image_serializer.data
+                            },
 
+                            'created_datetime': time.strftime('%Y.%m.%d'),
+
+                        }
+                    }, status=status.HTTP_200_OK)
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
                     }
-                }, status=status.HTTP_200_OK)
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(
                 {
-                    "code": 500,
-                    "message": kr_error_code(500)
+                    "code": 407,
+                    "message": kr_error_code(407)
                 }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response(
-            {
-                "code": 407,
-                "message": kr_error_code(407)
-            }
-            , status=status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED)
+                , status=status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED)
+
+        else:
+            if post.price == 0:
+                if serializer:
+                    # 조회수 증가
+                    post.hit += 1
+                    post.save()
+                    # 작가임
+                    # bookmark_status = self.bookmark_status(post)
+                    user = User.objects.filter(pk=post.author_id).get()
+                    profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
+                    image_serializer = ProfileImageSerializer(profile_image)
+                    time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
+                    profile = Profile.objects.select_related('user').filter(user=user).get()
+                    return Response({
+                        "detail": {
+                            "post_id": serializer.data['pk'],
+                            "cover_img": serializer.data['cover_image'],
+                            "main_content": serializer.data['main_content'],
+                            "title": serializer.data['title'],
+                            "tag": self.tag(post),
+                            # "bookmark_status": bookmark_status,
+                            "author": {
+                                "author_id": serializer.data['author'],
+                                "username": user.nickname,
+                                "achevement": "",
+                                "intro": profile.intro,
+                                "image": image_serializer.data
+                            },
+
+                            'created_datetime': time.strftime('%Y.%m.%d'),
+
+                        }
+                    }, status=status.HTTP_200_OK)
 
 
 class PostPreReadView(APIView):
@@ -422,7 +460,6 @@ class IsBuyPost(APIView):
             try:
                 post = Post.objects.filter(id=param).get()
                 serializer = PostSerializer(post)
-
                 try:
                     BuyList.objects.filter(user=user, post=post).get()
                     return Response({"detail": {
@@ -449,7 +486,7 @@ class IsBuyPost(APIView):
                         "nickname": post.author.nickname,
                         "main_content": self.main_content(post.main_content),
                         "tag": self.tag(post),
-                        "point":user.point
+                        "point": '보유 포인트: ' + str(user.point) +'P'
 
 
                     }},
@@ -463,6 +500,13 @@ class IsBuyPost(APIView):
                 post = Post.objects.filter(id=param).get()
                 serializer = PostSerializer(post)
 
+                if post.price == 0:
+                    return Response({"detail": {
+                        "isBuy": True,
+                        "title": serializer.data['title'],
+                        "nickname": post.author.nickname,
+                    }}, status=status.HTTP_200_OK)
+
                 return Response({"detail": {
                     "isBuy": False,
                     "cover_image": serializer.data['cover_image'],
@@ -474,7 +518,7 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
-                    "point": user.point
+                    "point": '로그인 해주세요'
 
                 }},
                     status=status.HTTP_200_OK)
