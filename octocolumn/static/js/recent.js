@@ -170,7 +170,7 @@ function getRecent(url){
             }
 
             $(window).unbind('scroll touchmove').on('scroll touchmove',function() { 
-                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if ($(window).scrollTop() == $(document).height() - window.innerHeight) {
                     if(next!=null) getRecent(next);
                 } 
             });
