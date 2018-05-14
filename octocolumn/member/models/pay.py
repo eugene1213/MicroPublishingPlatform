@@ -1,8 +1,4 @@
-from datetime import datetime
-
 from django.db import models
-from django.db.models import F
-from django.utils.dateformat import DateFormat
 
 from member.models import PointHistory
 

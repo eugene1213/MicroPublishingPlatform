@@ -184,8 +184,10 @@ def more(request, type=None):
         if token is not None:
             response = render_to_response("view/recent-more.html", {"login": True})
             return response
-        return redirect('views:index')
-    return redirect('views:index')
+        response = render_to_response("view/recent-more.html", {"login": True})
+        return response
+    response = render_to_response("view/recent-more.html", {"login": True})
+    return response
 
 
 def bookmark(request):
