@@ -215,17 +215,6 @@ a, a:visited {
   left: -7px;
   background-color: #fff; }
 
-.container .blog-posts .featured {
-  width: 100% !important;
-  height: 250px !important;
-  margin: 0.5em 0 1em 0 !important; }
-
-.container .blog-posts .featured .image {
-  height: 250px !important; }
-
-.container .blog-posts .featured .content {
-  height: 250px !important; }
-
 .container .blog-posts .row {
   display: flex; }
 
@@ -242,6 +231,10 @@ a, a:visited {
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
   margin-right: 1em;
   margin-bottom: 1em; }
+  .container .blog-posts .post.featured {
+    width: 100% !important;
+    height: 250px;
+    margin: 0.5em 0 1em 0 !important; }
 
 .container .blog-posts .post:hover {
   -moz-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
@@ -262,7 +255,7 @@ a, a:visited {
 .container .blog-posts .post .image {
   float: left;
   width: 50%;
-  height: 200px;
+  height: 100%;
   background-size: cover;
   background-position: center center;
   cursor: pointer; }
@@ -286,7 +279,7 @@ a, a:visited {
   -moz-box-shadow: -2px 0 2px -1px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: -2px 0 2px -1px rgba(0, 0, 0, 0.1);
   box-shadow: -2px 0 2px -1px rgba(0, 0, 0, 0.1);
-  height: 200px;
+  height: 100%;
   background-color: #000;
   color: #fff; }
 
@@ -342,6 +335,9 @@ img {
   height: auto; }
 
 @media screen and (max-width: 900px) {
+  .container {
+    width: 90vw !important; }
+
   .row {
     display: block !important; }
 
@@ -349,15 +345,45 @@ img {
     width: 100%;
     margin: 0; } }
 @media screen and (max-width: 600px) {
+  .main-content-title {
+    background-color: transparent;
+    color: #fff; }
+
+  .container {
+    width: 90vw !important; }
+
   .content {
-    width: 70% !important; }
+    width: 55% !important; }
+    .content p {
+      max-height: 48px !important; }
 
   .image {
-    width: 30% !important; }
+    width: 45% !important; }
 
   h1 {
     text-overflow: inherit;
-    white-space: normal; } }
+    white-space: normal; }
+
+  .post {
+    height: 160px !important; }
+
+  #preview-container {
+    padding: 0 !important; }
+
+  .preview-content {
+    width: 100% !important;
+    border-radius: 0 !important; }
+
+  .close {
+    top: 5px !important;
+    right: 5px !important;
+    width: 50px !important;
+    height: 50px !important; }
+
+  .sub-content-title {
+    line-height: 30px !important; }
+    .sub-content-title .post-more-view {
+      zoom: 1.5; } }
 /* clearfix */
 .cf:before,
 .cf:after {
