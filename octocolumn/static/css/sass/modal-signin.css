@@ -447,4 +447,21 @@
   background-color: rgba(42, 41, 42, 0.3) !important;
   color: rgba(42, 41, 42, 0.1); }
 
+@media screen and (max-width: 600px) {
+  .frame, .signin-sub-container, .form-signin {
+    width: 100% !important; }
+
+  .frame {
+    border-radius: 0;
+    height: auto; }
+
+  .welcome-title-container {
+    display: none !important; }
+
+  .btn_wrap {
+    width: 77% !important; }
+
+  .welcome-container {
+    padding: 0 !important; } }
+
 /*# sourceMappingURL=modal-signin.css.map */
