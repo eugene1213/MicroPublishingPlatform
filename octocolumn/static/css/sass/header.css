@@ -18,7 +18,9 @@ header .site-name {
   font-size: 20px;
   line-height: 44px;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 75%; }
 
 .beta-logo {
   position: absolute;
