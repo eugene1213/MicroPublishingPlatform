@@ -350,7 +350,8 @@ img {
     color: #fff; }
 
   .container {
-    width: 90vw !important; }
+    width: 100vw !important;
+    padding: 0 !important; }
 
   .content {
     width: 55% !important; }
