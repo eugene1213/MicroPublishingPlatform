@@ -393,7 +393,6 @@ body.back {
   margin-bottom: 90px; }
 
 .read_wrap h2 {
-  height: 72px;
   line-height: 72px;
   font-size: 32px;
   font-weight: bold;
@@ -530,7 +529,8 @@ body.back {
   font-weight: bold;
   text-align: center;
   color: #2a292a;
-  margin-bottom: 24px; }
+  margin-bottom: 24px;
+  word-break: break-word; }
 
 .read .contents .contents_title .title_name {
   font-size: 12px;

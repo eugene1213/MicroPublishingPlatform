@@ -18,6 +18,8 @@ header .site-name {
 	line-height: 44px;
 	text-align: center;
 	cursor: pointer;
+	overflow: hidden;
+    max-width: 75%;
 }
 .beta-logo{
 	position: absolute;
@@ -300,7 +302,7 @@ profile-container:hover {
 }
 
 @media screen and (max-width: 860px) {
-	.profile-text {
+	.profile-text:not(#sign) {
 		display: none;
 	}
 	.profile-img {
