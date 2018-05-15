@@ -6,7 +6,7 @@ unlink /run/supervisor.sock
 
 #nginx stop
 
-fuser 80/tcp
+fuser -k 80/tcp
 
 # celery off
 pkill -f "celery worker"
