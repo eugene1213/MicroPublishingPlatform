@@ -126,7 +126,7 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://www.octocolumn.com/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
+                "url": 'https://www.octocolumn.com/preview/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
                        "-" + str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -157,7 +157,7 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://www.octocolumn.com/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
+                "url": 'https://www.octocolumn.com/preview/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
                 str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),

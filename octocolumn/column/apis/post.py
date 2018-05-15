@@ -479,7 +479,8 @@ class IsBuyPost(APIView):
                     return Response({"detail": {
                         "isBuy": False,
                         "cover_image": serializer.data['cover_image'],
-                        "created_datetime": post.created_date.strftime('%Y.%m.%d')+' '+ post.created_date.strftime('%H:%M'),
+                        "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' +
+                                            post.created_date.strftime('%H:%M'),
                         "price": serializer.data['price'],
                         "preview": serializer.data['preview'],
                         "title": serializer.data['title'],
