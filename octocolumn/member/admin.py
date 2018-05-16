@@ -1,5 +1,6 @@
 
 from django.conf.urls import url
+from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect, HttpResponse
 
@@ -26,12 +27,13 @@ admin.site.unregister(Token)
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_per_page = 20
-    action_form = PointRewardForm
+
     actions = [
         'update_point',
         'reward_point',
         'reward_point_all',
     ]
+    # action_form = PointRewardForm
     list_display = ['username', 'first_name', 'nickname', 'last_name', 'point', 'user_type', 'created_at', 'post_count',
                     'is_active']
     list_display_links = ['username']
@@ -57,6 +59,10 @@ class UserAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def delete_user(modeladmin, request, queryset):
+        queryset.delete()
+        return modeladmin.message_user(request, '삭제 완료')
 
     def update_point(modeladmin, request, queryset):
         point = request.POST['point']
@@ -86,6 +92,7 @@ class UserAdmin(admin.ModelAdmin):
         return modeladmin.message_user(request, '리워드 실패')
 
     reward_point.short_description = '선택 회원 리워드 제공'
+    reward_point.action_form = PointRewardForm
     reward_point_all.short_description = '전체 회원 리워드 제공'
     update_point.short_description = '회원 포인트 변경'
     post_count.short_description = '포스팅'
@@ -360,3 +367,24 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
     author_actions.allow_tags = '완료'
     author_is_active.short_description = '인증 상태'
     author_is_active.admin_order_field = 'author__is_active'
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    readonly_fields = (
+        'content_type',
+        'user',
+        'action_time',
+        'object_id',
+        'object_repr',
+        'action_flag',
+        'change_message'
+    )
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        actions = super(LogEntryAdmin, self).get_actions(request)
+        del actions['delete_selected']
+        return actions
