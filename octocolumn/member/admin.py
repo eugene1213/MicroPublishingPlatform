@@ -205,7 +205,9 @@ class PointHistoryAdmin(admin.ModelAdmin):
         return False
 
     def post_title(self, instance):
-        return instance.post.title
+        if instance.post is not None:
+            return instance.post.title
+        return None
 
 
 @admin.register(PreAuthorPost)
@@ -371,20 +373,37 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
+    list_display = [
+        'content_type',
+        'user',
+        'action_time',
+        'object_repr',
+        'change_message',
+        'get_action_flag',
+    ]
+
     readonly_fields = (
         'content_type',
         'user',
         'action_time',
         'object_id',
         'object_repr',
-        'action_flag',
+        'get_action_flag',
         'change_message'
     )
 
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def get_actions(self, request):
-        actions = super(LogEntryAdmin, self).get_actions(request)
-        del actions['delete_selected']
-        return actions
+    def get_action_flag(self, instance):
+        return {
+            1: "생성",
+            2: "변경",
+            3: "삭제",
+
+        }.get(instance.action_flag, "No data")
+
+    # def get_actions(self, request):
+    #     actions = super(LogEntryAdmin, self).get_actions(request)
+    #     del actions['delete_selected']
+    #     return actions
