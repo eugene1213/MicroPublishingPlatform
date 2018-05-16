@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     # 장고 접속 에이전트 체크 라이브러리
     'django_user_agents',
 
+    # CORS 수정
     'corsheaders',
     # compressor
     # 'compressor',
@@ -195,4 +196,3 @@ SESSION_COOKIE_HTTPONLY =True
 CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_COOKIE_SECURE = False
-
