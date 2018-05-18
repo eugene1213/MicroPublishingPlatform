@@ -1,4 +1,6 @@
 import base64
+from itertools import chain
+from operator import attrgetter
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
@@ -9,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Post, Temp
+from column.pagination import PostListPagination
 from column.serializers import MyTempSerializer
 from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
@@ -25,6 +28,7 @@ __all__ = (
     'ProfileIntroUpdate',
     'PublishPost',
     'MyTemp',
+    'AllMyPost',
     'ProfileUpdate'
 )
 
@@ -349,4 +353,30 @@ class MyTemp(APIView):
 
         except ObjectDoesNotExist:
             return None
+
+
+class AllMyPost(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PostListPagination
+
+    def list(self, request, *args, **kwargs):
+        user = self.request.user
+        try:
+            temp = Temp.objects.select_related('author').filter(author=user).all()
+            post = Post.objects.select_related('author').filter(author=user).all()
+
+            all_post = sorted(chain(temp, post), key=attrgetter('created_date'), reverse=True)
+
+            page = self.paginate_queryset(all_post)
+            serializer = MyPublishPostSerializer(all_post, many=True)
+
+            if page is not None:
+                serializer = MyPublishPostSerializer(all_post, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
 

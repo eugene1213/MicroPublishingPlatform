@@ -6,7 +6,7 @@ from member.apis import Login, SignUp, FacebookLogin, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView, \
-    FollowerStatus, ProfileMainInfo, ProfileSubInfo
+    FollowerStatus, ProfileMainInfo, ProfileSubInfo, AllMyPost
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -33,6 +33,7 @@ urlpatterns = [
     # 프로필 관련
     url(r'^getMyPost/', PublishPost.as_view(), name='getMyPost'),
     url(r'^getMyTemp/', MyTemp.as_view(), name='getMyTemp'),
+    url(r'^getAllPost/', AllMyPost.as_view(), name='getAllPost'),
     url(r'^getProfileMainInfo/', ProfileMainInfo.as_view(), name='profileMain'),
     url(r'^getProfileSubInfo/', ProfileSubInfo.as_view(), name='profileSub'),
     url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
