@@ -41,11 +41,11 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class MyPublishPostSerializer(serializers.ModelSerializer):
+
     def get_is_temp(self, obj):
         if isinstance(obj, Temp):
             return True
         return False
-
 
     is_temp = SerializerMethodField()
 

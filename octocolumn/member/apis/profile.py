@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Post, Temp
-from column.pagination import PostListPagination
+from column.pagination import PostListPagination, AllPostListPagination
 from column.serializers import MyTempSerializer
 from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
@@ -355,9 +355,12 @@ class MyTemp(APIView):
             return None
 
 
+# 1
+# 유저의 프로필중 자기가 임시저장된 컬럼들을 리스팅 하는 API
+# URL /api/member/getMyAllPost/
 class AllMyPost(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    pagination_class = PostListPagination
+    pagination_class = AllPostListPagination
 
     def list(self, request, *args, **kwargs):
         user = self.request.user

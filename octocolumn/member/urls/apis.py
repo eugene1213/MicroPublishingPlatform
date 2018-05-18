@@ -33,7 +33,7 @@ urlpatterns = [
     # 프로필 관련
     url(r'^getMyPost/', PublishPost.as_view(), name='getMyPost'),
     url(r'^getMyTemp/', MyTemp.as_view(), name='getMyTemp'),
-    url(r'^getAllPost/', AllMyPost.as_view(), name='getAllPost'),
+    url(r'^getMyAllPost/', AllMyPost.as_view(), name='getMyAllPost'),
     url(r'^getProfileMainInfo/', ProfileMainInfo.as_view(), name='profileMain'),
     url(r'^getProfileSubInfo/', ProfileSubInfo.as_view(), name='profileSub'),
     url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
