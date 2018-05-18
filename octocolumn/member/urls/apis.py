@@ -3,10 +3,10 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, Logout, \
-    GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, ProfileInfo, \
+    GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView, \
-    FollowerStatus, OctoCodeView
+    FollowerStatus, ProfileMainInfo, ProfileSubInfo
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -33,7 +33,8 @@ urlpatterns = [
     # 프로필 관련
     url(r'^getMyPost/', PublishPost.as_view(), name='getMyPost'),
     url(r'^getMyTemp/', MyTemp.as_view(), name='getMyTemp'),
-    url(r'^getProfileInfo/', ProfileInfo.as_view(), name='profile'),
+    url(r'^getProfileMainInfo/', ProfileMainInfo.as_view(), name='profileMain'),
+    url(r'^getProfileSubInfo/', ProfileSubInfo.as_view(), name='profileSub'),
     url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
     url(r'^updateProfile/', ProfileUpdate.as_view(), name='profile'),
     url(r'^profile-image/', ProfileImageUpload.as_view(), name='profile_image'),

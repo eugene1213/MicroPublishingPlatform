@@ -1,10 +1,8 @@
 import base64
-from io import BytesIO
 
-from PIL import Image
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.base import ContentFile, File
-from rest_framework import generics, status, exceptions
+from django.core.files.base import ContentFile
+from rest_framework import generics, status
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -15,14 +13,15 @@ from column.serializers import MyTempSerializer
 from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
-from member.serializers import ProfileImageSerializer, ProfileSerializer
+from member.serializers import ProfileImageSerializer, ProfileMainSerializer, ProfileSubSerializer
 from utils.error_code import kr_error_code
 from utils.image_rescale import profile_image_resizing, image_quality_down
 
 __all__ = (
     'ProfileImageUpload',
     'UserCoverImageUpload',
-    'ProfileInfo',
+    'ProfileMainInfo',
+    'ProfileSubInfo',
     'ProfileIntroUpdate',
     'PublishPost',
     'MyTemp',
@@ -32,15 +31,15 @@ __all__ = (
 
 # 1
 # 유저의 프로필을 가져오는 API
-# URL /api/member/getProfileInfo/
-class ProfileInfo(APIView):
+# URL /api/member/getProfileMainInfo/
+class ProfileMainInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         user = self.request.user
         try:
             profile = Profile.objects.select_related('user').filter(user=user).get()
-            serializer = ProfileSerializer(profile)
+            serializer = ProfileMainSerializer(profile)
 
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -56,12 +55,11 @@ class ProfileInfo(APIView):
                 serializer = ProfileImageSerializer(profile_image)
                 return Response({
                     "nickname": user.nickname,
-                    "username": user.username,
                     "waiting":
                         WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
                     "post_count": Post.objects.filter(author=user).count(),
                     "point": user.point,
-                    "intro": "-",
+                    "intro": "- ",
                     "following": Relation.objects.select_related('from_user', 'to_user').filter(from_user=user).count(),
                     "follower": Relation.objects.select_related('to_user', 'from_user').filter(to_user=user).count(),
                     "image": serializer.data
@@ -70,7 +68,6 @@ class ProfileInfo(APIView):
             except ObjectDoesNotExist:
                 return Response({
                     "nickname": user.nickname,
-                    "username": user.username,
                     "waiting":
                         WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
                     "post_count": Post.objects.filter(author=user).count(),
@@ -83,6 +80,33 @@ class ProfileInfo(APIView):
                         "cover_image": "https://static.octocolumn.com/media/example/1.jpeg"
                     }
                 }, status=status.HTTP_200_OK)
+
+
+# 1
+# 유저의 프로필을 가져오는 API
+# URL /api/member/getProfileSubInfo/
+class ProfileSubInfo(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+        try:
+            profile = Profile.objects.select_related('user').filter(user=user).get()
+            serializer = ProfileSubSerializer(profile)
+
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except ObjectDoesNotExist:
+            return Response({
+                "username": user.username,
+                "intro": "-",
+            }, status=status.HTTP_200_OK)
 
 
 # 1
@@ -99,12 +123,9 @@ class ProfileIntroUpdate(APIView):
             profile = Profile.objects.select_related('user').filter(user=user).get()
 
             profile.intro = data['userIntro']
-            profile.save()
-            serializer = ProfileSerializer(profile)
+            if profile.save():
 
-            # 데이터를 직렬화 시켜 프린트
-            if serializer:
-                return Response('', status=status.HTTP_200_OK)
+                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
             return Response(
                 {
                     "code": 500,
@@ -114,10 +135,9 @@ class ProfileIntroUpdate(APIView):
 
         except ObjectDoesNotExist:
             update = Profile.objects.create(user=user, intro=data['userIntro'])
-            serializer = ProfileSerializer(update)
 
-            if serializer:
-                return Response('', status=status.HTTP_200_OK)
+            if update:
+                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
             return Response(
                 {
                     "code": 500,
