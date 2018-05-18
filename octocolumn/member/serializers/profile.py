@@ -7,18 +7,16 @@ from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
 
 __all__ = (
-    'ProfileSerializer',
+    'ProfileMainSerializer',
     'ProfileImageSerializer',
+    'ProfileSubSerializer',
 )
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileMainSerializer(serializers.ModelSerializer):
 
     def get_nickname(self,obj):
         return obj.user.nickname
-
-    def get_username(self,obj):
-        return obj.user.username
 
     def get_following(self, obj):
         return Relation.objects.filter(from_user=obj.user).count()
@@ -47,39 +45,49 @@ class ProfileSerializer(serializers.ModelSerializer):
             }
             return data
 
+    # def get_birth_day(self, obj):
+    #     return str(obj.month) + '/' + str(obj.day) + '/' + str(obj.year)
+
     post_count = SerializerMethodField()
     follower = SerializerMethodField()
     following = SerializerMethodField()
     waiting = SerializerMethodField()
     image = SerializerMethodField()
     nickname = SerializerMethodField()
-    username = SerializerMethodField()
+    # birth_day = SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = (
             'nickname',
-            'username',
-            'year',
-            'month',
-            'day',
-            'sex',
             'facebook',
             'instagram',
             'twitter',
-            'age',
-            'phone',
-            'intro',
-            'jobs',
-            'subjects',
-            'web',
-            'region',
             'intro',
             'follower',
             'following',
             'post_count',
             'waiting',
             'image'
+        )
+
+
+class ProfileSubSerializer(serializers.ModelSerializer):
+    def get_username(self,obj):
+        return obj.user.username
+
+    username = SerializerMethodField()
+
+    class Meta:
+        model = Profile
+        fields = (
+            'username',
+            'sex',
+            'birthday',
+            'phone',
+            'jobs',
+            'subjects',
+            'intro',
         )
 
 

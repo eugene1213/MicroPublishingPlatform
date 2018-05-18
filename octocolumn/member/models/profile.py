@@ -14,9 +14,10 @@ __all__ =(
 class Profile(models.Model):
 
     user = models.ForeignKey('member.User', null=True, blank=True)
-    year = models.IntegerField(null=True,blank=True)
-    month = models.IntegerField(null=True, blank=True)
-    day = models.IntegerField(null=True, blank=True)
+    # year = models.IntegerField(null=True,blank=True)
+    #     # month = models.IntegerField(null=True, blank=True)
+    #     # day = models.IntegerField(null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     sex = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
     intro = models.TextField(null=True, blank=True)
