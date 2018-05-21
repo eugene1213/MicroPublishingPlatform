@@ -143,10 +143,13 @@ class SignUp(generics.CreateAPIView):
             return Response(serializer.data, status=200)
         return Response(
             {
-                "code": 500,
-                "content": kr_error_code(500)
+                "code": 401,
+                "content": {
+                    "title": "Sign up Failed",
+                    "message": "비밀번호를 다시 한번 확인해주세요"
+                }
             }
-            , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            , status=status.HTTP_401_UNAUTHORIZED)
         # return HttpResponseRedirect(redirect_to='/signup/')
 
 
