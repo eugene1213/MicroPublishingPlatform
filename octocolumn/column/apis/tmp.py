@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import mixins, generics, status, exceptions
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
