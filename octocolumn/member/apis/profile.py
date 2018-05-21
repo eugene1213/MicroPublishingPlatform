@@ -374,7 +374,7 @@ class AllMyPost(generics.ListAPIView):
             serializer = MyPublishPostSerializer(all_post, many=True)
 
             if page is not None:
-                serializer = MyPublishPostSerializer(all_post, many=True)
+                serializer = MyPublishPostSerializer(page, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:
