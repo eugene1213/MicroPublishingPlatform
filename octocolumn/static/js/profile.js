@@ -58,17 +58,20 @@ $('.item').on('click', function(e) {
     
     // toggle content
     var id = $(this).data('id');
-    console.log(id)
-    switch(id){
-        case 1: break;
-        case 2: timeline(); break;
-        case 3: point();
-    }
+
     $('.item-detail').removeClass('active');
     $('.item-detail#item-' + id).addClass('active');
 });
 
-
+$('.item').one('click', function(e) {
+    var id = $(this).data('id');
+    
+    switch(id){
+        case 1: break;
+        case 2: timeline("/api/member/getMyAllPost/"); break;
+        case 3: point("/api/member/getPointHistory/");
+    }
+});
 
 function about(){
     $.ajax({
@@ -100,16 +103,62 @@ function about(){
     });
 }
 
-function timeline(){
+function timeline(url){
     $.ajax({
-        url: "/api/member/getMyAllPost/",        
+        url: url,        
         async: true,
         type: 'GET',
         dataType: 'json',
         success: function(json) {
 
             console.log(json);
+            var created_at = json.created_at;
+            var results = json.results;
+            var next = json.next;
+            var timelineHtml = '<li class="event">\
+                                    <div class="event-title">'+ created_at +'</div>\
+                                    <div class="event-content">\
+                                        <h3>octocolumn 가입</h3>\
+                                        <p>:)</p>\
+                                    </div>\
+                                </li>';
 
+            for(result in results){
+                var pk = results[result].pk;
+                var created_date = results[result].created_date;
+                var title = results[result].title;
+                var msg = '';
+                var href = '';
+                results[result].is_temp ? msg = '작성중' : msg = '출판';
+
+                if(results[result].is_temp ){
+                    msg = '작성중'
+                    href="/write/"+pk;
+                }else if(!results[result].is_temp){
+                    msg = '출판'
+                    href="/@author/published-post-"+pk;
+                }
+                timelineHtml += '<li class="event" id="'+result+'">\
+                                    <div class="event-title">'+ created_date +'</div>\
+                                    <div class="event-content">\
+                                        <h3>'+ msg +'</h3>\
+                                        <p><a href="'+href+'">:)</a></p>\
+                                    </div>\
+                                </li>';
+
+            }
+            $(".timeline").append(timelineHtml);
+
+            if(next==null) {
+                $(window).off('scroll');
+                return $('.spinner').remove();   
+            }
+
+            $(window).unbind('scroll touchmove').on('scroll touchmove',function() { 
+                if ($(window).scrollTop() == $(document).height() - window.innerHeight) {
+                    if(next!=null) timeline(next);
+                } 
+            });
         },
         error: function(error) {
             console.log(error);
@@ -119,14 +168,38 @@ function timeline(){
 
 function point(){
     $.ajax({
-        url: "/api/member/getProfileSubInfo/",        
+        url: url,
         async: true,
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
-        success: function(json) {
+        success: function(jsons) {
+            
+            console.log(jsons);
 
-            console.log(json);
+            var havePoint = jsons.point;
+            var pointHtml = '';
+            for(i in jsons.results){
+                
+                var point = jsons.results[i].point;
+                var detail = jsons.results[i].history;
+                var type = jsons.results[i].point_use_type;
+                var date = jsons.results[i].created_at;
+                var plus_minus = jsons.results[i].plus_minus;
 
+                date = date.split("T");
+                HH   = date[1].split(":")[0];
+                MM   = date[1].split(":")[1];
+
+                pointHtml +='<li>\
+                                <ul>\
+                                    <li class="spend-time">'+date[0]+' '+HH+':'+MM+'</li>\
+                                    <li class="spend-amount"><span>'+plus_minus*point+'</span>&nbsp;Point</li>\
+                                    <li class="spend-cont">'+detail+'&nbsp;<span>'+type+'</span></li>\
+                                </ul>\
+                            </li>';
+            }
+            $('.point-full-sub').append(pointHtml);
+            $("#point-amount").text(havePoint);
         },
         error: function(error) {
             console.log(error);
