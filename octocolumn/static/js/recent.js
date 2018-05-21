@@ -45,7 +45,6 @@ $(document).ready(function(){
             $('.sub-content-title').text('All Latest Updated Posts That You May Like');
     }
     getRecent(requestUrl);
-
     popBalloon();
 
     $(document).click(function(e){
@@ -82,9 +81,13 @@ $(function(){
 function getRecent(url){
 
     $.ajax({
-        
+        beforeSend: function() {
+            if(localStorage.getItem('loading') && localStorage.getItem('loading') == true){
+                return false;
+            }else localStorage.setItem('loading',true);
+        },
         url: url,
-        async: true,
+        async: false,
         type: 'GET',
         dataType: 'json',
         success: function(jsons) {
@@ -177,6 +180,9 @@ function getRecent(url){
         },
         error: function(error) {
             console.log(error);
+        },
+        complete: function() {
+            localStorage.setItem('loading',false);
         }
     });
 }
