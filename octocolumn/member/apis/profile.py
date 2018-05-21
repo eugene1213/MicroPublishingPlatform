@@ -1,46 +1,49 @@
 import base64
-from io import BytesIO
+from itertools import chain
+from operator import attrgetter
 
-from PIL import Image
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.base import ContentFile, File
-from rest_framework import generics, status, exceptions
+from django.core.files.base import ContentFile
+from rest_framework import generics, status
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from column.models import Post, Temp
+from column.pagination import PostListPagination, AllPostListPagination
 from column.serializers import MyTempSerializer
 from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile
 from member.models.user import WaitingRelation, Relation
-from member.serializers import ProfileImageSerializer, ProfileSerializer
+from member.serializers import ProfileImageSerializer, ProfileMainSerializer, ProfileSubSerializer
 from utils.error_code import kr_error_code
 from utils.image_rescale import profile_image_resizing, image_quality_down
 
 __all__ = (
     'ProfileImageUpload',
     'UserCoverImageUpload',
-    'ProfileInfo',
+    'ProfileMainInfo',
+    'ProfileSubInfo',
     'ProfileIntroUpdate',
     'PublishPost',
     'MyTemp',
+    'AllMyPost',
     'ProfileUpdate'
 )
 
 
 # 1
 # 유저의 프로필을 가져오는 API
-# URL /api/member/getProfileInfo/
-class ProfileInfo(APIView):
+# URL /api/member/getProfileMainInfo/
+class ProfileMainInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         user = self.request.user
         try:
             profile = Profile.objects.select_related('user').filter(user=user).get()
-            serializer = ProfileSerializer(profile)
+            serializer = ProfileMainSerializer(profile)
 
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -56,12 +59,11 @@ class ProfileInfo(APIView):
                 serializer = ProfileImageSerializer(profile_image)
                 return Response({
                     "nickname": user.nickname,
-                    "username": user.username,
                     "waiting":
                         WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
                     "post_count": Post.objects.filter(author=user).count(),
                     "point": user.point,
-                    "intro": "-",
+                    "intro": "- ",
                     "following": Relation.objects.select_related('from_user', 'to_user').filter(from_user=user).count(),
                     "follower": Relation.objects.select_related('to_user', 'from_user').filter(to_user=user).count(),
                     "image": serializer.data
@@ -70,7 +72,6 @@ class ProfileInfo(APIView):
             except ObjectDoesNotExist:
                 return Response({
                     "nickname": user.nickname,
-                    "username": user.username,
                     "waiting":
                         WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
                     "post_count": Post.objects.filter(author=user).count(),
@@ -83,6 +84,33 @@ class ProfileInfo(APIView):
                         "cover_image": "https://static.octocolumn.com/media/example/1.jpeg"
                     }
                 }, status=status.HTTP_200_OK)
+
+
+# 1
+# 유저의 프로필을 가져오는 API
+# URL /api/member/getProfileSubInfo/
+class ProfileSubInfo(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+        try:
+            profile = Profile.objects.select_related('user').filter(user=user).get()
+            serializer = ProfileSubSerializer(profile)
+
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "code": 500,
+                    "message": kr_error_code(500)
+                }
+                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except ObjectDoesNotExist:
+            return Response({
+                "username": user.username,
+                "intro": "-",
+            }, status=status.HTTP_200_OK)
 
 
 # 1
@@ -99,12 +127,9 @@ class ProfileIntroUpdate(APIView):
             profile = Profile.objects.select_related('user').filter(user=user).get()
 
             profile.intro = data['userIntro']
-            profile.save()
-            serializer = ProfileSerializer(profile)
+            if profile.save():
 
-            # 데이터를 직렬화 시켜 프린트
-            if serializer:
-                return Response('', status=status.HTTP_200_OK)
+                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
             return Response(
                 {
                     "code": 500,
@@ -114,10 +139,9 @@ class ProfileIntroUpdate(APIView):
 
         except ObjectDoesNotExist:
             update = Profile.objects.create(user=user, intro=data['userIntro'])
-            serializer = ProfileSerializer(update)
 
-            if serializer:
-                return Response('', status=status.HTTP_200_OK)
+            if update:
+                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
             return Response(
                 {
                     "code": 500,
@@ -329,4 +353,33 @@ class MyTemp(APIView):
 
         except ObjectDoesNotExist:
             return None
+
+
+# 1
+# 유저의 프로필중 자기가 임시저장된 컬럼들을 리스팅 하는 API
+# URL /api/member/getMyAllPost/
+class AllMyPost(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    pagination_class = AllPostListPagination
+
+    def list(self, request, *args, **kwargs):
+        user = self.request.user
+        try:
+            temp = Temp.objects.select_related('author').filter(author=user).all()
+            post = Post.objects.select_related('author').filter(author=user).all()
+
+            all_post = sorted(chain(temp, post), key=attrgetter('created_date'), reverse=True)
+
+            page = self.paginate_queryset(all_post)
+            serializer = MyPublishPostSerializer(all_post, many=True)
+
+            if page is not None:
+                serializer = MyPublishPostSerializer(all_post, many=True)
+                return self.get_paginated_response(serializer.data)
+            return Response(serializer.data)
+        except ObjectDoesNotExist:
+            return Response('', 200)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
 

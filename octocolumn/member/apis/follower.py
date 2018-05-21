@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from column.models import Post
 from member.models import User, ProfileImage, Profile
 from member.models.user import Relation, Bookmark
-from member.serializers import ProfileImageSerializer, ProfileSerializer, FollowStatusSerializer
+from member.serializers import ProfileImageSerializer, ProfileMainSerializer, FollowStatusSerializer
 from utils.error_code import kr_error_code
 
 __all__ = (
@@ -163,7 +163,7 @@ class GetUserFollowingCard(ListAPIView):
                     try:
 
                         profile = Profile.objects.filter(user=i.to_user).get()
-                        profile_serializer = ProfileSerializer(profile)
+                        profile_serializer = ProfileMainSerializer(profile)
 
                         data = {
                                 "pk": i.to_user.id,
@@ -230,7 +230,7 @@ class GetUserFollowingCard(ListAPIView):
                     try:
 
                         profile = Profile.objects.filter(user=i.to_user).get()
-                        profile_serializer = ProfileSerializer(profile)
+                        profile_serializer = ProfileMainSerializer(profile)
 
                         data = {
                                 "pk": i.to_user.id,
@@ -316,7 +316,7 @@ class GetUserFollowerCard(ListAPIView):
                     try:
 
                         profile = Profile.objects.filter(user=i.from_user).get()
-                        profile_serializer = ProfileSerializer(profile)
+                        profile_serializer = ProfileMainSerializer(profile)
 
                         data = {
                                 "pk": i.from_user.id,
@@ -386,7 +386,7 @@ class GetUserFollowerCard(ListAPIView):
                     try:
 
                         profile = Profile.objects.filter(user=i.from_user).get()
-                        profile_serializer = ProfileSerializer(profile)
+                        profile_serializer = ProfileMainSerializer(profile)
 
                         data = {
                             "pk": i.from_user.id,
