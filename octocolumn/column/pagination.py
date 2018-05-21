@@ -110,7 +110,9 @@ class AllPostListPagination(PageNumberPagination):
             previous_url = re.sub(p, 'https:', previous_i)
 
         ret = collections.OrderedDict()
-        ret["created_at"] = self.request.user.created_at
+        ret["created_at"] = self.request.user.created_at.strftime('%B')[:3] + \
+                            self.request.user.created_at.strftime(' %d')+', ' + \
+                            self.request.user.created_at.strftime('%Y')
         ret["count"] = self.page.paginator.count
         ret["next"] = next_url
         ret["previous"] = previous_url
