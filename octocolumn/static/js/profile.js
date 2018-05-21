@@ -41,9 +41,15 @@ $(document).ready(function(){
         },
         error: function(error) {
             console.log(error);
-        }
+        },
+        complete: about()
     });
+
 });
+
+$( function() {
+    $( "#datepicker" ).datepicker();
+} );
 
 $('.item').on('click', function(e) {
     // toggle arrow
@@ -52,9 +58,17 @@ $('.item').on('click', function(e) {
     
     // toggle content
     var id = $(this).data('id');
+    console.log(id)
+    switch(id){
+        case 1: break;
+        case 2: timeline(); break;
+        case 3: point();
+    }
     $('.item-detail').removeClass('active');
     $('.item-detail#item-' + id).addClass('active');
 });
+
+
 
 function about(){
     $.ajax({
@@ -65,6 +79,54 @@ function about(){
         success: function(json) {
 
             console.log(json);
+            var phone = json.phone;
+            var email = json.username;
+
+            var birth = json.birthday;
+            var gender = json.sex;
+            var job = json.jobs;
+            var interests = json.subject;
+
+            $("#phone").text(phone);
+            $("#email").text(email);
+            $("#birth").text(birth);
+            $("#gender").text(gender);
+            $("#job").text(job);
+            $("#interests").text(interests);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+function timeline(){
+    $.ajax({
+        url: "/api/member/getMyAllPost/",        
+        async: true,
+        type: 'GET',
+        dataType: 'json',
+        success: function(json) {
+
+            console.log(json);
+
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+function point(){
+    $.ajax({
+        url: "/api/member/getProfileSubInfo/",        
+        async: true,
+        type: 'POST',
+        dataType: 'json',
+        success: function(json) {
+
+            console.log(json);
+
         },
         error: function(error) {
             console.log(error);

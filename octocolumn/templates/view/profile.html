@@ -16,6 +16,7 @@
 <meta name="google-site-verification" content="Dq8XH8YdjcP0i0psM5a-wvQuiIInde9PlKijyO33y1c" />
 <title>octocolumn</title>
 <!-- core CSS -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/profile.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon-profile.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
@@ -162,7 +163,7 @@
                             	<ul>
                                     <li>
                                         <div class="about-title">Phone</div>
-                                        <div class="about-content">+22 22-2222-2222</div>
+                                        <div class="about-content" id="phone">+22 22-2222-2222</div>
                                     </li>
                                     <li>
                                         <div class="about-title">E-mail</div>
@@ -176,19 +177,18 @@
                             	<ul>
                                     <li>
                                         <div class="about-title">Birthday</div>
-                                        <div class="about-content">June 8, 1992</div>
                                     </li>
                                     <li>
                                         <div class="about-title">Gender</div>
-                                        <div class="about-content">-</div>
+                                        <div class="about-content" id="gender">-</div>
                                     </li>
                                     <li>
                                         <div class="about-title">Job</div>
-                                        <div class="about-content">-</div>
+                                        <div class="about-content" id="job">-</div>
                                     </li>
                                     <li>
                                         <div class="about-title">Interests</div>
-                                        <div class="about-content">-</div>
+                                        <div class="about-content" id="interests">-</div>
                                     </li>
                                 </ul>
                             </li>
@@ -400,7 +400,7 @@
     </div>
     </main>
 </div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
 <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
 <!-- <script type="text/javascript" src="{% static 'js/invite.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
