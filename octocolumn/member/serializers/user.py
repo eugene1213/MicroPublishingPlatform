@@ -53,8 +53,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
            username=validated_data['username'],
-            password=validated_data['password1'],
-            nickname=validated_data['nickname'],
+           password=validated_data['password1'],
+           nickname=validated_data['nickname'],
             # img_profile=validated_data.get('img_profile')
         )
 
