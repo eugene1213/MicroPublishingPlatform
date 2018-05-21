@@ -47,7 +47,12 @@ class MyPublishPostSerializer(serializers.ModelSerializer):
             return True
         return False
 
+    def get_created_date(self, obj):
+        return obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')+', ' + \
+               obj.created_date.strftime('%Y'),
+
     is_temp = SerializerMethodField()
+    created_date = SerializerMethodField()
 
     class Meta:
         model = Post

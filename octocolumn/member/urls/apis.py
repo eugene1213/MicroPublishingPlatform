@@ -17,7 +17,7 @@ urlpatterns = [
     # 비밀번호 찾기
     url(r'^passwordReset/$', PasswordReset.as_view(), name='passwordReset'),
     # 유저정보 요청
-    url(r'^userInfo/$', UserInfo.as_view(), name='signup'),
+    url(r'^userInfo/$', UserInfo.as_view(), name='userInfo'),
 
     # 토큰 관련
     url(r'^api-token-refresh/', refresh_jwt_token),

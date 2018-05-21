@@ -46,7 +46,9 @@ function signup_api(){
             });
         },
         error: function(error) {
-            console.log(error);
+            var msg = error.responseJSON.content.message
+            var title = error.responseJSON.content.title
+            error_modal(title, msg);
         }
     });
 }
