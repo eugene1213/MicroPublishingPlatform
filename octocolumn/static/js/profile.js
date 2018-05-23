@@ -115,6 +115,7 @@ function timeline(url){
             var created_at = json.created_at;
             var results = json.results;
             var next = json.next;
+            var previous = json.previous;
             var timelineHtml = '<li class="event">\
                                     <div class="event-title">'+ created_at +'</div>\
                                     <div class="event-content">\
@@ -122,7 +123,9 @@ function timeline(url){
                                         <p>:)</p>\
                                     </div>\
                                 </li>';
-
+            if(previous!=null){
+                timelineHtml = '';
+            }
             for(result in results){
                 var pk = results[result].pk;
                 var created_date = results[result].created_date;
@@ -166,7 +169,7 @@ function timeline(url){
     });
 }
 
-function point(){
+function point(url){
     $.ajax({
         url: url,
         async: true,
@@ -205,4 +208,143 @@ function point(){
             console.log(error);
         }
     });
+}
+
+$( function() {
+    $('.btn-send').unbind('click').click(function(){
+
+        var email = $("#emailAddr").val();
+
+        $.ajax({
+            url: "/api/member/invite/",
+            async: true,
+            type: 'POST',
+            dataType: 'json',
+            data: {email:email},
+            success: function(json) {
+                var successMsgTitle = '메일이 발송됐습니다.';
+                var successMsg = email+'님을 octocolumn Closed-Beta에 초대하셨습니다.';
+                modal({
+                    type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+                    title: successMsgTitle, //Modal Title
+                    text: successMsg, //Modal HTML Content
+                    size: 'normal', //Modal Size (normal | large | small)
+                    center: true, //Center Modal Box?
+                    autoclose: false, //Auto Close Modal Box?
+                    callback: null, //Callback Function after close Modal (ex: function(result){alert(result);})
+                    onShow: function(r) {}, //After show Modal function
+                    closeClick: true, //Close Modal on click near the box
+                    closable: true, //If Modal is closable
+                    theme: 'atlant', //Modal Custom Theme
+                    animate: false, //Slide animation
+                    background: 'rgba(0,0,0,0.35)', //Background Color, it can be null
+                    zIndex: 1050, //z-index
+                    template: '<div class="modal-box"><div class="modal-inner"><div class="modal-title"><a class="modal-close-btn"></a></div><div class="modal-text"></div></div></div>',
+                    _classes: {
+                        box: '.modal-box',
+                        boxInner: ".modal-inner",
+                        title: '.modal-title',
+                        content: '.modal-text',
+                        closebtn: '.modal-close-btn'
+                    }
+                });
+            },
+            error: function(error) {
+                console.log(error);         
+            }
+        });
+    })
+});
+$("#profileImgInput").change(function() {
+
+    if($("#profileImg").parents().hasClass("tmpWrap")) $("#profileImg").unwrap();
+    readURL(this,"#profileImg");
+    
+    //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
+    
+    $("#profileImg").unbind("load").load(function(){
+        
+        $(".profileimg_save").show();
+    });
+    $(".profileimg_save").unbind('click').click(function(){
+
+        uploadProfileImg("profile");
+        $(".profileimg_save").hide();
+    });
+});
+function uploadProfileImg(whichImg) {
+    
+    if(whichImg == "cover") {
+        var img = $("#cover").css("background");
+            img = img.split("url(")[1].split(")")[0];
+        var url = "/api/member/usercover-image/";
+        var percentage = '';
+        console.log(img);
+
+    } else if(whichImg == "profile") {
+
+        img = $("#profileImg").attr("src");
+
+
+        var marginTop = $("#profileImg").css("top");  //tmpWrap 기준
+            marginTop = marginTop.replace("px","");
+
+        var imgHeight = $("#profileImg").height();
+
+        var overflowY = imgHeight - $("#profileImg").closest(".profile-image-upload-wrap").height();
+        var topPercentage = (overflowY - marginTop) / $("#profileImg").closest(".profile-image-upload-wrap").height() * 100;
+
+        var marginLeft = $("#profileImg").css("left");
+            marginLeft = marginLeft.replace("px","");
+
+        var imgWidth = $("#profileImg").width();
+
+        var overflowX = imgWidth - $("#profileImg").closest(".profile-image-upload-wrap").width();
+        var leftPercentage = (overflowX - marginLeft) / $("#profileImg").closest(".profile-image-upload-wrap").width() * 100;
+            
+        if(marginTop != 0)          var percentage = "y" + topPercentage;
+        else if(marginLeft != 0)    var percentage = "x" + leftPercentage;
+        else {
+            if(overflowY>0) percentage = "y" + topPercentage;
+            else percentage = "x" + leftPercentage;
+        }
+
+        url = "/api/member/profile-image/";
+    }
+    $.ajax({
+        url: url,
+        async: true,
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify({
+            img: img,
+            margin: percentage
+        }),
+        success: function(json) {
+            console.log("이미지 업로드 성공!");
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+/* 이미지 파일 미리보기 */
+function readURL(input,id) {
+    
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+
+            if(id == "#profileImg"){
+                $(id).css('background', 'url(' +e.target.result+ ')');
+                uploadProfileImg('profile');
+            }else {
+                $(id).css('background', 'url(' +e.target.result+ ')');
+                uploadProfileImg('cover');
+            }
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
 }

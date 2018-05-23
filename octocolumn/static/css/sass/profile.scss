@@ -129,6 +129,16 @@ main {
 	cursor: pointer;
 	z-index: 1;
 }
+.profileCover-wrap input {
+    position: absolute;
+    width: 100%;
+    height: 320px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: alpha(opacity=0);
+    z-index: 5;
+    cursor: pointer;
+}
 .profileCover-wrap:hover {
 	background-color: rgba(0,0,0,0.8);
 	color: #fff;
@@ -150,7 +160,17 @@ main {
 .profileCover-wrap:hover .profileCover-block .btn:hover {
 	opacity: 0.9;
 }
-
+.profileImg-wrap input {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: alpha(opacity=0);
+    z-index: 5;
+    cursor: pointer;
+}
 .profileImg-wrap {
 	width: 140px;
 	height: 140px;
@@ -165,9 +185,14 @@ main {
 	bottom: 65px;
 	box-shadow: 0px 0px 20px 1px rgba(0,0,0,.2);
 	cursor: pointer;
-	z-index: 3;
+    z-index: 3;
+    
+    #profileImg {
+        width: 140px;
+        height: 140px;
+    }
 }
-.profileImg-wrap:hover {
+.profileImg-wrap img:hover {
 	background-color: rgba(42,41,42,0.8);
 	color: #fff;
 	z-index: 4;
