@@ -14,7 +14,7 @@ from column.models import Post, Temp
 from column.pagination import PostListPagination, AllPostListPagination
 from column.serializers import MyTempSerializer
 from column.serializers.post import MyPublishPostSerializer
-from member.models import ProfileImage, Profile
+from member.models import ProfileImage, Profile, UserSettings
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileMainSerializer, ProfileSubSerializer
 from utils.error_code import kr_error_code
@@ -25,11 +25,12 @@ __all__ = (
     'UserCoverImageUpload',
     'ProfileMainInfo',
     'ProfileSubInfo',
-    'ProfileIntroUpdate',
+    # 'ProfileIntroUpdate',
     'PublishPost',
     'MyTemp',
     'AllMyPost',
-    'ProfileUpdate'
+    'ProfileUpdate',
+    'ProfileOpenSettings'
 )
 
 
@@ -113,41 +114,85 @@ class ProfileSubInfo(APIView):
             }, status=status.HTTP_200_OK)
 
 
-# 1
-# 유저의 프로필중 자기소개를 업데이트 하는 API
-# URL /api/member/updateProfileIntro/
-class ProfileIntroUpdate(APIView):
+# 공개설정 수정
+class ProfileOpenSettings(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         user = self.request.user
         data = self.request.data
-
         try:
-            profile = Profile.objects.select_related('user').filter(user=user).get()
+            settings = UserSettings.objects.select_related('user').filter(user=user).get()
 
-            profile.intro = data['userIntro']
-            if profile.save():
-
-                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 500,
-                    "message": kr_error_code(500)
-                }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+            settings.phone = bool(data['hpNumber'])
+            settings.email = bool(data['email'])
+            settings.sex = bool(data['sex'])
+            settings.facebook = bool(data['fb'])
+            settings.web = bool(data['web'])
+            settings.instagram = bool(data['ins'])
+            settings.birthday = bool(data['birthday'])
+            settings.jobs = bool(data['jobs'])
+            settings.twitter = bool(data['tw'])
+            settings.subjects = bool(data['subjects'])
+            settings.save()
+            return Response({
+                "detail": "success"
+            }, status= status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            update = Profile.objects.create(user=user, intro=data['userIntro'])
+            settings = UserSettings.objects.create(user=user)
 
-            if update:
-                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 500,
-                    "message": kr_error_code(500)
-                }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            settings.phone = bool(data['hpNumber'])
+            settings.email = bool(data['email'])
+            settings.facebook = bool(data['fb'])
+            settings.web = bool(data['web'])
+            settings.instagram = bool(data['ins'])
+            settings.birthday = bool(data['birthday'])
+            settings.twitter = bool(data['tw'])
+            settings.jobs = bool(data['jobs'])
+            settings.subjects = bool(data['subjects'])
+            settings.sex = bool(data['sex'])
+            settings.save()
+
+            return Response({
+                "detail": "success"
+            }, status=status.HTTP_200_OK)
+
+
+# 1
+# 유저의 프로필중 자기소개를 업데이트 하는 API
+# URL /api/member/updateProfileIntro/
+# class ProfileIntroUpdate(APIView):
+#     permission_classes = (IsAuthenticated,)
+#
+#     def post(self, request):
+#         user = self.request.user
+#         data = self.request.data
+#
+#         try:
+#             profile = Profile.objects.select_related('user').filter(user=user).get()
+#
+#             profile.intro = data['userIntro']
+#             if profile.save():
+#
+#                 return Response({"detail": "Success"}, status=status.HTTP_200_OK)
+#             return Response(
+#                 {
+#                     "code": 500,
+#                     "message": kr_error_code(500)
+#                 }
+#                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#
+#         except ObjectDoesNotExist:
+#             update = Profile.objects.create(user=user, intro=data['userIntro'])
+#
+#             if update:
+#                 return Response({"detail": "Success"}, status=status.HTTP_200_OK)
+#             return Response(
+#                 {
+#                     "code": 500,
+#                     "message": kr_error_code(500)
+#                 }
+#                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -163,15 +208,12 @@ class ProfileUpdate(APIView):
         try:
             profile = Profile.objects.select_related('user').filter(user=user).get()
 
-            profile.year = data['birthYear']
-            profile.month = data['birthMonth']
-            profile.day = data['birthDay']
+            profile.intro = data['intro']
+            profile.birthday = data['birthday']
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
-            profile.age = data['age']
             profile.web = data['web']
             profile.jobs = data['job']
-            profile.region = data['region']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
             profile.twitter = data['tw']
@@ -181,9 +223,9 @@ class ProfileUpdate(APIView):
 
         except ObjectDoesNotExist:
             if Profile.objects.create(
-                    user=user, year=data['birthYear'], month=data['birthMonth'], day=data['birthDay'], sex=data['sex'],
+                    user=user, birthday=data['birthday'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'], jobs=data['job'], facebook=data['fb'], instagram=data['ins'],
-                    twitter=data['tw'], subjects=data['subject'], region=data['region'], web=data['web']):
+                    twitter=data['tw'], subjects=data['subject'], web=data['web'], intro=data['intro']):
                 return Response(status=status.HTTP_200_OK)
             return Response(
                 {

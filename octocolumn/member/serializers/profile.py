@@ -3,7 +3,7 @@ from rest_framework import serializers, exceptions
 from rest_framework.fields import SerializerMethodField
 
 from column.models import Post
-from member.models import ProfileImage, Profile
+from member.models import ProfileImage, Profile, UserSettings
 from member.models.user import WaitingRelation, Relation
 
 __all__ = (
@@ -75,8 +75,41 @@ class ProfileMainSerializer(serializers.ModelSerializer):
 class ProfileSubSerializer(serializers.ModelSerializer):
     def get_username(self,obj):
         return obj.user.username
+    
+    def get_settings(self,obj):
+        try:
+            settings = UserSettings.objects.filter(user=obj.user).get()
+
+            data = {
+                    "phone": settings.phone,
+                    "email": settings.email,
+                    "facebook": settings.facebook,
+                    "web": settings.web,
+                    "instagram": settings.instagram,
+                    "birthday": settings.birthday,
+                    "jobs": settings.jobs,
+                    "interest": settings.subjects
+
+                }
+            return data
+        except ObjectDoesNotExist:
+            user_settings = UserSettings.objects.create(user=obj.user)
+            data = {
+                "phone": user_settings.phone,
+                "email": user_settings.email,
+                "facebook": user_settings.facebook,
+                "web": user_settings.web,
+                "instagram": user_settings.instagram,
+                "birthday": user_settings.birthday,
+                "jobs": user_settings.jobs,
+                "interest": user_settings.subjects
+
+            }
+
+            return data
 
     username = SerializerMethodField()
+    settings = SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -88,6 +121,7 @@ class ProfileSubSerializer(serializers.ModelSerializer):
             'jobs',
             'subjects',
             'intro',
+            'settings'
         )
 
 
