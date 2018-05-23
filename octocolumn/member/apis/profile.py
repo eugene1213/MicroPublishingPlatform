@@ -133,7 +133,7 @@ class ProfileOpenSettings(APIView):
             settings.birthday = bool(data['birthday'])
             settings.jobs = bool(data['jobs'])
             settings.twitter = bool(data['tw'])
-            settings.subjects = bool(data['subjects'])
+            settings.subjects = bool(data['subject'])
             settings.save()
             return Response({
                 "detail": "success"
@@ -149,7 +149,7 @@ class ProfileOpenSettings(APIView):
             settings.birthday = bool(data['birthday'])
             settings.twitter = bool(data['tw'])
             settings.jobs = bool(data['jobs'])
-            settings.subjects = bool(data['subjects'])
+            settings.subjects = bool(data['subject'])
             settings.sex = bool(data['sex'])
             settings.save()
 
@@ -213,7 +213,7 @@ class ProfileUpdate(APIView):
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
             profile.web = data['web']
-            profile.jobs = data['job']
+            profile.jobs = data['jobs']
             profile.facebook = data['fb']
             profile.instagram = data['ins']
             profile.twitter = data['tw']
@@ -224,7 +224,7 @@ class ProfileUpdate(APIView):
         except ObjectDoesNotExist:
             if Profile.objects.create(
                     user=user, birthday=data['birthday'], sex=data['sex'],
-                    phone=data['hpNumber'], age=data['age'], jobs=data['job'], facebook=data['fb'], instagram=data['ins'],
+                    phone=data['hpNumber'], age=data['age'], jobs=data['jobs'], facebook=data['fb'], instagram=data['ins'],
                     twitter=data['tw'], subjects=data['subject'], web=data['web'], intro=data['intro']):
                 return Response(status=status.HTTP_200_OK)
             return Response(
