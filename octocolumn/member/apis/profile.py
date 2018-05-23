@@ -25,7 +25,7 @@ __all__ = (
     'UserCoverImageUpload',
     'ProfileMainInfo',
     'ProfileSubInfo',
-    'ProfileIntroUpdate',
+    # 'ProfileIntroUpdate',
     'PublishPost',
     'MyTemp',
     'AllMyPost',
