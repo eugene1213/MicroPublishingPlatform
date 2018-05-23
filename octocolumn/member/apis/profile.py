@@ -161,38 +161,38 @@ class ProfileOpenSettings(APIView):
 # 1
 # 유저의 프로필중 자기소개를 업데이트 하는 API
 # URL /api/member/updateProfileIntro/
-class ProfileIntroUpdate(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request):
-        user = self.request.user
-        data = self.request.data
-
-        try:
-            profile = Profile.objects.select_related('user').filter(user=user).get()
-
-            profile.intro = data['userIntro']
-            if profile.save():
-
-                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 500,
-                    "message": kr_error_code(500)
-                }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        except ObjectDoesNotExist:
-            update = Profile.objects.create(user=user, intro=data['userIntro'])
-
-            if update:
-                return Response({"detail": "Success"}, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 500,
-                    "message": kr_error_code(500)
-                }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+# class ProfileIntroUpdate(APIView):
+#     permission_classes = (IsAuthenticated,)
+#
+#     def post(self, request):
+#         user = self.request.user
+#         data = self.request.data
+#
+#         try:
+#             profile = Profile.objects.select_related('user').filter(user=user).get()
+#
+#             profile.intro = data['userIntro']
+#             if profile.save():
+#
+#                 return Response({"detail": "Success"}, status=status.HTTP_200_OK)
+#             return Response(
+#                 {
+#                     "code": 500,
+#                     "message": kr_error_code(500)
+#                 }
+#                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#
+#         except ObjectDoesNotExist:
+#             update = Profile.objects.create(user=user, intro=data['userIntro'])
+#
+#             if update:
+#                 return Response({"detail": "Success"}, status=status.HTTP_200_OK)
+#             return Response(
+#                 {
+#                     "code": 500,
+#                     "message": kr_error_code(500)
+#                 }
+#                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # 1
@@ -208,6 +208,7 @@ class ProfileUpdate(APIView):
         try:
             profile = Profile.objects.select_related('user').filter(user=user).get()
 
+            profile.intro = data['intro']
             profile.birthday = data['birthday']
             profile.sex = data['sex']
             profile.phone = data['hpNumber']
@@ -224,7 +225,7 @@ class ProfileUpdate(APIView):
             if Profile.objects.create(
                     user=user, birthday=data['birthday'], sex=data['sex'],
                     phone=data['hpNumber'], age=data['age'], jobs=data['job'], facebook=data['fb'], instagram=data['ins'],
-                    twitter=data['tw'], subjects=data['subject'], web=data['web']):
+                    twitter=data['tw'], subjects=data['subject'], web=data['web'], intro=data['intro']):
                 return Response(status=status.HTTP_200_OK)
             return Response(
                 {
