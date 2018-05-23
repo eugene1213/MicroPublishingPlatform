@@ -381,12 +381,22 @@ $(function(){
         if(gender==1) gender="Male";
         else if(gender==2) gender="Female";
 
+        console.log(introduce)
+        console.log(hpNumber)
+        console.log(website)
+        console.log(fb)
+        console.log(ins)
+        console.log(tw)
+        console.log(birthDay)
+        console.log(job)
+        console.log(interests)
+        console.log(gender)
+        
         $.ajax({
             url: "/api/member/updateProfile/",
             async: true,
             type: 'POST',
             dataType: 'json',
-            contentType: "application/json",
             data: {
                 intro: introduce,                 // 자기소개
                 birthDay: birthDay*1,             // 생일
