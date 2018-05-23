@@ -368,6 +368,7 @@ function readURL(input,id) {
 $(function(){
     $(".btn_save").click(function(){
 
+        var introduce = $(".introduce").html();
         var hpNumber = $(".setting-content > select").val() +'-'+ $("#HPhone1").val() +'-'+ $("#HPhone2").val();
         var website = $("#mywebsite").val();
         var fb = "www.facebook.com/" + $("#myfacebook").val();
@@ -387,6 +388,7 @@ $(function(){
             dataType: 'json',
             contentType: "application/json",
             data: {
+                intro: introduce,                 // 자기소개
                 birthDay: birthDay*1,             // 생일
                 sex: gender,                      // 성별
                 hpNumber: hpNumber,               // 폰번호
@@ -395,7 +397,7 @@ $(function(){
                 fb: fb,                           // 페북
                 ins: ins,                         // 인스타
                 tw: tw,                           // 트윗
-                subject: interests                  // 관심분야
+                subject: interests                // 관심분야
             },
             success: function(json) {
             },
