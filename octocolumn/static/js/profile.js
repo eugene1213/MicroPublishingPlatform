@@ -255,6 +255,10 @@ $( function() {
         });
     })
 });
+$("#coverImgInput").change(function() {
+    
+    readURL(this,"#cover");
+});
 $("#profileImgInput").change(function() {
 
     if($("#profileImg").parents().hasClass("tmpWrap")) $("#profileImg").unwrap();
@@ -262,20 +266,20 @@ $("#profileImgInput").change(function() {
     
     //$(".toggle-wrap .arrow-box .cover-wrap .cover-img-wrap input").css("margin-top","0px");
     
-    $("#profileImg").unbind("load").load(function(){
+    // $("#profileImg").unbind("load").load(function(){
         
-        $(".profileimg_save").show();
-    });
-    $(".profileimg_save").unbind('click').click(function(){
+    //     $(".profileimg_save").show();
+    // });
+    // $(".profileimg_save").unbind('click').click(function(){
 
-        uploadProfileImg("profile");
-        $(".profileimg_save").hide();
-    });
+    //     uploadProfileImg("profile");
+    //     $(".profileimg_save").hide();
+    // });
 });
 function uploadProfileImg(whichImg) {
     
     if(whichImg == "cover") {
-        var img = $("#cover").css("background");
+        var img = $("#cover").css("background-image");
             img = img.split("url(")[1].split(")")[0];
         var url = "/api/member/usercover-image/";
         var percentage = '';
@@ -285,29 +289,28 @@ function uploadProfileImg(whichImg) {
 
         img = $("#profileImg").attr("src");
 
+        // var marginTop = $("#profileImg").css("top");  //tmpWrap 기준
+        //     marginTop = marginTop.replace("px","");
 
-        var marginTop = $("#profileImg").css("top");  //tmpWrap 기준
-            marginTop = marginTop.replace("px","");
+        // var imgHeight = $("#profileImg").height();
 
-        var imgHeight = $("#profileImg").height();
+        // var overflowY = imgHeight - $("#profileImg").closest(".profile-image-upload-wrap").height();
+        // var topPercentage = (overflowY - marginTop) / $("#profileImg").closest(".profile-image-upload-wrap").height() * 100;
 
-        var overflowY = imgHeight - $("#profileImg").closest(".profile-image-upload-wrap").height();
-        var topPercentage = (overflowY - marginTop) / $("#profileImg").closest(".profile-image-upload-wrap").height() * 100;
+        // var marginLeft = $("#profileImg").css("left");
+        //     marginLeft = marginLeft.replace("px","");
 
-        var marginLeft = $("#profileImg").css("left");
-            marginLeft = marginLeft.replace("px","");
+        // var imgWidth = $("#profileImg").width();
 
-        var imgWidth = $("#profileImg").width();
-
-        var overflowX = imgWidth - $("#profileImg").closest(".profile-image-upload-wrap").width();
-        var leftPercentage = (overflowX - marginLeft) / $("#profileImg").closest(".profile-image-upload-wrap").width() * 100;
+        // var overflowX = imgWidth - $("#profileImg").closest(".profile-image-upload-wrap").width();
+        // var leftPercentage = (overflowX - marginLeft) / $("#profileImg").closest(".profile-image-upload-wrap").width() * 100;
             
-        if(marginTop != 0)          var percentage = "y" + topPercentage;
-        else if(marginLeft != 0)    var percentage = "x" + leftPercentage;
-        else {
-            if(overflowY>0) percentage = "y" + topPercentage;
-            else percentage = "x" + leftPercentage;
-        }
+        // if(marginTop != 0)          var percentage = "y" + topPercentage;
+        // else if(marginLeft != 0)    var percentage = "x" + leftPercentage;
+        // else {
+            // if(overflowY>0) percentage = "y" + topPercentage;
+            // else percentage = "x" + leftPercentage;
+        // }
 
         url = "/api/member/profile-image/";
     }
@@ -341,7 +344,7 @@ function readURL(input,id) {
                 $(id).css('background', 'url(' +e.target.result+ ')');
                 uploadProfileImg('profile');
             }else {
-                $(id).css('background', 'url(' +e.target.result+ ')');
+                $(id).css('background-image', 'url(' +e.target.result+ ')');
                 uploadProfileImg('cover');
             }
         }
