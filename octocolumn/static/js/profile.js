@@ -11,7 +11,6 @@ $(document).ready(function(){
             var cover_img = json.image.cover_image;
             var profile_img = json.image.profile_image;
             var username = json.nickname;
-            var email = json.username;
             var waiting = json.waiting;
             
             var userIntro = json.intro;
@@ -24,14 +23,21 @@ $(document).ready(function(){
             var ins = json.instagram;
             var tw = json.twitter;
 
-            $(".profileCover-wrap").css("background-image",'url(' +cover_img+ ')');
-            $(".profileImg-wrap > img").attr("src",profile_img);
+            $("#cover").css("background-image",'url(' +cover_img+ ')');
+            $("#profileImg").css("background-image",'url(' +profile_img+ ')');
             $(".userName").text(username);
             $(".waiting-wrap > p > span").text(waiting);
             $("#profileIntro").html(userIntro);
             $("#Following").text(following);
             $("#Follower").text(follower);
             $("#posts").text(posts);
+
+            /* setting */
+            $(".introduce").html(userIntro);
+            $("#myfacebook").val(fb);
+            $("#myinstagram").val(ins);
+            $("#mytwitter").val(tw);
+            $("#mywebsite").val(website);
 
             // if(website)         $(".private-table :contains(웹사이트) + td").text(website);
             // if(fb)              $(".private-table :contains(facebook) + td").text(fb);
@@ -96,6 +102,13 @@ function about(){
             $("#gender").text(gender);
             $("#job").text(job);
             $("#interests").text(interests);
+
+            /* setting */
+            $("#datepicker").text(birth);
+            $("#myjob").text(job);
+            $("#myinterests").text(interests);
+            $("#myemail").text(email);
+            
         },
         error: function(error) {
             console.log(error);
@@ -287,8 +300,8 @@ function uploadProfileImg(whichImg) {
 
     } else if(whichImg == "profile") {
 
-        img = $("#profileImg").attr("src");
-
+        var img = $("#profileImg").css("background-image");
+        img = img.split("url(")[1].split(")")[0];
         // var marginTop = $("#profileImg").css("top");  //tmpWrap 기준
         //     marginTop = marginTop.replace("px","");
 
@@ -341,7 +354,7 @@ function readURL(input,id) {
         reader.onload = function(e) {
 
             if(id == "#profileImg"){
-                $(id).css('background', 'url(' +e.target.result+ ')');
+                $(id).css('background-image', 'url(' +e.target.result+ ')');
                 uploadProfileImg('profile');
             }else {
                 $(id).css('background-image', 'url(' +e.target.result+ ')');
@@ -351,3 +364,44 @@ function readURL(input,id) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+$(function(){
+    $(".btn_save").click(function(){
+
+        var hpNumber = $(".setting-content > select").val() +'-'+ $("#HPhone1").val() +'-'+ $("#HPhone2").val();
+        var website = $("#mywebsite").val();
+        var fb = "www.facebook.com/" + $("#myfacebook").val();
+        var ins = "www.instagram.com/" + $("#myinstagram").val();
+        var tw = "twitter.com/" + $("#mytwitter").val();
+        var birthDay = $("#datepicker").val();
+        var job = $("#myjob").val();
+        var interests = $("#myinterests").val();
+        var gender = $(".gender[checked]").val();
+        if(gender==1) gender="Male";
+        else if(gender==2) gender="Female";
+
+        $.ajax({
+            url: "/api/member/updateProfile/",
+            async: true,
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: {
+                birthDay: birthDay*1,             // 생일
+                sex: gender,                      // 성별
+                hpNumber: hpNumber,               // 폰번호
+                job: job,                         // 직업
+                web: website,                     // 웹사이트
+                fb: fb,                           // 페북
+                ins: ins,                         // 인스타
+                tw: tw,                           // 트윗
+                subject: interests                  // 관심분야
+            },
+            success: function(json) {
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});

@@ -49,27 +49,25 @@
 					<a href="#" class="btn">Edit</a>
 				</div>
             </div>
-            <div class="profileImg-wrap profile-image-upload-wrap">
+            <div class="profileImg-wrap profile-image-upload-wrap" id="profileImg">
                 <input type="file" id="profileImgInput" accept=".jpg,.jpeg,.png">
-                <div id="profileImg"></div>
             	<div class="profileImg-block">
 					<a href="#" class="btn">Edit</a>
 				</div>
             </div>
-            <div class="profileInfo">
-            	<div class="userName">User Name</div>
-                <span>Introduce yourself!</span>
-            </div>
         </div>
-        
-        <!-- SNS -->
-        <div class="userSns-wrap">
-        	<ul>
-                <li class="userSns personal-website"><span class="icon-home"></span></li>
-                <li class="userSns facebook"><span class="icon-facebook"></span></li>
-                <li class="userSns instagram"><span class="icon-instagram"></span></li>
-                <li class="userSns twitter"><span class="icon-twitter"></span></li>
-            </ul>
+        <div class="profileInfo">
+            <div class="userName">User Name</div>
+            <div class="userIntro">자기소개란을 준비했습니다.<br>다른 사람들이 당신에 대해서 알 수 있도록 도와줄 겁니다.</div>
+            <!-- SNS -->
+            <div class="userSns-wrap">
+                <ul>
+                    <li class="userSns personal-website"><span class="icon-home"></span></li>
+                    <li class="userSns facebook"><span class="icon-facebook"></span></li>
+                    <li class="userSns instagram"><span class="icon-instagram"></span></li>
+                    <li class="userSns twitter"><span class="icon-twitter"></span></li>
+                </ul>
+            </div>
         </div>
         
         <!-- Waiting Reader -->
@@ -146,59 +144,49 @@
                 <div class="item" data-id="3">
                     <div class="item-name"><span class="icon-database"></span>Point</div>
                 </div>
-                <!--.item 04
+                <!--.item 04 -->
                 <div class="item" data-id="4">
-                    <div class="item-name">Achievements</div>
+                    <div class="item-name"><span class="icon-cog"></span>Setting</div>
                 </div>
-                -->
             </div>
             
             <!--.submenu-content-->
-            <div class="submenu-content scrollbar-basic">
+            <div class="submenu-content">
                 <!--.item-detail 01 -->
                 <div class="item-detail active" id="item-1">
                 	<div class="about-wrap">
                     	<ul>
                         	<li class="about-content-wrap">
-                            	<span class="btn-edit">Edit</span>
-                            	<p>Contact Information</p>
+                            	<span class="info-title">Contact Information</span>
                             	<ul>
                                     <li>
                                         <div class="about-title">Phone</div>
-                                        <div class="about-content" id="phone">+22 22-2222-2222</div>
+                                        <div class="about-content" id="phone"></div>
                                     </li>
                                     <li>
                                         <div class="about-title">E-mail</div>
-                                        <div class="about-content" id="email">+22 22-2222-2222</div>
+                                        <div class="about-content" id="email"></div>
                                     </li>
                                 </ul>
                             </li>
                         	<li class="about-content-wrap">
-                            	<span class="btn-edit">Edit</span>
-                            	<p>Basic Information</p>
+                            	<span class="info-title">Basic Information</span>
                             	<ul>
                                     <li>
                                         <div class="about-title">Birthday</div>
+                                        <div class="about-content" id="birth"></div>
                                     </li>
                                     <li>
                                         <div class="about-title">Gender</div>
-                                        <div class="about-content" id="gender">-</div>
+                                        <div class="about-content" id="gender"></div>
                                     </li>
                                     <li>
                                         <div class="about-title">Job</div>
-                                        <div class="about-content" id="job">-</div>
+                                        <div class="about-content" id="job"></div>
                                     </li>
                                     <li>
                                         <div class="about-title">Interests</div>
-                                        <div class="about-content" id="interests">-</div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="about-content-wrap">
-                            	<p>Privacy Information</p>
-                            	<ul>
-                                    <li>
-                                        <span class="about-privacy-btn">비밀번호 변경</span>
+                                        <div class="about-content" id="interests"></div>
                                     </li>
                                 </ul>
                             </li>
@@ -250,11 +238,176 @@
                         </div>
                     </div>
                 </div>
-                <!--.item-detail 04
+                <!--.item-detail 04 -->
                 <div class="item-detail" id="item-4">
-                    <h3>준비중입니다. 조금만 기다려주세요! :)</h3>
+                    <div class="setting-wrap">
+                        <ul>
+                            <li class="setting-content-wrap">
+                                <div class="warning-setting">
+                                    공개하고 싶지 않은 정보는 좌측 체크박스를 해제하세요.
+                                </div>
+                            </li>
+                            <li class="setting-content-wrap">
+                                <span class="info-title">Introduce</span>
+                                <div class="introduce"></div>
+                            </li>
+                            <li class="setting-content-wrap">
+                                <span class="info-title">Contact Information</span>
+                                <ul>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch01" type="checkbox" checked="true">
+                                            <label for="ch01">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Phone</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            <select>
+                                                <option value="010">010</option>
+                                                <option value="011">011</option>
+                                                <option value="016">016</option>
+                                            </select>
+                                            -
+                                            <input type="text" id="HPhone1">
+                                            -
+                                            <input type="text" id="HPhone2">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch02" type="checkbox" checked="true">
+                                            <label for="ch02">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">E-mail</div>
+                                        </div>
+                                        <div class="setting-content" id="myemail"></div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="setting-content-wrap">
+                                <span class="info-title">SNS</span>
+                                <ul>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch03" type="checkbox" checked="true">
+                                            <label for="ch03">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Website</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            <input type="text" id="mywebsite">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch04" type="checkbox" checked="true">
+                                            <label for="ch04">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Facebook</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            www.facebook.com/
+                                            <input type="text" id="myfacebook">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch05" type="checkbox" checked="true">
+                                            <label for="ch05">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Instagram</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            www.instagram.com/
+                                            <input type="text" id="myinstagram">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch06" type="checkbox" checked="true">
+                                            <label for="ch06">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Twitter</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            twitter.com/
+                                            <input type="text" id="mytwitter">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="setting-content-wrap">
+                                <span class="info-title">Basic Information</span>
+                                <ul>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch07" type="checkbox" checked="true">
+                                            <label for="ch07">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Birthday</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            <input id="datepicker">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch08" type="checkbox" checked="true">
+                                            <label for="ch08">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Gender</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            <input type="radio" class="gender" name="gender" value="1" checked="true"><span>Male</span>
+                                            <input type="radio" class="gender" name="gender" value="2"><span>Female</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch09" type="checkbox" checked="true">
+                                            <label for="ch09">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Job</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            <input type="text" id="myjob">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="setting-menu">
+                                            <input id="ch10" type="checkbox" checked="true">
+                                            <label for="ch10">
+                                                <span class="icon-ok"></span>
+                                            </label>
+                                            <div class="setting-title">Interests</div>
+                                        </div>
+                                        <div class="setting-content">
+                                            <input type="text" id="myinterests">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="setting-content-wrap">
+                                <p class="info-title">Privacy Information</p>
+                                <ul>
+                                    <li>
+                                        <span class="setting-privacy-btn">비밀번호 변경</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <button class="btn_save">SAVE</button>
+                    </div>
                 </div>
-                -->
             </div>
         </div>
     </div>

@@ -218,6 +218,7 @@ class ProfileImageUpload(generics.CreateAPIView):
     #파일 업로드
     def post(self, request, *args, **kwargs):
         user = self.request.user
+        print(self.request.data)
         profile_file_obj = self.base64_content(self.request.data['img'])
         resizing_image = profile_image_resizing(profile_file_obj)
 
