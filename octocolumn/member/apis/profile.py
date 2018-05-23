@@ -220,7 +220,7 @@ class ProfileImageUpload(generics.CreateAPIView):
         user = self.request.user
         margin = self.request.data['margin']
         profile_file_obj = self.base64_content(self.request.data['img'], margin)
-        resizing_image = profile_image_resizing(profile_file_obj, margin)
+        resizing_image = profile_image_resizing(profile_file_obj)
 
         try:
             profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
