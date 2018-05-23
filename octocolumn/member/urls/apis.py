@@ -6,7 +6,7 @@ from member.apis import Login, SignUp, FacebookLogin, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, \
     ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView, \
-    FollowerStatus, ProfileMainInfo, ProfileSubInfo, AllMyPost
+    FollowerStatus, ProfileMainInfo, ProfileSubInfo, AllMyPost, ProfileOpenSettings
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^getProfileMainInfo/', ProfileMainInfo.as_view(), name='profileMain'),
     url(r'^getProfileSubInfo/', ProfileSubInfo.as_view(), name='profileSub'),
     url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
+    url(r'^updateUserSettings/', ProfileOpenSettings.as_view(), name='settings'),
     url(r'^updateProfile/', ProfileUpdate.as_view(), name='profile'),
     url(r'^profile-image/', ProfileImageUpload.as_view(), name='profile_image'),
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),
