@@ -202,11 +202,11 @@ class ProfileImageUpload(generics.CreateAPIView):
     serializer_class = ProfileImageSerializer
 
     # base64 파일 파일 형태로
-    def base64_content(self, image, margin):
+    def base64_content(self, image):
         if image is not '':
             format, imgstr = image.split(';base64,')
             ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name=margin+'.'+ext)
+            data = ContentFile(base64.b64decode(imgstr), name='margin'+'.'+ext)
             return data
         return Response(
             {
@@ -218,8 +218,7 @@ class ProfileImageUpload(generics.CreateAPIView):
     #파일 업로드
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        margin = self.request.data['margin']
-        profile_file_obj = self.base64_content(self.request.data['img'], margin)
+        profile_file_obj = self.base64_content(self.request.data['img'])
         resizing_image = profile_image_resizing(profile_file_obj)
 
         try:
