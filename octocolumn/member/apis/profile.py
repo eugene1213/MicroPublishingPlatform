@@ -164,7 +164,7 @@ class ProfileSubInfo(APIView):
         else:
             try:
                 profile = Profile.objects.select_related('user').filter(user=member).get()
-                serializer = ProfileSubSerializer(profile, context={'request': request})
+                serializer = ProfileSubSerializer(profile, context={'request': self.request})
 
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
