@@ -3,29 +3,31 @@
 <head>
 	{% load static %}
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="viewport" content="width=1280, user-scalable=no, target-densitydpi=medium-dpi">
+	<meta name="viewport" content="width=1280, target-densitydpi=medium-dpi">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
+	<!-- <meta name="format-detection" content="telephone=no"> -->
 	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
 	<meta name="description" content="octocolumn" />
 	<meta name="keywords" content="octocolumn">
 	<meta name="copyright" content="octocolumn"/>
-	<meta name="theme-color" content="#2a292a">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="x-rim-auto-match" content="none">
-	<title>octocolumn</title>
+	<meta name="theme-color" content="#2a292a">
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+	<title>octocolumn</title>
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-	<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-	<script src="{% static 'js/script.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/profile.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/flip-card.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon-btn.css' %}">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
+	<!-- JS -->
+	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 </head>
-<style>
-
-</style>
 <body>
 	<div class="mBg"></div>
 	{% if login %}
@@ -36,7 +38,7 @@
 	<div class="profile_allWrap">
 		<div class="profile">
 			<div class="profile_box">
-				<div class="profile_tab1">
+				<div class="profile_tab1 active">
 					개<br />
 					인<br />
 					정<br />
@@ -63,30 +65,30 @@
 					정<br />
 					보<br />
 				</div>
-				<div class="profile_tab6 active">
+				<div class="profile_tab6">
 					내<br />
 					<br />
 					글<br />
 				</div>
 			</div>
-
-
-			<div class="profile_img">
+			<div class="profile_img profile-image-upload-wrap">
+					<input type='file' id="profileImgInput" accept=".jpg,.jpeg,.png"/>
+					<img id="profileImg" src="" alt="">
 				<div class="profileimg_write"></div>
+				<div class="profileimg_save"></div>
 			</div>
-
-			<div class="profile_mainbanner">
+			<div class="profile_mainbanner profile-image-upload-wrap">
+				<input type='file' id="coverImgInput" accept=".jpg,.jpeg,.png"/>
 			</div>
 			<div class="profile_write"></div>
+			<div class="profile_save"></div>
 			<div class="profile_condition">
 				<div class="profile_con_txt">
 					당신의 글을 기다리고 있는 사람
 				</div>
-				<div class="profile_con_icon">
-					4,327
-				</div>
+				<div class="profile_con_icon">0</div>
 				<div class="profile_con_stamp">
-					<div class="stamp_tit">스탬프</div>
+					<!-- <div class="stamp_tit">스탬프</div>
 					<div class="stamp_img">
 						<div class="stamp_icon1"></div>
 						<div class="stamp_icon1"></div>
@@ -96,104 +98,233 @@
 						<div class="stamp_icon2"></div>
 						<div class="stamp_icon2"></div>
 						<div class="stamp_icon2"></div>
-					</div>
+					</div> -->
 				</div>
 				<div class="profile_con_following">
 					<div class="following_tit">Following</div>
-					<div class="following_num">99</div>
+					<div class="following_num" id="Following">0</div>
 				</div>
 				<div class="profile_con_following" style="margin-right: 1px;">
 					<div class="following_tit">Follower</div>
-					<div class="following_num">4</div>
+					<div class="following_num" id="Follower">0</div>
 				</div>
 				<div class="profile_con_following">
 					<div class="following_tit">Posts</div>
-					<div class="following_num">-</div>
+					<div class="following_num" id="posts">0</div>
 				</div>
 			</div>
 			<div class="profile_content">
-				<div class="content_title1">Kelly Sullivan</div>
-				<div class="content_title2">패션 전문가</div>
+				<div class="content_title1"><span></span></div>
+				<div class="content_title2"><!--업적--></div>
 				<div class="profile_introduce">
 					<div class="pro_intro_tit">자기소개</div>
 					<div class="pro_intro_btn"></div>
-						In the tumultuous business of cutting-in and attending to a whale, there is much running backwards and forwards among the crew. Now hands are wanted here, and then again hands are wanted there. There is no staying in any one place; for at one and the same time everything has to be done everywhere. It is much the same with him who endeavors the description of the scene. We must now retrace our way a little.
+					<div id="profileIntro" contenteditable="false">자기소개란을 준비했습니다.<br />
+							다른 사람들이 당신에 대해서 알 수 있도록 도와줄 겁니다.</div>
 				</div>
-				<div class="profile_history">
-					<div class="pro_his_tit1">발행</div>
+			<!-- 개인정보 -->
+				<div class="profile-userInfo profile-infomations">
+					<div class="btn-modify">
+						<img src="{% static 'images/icons/profile/write.png' %}" alt="수정버튼">
+					</div>
+					<div class="profile-title-wrap">
+						<div class="infoTitle">기본 정보</div>
+						<div class="infoTitle">연락처 정보</div>
+						<div class="infoTitle">개인 정보</div>
+					</div>
+					<div class="profile-info-wrap">
+						<div class="table-wrap">
+							<table class="base-table">
+								<tr>
+									<td>태어난 년도</td>
+									<td contenteditable="false" placeholder="숫자만 입력해주세요.ex) 2000" id="birthYear"></td>
+									<td ></td>
+								</tr>
+								<tr>
+									<td>생일</td>
+									<td contenteditable="false" placeholder="ex) 01월20일" id="birthMonth"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>성별</td>
+									<td contenteditable="false" placeholder="" id="gender"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>나이</td>
+									<td contenteditable="false" placeholder="숫자만 입력해주세요.ex) 30" id="age"></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+						<div class="table-wrap">
+							<table class="contact-table">
+								<tr>
+									<td>휴대폰</td>
+									<td contenteditable="false" placeholder="숫자만 입력해주세요.ex) 01012345678" id="hpNumber"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>지역</td>
+									<td contenteditable="false" id="location"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>이메일</td>
+									<td id="email"></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+						<div class="table-wrap">
+							<table class="private-table">
+								<tr>
+									<td>직업</td>
+									<td contenteditable="false" id="job"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>웹사이트</td>
+									<td contenteditable="false" id="website"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>facebook</td>
+									<td contenteditable="false" id="fb"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>instagram</td>
+									<td contenteditable="false" id="ins"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>twitter</td>
+									<td contenteditable="false" id="tw"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>관심분야</td>
+									<td contenteditable="false" id="subject"></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			<!-- //개인정보 -->
+			<!-- 포인트내역 -->
+				<div class="profile-point-history profile-infomations">
+					<div class="items-wrap">
+						<div class="have-point">
+							<span class="point-text">보유 포인트</span>
+							<div class="point-wrap">
+								<span id="point-amount">1000</span>
+								<span>point</span>
+								<div class="btn-exchange">환전</div>
+							</div>
+						</div>
+						<div class="have-point">
+							<span class="point-text">보유 쿠폰</span>
+							<div class="point-wrap">
+								<span id="cupon-amount">0장</span>
+								<div class="btn-exchange">확인</div>
+							</div>
+						</div>
+					</div>
+					<table class="point-history-wrap">
+						<tr id="tr-header">
+							<th>시간</th>
+							<th>포인트</th>
+							<th>내용</th>
+						</tr>
+						<!-- <tr>
+							<td>2017년 10월 8일 16:23</td>
+							<td>5 point</td>
+							<td>Can these bones live? <span id="stat">댓글 작성</span></td>
+						</tr> -->
+					</table>
+				</div>
+			<!-- //포인트내역 -->
+			<!-- 관계 -->
+				<div class="profile-relationship profile-infomations">
+					<div class="relationship-tab-wrap">
+						<div class="tab">Following</div>
+						<div class="tab">Follower</div>
+					</div>
+				</div>
+			<!-- //관계 -->
+			<!-- 계정정보 -->
+				<div class="profile-privateInfo profile-infomations">
+					<div class="infoTitle">
+						<span>비밀번호</span>
+						<div class="info-hr"></div>
+						<div class="btn-set-info" id="btnSetPassword">변경</div>
+					</div>
+					<!-- <div class="infoTitle">
+						<span>자동충전</span>
+						<div class="info-hr"></div>
+						<div class="btn-set-info" id="btnSetAutoCharge">해지</div>						
+					</div> -->
+					<!-- <div class="infoTitle">
+						<div class="info-hr">
+							<span>신용카드</span><span id="cardName">카드이름</span><span>1234-567890-12345</span>
+							<div class="profile-modify-card"></div>
+						</div>
+					</div> -->
+					<div class="infoTitle">
+						<span>초대장 전송</span>
+						<input id='emailAddr' type="email" placeholder="초대장을 보낼 사람의 이메일을 입력하세요."></input>
+						<div class="btn-send">전송</div>
+					</div>
+				</div>
+			<!-- //계정정보 -->
+			<!-- 내 글 -->
+				<div class="profile_history profile-infomations">
+					<div class="pro_his_tit1">출판</div>
 					<div class="pro_his_tit2">작성 중</div>
 					<div class="history_bar">
 						<div class="history_year1">1975</div>
-						<div class="history_year2">2017</div>
+						<div class="history_year2">2018</div>
 						<div class="history_year3">Today</div>
 						<div class="history_date1">
-							07.11
+							<span>07.11</span>
 							<div class="date_box">
 								octocolumn 가입! :)
 							</div>
-							<div class="bordertip_right"></div>
+							<div class="bordertip_right2"></div>
 						</div>
-
-						<div class="history_date2">
-							07.11
+						<!-- <div class="history_date2">
+							<span>07.11</span>
 							<div class="date_box">
 								<div class="date_img"></div>
-								And Then I Made My First Million (Only To Lose It Later)
+								<span>And Then I Made My First Million (Only To Lose It Later)</span>
 							</div>
 							<div class="bordertip_left"></div>
 						</div>
 
 						<div class="history_date3">
-							07.11
+							<span>07.11</span>
 							<div class="date_box">
 								<div class="date_img"></div>
-								And Then I Made My First Million (Only To Lose It Later)
+								<span>And Then I Made My First Million (Only To Lose It Later)</span>
 							</div>
-							<div class="bordertip_right2"></div>
-						</div>
-
-						<div class="history_date2">
-							07.11
-							<div class="date_box">
-								<div class="date_img"></div>
-								And Then I Made My First Million (Only To Lose It Later)
-							</div>
-							<div class="bordertip_left"></div>
-						</div>
-						<div class="history_date2">
-								07.11
-								<div class="date_box">
-									<div class="date_img"></div>
-									And Then I Made My First Million (Only To Lose It Later)
-								</div>
-								<div class="bordertip_left"></div>
-							</div>
-	
-							<div class="history_date3">
-								07.11
-								<div class="date_box">
-									<div class="date_img"></div>
-									And Then I Made My First Million (Only To Lose It Later)
-								</div>
-								<div class="bordertip_right2"></div>
-							</div>
-	
-							<div class="history_date2">
-								07.11
-								<div class="date_box">
-									<div class="date_img"></div>
-									And Then I Made My First Million (Only To Lose It Later)
-								</div>
-								<div class="bordertip_left"></div>
-							</div>
-
+							<div class="bordertip_right"></div>
+						</div> -->
 					</div>
 				</div>
+			<!-- //내 글 -->
 			</div>
 		</div>
 
 	</div><!-- class="profile_allWrap" -->
-
-
+	<script type="text/javascript" src="{% static 'js/invite.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/balloon.js' %}"></script>	
+	<script type="text/javascript" src="{% static 'js/get-profile.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/getUserCard.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/drag-n-crop.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/get-my-posts.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>	
 </body>
 </html>
