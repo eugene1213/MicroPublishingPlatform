@@ -128,11 +128,19 @@ function about(pk){
 }
 
 function timeline(url){
+
+    var current_url = window.location.href;
+    var pk = current_url.split("/");
+        pk = pk[pk.length-1];
+
     $.ajax({
         url: url,        
         async: true,
-        type: 'GET',
+        type: 'POST',
         dataType: 'json',
+        data: {
+            pk: pk
+        },
         success: function(json) {
 
             console.log(json);
