@@ -30,13 +30,14 @@ def mobile(request):
 
 
 def index(request):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            response = render_to_response("view/main.html", {"login": True})
-            return response
-        return render_to_response("view/main.html", )
-    return render_to_response("view/main.html",)
+    # if request.COOKIES:
+    #     token = request.COOKIES.get('token')
+    #     if token is not None:
+    if request.user.is_authenticated:
+        response = render_to_response("view/main.html", {"login": True})
+        return response
+    return render_to_response("view/main.html", )
+    # return render_to_response("view/main.html",)
 
 
 def write(request, temp_id=None):
@@ -168,14 +169,30 @@ def preview(request, author=None, title=None):
             raise Http404
 
 
-def profile(request):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            response = render_to_response("view/profile.html", {"login": True})
+def profile(request, member_id=None):
+    if request.user.is_authenticated:
+        member = User.objects.filter(pk=member_id).get()
+        if request.user == member:
+            response = render_to_response("view/profile.html", {"login": True,
+                                                                "is_user": True
+                                                                })
             return response
-        return redirect('views:index')
-    return redirect('views:index')
+        response = render_to_response("view/profile.html", {"login": True,
+                                                            "is_user": False
+                                                            })
+        return response
+    response = render_to_response("view/profile.html", {"login": False,
+                                                        "is_user": False
+                                                        })
+    return response
+
+    # if request.COOKIES:
+    #     token = request.COOKIES.get('token')
+    #     if token is not None:
+    #         response = render_to_response("view/profile.html", {"login": True})
+    #         return response
+    #     return redirect('views:index')
+    # return redirect('views:index')
 
 
 def more(request, type=None):
@@ -222,7 +239,6 @@ def feed(request):
         return redirect('views:index')
     return redirect('views:index')
 
-@never_cache
 def signin(request):
 
     if request.COOKIES:
@@ -235,17 +251,14 @@ def signin(request):
     return response
 
 
-@never_cache
 def signup(request):
     return render_to_response('view/beta-signup.html')
 
 
-@never_cache
 def signinForm(request):
     return render_to_response('view/beta-signin2.html')
 
 
-@never_cache
 def okay(request):
     return render_to_response('view/beta-okay.html')
 
@@ -288,21 +301,18 @@ def handler500(request):
     return response
 
 
-@never_cache
 def facebook(request):
     return render_to_response('view/login/facebook_login.html')
 
 
-@never_cache
 def kakao(request):
     return render_to_response('view/login/kakao_login.html')
 
 
-@never_cache
 def google(reqeust):
     return render_to_response('view/login/google_login.html')
 
 
-@never_cache
 def naver_request(request):
     return render_to_response('naver6bc332ab9aa51989a598805bc6c439d3.html')
+
