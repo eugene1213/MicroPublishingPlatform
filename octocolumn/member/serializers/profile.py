@@ -86,8 +86,10 @@ class ProfileSubSerializer(serializers.ModelSerializer):
                     "email": settings.email,
                     "facebook": settings.facebook,
                     "web": settings.web,
+                    "sex": settings.sex,
                     "instagram": settings.instagram,
                     "birthday": settings.birthday,
+                    "twitter": settings.twitter,
                     "jobs": settings.jobs,
                     "interest": settings.subjects
 
@@ -100,9 +102,11 @@ class ProfileSubSerializer(serializers.ModelSerializer):
                 "email": user_settings.email,
                 "facebook": user_settings.facebook,
                 "web": user_settings.web,
+                "sex": user_settings.sex,
                 "instagram": user_settings.instagram,
                 "birthday": user_settings.birthday,
                 "jobs": user_settings.jobs,
+                "twitter": user_settings.twitter,
                 "interest": user_settings.subjects
 
             }
