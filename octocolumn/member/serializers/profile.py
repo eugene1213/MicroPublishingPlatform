@@ -63,6 +63,7 @@ class ProfileMainSerializer(serializers.ModelSerializer):
             'facebook',
             'instagram',
             'twitter',
+            'web',
             'intro',
             'follower',
             'following',
@@ -119,7 +120,6 @@ class ProfileSubSerializer(serializers.ModelSerializer):
             'birthday',
             'phone',
             'jobs',
-            'web',
             'subjects',
             'intro',
             'settings'
