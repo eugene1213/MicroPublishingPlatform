@@ -140,6 +140,7 @@
                 <div class="item" data-id="2">
                     <div class="item-name"><span class="icon-eye"></span>Timeline</div>
                 </div>
+            {% if is_user %}
                 <!--.item 03 -->
                 <div class="item" data-id="3">
                     <div class="item-name"><span class="icon-database"></span>Point</div>
@@ -148,6 +149,9 @@
                 <div class="item" data-id="4">
                     <div class="item-name"><span class="icon-cog"></span>Setting</div>
                 </div>
+            {% else %}
+                
+            {% endif %}
             </div>
             
             <!--.submenu-content-->

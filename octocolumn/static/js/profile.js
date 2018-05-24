@@ -55,7 +55,7 @@ $(document).ready(function(){
         error: function(error) {
             console.log(error);
         },
-        complete: about()
+        complete: about(pk)
     });
 });
 
@@ -85,12 +85,15 @@ $('.item').one('click', function(e) {
     }
 });
 
-function about(){
+function about(pk){
     $.ajax({
         url: "/api/member/getProfileSubInfo/",        
         async: true,
         type: 'POST',
         dataType: 'json',
+        data: {
+            pk: pk
+        },
         success: function(json) {
 
             console.log(json);
