@@ -170,10 +170,6 @@ def preview(request, author=None, title=None):
 
 
 def profile(request, member_id=None):
-    print(member_id)
-    if member_id is None:
-        return redirect('views:index')
-
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -195,7 +191,7 @@ def profile(request, member_id=None):
                                                                     })
                 return response
         response = render_to_response("view/profile.html", {"login": False,
-                                                    "is_user": False
+                                                        "is_user": False
                                                     })
         return response
     response = render_to_response("view/profile.html", {"login": False,
