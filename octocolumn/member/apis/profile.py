@@ -468,11 +468,12 @@ class MyTemp(APIView):
 # 유저의 프로필중 자기가 임시저장된 컬럼들을 리스팅 하는 API
 # URL /api/member/getMyAllPost/
 class AllMyPost(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
     pagination_class = AllPostListPagination
 
     def list(self, request, *args, **kwargs):
-        user = self.request.user
+        pk = self.request.data['pk']
+        user = User.objects.filter(pk=pk).get()
         try:
             temp = Temp.objects.select_related('author').filter(author=user).all()
             post = Post.objects.select_related('author').filter(author=user).all()
