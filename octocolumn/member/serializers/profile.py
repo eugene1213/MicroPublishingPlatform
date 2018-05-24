@@ -119,6 +119,7 @@ class ProfileSubSerializer(serializers.ModelSerializer):
             'birthday',
             'phone',
             'jobs',
+            'web',
             'subjects',
             'intro',
             'settings'
