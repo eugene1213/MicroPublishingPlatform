@@ -1,10 +1,17 @@
 $(document).ready(function(){
 
+    var current_url = window.location.href;
+    var pk = current_url.split("/");
+        pk = pk[pk.length-1];
+
     $.ajax({
         url: "/api/member/getProfileMainInfo/",
         async: true,
         type: 'POST',
         dataType: 'json',
+        data: {
+            pk: pk
+        },
         success: function(json) {
 
             console.log(json);
@@ -48,7 +55,7 @@ $(document).ready(function(){
         error: function(error) {
             console.log(error);
         },
-        complete: about()
+        complete: about(pk)
     });
 });
 
@@ -78,12 +85,15 @@ $('.item').one('click', function(e) {
     }
 });
 
-function about(){
+function about(pk){
     $.ajax({
         url: "/api/member/getProfileSubInfo/",        
         async: true,
         type: 'POST',
         dataType: 'json',
+        data: {
+            pk: pk
+        },
         success: function(json) {
 
             console.log(json);
