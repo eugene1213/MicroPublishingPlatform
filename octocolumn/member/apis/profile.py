@@ -1,4 +1,5 @@
 import base64
+import hashlib
 from itertools import chain
 from operator import attrgetter
 
@@ -6,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from rest_framework import generics, status
 from rest_framework.parsers import JSONParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -38,7 +39,7 @@ __all__ = (
 # 유저의 프로필을 가져오는 API
 # URL /api/member/getProfileMainInfo/
 class ProfileMainInfo(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         user = self.request.user

@@ -15,13 +15,19 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^naver6bc332ab9aa51989a598805bc6c439d3.html', naver_request, name='naver'),
 
-    url(r'^write/', include([
+    url(r'^write/',
+        include([
             url(r'^$', write, name="write"),
-            url(r'^(?P<temp_id>\d+)$', write, name="temp_write")
+            url(r'^(?P<temp_id>\d+)$',
+                write, name="temp_write")
     ]), name='write'),
     url(r'^@(?P<author>.+)/(?P<title>.+)$', read, name='read'),
     url(r'^preview/@(?P<author>.+)/(?P<title>.+)$', preview, name='preview'),
-    url(r'^profile/$', profile, name='profile'),
+    url(r'^profile/', include([
+            url(r'^$', profile, name="write"),
+            url(r'^(?P<member_id>\d+)$',
+                profile, name="temp_write")
+    ]), name='profile'),
     url(r'^more/(?P<type>[-\w]+)/$', more, name='more'),
     # url(r'^recent/$', recent, name='recent'),
     url(r'^buylist/$', buylist, name='buylist'),
