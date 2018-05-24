@@ -39,10 +39,10 @@ $(document).ready(function(){
             $("#mytwitter").val(tw.split('/')[1]);
             $("#mywebsite").val(website);
 
-            // if(website)         $(".private-table :contains(웹사이트) + td").text(website);
-            // if(fb)              $(".private-table :contains(facebook) + td").text(fb);
-            // if(ins)             $(".private-table :contains(instagram) + td").text(ins);
-            // if(tw)              $(".private-table :contains(twitter) + td").text(tw);
+            if(website)         $(".personal-website a").attr('href','https://'+website);
+            if(fb)              $(".facebook a").attr('href','https://'+fb);
+            if(ins)             $(".instagram a").attr('href','https://'+ins);
+            if(tw)              $(".twitter a").attr('href','https://'+tw);
 
         },
         error: function(error) {
@@ -133,8 +133,8 @@ function timeline(url){
             var timelineHtml = '<li class="event">\
                                     <div class="event-title">'+ created_at +'</div>\
                                     <div class="event-content">\
-                                        <h3>octocolumn 가입</h3>\
-                                        <p>:)</p>\
+                                        <h3>byCAL 가입</h3>\
+                                        <p>byCAL과 함께 새로운 지식을 탐험해보세요. :)</p>\
                                     </div>\
                                 </li>';
             if(previous!=null){
@@ -145,21 +145,23 @@ function timeline(url){
                 var created_date = results[result].created_date;
                 var title = results[result].title;
                 var msg = '';
+                var msg2 = '';
                 var href = '';
-                results[result].is_temp ? msg = '작성중' : msg = '출판';
 
                 if(results[result].is_temp ){
-                    msg = '작성중'
+                    msg = '\''+ title + '\' ' + ' 작성중';
+                    msg2 = '칼럼을 완성해주세요!';
                     href="/write/"+pk;
                 }else if(!results[result].is_temp){
-                    msg = '출판'
+                    msg = '\''+ title + '\' ' + ' 출판';
+                    msg2 = '칼럼 보러가기'
                     href="/@author/published-post-"+pk;
                 }
                 timelineHtml += '<li class="event" id="'+result+'">\
                                     <div class="event-title">'+ created_date +'</div>\
                                     <div class="event-content">\
                                         <h3>'+ msg +'</h3>\
-                                        <p><a href="'+href+'">:)</a></p>\
+                                        <p><a href="'+href+'">'+ msg2 +'</a></p>\
                                     </div>\
                                 </li>';
 
@@ -400,6 +402,32 @@ $(function(){
                 subject: interests                // 관심분야
             },
             success: function(json) {
+                var successMsgTitle = '저장';
+                var successMsg = '';
+                modal({
+                    type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
+                    title: successMsgTitle, //Modal Title
+                    text: successMsg, //Modal HTML Content
+                    size: 'normal', //Modal Size (normal | large | small)
+                    center: true, //Center Modal Box?
+                    autoclose: true, //Auto Close Modal Box?
+                    callback: null, //Callback Function after close Modal (ex: function(result){alert(result);})
+                    onShow: function(r) {}, //After show Modal function
+                    closeClick: true, //Close Modal on click near the box
+                    closable: true, //If Modal is closable
+                    theme: 'atlant', //Modal Custom Theme
+                    animate: false, //Slide animation
+                    background: 'rgba(0,0,0,0.35)', //Background Color, it can be null
+                    zIndex: 1050, //z-index
+                    template: '<div class="modal-box"><div class="modal-inner"><div class="modal-title"><a class="modal-close-btn"></a></div><div class="modal-text"></div></div></div>',
+                    _classes: {
+                        box: '.modal-box',
+                        boxInner: ".modal-inner",
+                        title: '.modal-title',
+                        content: '.modal-text',
+                        closebtn: '.modal-close-btn'
+                    }
+                });
             },
             error: function(error) {
                 console.log(error);

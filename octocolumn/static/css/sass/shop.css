@@ -1,1 +1,220 @@
-.shop{box-sizing:border-box;margin:0 auto;width:944px;padding-top:75px;margin-bottom:100px}.shop .shop_title{font-size:64px;margin-bottom:20px;text-align:center}.shop .shop_title:after{height:2px;width:100%;text-align:center;content:'';display:block;margin-top:10px;background-color:#2A292A}.shop p.shop_contents{font-size:24px;line-height:32px;margin-bottom:45px}.shop .shop_recharge{height:152px;border-radius:5px;border:2px solid #2a292a;padding:24px;margin-bottom:16px;background-color:#fafafa}.shop .shop_recharge>div{float:left}.shop .title{height:100%;margin-right:48px;width:256px}.shop .title>*{color:#000;font-size:24px;display:block;height:37%;box-sizing:border-box;line-height:0.5em}.shop .title h2{border-bottom:2px solid rgba(0,0,0,0.7);width:100%}.shop .title p.money{line-height:1.5em}.shop .detail{height:100%;margin-right:16px;width:456px}.shop .detail p{font-size:16px;line-height:20px;margin-bottom:33px;color:rgba(0,0,0,0.7);font-weight:normal}.shop .detail p:last-child{margin-bottom:0px}.shop .chooseBtn{width:115px;height:100%;box-sizing:border-box;font-size:16px;font-weight:100;line-height:2.5;position:relative}.shop .chooseBtn a{width:115px;height:40px;position:absolute;top:50%;margin-top:-20px;text-align:center;color:#fafafa;background-color:#0C4989;border-radius:4px}.shop .shop_chose:after{content:"";display:block;clear:both}.shop .shop_chose_content{width:304px;height:400px;border-radius:5px;background-color:#fafafa;box-sizing:border-box;border:2px solid #2a292a;float:left;margin-right:16px;padding:24px}.shop .shop_chose_content:last-child{margin-right:0px}.shop .shop_chose_content .title{margin-bottom:15px;height:auto}.shop .shop_chose_content .title>*{height:62px}.shop .shop_chose_content .title p.money{line-height:1.5em;border-bottom:2px solid rgba(0,0,0,0.7);width:100%}.shop .shop_chose_content .detail{margin-right:0px;width:auto;height:auto}.shop .shop_chose_content .detail p{margin-bottom:22px;text-align:right}.shop .shop_chose_content .chooseBtn{width:115px;height:auto;box-sizing:border-box;font-size:16px;font-weight:100;line-height:2.5;position:relative;top:50px;margin-left:-57.5px;left:50%}.shop .shop_chose_content .chooseBtn a{width:115px;height:40px;position:static;text-align:center;color:#fafafa;background-color:#0C4989;border-radius:4px}
+/* ============================ */
+/*             common           */
+/* ============================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none; }
+
+a, a:visited, a:focus, a:active, a:link {
+  text-decoration: none;
+  outline: 0; }
+
+a {
+  color: currentColor;
+  transition: .2s ease-in-out; }
+
+h1, h2, h3, h4 {
+  margin: 0; }
+
+ul {
+  padding: 0;
+  list-style: none; }
+
+img {
+  vertical-align: middle;
+  height: auto;
+  width: 100%; }
+
+.page {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  letter-spacing: 0em;
+  color: #2a292a; }
+
+.full-left {
+  float: left; }
+
+.full-right {
+  float: right; }
+
+.mid {
+  margin: 0 auto; }
+
+i {
+  border: 0 solid #2a292a;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 4px; }
+
+.right-arrow {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg); }
+
+.left-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg); }
+
+body {
+  background-color: #fafafa; }
+
+/* ============================ */
+/*         main content         */
+/* ============================ */
+main {
+  width: 100%;
+  padding: 0;
+  margin: 44px auto 0;
+  flex-direction: column;
+  position: relative;
+  float: left;
+  background-color: #fafafa; }
+
+/* ============================ */
+/*             shop             */
+/* ============================ */
+.main-container {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 30px 0; }
+
+/* Shop Header */
+.shop-header {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  line-height: 1.3;
+  margin: 50px 0; }
+
+.shop-header .shop-title {
+  font-size: 43px;
+  font-weight: 800; }
+
+.shop-header .shop-sub {
+  font-size: 16px;
+  font-weight: 300; }
+
+/* Main Contents */
+.shop-item {
+  width: 100%;
+  max-width: 830px;
+  display: flex;
+  margin: 0 auto; }
+
+.shop-item .item {
+  width: 260px; }
+
+.card {
+  height: 300px;
+  border: 0;
+  border-radius: 0px;
+  transition: all .3s ease-in-out;
+  position: relative;
+  will-change: transform;
+  background-color: #fff;
+  position: relative;
+  cursor: pointer; }
+
+.card:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 5px;
+  background-color: #2a292a;
+  transition: 0.5s; }
+
+.card:hover {
+  transform: scale(1.05);
+  -webkit-box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.08); }
+
+.card:hover:after {
+  width: 100%; }
+
+.card .card-header {
+  padding-top: 30px;
+  margin: 0; }
+
+.card .card-title {
+  font-size: 24px;
+  text-align: center; }
+
+.card .card-block {
+  padding-top: 0; }
+
+.display-2 {
+  font-size: 50px;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 36px 0; }
+
+.display-3 {
+  font-size: 10px;
+  text-align: center;
+  color: rgba(42, 41, 42, 0.5); }
+
+.display-3 p {
+  font-size: 14px; }
+
+.display-3 span {
+  font-size: 24px; }
+
+.btn {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(42, 41, 42, 0.5);
+  border-radius: 0;
+  letter-spacing: 1px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.btn-gradient {
+  width: 100%;
+  height: 50px;
+  box-shadow: 0px -1px 0px rgba(42, 41, 42, 0.1);
+  transition: background .3s ease-in-out; }
+
+.btn-gradient:hover {
+  color: white;
+  background-color: #2a292a;
+  box-shadow: none; }
+
+.tester {
+  float: left; }
+
+.starter {
+  margin: 0 auto; }
+
+.regular {
+  float: right; }
+
+@media screen and (max-width: 880px) {
+  .shop-item {
+    display: inline-block; }
+
+  .shop-item .item {
+    width: 100%;
+    margin-bottom: 50px; }
+
+  .tester {
+    clear: both; }
+
+  .starter {
+    clear: both; }
+
+  .regular {
+    clear: both; } }
+
+/*# sourceMappingURL=shop.css.map */
