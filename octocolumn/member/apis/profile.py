@@ -146,7 +146,7 @@ class ProfileSubInfo(APIView):
         if user == member:
             try:
                 profile = Profile.objects.select_related('user').filter(user=user).get()
-                serializer = ProfileSubSerializer(profile)
+                serializer = ProfileSubSerializer(profile, context={'user': self.request.user})
 
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -164,7 +164,7 @@ class ProfileSubInfo(APIView):
         else:
             try:
                 profile = Profile.objects.select_related('user').filter(user=member).get()
-                serializer = ProfileSubSerializer(profile, context={'request': self.request})
+                serializer = ProfileSubSerializer(profile, context={'user': self.request.user})
 
                 if serializer:
                     return Response(serializer.data, status=status.HTTP_200_OK)
