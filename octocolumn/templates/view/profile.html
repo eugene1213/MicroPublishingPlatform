@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="profileInfo">
-            <div class="userName">User Name</div>
+            <div class="userName"></div>
             <div class="userIntro" id="profileIntro">자기소개란을 준비했습니다.<br>다른 사람들이 당신에 대해서 알 수 있도록 도와줄 겁니다.</div>
             <!-- SNS -->
             <div class="userSns-wrap">
@@ -208,11 +208,11 @@
                         </ul>
 					</div>
 				</div>
-                
+            {% if is_user %}
                 <!--.item-detail 03 -->
                 <div class="item-detail" id="item-3">
                     <div class="point-wrap">
-                    	<div class="point-half">
+                        <div class="point-half">
                             <div class="have-point">
                                 <div class="point-title">보유 포인트</div>
                                 <div class="point-sub"><span id="point-amount">0</span>&nbsp;Point</div>
@@ -409,6 +409,9 @@
                         <button class="btn_save">SAVE</button>
                     </div>
                 </div>
+            {% else %}
+
+            {% endif %}
             </div>
         </div>
     </div>
