@@ -249,7 +249,7 @@
                             </li>
                             <li class="setting-content-wrap">
                                 <span class="info-title">Introduce</span>
-                                <div class="introduce"></div>
+                                <div class="introduce" contenteditable="true"></div>
                             </li>
                             <li class="setting-content-wrap">
                                 <span class="info-title">Contact Information</span>
@@ -269,9 +269,9 @@
                                                 <option value="016">016</option>
                                             </select>
                                             -
-                                            <input type="text" id="HPhone1">
+                                            <input type="text" id="HPhone1" maxlength="4">
                                             -
-                                            <input type="text" id="HPhone2">
+                                            <input type="text" id="HPhone2" maxlength="4">
                                         </div>
                                     </li>
                                     <li>
@@ -366,8 +366,8 @@
                                             <div class="setting-title">Gender</div>
                                         </div>
                                         <div class="setting-content">
-                                            <input type="radio" class="gender" name="gender" value="1" checked="true"><span>Male</span>
-                                            <input type="radio" class="gender" name="gender" value="2"><span>Female</span>
+                                            <input type="radio" class="gender" id="genderM" value="M" checked="true"><span>Male</span>
+                                            <input type="radio" class="gender" id="genderF" value="F"><span>Female</span>
                                         </div>
                                     </li>
                                     <li>

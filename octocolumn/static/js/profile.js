@@ -34,9 +34,9 @@ $(document).ready(function(){
 
             /* setting */
             $(".introduce").html(userIntro);
-            $("#myfacebook").val(fb);
-            $("#myinstagram").val(ins);
-            $("#mytwitter").val(tw);
+            $("#myfacebook").val(fb.split('/')[1]);
+            $("#myinstagram").val(ins.split('/')[1]);
+            $("#mytwitter").val(tw.split('/')[1]);
             $("#mywebsite").val(website);
 
             // if(website)         $(".private-table :contains(웹사이트) + td").text(website);
@@ -94,7 +94,7 @@ function about(){
             var birth = json.birthday;
             var gender = json.sex;
             var job = json.jobs;
-            var interests = json.subject;
+            var interests = json.subjects;
 
             $("#phone").text(phone);
             $("#email").text(email);
@@ -104,9 +104,11 @@ function about(){
             $("#interests").text(interests);
 
             /* setting */
-            $("#datepicker").text(birth);
-            $("#myjob").text(job);
-            $("#myinterests").text(interests);
+            $("#HPhone1").val(phone.split('-')[1]);
+            $("#HPhone2").val(phone.split('-')[2]);
+            $("#datepicker").val(birth);
+            $("#myjob").val(job);
+            $("#myinterests").val(interests);
             $("#myemail").text(email);
             
         },
@@ -380,17 +382,6 @@ $(function(){
         var gender = $(".gender[checked]").val();
         if(gender==1) gender="Male";
         else if(gender==2) gender="Female";
-
-        console.log(introduce)
-        console.log(hpNumber)
-        console.log(website)
-        console.log(fb)
-        console.log(ins)
-        console.log(tw)
-        console.log(birthDay)
-        console.log(job)
-        console.log(interests)
-        console.log(gender)
         
         $.ajax({
             url: "/api/member/updateProfile/",
@@ -399,10 +390,10 @@ $(function(){
             dataType: 'json',
             data: {
                 intro: introduce,                 // 자기소개
-                birthDay: birthDay*1,             // 생일
+                birthday: birthDay,               // 생일
                 sex: gender,                      // 성별
                 hpNumber: hpNumber,               // 폰번호
-                job: job,                         // 직업
+                jobs: job,                        // 직업
                 web: website,                     // 웹사이트
                 fb: fb,                           // 페북
                 ins: ins,                         // 인스타
