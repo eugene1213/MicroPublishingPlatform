@@ -1159,7 +1159,8 @@ input[type="radio"] {
     color: #2a292a;
     padding: 4px 6px;
     box-sizing: border-box;
-    overflow-y: scroll;
+    overflow-y: auto;
+    line-height: 1.5;
 }
 .setting-content input::placeholder {
 	color: #2a292a;
