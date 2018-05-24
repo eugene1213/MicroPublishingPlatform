@@ -77,41 +77,47 @@ class ProfileSubSerializer(serializers.ModelSerializer):
     def get_username(self,obj):
         return obj.user.username
     
-    def get_settings(self,obj):
+    def get_settings(self, obj):
         try:
-            settings = UserSettings.objects.filter(user=obj.user).get()
+            user = self.context.get('request').user
+            if user == obj.user:
+                settings = UserSettings.objects.filter(user=obj.user).get()
 
-            data = {
-                    "phone": settings.phone,
-                    "email": settings.email,
-                    "facebook": settings.facebook,
-                    "web": settings.web,
-                    "sex": settings.sex,
-                    "instagram": settings.instagram,
-                    "birthday": settings.birthday,
-                    "twitter": settings.twitter,
-                    "jobs": settings.jobs,
-                    "interest": settings.subjects
+                data = {
+                        "phone": settings.phone,
+                        "email": settings.email,
+                        "facebook": settings.facebook,
+                        "web": settings.web,
+                        "sex": settings.sex,
+                        "instagram": settings.instagram,
+                        "birthday": settings.birthday,
+                        "twitter": settings.twitter,
+                        "jobs": settings.jobs,
+                        "interest": settings.subjects
+
+                    }
+                return data
+            return None
+        except ObjectDoesNotExist:
+            user = self.context.get('request').user
+            if user == obj.user:
+                user_settings = UserSettings.objects.create(user=obj.user)
+                data = {
+                    "phone": user_settings.phone,
+                    "email": user_settings.email,
+                    "facebook": user_settings.facebook,
+                    "web": user_settings.web,
+                    "sex": user_settings.sex,
+                    "instagram": user_settings.instagram,
+                    "birthday": user_settings.birthday,
+                    "jobs": user_settings.jobs,
+                    "twitter": user_settings.twitter,
+                    "interest": user_settings.subjects
 
                 }
-            return data
-        except ObjectDoesNotExist:
-            user_settings = UserSettings.objects.create(user=obj.user)
-            data = {
-                "phone": user_settings.phone,
-                "email": user_settings.email,
-                "facebook": user_settings.facebook,
-                "web": user_settings.web,
-                "sex": user_settings.sex,
-                "instagram": user_settings.instagram,
-                "birthday": user_settings.birthday,
-                "jobs": user_settings.jobs,
-                "twitter": user_settings.twitter,
-                "interest": user_settings.subjects
 
-            }
-
-            return data
+                return data
+            return None
 
     username = SerializerMethodField()
     settings = SerializerMethodField()

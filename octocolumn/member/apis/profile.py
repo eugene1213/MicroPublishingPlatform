@@ -15,7 +15,7 @@ from column.models import Post, Temp
 from column.pagination import PostListPagination, AllPostListPagination
 from column.serializers import MyTempSerializer
 from column.serializers.post import MyPublishPostSerializer
-from member.models import ProfileImage, Profile, UserSettings
+from member.models import ProfileImage, Profile, UserSettings, User
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileMainSerializer, ProfileSubSerializer
 from utils.error_code import kr_error_code
@@ -42,77 +42,143 @@ class ProfileMainInfo(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        user = self.request.user
+        member_id = self.request.data['pk']
         try:
-            profile = Profile.objects.select_related('user').filter(user=user).get()
-            serializer = ProfileMainSerializer(profile)
+            member = User.objects.filter(pk=member_id).get()
+            user = self.request.user
 
-            if serializer:
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 500,
-                    "message": kr_error_code(500)
-                }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            if user == member:
+                try:
+                    profile = Profile.objects.select_related('user').filter(user=user).get()
+                    serializer = ProfileMainSerializer(profile)
+
+                    if serializer:
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                    return Response(
+                        {
+                            "code": 500,
+                            "message": kr_error_code(500)
+                        }
+                        , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except ObjectDoesNotExist:
+                    try:
+                        profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
+                        serializer = ProfileImageSerializer(profile_image)
+                        return Response({
+                            "nickname": user.nickname,
+                            "waiting":
+                                WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
+                            "post_count": Post.objects.filter(author=user).count(),
+                            "point": user.point,
+                            "intro": "- ",
+                            "following": Relation.objects.select_related('from_user', 'to_user').filter(
+                                from_user=user).count(),
+                            "follower": Relation.objects.select_related('to_user', 'from_user').filter(
+                                to_user=user).count(),
+                            "image": serializer.data
+                        }, status=status.HTTP_200_OK)
+
+                    except ObjectDoesNotExist:
+                        return Response({
+                            "nickname": user.nickname,
+                            "waiting":
+                                WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
+                            "post_count": Post.objects.filter(author=user).count(),
+                            "point": user.point,
+                            "intro": "-",
+                            "following": Relation.objects.select_related('from_user', 'to_user').filter(
+                                from_user=user).count(),
+                            "follower": Relation.objects.select_related('to_user', 'from_user').filter(
+                                to_user=user).count(),
+                            "image": {
+                                "profile_image": "https://static.octocolumn.com/media/example/2_x20_.jpeg",
+                                "cover_image": "https://static.octocolumn.com/media/example/1.jpeg"
+                            }
+                        }, status=status.HTTP_200_OK)
+            else:
+                try:
+                    profile_image = ProfileImage.objects.select_related('user').filter(user=member).get()
+                    serializer = ProfileImageSerializer(profile_image)
+                    return Response({
+                        "nickname": member.nickname,
+                        "waiting":
+                            WaitingRelation.objects.select_related('receive_user').filter(receive_user=member).count(),
+                        "post_count": Post.objects.filter(author=member).count(),
+                        "intro": "-",
+                        "following": Relation.objects.select_related('from_user', 'to_user').filter(
+                            from_user=member).count(),
+                        "follower": Relation.objects.select_related('to_user', 'from_user').filter(
+                            to_user=member).count(),
+                        "image": serializer.data
+                    }, status=status.HTTP_200_OK)
+
+                except ObjectDoesNotExist:
+                    return Response({
+                        "nickname": member.nickname,
+                        "waiting":
+                            WaitingRelation.objects.select_related('receive_user').filter(receive_user=member).count(),
+                        "post_count": Post.objects.filter(author=member).count(),
+                        "intro": "-",
+                        "following": Relation.objects.select_related('from_user', 'to_user').filter(
+                            from_user=member).count(),
+                        "follower": Relation.objects.select_related('to_user', 'from_user').filter(
+                            to_user=member).count(),
+                        "image": {
+                            "profile_image": "https://static.octocolumn.com/media/example/2_x20_.jpeg",
+                            "cover_image": "https://static.octocolumn.com/media/example/1.jpeg"
+                        }
+                    }, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            try:
-                profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
-                serializer = ProfileImageSerializer(profile_image)
-                return Response({
-                    "nickname": user.nickname,
-                    "waiting":
-                        WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
-                    "post_count": Post.objects.filter(author=user).count(),
-                    "point": user.point,
-                    "intro": "- ",
-                    "following": Relation.objects.select_related('from_user', 'to_user').filter(from_user=user).count(),
-                    "follower": Relation.objects.select_related('to_user', 'from_user').filter(to_user=user).count(),
-                    "image": serializer.data
-                }, status=status.HTTP_200_OK)
-
-            except ObjectDoesNotExist:
-                return Response({
-                    "nickname": user.nickname,
-                    "waiting":
-                        WaitingRelation.objects.select_related('receive_user').filter(receive_user=user).count(),
-                    "post_count": Post.objects.filter(author=user).count(),
-                    "point": user.point,
-                    "intro": "-",
-                    "following": Relation.objects.select_related('from_user', 'to_user').filter(from_user=user).count(),
-                    "follower": Relation.objects.select_related('to_user', 'from_user').filter(to_user=user).count(),
-                    "image": {
-                        "profile_image": "https://static.octocolumn.com/media/example/2_x20_.jpeg",
-                        "cover_image": "https://static.octocolumn.com/media/example/1.jpeg"
-                    }
-                }, status=status.HTTP_200_OK)
+            return Response({''})
 
 
 # 1
 # 유저의 프로필을 가져오는 API
 # URL /api/member/getProfileSubInfo/
 class ProfileSubInfo(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
+        member_id = self.request.data['pk']
+        member = User.objects.filter(pk=member_id).get()
         user = self.request.user
-        try:
-            profile = Profile.objects.select_related('user').filter(user=user).get()
-            serializer = ProfileSubSerializer(profile)
 
-            if serializer:
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 500,
-                    "message": kr_error_code(500)
-                }
-                , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except ObjectDoesNotExist:
-            return Response({
-                "username": user.username,
-                "intro": "-",
-            }, status=status.HTTP_200_OK)
+        if user == member:
+            try:
+                profile = Profile.objects.select_related('user').filter(user=user).get()
+                serializer = ProfileSubSerializer(profile)
+
+                if serializer:
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
+                    }
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except ObjectDoesNotExist:
+                return Response({
+                    "username": user.username,
+                    "intro": "-",
+                }, status=status.HTTP_200_OK)
+        else:
+            try:
+                profile = Profile.objects.select_related('user').filter(user=member).get()
+                serializer = ProfileSubSerializer(profile, context={'request': request})
+
+                if serializer:
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(
+                    {
+                        "code": 500,
+                        "message": kr_error_code(500)
+                    }
+                    , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except ObjectDoesNotExist:
+                return Response({
+                    "username": member.username,
+                    "intro": "-",
+                }, status=status.HTTP_200_OK)
 
 
 # 공개설정 수정
