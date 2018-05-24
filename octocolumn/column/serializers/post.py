@@ -73,7 +73,6 @@ class PostMoreSerializer(serializers.ModelSerializer):
         user = self.context.get('user')
         author_serializer = UserSerializer(obj.author)
         data = {
-            "pk":user.pk,
             "img": self.image(obj.author),
             # "created_datetime": obj.created_date.strftime('%Y.%m.%d')+' '+obj.created_date.strftime('%H:%M'),
             "created_date": obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d'),

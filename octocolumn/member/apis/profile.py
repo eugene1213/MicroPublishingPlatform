@@ -490,6 +490,6 @@ class AllMyPost(generics.ListAPIView):
         except ObjectDoesNotExist:
             return Response('', 200)
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         return self.list(request)
 
