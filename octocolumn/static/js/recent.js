@@ -42,7 +42,7 @@ $(document).ready(function(){
             $('.sub-content-title').text('All Your Purchased Posts');
             break;
         case 'feed': requestUrl = '/api/column/postRecentMore/';
-            $('.sub-content-title').text('All Latest Updated Posts That You May Like');
+            $('.sub-content-title').text('All Your followers posts');
     }
     getRecent(requestUrl);
     popBalloon();

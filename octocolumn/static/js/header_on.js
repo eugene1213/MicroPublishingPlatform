@@ -35,7 +35,7 @@ function getUserInfo() {
             $("#profile-container > .profile-text").text(nickname);
             $("#header-profile-image").css("background-image", "url("+profile_image+")");
             $('.point > .text > span').text(point);
-            $(".setting").attr('onclick','window.location.href=/profile/'+pk);
+            $(".setting").attr('onclick','window.location.href=\'/profile/'+pk+'\'');
         }
     });
 }

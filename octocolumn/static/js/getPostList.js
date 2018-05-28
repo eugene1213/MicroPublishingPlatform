@@ -7,8 +7,6 @@ function getData(){
         dataType: 'json',
         success: function(jsons) {
 
-            console.log(jsons);
-
             posts = jsons.results;
 
             var postsHtml = '';

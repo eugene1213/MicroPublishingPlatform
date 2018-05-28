@@ -17,9 +17,13 @@ header .site-name {
 	font-size: 20px;
 	line-height: 44px;
 	text-align: center;
+	width: 83px;
+	height: 25px;
+	margin-top: 11px;
+	background-image: url(../../images/example/bycal_logo_83x25.svg);
+	background-size: cover;
+	background-position: center center;
 	cursor: pointer;
-	overflow: hidden;
-    max-width: 75%;
 }
 .beta-logo{
 	position: absolute;
