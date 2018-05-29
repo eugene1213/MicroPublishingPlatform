@@ -83,29 +83,14 @@ $(window).unbind('scroll touchmove').on('scroll touchmove',function() {
 var lastScrollTop = 0;
 var imgHeight = $('.main-container').height();
 var imgWidth = $('.main-container').width();
-var mainImageTextCoord1 = $('.sub-content').offset().top;
-var mainImageTextHeight1 = $('.sub-content').height();
-
-var mainImageTextCoord2 = $('.main-content').offset().top;
-var mainImageTextHeight2 = $('.main-content').height();
-// var mainImageTextCoord3 = $('.main-container').offset().top;
-var mainImageTextCoord4 = $('.main-container').height();
+var mainImageTextCoord = $('.main-container').offset().top;
 var opacity1 = 0;
-var opacity2 = 0;
-var opacity3 = 0;
-var opacity4 = 0;
-var width = 0;
+
 $(window).scroll(function(){
 
     var st = $(document).scrollTop();
 
-    opacity1 = (mainImageTextCoord1-st)/mainImageTextCoord1;
-    opacity2 = (mainImageTextCoord2+mainImageTextHeight2-st)/(mainImageTextCoord2+mainImageTextHeight2);
-    // opacity3 = (mainImageTextCoord3-st)/mainImageTextCoord3;
-    opacity4 = (mainImageTextCoord4-st*1.5)/mainImageTextCoord4;
+    opacity1 = (mainImageTextCoord+imgHeight-st*2)/(mainImageTextCoord+imgHeight);
 
-    $('.sub-content').css('opacity',opacity1);
-    $('.main-content').css('opacity',opacity2);
-    // $('.main-container').css('opacity',opacity3);
-    // $('.main-container').css('opacity',opacity4);
+    $('.main-container').css('opacity',opacity1);
 });

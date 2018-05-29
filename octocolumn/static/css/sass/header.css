@@ -16,7 +16,6 @@ header .site-name {
   margin: 0 auto;
   color: #fff;
   font-size: 20px;
-  line-height: 44px;
   text-align: center;
   width: 83px;
   height: 25px;
@@ -198,7 +197,9 @@ profile-container:hover {
   position: relative;
   display: block;
   border: 0;
-  background-size: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 50%;
   height: 26px;
   width: 26px;
