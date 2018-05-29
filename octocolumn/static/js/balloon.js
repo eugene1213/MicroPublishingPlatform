@@ -24,7 +24,7 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                 var ins= 'https://'+jsons.instagram;
                 var fb = 'https://'+jsons.facebook;
                 var tw = 'https://'+jsons.twitter;
-                var web = jsons.web;
+                var web= 'https://'+jsons.web;
 
                 var followers = jsons.follower_count;
                 var follow_status = jsons.follow_status;

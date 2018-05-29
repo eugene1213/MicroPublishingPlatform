@@ -999,7 +999,8 @@ a {
         transition: .25s ease-in-out; }
     .flip .socialbar .more-info {
       pointer-events: auto;
-      opacity: 1; }
+      opacity: 1;
+      border-radius: 5px; }
       .flip .socialbar .more-info:hover {
         color: #2a292a;
         background-color: #fafafa;
