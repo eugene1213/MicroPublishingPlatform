@@ -991,8 +991,10 @@ a {
       cursor: pointer;
       opacity: 0.3; }
     .flip .socialbar a[href^="http"] i {
-      opacity: 1; }
+      opacity: 1;
+      border-radius: 5px; }
       .flip .socialbar a[href^="http"] i:hover {
+        color: #2a292a;
         background-color: #fafafa;
         transition: .25s ease-in-out; }
     .flip .socialbar .more-info {
