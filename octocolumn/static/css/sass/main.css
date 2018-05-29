@@ -119,14 +119,12 @@ main {
   width: 100%;
   position: relative;
   padding: 10vw 5vw 20px 5vw;
-  background-color: #2a292a;
   display: flex; }
 
 .main-content {
   width: 55%;
   max-width: 800px;
   position: relative;
-  background-color: #2a292a;
   text-align: center;
   display: block;
   align-items: center;
@@ -698,7 +696,7 @@ img {
 
 @media screen and (max-width: 900px) {
   .container {
-    width: 90vw !important; }
+    width: 86vw !important; }
 
   .row {
     display: block !important; }
@@ -712,8 +710,7 @@ img {
     color: #fff; }
 
   .container {
-    width: 100vw !important;
-    padding: 0 !important; }
+    width: 96vw !important; }
 
   .content {
     width: 55% !important; }
@@ -994,8 +991,10 @@ a {
       cursor: pointer;
       opacity: 0.3; }
     .flip .socialbar a[href^="http"] i {
-      opacity: 1; }
+      opacity: 1;
+      border-radius: 5px; }
       .flip .socialbar a[href^="http"] i:hover {
+        color: #2a292a;
         background-color: #fafafa;
         transition: .25s ease-in-out; }
     .flip .socialbar .more-info {

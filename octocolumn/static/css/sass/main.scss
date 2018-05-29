@@ -116,14 +116,12 @@ main {
 	width: 100%;
 	position: relative;
 	padding: 10vw 5vw 20px 5vw;
-	background-color: #2a292a;
 	display: flex;
 }
 .main-content {
 	width: 55%;
 	max-width: 800px;
 	position: relative;
-	background-color: #2a292a;
 	text-align: center;
 	display: block;
 	align-items: center;
@@ -821,7 +819,7 @@ img {
 
 @media screen and (max-width: 900px) {
 	.container{
-		width: 90vw !important;
+		width: 86vw !important;
 	}
 	.row {
 	  	display: block !important;
@@ -837,8 +835,7 @@ img {
 		color: #fff;
 	}
 	.container{
-		width: 100vw !important;
-		padding: 0 !important;
+		width: 96vw !important;
 	}
 	.content {
 		width: 55% !important;
@@ -1170,8 +1167,10 @@ border-color: rgba(#333,.85);
 		}
 		a[href^="http"] i {
 			opacity: 1;
-
+			border-radius: 5px;
+			
 			&:hover {
+				color: #2a292a;
 				background-color:rgba(250, 250, 250, 1);
 				transition:.25s ease-in-out;
 			}
@@ -1181,7 +1180,7 @@ border-color: rgba(#333,.85);
 			opacity: 1;
 
 			&:hover {
-				color: #2a292a;
+				color: #2a292a;			
 				background-color:rgba(250, 250, 250, 1);
 				transition:.25s ease-in-out;
 			}
