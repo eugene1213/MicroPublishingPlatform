@@ -119,14 +119,12 @@ main {
   width: 100%;
   position: relative;
   padding: 10vw 5vw 20px 5vw;
-  background-color: #2a292a;
   display: flex; }
 
 .main-content {
   width: 55%;
   max-width: 800px;
   position: relative;
-  background-color: #2a292a;
   text-align: center;
   display: block;
   align-items: center;
@@ -698,7 +696,7 @@ img {
 
 @media screen and (max-width: 900px) {
   .container {
-    width: 90vw !important; }
+    width: 86vw !important; }
 
   .row {
     display: block !important; }
@@ -712,8 +710,7 @@ img {
     color: #fff; }
 
   .container {
-    width: 100vw !important;
-    padding: 0 !important; }
+    width: 96vw !important; }
 
   .content {
     width: 55% !important; }
