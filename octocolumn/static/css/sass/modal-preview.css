@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .preview-wrap {
   position: absolute;
   overflow-y: scroll;
@@ -160,6 +161,10 @@
           max-width: 53.33%;
           float: left;
           margin: 0 30px 20px 0; }
+          .preview-wrap .preview .preview-main-content .medium-insert-images-left img:after {
+            content: '';
+            clear: both;
+            display: block; }
       .preview-wrap .preview .preview-main-content .medium-insert-images-right {
         width: 952px;
         margin: auto; }
@@ -167,6 +172,9 @@
           max-width: 53.33%;
           float: right;
           margin: 0 0 20px 30px; }
+          .preview-wrap .preview .preview-main-content .medium-insert-images-right img:after {
+            content: '';
+            clear: both; }
       .preview-wrap .preview .preview-main-content .medium-insert-images-full {
         width: 100%; }
     .preview-wrap .preview .priceBtn {
@@ -426,5 +434,8 @@
   -ms-transform: rotate(-70deg);
   -o-transform: rotate(-70deg);
   content: ''; }
+
+.balance:contains('로그인 해주세요') {
+  cursor: pointer; }
 
 /*# sourceMappingURL=modal-preview.css.map */

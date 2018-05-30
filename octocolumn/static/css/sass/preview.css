@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* ============================ */
 /*            preview             */
 /* ============================ */
@@ -74,6 +75,8 @@
   opacity: 0.5;
   font-size: 16px;
   margin-bottom: 12px; }
+  .preview-content .balance:contains(로그인 해주세요) {
+    cursor: pointer; }
 
 /* close button */
 .close {
@@ -238,6 +241,8 @@
       max-width: 53.33%;
       float: left;
       margin: 0 30px 20px 0; }
+      .column-preview .column-content .medium-insert-images-left img + figcaption {
+        clear: both; }
   .column-preview .column-content .medium-insert-images-right {
     width: 90%;
     margin: auto; }
@@ -245,6 +250,8 @@
       max-width: 53.33%;
       float: right;
       margin: 0 0 20px 30px; }
+      .column-preview .column-content .medium-insert-images-right img + figcaption {
+        clear: both; }
   .column-preview .column-content .medium-insert-images-full {
     width: 100%; }
   .column-preview .column-content .gradient {

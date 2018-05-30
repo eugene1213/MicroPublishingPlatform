@@ -1,4 +1,4 @@
-/* 구매했는지 체크 */
+/* 구매했는지 체크 후 구매하지 않았다면 프리뷰 모달 팝업 */
 function isBought(post_id, readtime, bookmark_status) {
 
     $.ajax({
@@ -132,7 +132,7 @@ function isBought(post_id, readtime, bookmark_status) {
                 contentHeight = $('.column-content').height();
                 $('.gradient').height(contentHeight);
             });
-            $('.balance :contains(로그인 해주세요)').click(function(){
+            $('.balance:contains(로그인 해주세요)').click(function(){
                 $('#preview-container').remove();
                 modalSignin();
             });
