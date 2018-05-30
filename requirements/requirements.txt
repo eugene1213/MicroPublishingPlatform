@@ -42,5 +42,6 @@ django-user-agents
 django-redis-cache
 django-jet
 celery[redis]
+uwsgi
 
 
