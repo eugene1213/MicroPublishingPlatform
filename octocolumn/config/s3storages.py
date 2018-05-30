@@ -1,6 +1,7 @@
 import re
 
 from django.conf import settings
+# from storages.backends.azure_storage import AzureStorage
 from storages.backends.azure_storage import AzureStorage
 from storages.backends.s3boto import S3BotoStorage
 
@@ -30,11 +31,11 @@ class AzureStaticStorage(AzureStorage):
     file_overwrite = True
 
 
-# class AzureMediaStorage(AzureStorage):
-#     account_name = settings.AZURE_STORAGE_ACCOUNT
-#     account_key = settings.AZURE_STORAGE_KEY
-#     azure_container = 'media'
-#     file_overwrite = True
+class AzureMediaStorage(AzureStorage):
+    account_name = settings.AZURE_STORAGE_ACCOUNT
+    account_key = settings.AZURE_STORAGE_KEY
+    azure_container = 'media'
+    file_overwrite = True
 
 # class AzureStaticStorage(AzureStorage):
 #
@@ -43,10 +44,10 @@ class AzureStaticStorage(AzureStorage):
 #         _ret = re.sub('//[a-z.0-9A-Z]*/', settings.STATIC_URL, ret)
 #         return _ret
 
-class AzureMediaStorage(AzureStorage):
-
-    def url(self, name):
-        ret = super(AzureMediaStorage, self).url(name)
-        _ret = re.sub('//[a-z.0-9A-Z]*/', settings.MEDIA_URL, ret)
-        return _ret
+# class AzureMediaStorage(AzureStorage):
+#
+#     def url(self, name):
+#         ret = super(AzureMediaStorage, self).url(name)
+#         _ret = re.sub('//[a-z.0-9A-Z]*/', settings.MEDIA_URL, ret)
+#         return _ret
 
