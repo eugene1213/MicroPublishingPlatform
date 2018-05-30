@@ -15,7 +15,7 @@
 <meta http-equiv="x-rim-auto-match" content="none" />
 <meta name="google-site-verification" content="Dq8XH8YdjcP0i0psM5a-wvQuiIInde9PlKijyO33y1c" />
 <title>octocolumn</title>
-<link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}" />
+<link rel="shortcut icon" href="{% static 'images/favicon/favicon-32.ico' %}" />
 <!-- core CSS -->
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/main.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
@@ -47,21 +47,19 @@
     <main>
         <!-- main content 01 -->
         <div class="main-container">
-            <div class="main-text-container">
-                <span class="main-content-title">Dive into the sentence.</span>
-                <div class="main-content-sub">
-                    <span>마음을 움직이는 흥미로운 아이디어,
-                    <br>가장 잘 아는 사람들로부터 직접 들을 수 있습니다.
-                    <br>기술에서 정치에 이르기까지 당신이 관심있어하는
-                    <br>모든 분야에 대해서 다루고 있습니다.
-                    </span>
+            <div class="contents-wrap">
+                <div class="main-content">
+                    <p class="css-typing"><h1>A book<br>of<br><span data-typer-targets="new era,original ideas,the internet,you"></span></h1></p>
                 </div>
-                <div class="main-content-btn">
-                    <a href="#" class="Learn-more">Learn more</a>
-                    <a href="#" class="Get-started">Get started</a>
+                <div class="sub-content">
+                    <h5>‘byCAL’은 지식 콘텐츠의 캐쥬얼한 소비를 위한 플랫폼입니다.<br>
+            각 분야의 칼럼니스트들의 깊이 있고, 정제된 이야기를 구매해서 읽어보세요.</h5>
                 </div>
             </div>
-            <div class="main-content-img"></div>
+            <div class="mouse-wrap">
+                <div class="mouse"></div>
+                <p>Scroll</p>
+            </div>
         </div>
         <!-- Sub content 01 -->
         <div class="container" id="container">
@@ -253,12 +251,14 @@
 {% endif %}
 <!-- JS -->
 <script src="{% static 'js/script2.js' %}"></script>
+<script src="{% static 'js/signin.js' %}"></script>
 <script src="{% static 'js/getPostList.js' %}"></script>
 <script src="{% static 'js/balloon.js' %}"></script>
 <script src="{% static 'js/checkOwnPost.js' %}"></script>
 <script src="{% static 'js/request-buy.js' %}"></script>
 <script src="{% static 'js/drag-n-crop.js' %}"></script>
 <script src="{% static 'js/checkBookMark.js' %}"></script>
+<script src='https://rawgit.com/layervault/jquery.typer.js/master/src/jquery.typer.js'></script>
 <script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/spin.js' %}"></script>	
 <script src="{% static 'js/jquery.imageloader.js' %}"></script>

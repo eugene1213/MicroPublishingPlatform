@@ -42,22 +42,38 @@ class FollowStatusSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         serializer = UserSerializer(obj)
-        profile = Profile.objects.select_related('user').filter(user=obj).get()
+        try:
+            profile = Profile.objects.select_related('user').filter(user=obj).get()
 
-        data = {
-            "username": serializer.data['nickname'],
-            "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
-            "intro": profile.intro,
-            "blog": '',
-            "achevement": "",
-            "instagram": profile.instagram,
-            "facebook": profile.facebook,
-            "twitter": profile.twitter,
-            "img": self.image(obj)
+            data = {
+                "username": serializer.data['nickname'],
+                "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
+                "intro": profile.intro,
+                "web": profile.web,
+                "achevement": "",
+                "instagram": profile.instagram,
+                "facebook": profile.facebook,
+                "twitter": profile.twitter,
+                "img": self.image(obj)
 
-        }
+            }
 
-        return data
+            return data
+        except ObjectDoesNotExist:
+            data = {
+                "username": serializer.data['nickname'],
+                "following_url": "/api/member/" + str(serializer.data['pk']) + "/follow/",
+                "intro": "",
+                "web": "",
+                "achevement": "",
+                "instagram": "",
+                "facebook": "",
+                "twitter": "",
+                "img": self.image(obj)
+
+            }
+            return data
+
     user = SerializerMethodField()
     follow_status = SerializerMethodField()
     follower_count = SerializerMethodField()

@@ -241,10 +241,10 @@ class PostListView(generics.ListAPIView):
             post = Post.objects.select_related('author').all().order_by('-created_date')[0:10]
 
             page = self.paginate_queryset(post)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+            serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
             if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:
@@ -264,10 +264,10 @@ class PostMoreListView(generics.ListAPIView):
             post = Post.objects.all().order_by('-created_date')
 
             page = self.paginate_queryset(post)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+            serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
             if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:
@@ -564,10 +564,10 @@ class BookmarkListView(generics.ListAPIView):
                 list.append(i.post)
 
             page = self.paginate_queryset(list)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+            serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
             if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:
@@ -592,10 +592,10 @@ class BuyListView(generics.ListAPIView):
                 list.append(i.post)
 
             page = self.paginate_queryset(list)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+            serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
             if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:
@@ -619,10 +619,10 @@ class FeedListView(generics.ListAPIView):
                 list.append(i.post)
 
             page = self.paginate_queryset(list)
-            serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+            serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
             if page is not None:
-                serializer = PostMoreSerializer(page, context={'request': request}, many=True)
+                serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
                 return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         except ObjectDoesNotExist:

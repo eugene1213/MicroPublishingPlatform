@@ -43,19 +43,18 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            raise serializers.ValidationError('비밀번호가 일치하지 않습니다')
+            return data
         
         if len(data['password1']) < 8:
-            raise serializers.ValidationError('비밀번호는 최소 8자리 입니다.')
+            return serializers.ValidationError('비밀번호는 최소 8자리 입니다.')
 
         return data
 
     def create(self, validated_data):
         user = User.objects.create_user(
            username=validated_data['username'],
-            password=validated_data['password1'],
-            nickname=validated_data['nickname'],
-            # img_profile=validated_data.get('img_profile')
+           password=validated_data['password1'],
+           nickname=validated_data['nickname'],
         )
 
         if user:

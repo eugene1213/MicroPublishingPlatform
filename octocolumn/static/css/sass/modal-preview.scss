@@ -196,6 +196,12 @@
                     max-width: 53.33%;
                     float: left;
                     margin: 0 30px 20px 0;
+
+                    &:after {
+                        content: '';
+                        clear: both;
+                        display: block;
+                    }
                 }
             }
             .medium-insert-images-right {
@@ -206,6 +212,11 @@
                     max-width: 53.33%;
                     float: right;
                     margin: 0 0 20px 30px;
+
+                    &:after {
+                        content: '';                        
+                        clear: both;
+                    }
                 }
             }
             .medium-insert-images-full {
@@ -547,4 +558,7 @@
     -ms-transform:     rotate(-70deg);
     -o-transform:      rotate(-70deg);
     content: '';
+ }
+ .balance:contains('로그인 해주세요') {
+     cursor: pointer;
  }

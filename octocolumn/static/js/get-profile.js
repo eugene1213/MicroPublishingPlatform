@@ -254,20 +254,16 @@ function get_profile() {
             var username = json.nickname;
             var email = json.username;
             var waiting = json.waiting;
-            // var stamp = json.stamp;
+            
             var userIntro = json.intro;
             var following = json.following;
             var follower = json.follower;
             var posts = json.post_count;
 
-            var birthYear = json.year;
-            var birthMonth = json.month;
-            var birthDay = json.day;
+            var birth = json.birth;
             var gender = json.sex;
-            var age = json.age;
 
             var hpNumber = json.phone;
-            var location = json.region;
 
             var job = json.jobs;
             var website = json.web;
@@ -276,40 +272,33 @@ function get_profile() {
             var tw = json.twitter;
             var subject = json.subjects;
             
-            $(".profile_mainbanner").css("background",'url(' +cover_img+ ')');
-            $(".profile_img > img").attr("src",profile_img);
-            $(".content_title1 > span").text(username);
-            $(".profile_con_icon").text(waiting);
+            $(".profileCover-wrap").css("background",'url(' +cover_img+ ')');
+            $(".profileImg-wrap > img").attr("src",profile_img);
+            $(".userName").text(username);
+            $(".waiting-wrap > p > span").text(waiting);
             $("#profileIntro").html(userIntro);
             $("#Following").text(following);
             $("#Follower").text(follower);
             $("#posts").text(posts);
             $("#email").text(email);
 
-            if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear + "년");
-            if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
-            if(gender)          $(".base-table :contains(성별) + td").text(gender);
-            if(age > 0)         $(".base-table :contains(나이) + td").text(age);
+            // if(birthYear)       $(".base-table :contains(태어난 년도) + td").text(birthYear + "년");
+            // if(birthMonth)      $(".base-table :contains(생일) + td").text(birthMonth + "월" + birthDay + "일");
+            // if(gender)          $(".base-table :contains(성별) + td").text(gender);
+            // if(age > 0)         $(".base-table :contains(나이) + td").text(age);
 
-            if(hpNumber)        $(".contact-table :contains(휴대폰) + td").text(hpNumber);
-            if(location)        $(".contact-table :contains(지역) + td").text(location);
-            if(email)           $(".contact-table :contains(이메일) + td").text(email);
+            // if(hpNumber)        $(".contact-table :contains(휴대폰) + td").text(hpNumber);
+            // if(location)        $(".contact-table :contains(지역) + td").text(location);
+            // if(email)           $(".contact-table :contains(이메일) + td").text(email);
 
-            if(job)             $(".private-table :contains(직업) + td").text(job);
-            if(website)         $(".private-table :contains(웹사이트) + td").text(website);
-            if(fb)              $(".private-table :contains(facebook) + td").text(fb);
-            if(ins)             $(".private-table :contains(instagram) + td").text(ins);
-            if(tw)              $(".private-table :contains(twitter) + td").text(tw);
-            if(subject)         $(".private-table :contains(관심분야) + td").text(subject);
+            // if(job)             $(".private-table :contains(직업) + td").text(job);
+            // if(website)         $(".private-table :contains(웹사이트) + td").text(website);
+            // if(fb)              $(".private-table :contains(facebook) + td").text(fb);
+            // if(ins)             $(".private-table :contains(instagram) + td").text(ins);
+            // if(tw)              $(".private-table :contains(twitter) + td").text(tw);
+            // if(subject)         $(".private-table :contains(관심분야) + td").text(subject);
 
-            historyBarHeight();
-
-            // $("#coverImg").load(function(){
-            //     loadCropImage("#coverImg");
-            // });
-            // $("#profileImg").load(function(){
-            //     loadCropImage("#profileImg");
-            // });
+            // historyBarHeight();
         },
         error: function(error) {
             console.log(error);

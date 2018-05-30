@@ -16,11 +16,14 @@ header .site-name {
   margin: 0 auto;
   color: #fff;
   font-size: 20px;
-  line-height: 44px;
   text-align: center;
-  cursor: pointer;
-  overflow: hidden;
-  max-width: 75%; }
+  width: 83px;
+  height: 25px;
+  margin-top: 11px;
+  background-image: url(../../images/example/bycal_logo_83x25.svg);
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer; }
 
 .beta-logo {
   position: absolute;
@@ -194,7 +197,9 @@ profile-container:hover {
   position: relative;
   display: block;
   border: 0;
-  background-size: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 50%;
   height: 26px;
   width: 26px;
@@ -278,7 +283,7 @@ profile-container:hover {
   float: left;
   width: 36px;
   height: 36px;
-  font-size: 10px;
+  font-size: 12px;
   text-align: center;
   line-height: 36px;
   position: relative; }

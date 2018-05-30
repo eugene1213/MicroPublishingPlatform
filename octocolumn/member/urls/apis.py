@@ -4,9 +4,9 @@ from rest_framework_jwt.views import refresh_jwt_token, verify_jwt_token, obtain
 from member import apis
 from member.apis import Login, SignUp, FacebookLogin, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, \
-    ProfileIntroUpdate, Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
+    Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView, \
-    FollowerStatus, ProfileMainInfo, ProfileSubInfo
+    FollowerStatus, ProfileMainInfo, ProfileSubInfo, AllMyPost, ProfileOpenSettings
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -17,7 +17,7 @@ urlpatterns = [
     # 비밀번호 찾기
     url(r'^passwordReset/$', PasswordReset.as_view(), name='passwordReset'),
     # 유저정보 요청
-    url(r'^userInfo/$', UserInfo.as_view(), name='signup'),
+    url(r'^userInfo/$', UserInfo.as_view(), name='userInfo'),
 
     # 토큰 관련
     url(r'^api-token-refresh/', refresh_jwt_token),
@@ -33,9 +33,11 @@ urlpatterns = [
     # 프로필 관련
     url(r'^getMyPost/', PublishPost.as_view(), name='getMyPost'),
     url(r'^getMyTemp/', MyTemp.as_view(), name='getMyTemp'),
+    url(r'^getMyAllPost/', AllMyPost.as_view(), name='getMyAllPost'),
     url(r'^getProfileMainInfo/', ProfileMainInfo.as_view(), name='profileMain'),
     url(r'^getProfileSubInfo/', ProfileSubInfo.as_view(), name='profileSub'),
-    url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
+    # url(r'^updateProfileIntro/', ProfileIntroUpdate.as_view(), name='profile'),
+    url(r'^updateUserSettings/', ProfileOpenSettings.as_view(), name='settings'),
     url(r'^updateProfile/', ProfileUpdate.as_view(), name='profile'),
     url(r'^profile-image/', ProfileImageUpload.as_view(), name='profile_image'),
     url(r'^usercover-image/', UserCoverImageUpload.as_view(), name='usercover_image'),

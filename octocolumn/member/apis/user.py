@@ -85,16 +85,20 @@ class Login(APIView):
                     return response
                 # return response
                 return response
-            data = {
-                "detail": "This Account is not Activate"
-            }
-            return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-            # return HttpResponseRedirect(redirect_to='/signin/')
-        data = {
-            'detail': 'Invalid credentials'
-        }
+            return Response(
+                {
+                    "code": 406,
+                    "content": kr_error_code(401)
 
-        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+                }
+                , status=status.HTTP_406_NOT_ACCEPTABLE)
+            # return HttpResponseRedirect(redirect_to='/signin/')
+        return Response(
+            {
+                "code": 401,
+                "content": kr_error_code(401)
+            }
+            , status=status.HTTP_401_UNAUTHORIZED)
         # return HttpResponseRedirect(redirect_to='/signin/')
 
 
@@ -137,7 +141,15 @@ class SignUp(generics.CreateAPIView):
             serializer.save()
             # return HttpResponseRedirect(redirect_to='/okay/')
             return Response(serializer.data, status=200)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {
+                "code": 401,
+                "content": {
+                    "title": "Sign up Failed",
+                    "message": "비밀번호를 다시 한번 확인해주세요"
+                }
+            }
+            , status=status.HTTP_401_UNAUTHORIZED)
         # return HttpResponseRedirect(redirect_to='/signup/')
 
 
