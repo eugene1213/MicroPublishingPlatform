@@ -24,9 +24,8 @@
     "s3_bucket_name":"devtestserver"
   },
   "azure":{
-    "account":"devocto",
-    "account_key":"8/bQE7j+UP3eE04x9NaBzrS6zcRUUNTopjqdvDIWj3TXMHivhTy8O11JuIQjBOpiPe5AR53T+E9CcE4vnozjEw==",
-    "container":"devocto"
+    "account":"bycal",
+    "account_key":"8JX98OjFx6qJlMH/JNzSWomWxq+RnB4kgHqWXlQDMBL2CfNdYMISvyY7e0Q4SQs2BCJRkoZn7XaSiCVxkWtT0g=="
   },
   "accounts":{
     "facebook":{

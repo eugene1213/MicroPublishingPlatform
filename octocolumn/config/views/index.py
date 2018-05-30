@@ -30,6 +30,7 @@ def mobile(request):
 
 
 def index(request):
+    print(request.user.is_authenticated)
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
@@ -170,7 +171,6 @@ def preview(request, author=None, title=None):
 
 
 def profile(request, member_id=None):
-    print(request.user)
     if request.COOKIES:
         token = request.COOKIES.get('token')
         if token is not None:
