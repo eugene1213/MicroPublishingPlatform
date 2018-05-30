@@ -34,7 +34,6 @@
     {% if login %}
         {% include 'view/header_on.html' %}
     {% else %}
-        <script>window.location.href = '/';</script>
     {% endif %}
 	<!-- header -->
     
@@ -136,11 +135,11 @@
                 <div class="item active" data-id="1">
                     <div class="item-name"><span class="icon-user"></span>About</div>
                 </div>
+            {% if is_user %}                
                 <!--.item 02 -->
                 <div class="item" data-id="2">
                     <div class="item-name"><span class="icon-eye"></span>Timeline</div>
                 </div>
-            {% if is_user %}
                 <!--.item 03 -->
                 <div class="item" data-id="3">
                     <div class="item-name"><span class="icon-database"></span>Point</div>
@@ -204,7 +203,7 @@
                         </div>
                     </div>
                 </div>
-                
+            {% if is_user %}
                 <!--.item-detail 02 -->
                 <div class="item-detail" id="item-2">
                     <div class="timeline-wrap">
@@ -212,7 +211,6 @@
                         </ul>
 					</div>
 				</div>
-            {% if is_user %}
                 <!--.item-detail 03 -->
                 <div class="item-detail" id="item-3">
                     <div class="point-wrap">

@@ -99,7 +99,7 @@ class ProfileSubSerializer(serializers.ModelSerializer):
                 return data
             return None
         except ObjectDoesNotExist:
-            user = self.request.user
+            user = self.context.get('user')
             if user == obj.user:
                 user_settings = UserSettings.objects.create(user=obj.user)
                 data = {
