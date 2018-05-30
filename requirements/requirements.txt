@@ -43,5 +43,6 @@ django-redis-cache
 django-jet
 celery[redis]
 uwsgi
+azure-storage==0.20.0
 
 

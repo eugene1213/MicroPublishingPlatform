@@ -5,11 +5,10 @@
     "databases":{
       "engine":"django.db.backends.postgresql_psycopg2",
       "name":"octo",
-      "user":"devocto",
+      "user":"bycal@bycaldb",
       "password":"!devocto1234",
-      "host":"octocolumn.cgkhz06rcrfm.ap-northeast-2.rds.amazonaws.com",
+      "host":"bycaldb.postgres.database.azure.com",
       "port":"5432"
-
     },
     "email":{
       "host":"smtp.gmail.com",
