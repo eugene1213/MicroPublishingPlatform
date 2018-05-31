@@ -4,7 +4,7 @@ unlink /run/supervisor.sock
 # nginx stop
 fuser -k 80/tcp
 # nginx off
-#service nginx stop
+service nginx stop
 
 #nginx stop
 
