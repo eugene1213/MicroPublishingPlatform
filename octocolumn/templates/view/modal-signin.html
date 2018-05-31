@@ -51,6 +51,10 @@ function fblogin(){
 				dataType: 'json',
 				success: function() {
 					window.location.href = '/';
+					console.log(accessToken)
+				},
+				error: function(err){
+					console.log(err);
 				}
 			});
 		} else if (response.status === 'not_authorized') {
@@ -69,6 +73,8 @@ function fblogin(){
 							dataType: 'json',
 							success: function() {
 								window.location.href = '/';
+					console.log(token)
+								
 							},
 							error: function(err){
 								console.log(err);
@@ -81,6 +87,32 @@ function fblogin(){
 			});
 		} else {
 			// the user isn't logged in to Facebook.
+			FB.login(function(response) {
+				if (response.authResponse) {
+					console.log('Welcome!  Fetching your information.... ');
+					FB.api('/me', function(response) {
+						console.log(JSON.stringify(response))
+						token = JSON.stringify(response);
+						$.ajax({
+							url: "/api/member/facebookLogin/",
+							async: false,
+							type: 'POST',
+							dataType: 'json',
+							data: {token:token},
+							success: function() {
+								window.location.href = '/';
+								console.log(token)
+								
+							},
+							error: function(err){
+								console.log(err);
+							}
+						});
+					});
+				} else {
+					console.log('User cancelled login or did not fully authorize.');
+				}
+			});
 		}
 	});
 }

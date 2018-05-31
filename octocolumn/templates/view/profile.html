@@ -44,16 +44,22 @@
     	<!-- Profile -->
     	<div class="profile-wrap">
             <div class="profileCover-wrap" id="cover">
+            {% if is_user %}                            
                 <input type="file" id="coverImgInput" accept=".jpg,.jpeg,.png">
             	<div class="profileCover-block">
 					<a href="#" class="btn">Edit</a>
 				</div>
+            {% else %}
+            {% endif %}
             </div>
             <div class="profileImg-wrap profile-image-upload-wrap" id="profileImg">
+             {% if is_user %}   
                 <input type="file" id="profileImgInput" accept=".jpg,.jpeg,.png">
             	<div class="profileImg-block">
 					<a href="#" class="btn">Edit</a>
 				</div>
+            {% else %}
+            {% endif %}
             </div>
         </div>
         <div class="profileInfo">
@@ -150,7 +156,7 @@
                     <div class="item-name"><span class="icon-cog"></span>Setting</div>
                 </div>
             {% else %}
-                
+
             {% endif %}
             </div>
             
