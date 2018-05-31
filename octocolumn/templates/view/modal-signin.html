@@ -68,6 +68,11 @@ function fblogin(){
 					},
 					error: function(err){
 						console.log(err);
+						if(err.responseJSON.code){
+							title = err.responseJSON.content.title;
+							msg = err.responseJSON.content.message;
+							error_modal(title,msg,false);
+						}
 					}
 				});
 			});
@@ -102,6 +107,11 @@ function fblogin(){
 							},
 							error: function(err){
 								console.log(err);
+								if(err.responseJSON.code){
+									title = err.responseJSON.content.title;
+									msg = err.responseJSON.content.message;
+									error_modal(title,msg,false);
+								}
 							}
 						});
 					});
@@ -141,6 +151,11 @@ function fblogin(){
 							},
 							error: function(err){
 								console.log(err);
+								if(err.responseJSON.code){
+									title = err.responseJSON.content.title;
+									msg = err.responseJSON.content.message;
+									error_modal(title,msg,false);
+								}
 							}
 						});
 					});
