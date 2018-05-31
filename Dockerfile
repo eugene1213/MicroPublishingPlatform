@@ -48,6 +48,8 @@ RUN         /root/.pyenv/versions/app/bin/pip install -r /srv/app/requirements/r
 ## supervisor파일 복사
 COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
 COPY        .config/supervisor/nginx.conf /etc/supervisor/conf.d/
+COPY        .config/supervisor/celery.conf /etc/supervisor/conf.d/
+
 ##
 ## nginx파일 복사
 COPY        .config/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -100,21 +102,21 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # Certbot 설치
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:certbot/certbot
-RUN apt-get update
-RUN apt-get install dialog apt-utils -y
-RUN apt-get install -y python-certbot-nginx
-
-RUN         cp /srv/app/.config/supervisor/* \
-                /etc/supervisor/conf.d/
+#RUN apt-get update
+#RUN apt-get install -y software-properties-common
+#RUN add-apt-repository -y ppa:certbot/certbot
+#RUN apt-get update
+#RUN apt-get install dialog apt-utils -y
+#RUN apt-get install -y python-certbot-nginx
+#
+#RUN         cp /srv/app/.config/supervisor/* \
+#                /etc/supervisor/conf.d/
 
 RUN chmod +x run.sh
 
-CMD         supervisord -n
-EXPOSE      80
-
+#CMD         supervisord -n
+#EXPOSE      80
+RUN ./run.sh
 
 # certbot --nginx -d www.octocolumn.com
 #RUN certbot certonly -d www.octocolumn.com -d octocolumn.com
