@@ -1,5 +1,4 @@
---upgrade setuptools
---upgrade pip
+setuptools
 blessed==1.14.2
 botocore==1.8.0
 cement==2.8.2
