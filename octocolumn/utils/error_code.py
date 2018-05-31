@@ -91,7 +91,7 @@ def kr_error_code(x):
             "message": "이미 가입 되어있는 이메일 입니다.",
         },
         433: {
-            "title": "Email Access Required",
+            "title": "Email Permission Required",
             "message": "이메일 권한 설정을 확인해주세요",
         },
 
