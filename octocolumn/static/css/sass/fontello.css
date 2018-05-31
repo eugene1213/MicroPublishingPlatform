@@ -44,11 +44,13 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
 .icon-bookmark:before {
-  content: '\e800'; }
+  content: '\e800';
+  font-family: "fontello" !important; }
 
 /* '북마크' */
 .icon-bookmark-empty:before {
-  content: '\f097'; }
+  content: '\f097';
+  font-family: "fontello" !important; }
 
 /* '빈 북마크' */
 .icon-television:before {

@@ -19,7 +19,7 @@
 			appId      : '187797705177095',
 			cookie     : true,
 			xfbml      : true,
-			version    : '2.12'
+			version    : 'v2.12'
 		});
 		
 	  	FB.AppEvents.logPageView();   
@@ -33,6 +33,59 @@
 		js.src = "https://connect.facebook.net/en_US/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
+
+function fblogin(){
+	FB.getLoginStatus(function(response) {
+		if (response.status === 'connected') {
+			// the user is logged in and has authenticated your
+			// app, and response.authResponse supplies
+			// the user's ID, a valid access token, a signed
+			// request, and the time the access token 
+			// and signed request each expire
+			var uid = response.authResponse.userID;
+			var accessToken = response.authResponse.accessToken;
+			$.ajax({
+				url: "/api/member/facebookLogin/" + accessToken,
+				async: false,
+				type: 'GET',
+				dataType: 'json',
+				success: function() {
+					window.location.href = '/';
+				}
+			});
+		} else if (response.status === 'not_authorized') {
+			// the user must go through the login flow
+			// to authorize your app or renew authorization
+			FB.login(function(response) {
+				if (response.authResponse) {
+					console.log('Welcome!  Fetching your information.... ');
+					FB.api('/me', function(response) {
+						console.log(JSON.stringify(response))
+						token = JSON.stringify(response);
+						$.ajax({
+							url: "/api/member/facebookLogin/" + token,
+							async: false,
+							type: 'GET',
+							dataType: 'json',
+							success: function() {
+								window.location.href = '/';
+							},
+							error: function(err){
+								console.log(err);
+							}
+						});
+					});
+				} else {
+					console.log('User cancelled login or did not fully authorize.');
+				}
+			});
+		} else {
+			// the user isn't logged in to Facebook.
+		}
+	});
+}
+
+
 </script>
 <script>
 	var googleUser = {};
@@ -140,7 +193,7 @@
                     <p onClick="(function(){$('.welcome-container').hide();$('.findpw-container').show();})();">Forgot your password?</p>
                 </div>
                 <div class="btn_wrap">
-                    <div class="btn-signin facebook" onClick="javascript:FB.login(function(response){console.log(response)});">
+                    <div class="btn-signin facebook" onClick="javascript:fblogin();">
                         <div class="signwith-icon icon-facebook"></div>
                         <span class="signwith-text">Sign in with Facebook</span>
                     </div>

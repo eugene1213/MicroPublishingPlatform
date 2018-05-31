@@ -30,24 +30,16 @@ def mobile(request):
 
 
 def index(request):
-    print(request.user.is_authenticated)
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-    # if request.user.is_authenticated:
+    if request.user.is_authenticated:
             response = render_to_response("view/main.html", {"login": True})
             return response
-        return render_to_response("view/main.html", )
-    return render_to_response("view/main.html",)
+    return render_to_response("view/main.html", )
 
 
 def write(request, temp_id=None):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
+    if request.user.is_authenticated:
             response = render_to_response("view/write.html", {"login": True})
             return response
-        return redirect('views:index')
     return redirect('views:index')
 
 
@@ -64,29 +56,20 @@ def read(request, author=None, title=None):
         post = Post.objects.filter(pk=int(post_num[-1])).get()
 
         if post.price == 0:
-            if request.COOKIES:
-                token = request.COOKIES.get('token')
-                if token is not None:
-                    response = render_to_response("view/read.html", {"login": True})
-                    return response
-                response = render_to_response("view/read.html")
+            if request.user.is_authenticated:
+                response = render_to_response("view/read.html", {"login": True})
                 return response
-            response = render_to_response("view/preview.html")
+            response = render_to_response("view/read.html")
             return response
+
         else:
-            if request.COOKIES:
-                token = request.COOKIES.get('token')
-                if token is not None:
-                    response = render_to_response("view/read.html", {"login": True})
-                    return response
-                return redirect('views:index')
+            if request.user.is_authenticated:
+                response = render_to_response("view/read.html", {"login": True})
+                return response
             return redirect('views:index')
 
     except ObjectDoesNotExist:
         raise Http404
-
-        # return redirect('views:index')
-    # return redirect('views:index')
 
 
 def preview(request, author=None, title=None):
@@ -106,7 +89,7 @@ def preview(request, author=None, title=None):
         url = re.sub('[/~₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|,|\.|\/|<|>|\?/g]', '', author)
         return url.replace(' ', '')
 
-    if token is not None:
+    if request.user.is_authenticated:
         post_num = title.split('-')
         if len(post_num) is 1:
             raise Http404
@@ -116,19 +99,12 @@ def preview(request, author=None, title=None):
 
         try:
             post = Post.objects.filter(pk=int(post_num[-1])).get()
-            # postTitle = post.title.replace(' ', '-')
-            # postUser = post.author.username.split('@')[0]
-            # print(author != postUser)
-            # # if author != post.author.username and title != postTitle:
-            # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
-            # #                                             str(post.pk)
-            # #                                 )
             response = render_to_response("view/preview.html", {
                 "login": True,
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://www.octocolumn.com/preview/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
+                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
                        "-" + str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -147,19 +123,12 @@ def preview(request, author=None, title=None):
 
         try:
             post = Post.objects.filter(pk=int(post_num[-1])).get()
-            # postTitle = post.title.replace(' ', '-')
-            # postUser = post.author.username.split('@')[0]
-            # print(author != postUser)
-            # # if author != post.author.username and title != postTitle:
-            # #     return HttpResponseRedirect(redirect_to='/@' + postUser + '/' + postTitle + '-' +
-            # #                                             str(post.pk)
-            # #                                 )
             response = render_to_response("view/preview.html", {
                 "login": False,
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://www.octocolumn.com/preview/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
+                "url": 'https://bycal.co/preview/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
                 str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -171,50 +140,37 @@ def preview(request, author=None, title=None):
 
 
 def profile(request, member_id=None):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            try:
-                member = User.objects.filter(pk=member_id).get()
-                if request.user == member:
-                    response = render_to_response("view/profile.html", {"login": True,
-                                                                        "is_user": True
-                                                                        })
-                    return response
-                response = render_to_response("view/profile.html", {"login": True,
-                                                                    "is_user": False
-                                                                    })
+    if request.user.is_authenticated:
+        try:
+            member = User.objects.filter(pk=member_id).get()
+            print(request.user == member)
+            if request.user == member:
+                response = render_to_response("view/profile.html", {
+                    "login": True,
+                    "is_user": True
+                })
                 return response
-            except ObjectDoesNotExist:
+            response = render_to_response("view/profile.html", {
+                "login": True,
+                "is_user": False
+            })
+            return response
+        except ObjectDoesNotExist:
 
-                response = render_to_response("view/profile.html", {"login": True,
-                                                                    "is_user": False
-                                                                    })
-                return response
-        response = render_to_response("view/profile.html", {"login": False,
-                                                        "is_user": False
-                                                    })
-        return response
-    response = render_to_response("view/profile.html", {"login": False,
-                                                        "is_user": False
-                                                        })
+            response = render_to_response("view/profile.html", {
+                "login": True,
+                "is_user": False
+            })
+            return response
+    response = render_to_response("view/profile.html", {
+        "login": False,
+        "is_user": False
+    })
     return response
-
-    # if request.COOKIES:
-    #     token = request.COOKIES.get('token')
-    #     if token is not None:
-    #         response = render_to_response("view/profile.html", {"login": True})
-    #         return response
-    #     return redirect('views:index')
-    # return redirect('views:index')
 
 
 def more(request, type=None):
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            response = render_to_response("view/recent-more.html", {"login": True})
-            return response
+    if request.user.is_authenticated:
         response = render_to_response("view/recent-more.html", {"login": True})
         return response
     response = render_to_response("view/recent-more.html", {"login": True})
@@ -222,59 +178,48 @@ def more(request, type=None):
 
 
 def bookmark(request):
-
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            response = render_to_response("view/bookmark.html", {"login": True})
-            return response
-        return redirect('views:index')
+    if request.user.is_authenticated:
+        response = render_to_response("view/bookmark.html", {"login": True})
+        return response
     return redirect('views:index')
 
 
 def buylist(request):
-
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            response = render_to_response("view/purchased-post.html", {"login": True})
-            return response
-        return redirect('views:index')
+    if request.user.is_authenticated:
+        response = render_to_response("view/purchased-post.html", {"login": True})
+        return response
     return redirect('views:index')
 
 
 def feed(request):
-
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            response = render_to_response("view/feed.html", {"login": True})
-            return response
-        return redirect('views:index')
+    if request.user.is_authenticated:
+        response = render_to_response("view/feed.html", {"login": True})
+        return response
     return redirect('views:index')
 
-def signin(request):
 
-    if request.COOKIES:
-        token = request.COOKIES.get('token')
-        if token is not None:
-            return redirect('views:index')
-        response = render_to_response("view/beta-signin.html", {"login": False})
-        return response
-    response = render_to_response("view/beta-signin.html", {"login": False})
-    return response
-
-
-def signup(request):
-    return render_to_response('view/beta-signup.html')
+# def signin(request):
+#
+#     if request.COOKIES:
+#         token = request.COOKIES.get('token')
+#         if token is not None:
+#             return redirect('views:index')
+#         response = render_to_response("view/beta-signin.html", {"login": False})
+#         return response
+#     response = render_to_response("view/beta-signin.html", {"login": False})
+#     return response
 
 
-def signinForm(request):
-    return render_to_response('view/beta-signin2.html')
-
-
-def okay(request):
-    return render_to_response('view/beta-okay.html')
+# def signup(request):
+#     return render_to_response('view/beta-signup.html')
+#
+#
+# def signinForm(request):
+#     return render_to_response('view/beta-signin2.html')
+#
+#
+# def okay(request):
+#     return render_to_response('view/beta-okay.html')
 
 
 def findPass(request):
