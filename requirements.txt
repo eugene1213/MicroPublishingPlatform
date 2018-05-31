@@ -1,4 +1,3 @@
-setuptools
 blessed==1.14.2
 botocore==1.8.0
 cement==2.8.2
@@ -44,6 +43,6 @@ celery[redis]
 uwsgi
 azure-storage==0.20.0
 pillow
-
+psycopg2
 
 
