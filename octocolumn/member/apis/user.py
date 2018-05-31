@@ -210,14 +210,25 @@ class FacebookLogin(APIView):
         #     raise APIException('페이스북 토큰이 유효하지 않음')
         #
         uid = self.request.data['uid']
-        print(uid)
-        print("23424223")
+        if self.request.data.get('email') or self.request.data['email'] is None:
+            return Response(
+                {
+                    "code": 433,
+                    "content": kr_error_code(433)
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
         userinfo = User.objects.filter(username=self.request.data['email']).count()
 
-
         if not userinfo == 0:
-            raise APIException('Already exists this email')
+            return Response(
+                {
+                    "code": 432,
+                    "content": kr_error_code(432)
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
         # FacebookBackend를 사용해서 유저 인증
         user = FacebookBackend.authenticate(user_id=uid)
