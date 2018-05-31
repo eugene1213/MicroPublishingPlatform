@@ -171,11 +171,6 @@ REDIRECT_URI = config_secret_deploy['accounts']['google']['javascript_origins']
 AUTH_URI = config_secret_deploy['accounts']['google']['auth_uri']
 TOKEN_URI = config_secret_deploy['accounts']['google']['token_uri']
 
-# Facebook
-FACEBOOK_APP_ID = config_secret_deploy['account']['facebook']['app_id']
-FACEBOOK_APP_SECRET_CODE = config_secret_deploy['account']['facebook']['secret_code']
-
-
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
@@ -239,7 +234,7 @@ JET_SIDE_MENU_COMPACT = True
 
 # SECURE_SSL_REDIRECT = True
 
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 
