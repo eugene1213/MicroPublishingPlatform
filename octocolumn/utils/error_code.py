@@ -86,6 +86,14 @@ def kr_error_code(x):
             "title": "Already rated",
             "message": "이미 평가한 칼럼입니다.",
         },
+        432: {
+            "title": "Already exists this email",
+            "message": "이미 가입 되어있는 이메일 입니다.",
+        },
+        433: {
+            "title": "Email Permission Required",
+            "message": "이메일 권한 설정을 확인해주세요",
+        },
 
         500: {
             "title": "Fatal error",

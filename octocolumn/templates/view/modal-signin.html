@@ -42,45 +42,131 @@ function fblogin(){
 			// the user's ID, a valid access token, a signed
 			// request, and the time the access token 
 			// and signed request each expire
+			console.log(1)
 			var uid = response.authResponse.userID;
 			var accessToken = response.authResponse.accessToken;
-			$.ajax({
-				url: "/api/member/facebookLogin/" + accessToken,
-				async: false,
-				type: 'GET',
-				dataType: 'json',
-				success: function() {
-					window.location.href = '/';
-				}
+			console.log(accessToken);
+
+			FB.api('/me?fields=id,name,email', function(response2) {
+				console.log(JSON.stringify(response2));
+				name = response2.name;
+				uid = response2.id;
+				email = response2.email;
+
+				$.ajax({
+					url: "/api/member/facebookLogin/",
+					async: false,
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						uid: uid,
+						email: email,
+						nickname: name
+					},
+					success: function() {
+						window.location.href = '/';
+					},
+					error: function(err){
+						console.log(err);
+						if(err.responseJSON.code){
+							title = err.responseJSON.content.title;
+							msg = err.responseJSON.content.message;
+							error_modal(title,msg,false);
+						}
+					}
+				});
 			});
 		} else if (response.status === 'not_authorized') {
+			console.log(2)
+			
 			// the user must go through the login flow
 			// to authorize your app or renew authorization
 			FB.login(function(response) {
 				if (response.authResponse) {
-					console.log('Welcome!  Fetching your information.... ');
-					FB.api('/me', function(response) {
-						console.log(JSON.stringify(response))
-						token = JSON.stringify(response);
+					access_token = response.authResponse.accessToken;
+
+					FB.api('/me?fields=id,name,email', function(response2) {
+						console.log(JSON.stringify(response2));
+
+						name = response2.name;
+						uid = response2.id;
+						email = response2.email;
+
 						$.ajax({
-							url: "/api/member/facebookLogin/" + token,
+							url: "/api/member/facebookLogin/",
 							async: false,
-							type: 'GET',
+							type: 'POST',
 							dataType: 'json',
+							data: {
+								uid: uid,
+								email: email,
+								nickname: name
+							},
 							success: function() {
 								window.location.href = '/';
 							},
 							error: function(err){
 								console.log(err);
+								if(err.responseJSON.code){
+									title = err.responseJSON.content.title;
+									msg = err.responseJSON.content.message;
+									error_modal(title,msg,false);
+								}
 							}
 						});
 					});
 				} else {
 					console.log('User cancelled login or did not fully authorize.');
 				}
+			},
+			{
+				scope: 'email',
+				auth_type: 'rerequest'
 			});
 		} else {
+			console.log(3)
+			
 			// the user isn't logged in to Facebook.
+			FB.login(function(response) {
+				if (response.authResponse) {			
+					access_token = response.authResponse.accessToken;
+
+					FB.api('/me?fields=id,name,email', function(response2) {
+						console.log(JSON.stringify(response2))
+						name = response2.name;
+						uid = response2.id;
+						email = response2.email;
+						$.ajax({
+							url: "/api/member/facebookLogin/",
+							async: false,
+							type: 'POST',
+							dataType: 'json',
+							data: {
+								uid: uid,
+								email: email,
+								nickname: name
+							},
+							success: function() {
+								window.location.href = '/';
+							},
+							error: function(err){
+								console.log(err);
+								if(err.responseJSON.code){
+									title = err.responseJSON.content.title;
+									msg = err.responseJSON.content.message;
+									error_modal(title,msg,false);
+								}
+							}
+						});
+					});
+				} else {
+					console.log('User cancelled login or did not fully authorize.');
+				}
+			},
+			{
+				scope: 'email',
+				auth_type: 'rerequest'
+			});
 		}
 	});
 }
