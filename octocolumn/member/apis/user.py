@@ -210,7 +210,7 @@ class FacebookLogin(APIView):
         #     raise APIException('페이스북 토큰이 유효하지 않음')
         #
         uid = self.request.data['uid']
-        if self.request.data.get('email') or self.request.data['email'] is None:
+        if self.request.data.get('email'):
             return Response(
                 {
                     "code": 433,
