@@ -40,7 +40,6 @@ django-user-agents
 django-redis-cache
 django-jet
 celery[redis]
-uwsgi
 azure-storage==0.20.0
 pillow
 psycopg2
