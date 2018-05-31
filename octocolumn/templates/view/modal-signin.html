@@ -47,19 +47,20 @@ function fblogin(){
 			var accessToken = response.authResponse.accessToken;
 			console.log(accessToken);
 
-			FB.api('/me', function(response2) {
+			FB.api('/me?fields=id,name,email', function(response2) {
 				console.log(JSON.stringify(response2));
-				userData = JSON.stringify(response2);
-				name = userData.name;
-				uid = userData.id;
+				name = response2.name;
+				uid = response2.id;
+				email = response2.email;
+
 				$.ajax({
 					url: "/api/member/facebookLogin/",
 					async: false,
 					type: 'POST',
 					dataType: 'json',
 					data: {
-						user_id: uid,
-						email: 'asdfa@sdfa.asdf',
+						uid: uid,
+						email: email,
 						nickname: name
 					},
 					success: function() {
@@ -79,17 +80,22 @@ function fblogin(){
 				if (response.authResponse) {
 					access_token = response.authResponse.accessToken;
 
-					FB.api('/me', function(response2) {
+					FB.api('/me?fields=id,name,email', function(response2) {
 						console.log(JSON.stringify(response2));
-						userData = JSON.stringify(response2);
+
+						name = response2.name;
+						uid = response2.id;
+						email = response2.email;
+
 						$.ajax({
 							url: "/api/member/facebookLogin/",
 							async: false,
 							type: 'POST',
 							dataType: 'json',
 							data: {
-								access_token: accessToken,
-								userData: userData
+								uid: uid,
+								email: email,
+								nickname: name
 							},
 							success: function() {
 								window.location.href = '/';
@@ -102,7 +108,11 @@ function fblogin(){
 				} else {
 					console.log('User cancelled login or did not fully authorize.');
 				}
-			},{scope: 'email'});
+			},
+			{
+				scope: 'email',
+				auth_type: 'rerequest'
+			});
 		} else {
 			console.log(3)
 			
@@ -111,17 +121,20 @@ function fblogin(){
 				if (response.authResponse) {			
 					access_token = response.authResponse.accessToken;
 
-					FB.api('/me', function(response2) {
+					FB.api('/me?fields=id,name,email', function(response2) {
 						console.log(JSON.stringify(response2))
-						userData = JSON.stringify(response2);
+						name = response2.name;
+						uid = response2.id;
+						email = response2.email;
 						$.ajax({
 							url: "/api/member/facebookLogin/",
 							async: false,
 							type: 'POST',
 							dataType: 'json',
 							data: {
-								access_token: accessToken,
-								userData: userData
+								uid: uid,
+								email: email,
+								nickname: name
 							},
 							success: function() {
 								window.location.href = '/';
@@ -134,7 +147,11 @@ function fblogin(){
 				} else {
 					console.log('User cancelled login or did not fully authorize.');
 				}
-			},{scope: 'email'});
+			},
+			{
+				scope: 'email',
+				auth_type: 'rerequest'
+			});
 		}
 	});
 }

@@ -209,7 +209,9 @@ class FacebookLogin(APIView):
         # if not debug_token_info.is_valid:
         #     raise APIException('페이스북 토큰이 유효하지 않음')
         #
-        user_id = self.request.data['user_id']
+        uid = self.request.data['uid']
+        print(uid)
+        print("23424223")
 
         userinfo = User.objects.filter(username=self.request.data['email']).count()
 
@@ -217,13 +219,13 @@ class FacebookLogin(APIView):
             raise APIException('Already exists this email')
 
         # FacebookBackend를 사용해서 유저 인증
-        user = FacebookBackend.authenticate(facebook_user_id=user_id)
+        user = FacebookBackend.authenticate(user_id=uid)
         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
         if not user:
             user = User.objects.create_facebook_user(
                 username=self.request.data['email'],
                 nickname=self.request.data['nickname'],
-                social_id=f'fb_{user_id}',
+                social_id=f'fb_{uid}',
                 )
             Profile.objects.create(user=user)
             ProfileImage.objects.create(user=user)
