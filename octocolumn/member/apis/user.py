@@ -213,6 +213,7 @@ class FacebookLogin(APIView):
 
         userinfo = User.objects.filter(username=self.request.data['email']).count()
 
+
         if not userinfo == 0:
             raise APIException('Already exists this email')
 
