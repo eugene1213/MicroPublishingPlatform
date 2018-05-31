@@ -91,8 +91,8 @@ def kr_error_code(x):
             "message": "이미 가입 되어있는 이메일 입니다.",
         },
         433: {
-            "title": "This account does not have an email address.",
-            "message": "이 계정에는 이메일이 등록되어있지 않습니다.",
+            "title": "Email Access Required",
+            "message": "이메일 권한 설정을 확인해주세요",
         },
 
         500: {
