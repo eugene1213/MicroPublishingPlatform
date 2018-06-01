@@ -73,7 +73,7 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # collectstatic 실행
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
 # manage.py
 #WORKDIR     /srv/app/octocolumn
 
