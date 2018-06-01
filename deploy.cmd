@@ -182,3 +182,4 @@ exit /b 1
 :end
 endlocal
 echo Finished successfully.
+echo %DEPLOYMENT_SOURCE%\web.%PYTHON_VER%.config
