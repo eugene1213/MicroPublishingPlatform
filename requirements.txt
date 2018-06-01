@@ -42,4 +42,3 @@ django-jet
 celery[redis]
 azure-storage==0.20.0
 pillow
-psycopg2
