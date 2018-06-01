@@ -129,9 +129,9 @@ REM env\scripts\easy_install pytz
 REM IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 5. Copy web.config
-IF EXIST "%DEPLOYMENT_SOURCE%\web.%PYTHON_VER%.config" (
+IF EXIST "%DEPLOYMENT_SOURCE%\web.3.4.config" (
   echo Overwriting web.config with web.%PYTHON_VER%.config
-  copy /y "%DEPLOYMENT_SOURCE%\web.%PYTHON_VER%.config" "%DEPLOYMENT_TARGET%\web.config"
+  copy /y "%DEPLOYMENT_SOURCE%\web.3.4.config" "%DEPLOYMENT_TARGET%\web.config"
 )
 
 :: 6. Django collectstatic
@@ -182,4 +182,3 @@ exit /b 1
 :end
 endlocal
 echo Finished successfully.
-echo %DEPLOYMENT_SOURCE%\web.%PYTHON_VER%.config
