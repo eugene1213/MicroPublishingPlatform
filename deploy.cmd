@@ -135,6 +135,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\web.3.4.config" (
   echo Overwriting web.config with web.%PYTHON_VER%.config
   copy /y "%DEPLOYMENT_SOURCE%\web.3.4.config" "%DEPLOYMENT_TARGET%\web.config"
 )
+echo Copy web.config
 
 :: 6. Django collectstatic
 IF EXIST "%DEPLOYMENT_TARGET%\manage.py" (
