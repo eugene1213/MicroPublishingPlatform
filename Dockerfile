@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 ENV         LANG C.UTF-8
 
 # 현재경로의 모든 파일들을 컨테이너의 /srv/app폴더에 복사
-COPY         .. /srv/app
+COPY         .  /srv/app
 # cd /srv/app와 같은 효과
 WORKDIR     /srv/app
 
