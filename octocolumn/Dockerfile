@@ -6,19 +6,19 @@ RUN chsh -s /usr/bin/zsh
 
 RUN curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 # 파이썬 패키
-RUN apt-get install python3 && apt-get install python-pip
+#RUN apt-get install python3 && apt-get install python-pip
 
 
 
 # pyenv
-RUN apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev
-
-RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-
-# virtualevn
-# git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+#RUN apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+#libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+#xz-utils tk-dev
+#
+#RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+#
+## virtualevn
+#RUN git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 # nginx
 
 
