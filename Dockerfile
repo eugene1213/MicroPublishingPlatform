@@ -46,14 +46,14 @@ RUN         pyenv local app
 RUN         /root/.pyenv/versions/app/bin/pip install -r /srv/app/requirements/requirements.txt
 
 ## supervisor파일 복사
-COPY        supervisor/uwsgi.conf /etc/supervisor/conf.d/
-COPY        supervisor/nginx.conf /etc/supervisor/conf.d/
-COPY        supervisor/celery.conf /etc/supervisor/conf.d/
+COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
+COPY        .config/supervisor/nginx.conf /etc/supervisor/conf.d/
+COPY        .config/supervisor/celery.conf /etc/supervisor/conf.d/
 
 ##
 ## nginx파일 복사
-COPY        nginx/nginx.conf /etc/nginx/nginx.conf
-COPY        nginx/app.conf /etc/nginx/sites-available/app.conf
+COPY        .config/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY        .config/nginx/app.conf /etc/nginx/sites-available/app.conf
 RUN         rm -rf /etc/nginx/sites-enabled/default
 RUN         rm -rf /etc/init/nginx.conf
 RUN         ln -sf /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app.conf
