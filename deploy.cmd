@@ -120,6 +120,8 @@ IF NOT EXIST "%DEPLOYMENT_TARGET%\env\azure.env.%PYTHON_RUNTIME%.txt" (
 
 :: 4. Install packages
 echo Pip install requirements.
+env\scripts\easy_install pip
+env\scripts\pip install --upgrade setuptools
 env\scripts\pip install -r requirements.txt
 IF !ERRORLEVEL! NEQ 0 goto error
 
