@@ -151,15 +151,5 @@ JWT_AUTH = {
     'JWT_AUTH_COOKIE': 'token'
  }
 
-
-CORS_ORIGIN_WHITELIST = (
-     'google.com',
-     'hostname.example.com',
-     'localhost:8000',
-     '127.0.0.1:8000',
-     'localhost:80',
-
-)
-
 CORS_ALLOW_CREDENTIALS = True
 
