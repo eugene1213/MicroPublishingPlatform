@@ -114,9 +114,9 @@ RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py c
 
 RUN chmod +x run.sh
 
-#CMD         supervisord -n
+CMD         supervisord -n
 #EXPOSE      80
-RUN ./run.sh
+#RUN ./run.sh
 EXPOSE      80
 
 
