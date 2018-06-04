@@ -14,11 +14,11 @@ from utils.tokengenerator import account_activation_token, invite_token
 class SignupEmailTask(Task):
     def run(self, pk):
         # 이메일 발송
-        mail_subject = 'Octocolumn 이메일 인증.'
+        mail_subject = 'byCAL 이메일 인증.'
         user = User.objects.filter(pk=pk).get()
         message = render_to_string('singup_activation.html', {
             'user': user.nickname,
-            'domain': 'www.octocolumn.com',
+            'domain': 'bycal.co',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user),
         })
@@ -38,10 +38,10 @@ class PasswordResetTask(Task):
     def run(self, pk):
         user = User.objects.filter(pk=pk).get()
 
-        mail_subject = 'Octocolumn 비밀번호 변경.'
+        mail_subject = 'byCAL 비밀번호 변경.'
         message = render_to_string('pw_change.html', {
             'user': user,
-            'domain': 'www.octocolumn.com',
+            'domain': 'bycal.co',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user),
         })
@@ -58,10 +58,10 @@ class InviteUserTask(Task):
         user = InviteUser.objects.filter(pk=user_pk).get()
         send_user = User.objects.filter(pk=send_user_pk).get()
         # 이메일 발송
-        mail_subject = 'Octocolumn Invite'
+        mail_subject = 'byCAL Invite'
         message = render_to_string('invitation.html', {
             'user': user,
-            'domain': 'www.octocolumn.com',
+            'domain': 'bycal.com',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': invite_token.make_token(user),
             'send_user': send_user.nickname

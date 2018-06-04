@@ -30,6 +30,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     nickname = serializers.CharField(write_only=True)
+    username = serializers.CharField(write_only=True)
+
 
     class Meta:
         model = User
@@ -43,8 +45,8 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            return data
-        
+            return serializers.ValidationError('비밀번호가 일치하지 않습니다.')
+
         if len(data['password1']) < 8:
             return serializers.ValidationError('비밀번호는 최소 8자리 입니다.')
 
@@ -56,7 +58,6 @@ class SignUpSerializer(serializers.ModelSerializer):
            password=validated_data['password1'],
            nickname=validated_data['nickname'],
         )
-
         if user:
             task = SignupEmailTask
 
@@ -67,8 +68,6 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         else:
             raise serializers.ValidationError('이메일을 다시한번 확인해주시기 바랍니다.')
-
-
 
     def to_representation(self, instance):
         # serializer된 형태를 결정
