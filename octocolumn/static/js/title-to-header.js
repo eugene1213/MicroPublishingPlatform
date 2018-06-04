@@ -22,14 +22,14 @@ function title2header(read_or_write){            // 글 읽기,쓰기 페이지�
     } else if(read_or_write == "read"){                           // 글읽기
 
         var background = $(".site-name").css('background-image');
-        titleText = $(".read_wrap > h2").text();
-       
+        titleText = $(".column-title").text();
+
         $(window).scroll(function(){
 
             var st = $(document).scrollTop();
             if(st == 0) {
+                $(".site-name").text("");      
                 $(".site-name").css('background-image',background);
-                $(".site-name").text('');      
             } else {
                 $(".site-name").text(titleText);
                 $(".site-name").css('background-image','none');

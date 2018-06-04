@@ -60,12 +60,12 @@
 		&:hover {
 			background-color: #e5e5e5;
 
-			&:before, :after {
+			&:before, &:after {
 				border-top: 12px solid #e5e5e5;
 			}
 		}
 		&.marked {
-			background-color: #004b8d;
+			background-color: #004b8d !important;
 
 			&:after, &:before {
 				content: "";
@@ -91,7 +91,7 @@
 		font-size: 16px;
 		margin-bottom: 12px;
 
-		&:contains(로그인 해주세요) {
+		&:contains('로그인 해주세요') {
 			cursor: pointer;
 		}
 	}
