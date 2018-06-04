@@ -31,7 +31,13 @@ $(document).ready(function(){
             var post_id = json.detail.post_id;
             var url = '/@'+ urlAuthor+'/'+urlTitle+'-'+post_id;
             var href = 'https://www.octocolumn.com'+url;
-
+            var tags = json.detail.tag;  //미구현
+            // var reply = json.detail.reply; //미구현
+            var tagsHtml = '';
+            for(i in tags){
+                tagsHtml += '<li>'+tags[i].tag+'</li>';
+            }
+            $(".column-tags ul").html(tagsHtml);
             if(window.location.href != href) history.replaceState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
 
             for(var i in tagArray) {
@@ -47,14 +53,23 @@ $(document).ready(function(){
             
             $('.fb-share-button').attr('data-href', 'https://www.octocolumn.com/preview'+url);
             $(".mainImg").css("background-image","url("+cover_img+")");
+                $(".cover-img").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
+                $(".column-title").text(title);
             $(".date").text(created_datetime);
+                $(".date-published ").text(created_datetime);
             $(".main_content_wrap").html(json.detail.main_content);
+                $(".column-content").html(json.detail.main_content);
             $(".writer > span").text(author);
+                $(".user-name i").text(author);
             $('.picture').css('background-image','url('+author_image+')');
+                $(".writer_cover").css('background-image','url('+author_image+')');
             $('.name').text(author);
+                $(".writer_name").text(author);
             $('.contents > .text').html(intro);
-            var descText = $(".main_content_wrap").text().substr(0,100)+'...';
+                $(".writer_say").html(intro);
+            var descText = $(".column-content").text().substr(0,100)+'...';
+            
             $('meta[property="og:description"]').attr('content',descText);
             //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             coverImgController();
@@ -180,9 +195,10 @@ $(document).ready(function(){
 
 function coverImgController(){
     
-    var imgHeight = window.innerHeight - $(".read_wrap").height() - 32 - 40;
+    var imgHeight = window.innerHeight - 108 - 44;
 
-    $(".mainImg").height(imgHeight);
+    $(".cover-img").height(imgHeight);
+    $(".column-preview").css('margin-top',imgHeight-44);
 }
 //  우클릭 방지
 $(function() {
@@ -194,4 +210,12 @@ $(function() {
 	$('.main_content_wrap').on('mousedown', function() {
         return false;
     });
+});
+var margin = 0;
+$(window).scroll(function(){
+
+    var st = $(document).scrollTop();
+        margin = (-1) * st / 3;
+
+    $('.wrap-cover-img').css('margin-top',margin);
 });

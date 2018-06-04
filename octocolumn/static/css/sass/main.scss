@@ -160,6 +160,7 @@ main {
 	width: 43%;
 	text-align: left;
 	margin-left: 2%;
+	padding-top: 140px;
 }
 .sub-content h5 {
 	line-height: 1.5;
@@ -1068,7 +1069,9 @@ border-color: rgba(#333,.85);
 			left: 100px;
 			top: 106px;
 			overflow: hidden;
-			background-size: 100%;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
 		}
 		.btn-follow {
 			float: right;
