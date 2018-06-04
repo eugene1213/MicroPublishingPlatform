@@ -119,12 +119,18 @@ class Logout(APIView):
         return log.save()
 
     def post(self, request):
+        user = self.request.user
+        if user.is_authenticated:
+            response = Response({"detail": "Successfully logged out."},
+                            status= status.HTTP_200_OK)
+            self.saved_logout_log(user)
+            response.delete_cookie('token')
+            return response
         response = Response({"detail": "Successfully logged out."},
-                        status= status.HTTP_200_OK)
+                            status=status.HTTP_200_OK)
+        response.delete_cookie('sessionid')
+        return
 
-        self.saved_logout_log(self.request.user)
-        response.delete_cookie('token')
-        return response
 
 
 # 1
@@ -314,6 +320,7 @@ class UserInfo(APIView):
     def post(self, request):
         user = self.request.user
         serializer = UserSerializer(user)
+        print(user.is_authenticated)
         if user.is_authenticated:
             try:
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
@@ -339,8 +346,7 @@ class UserInfo(APIView):
                     "message": kr_error_code(402)
                 }
                 , status=status.HTTP_402_PAYMENT_REQUIRED)
-            response.delete_cookie('token')
-
+            response.delete_cookie('sessionid')
             return response
 
 
