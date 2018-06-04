@@ -104,7 +104,8 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
+                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                       url_exchange(post.title) +
                        "-" + str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -128,7 +129,8 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://bycal.co/preview/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
+                "url": 'https://bycal.co/preview/'+'@' + author_exchange(post.author.nickname) + '/' +
+                       url_exchange(post.title) + "-" +
                 str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -143,7 +145,6 @@ def profile(request, member_id=None):
     if request.user.is_authenticated:
         try:
             member = User.objects.filter(pk=member_id).get()
-            print(request.user == member)
             if request.user == member:
                 response = render_to_response("view/profile.html", {
                     "login": True,

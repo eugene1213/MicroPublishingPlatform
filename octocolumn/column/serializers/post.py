@@ -80,7 +80,6 @@ class PostMoreSerializer(serializers.ModelSerializer):
             "author_id": author_serializer.data['pk'],
             "username": author_serializer.data['nickname'],
             # "following_url": "/api/member/" + str(author_serializer.data['pk']) + "/followStatus/",
-            "achevement": "",
             "main_content": self.main_content(obj),
             "bookmark_status": self.bookmark_status(obj, user)
         }
