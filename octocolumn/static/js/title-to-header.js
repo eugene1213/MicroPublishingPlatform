@@ -1,6 +1,9 @@
 function title2header(read_or_write){            // 글 읽기,쓰기 페이지에서 제목에 입력된 값이 헤더 로고에 박힌다.
 
-    if(read_or_write == "write"){                                 // 글쓰기 모드
+    if(read_or_write == "write"){                                 // 글쓰기
+
+        var background = $(".site-name").css('background-image');     
+
         $(".title").focusout(function(){
 
             var titleText = "";
@@ -8,11 +11,15 @@ function title2header(read_or_write){            // 글 읽기,쓰기 페이지�
             if($(".title").text() != "") {
 
                 titleText = $(".title").text();
-                $("header > span").text(titleText);
+                $(".site-name").text(titleText);
+                $(".site-name").css('background-image','none');
 
-            } else $("header > span").text("octocolumn");
+            } else {
+                $(".site-name").text("");
+                $(".site-name").css('background-image',background);
+            }
         });
-    } else if(read_or_write == "read"){                           // 글읽기 모드
+    } else if(read_or_write == "read"){                           // 글읽기
 
         var background = $(".site-name").css('background-image');
         titleText = $(".read_wrap > h2").text();

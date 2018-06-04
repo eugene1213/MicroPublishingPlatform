@@ -68,55 +68,28 @@ function isBought(post_id, readtime, bookmark_status) {
                         </div>\
                     </div>\
                 ';
-            //     <div class="rating">\
-            //     <input id="star5" name="rating" type="radio" value="5"/>\
-            //     <label for="star5" class="full iconbtn-star-full"></label>\
-            //     <input id="star4.5" name="rating" type="radio" value="4.5"/>\
-            //     <label for="star4.5" class="half iconbtn-star-half"></label>\
-            //     <input id="star3" name="rating" type="radio" value="3"/>\
-            //     <label for="star3" class="full iconbtn-star-full"></label>\
-            //     <input id="star3.5" name="rating" type="radio" value="3.5"/>\
-            //     <label for="star3.5" class="half iconbtn-star-half"></label>\
-            //     <input id="star2" name="rating" type="radio" value="2"/>\
-            //     <label for="star2" class="full iconbtn-star-full"></label>\
-            //     <input id="star2.5" name="rating" type="radio" value="2.5"/>\
-            //     <label for="star2.5" class="half iconbtn-star-half"></label>\
-            //     <input id="star1" name="rating" type="radio" value="1"/>\
-            //     <label for="star1" class="full iconbtn-star-full"></label>\
-            //     <input id="star1.5"  name="rating" type="radio" value="1.5"/>\
-            //     <label for="star1.5" class="half iconbtn-star-half"></label>\
-            //     <input id="star0"  name="rating" type="radio" value="0"/>\
-            //     <label for="star0" class="full iconbtn-star-full"></label>\
-            //     <input id="star0.5"  name="rating" type="radio" value="0.5"/>\
-            //     <label for="star0.5" class="half iconbtn-star-half"></label>\
-            // </div>\
-                // var previewHtml = '\
-                //     <div class="preview-wrap">\
-                //         <div class="preview" id="preview">\
-                //             <div class="btn-cancel-wrap" onclick="javascript:(function(){$(\'.preview-wrap\').remove();$(\'.page\').css(\'position\', \'static\');})();">\
-                //                 <div class="btn-cancel"></div>\
-                //                 <div class="preview_purchaseBtn" onclick=\'buy();\'>구매</div>\
-                //             </div>\
-                //             <div class="ready2publish">Preview</div>\
-                //             <div class="preview-cover-img" style="background-image:url('+cover_img+')"></div>\
-                //             <div class="preview-title">'+title+'</div>\
-                //             <div class="preview-content-info">\
-                //                 <div class="preview-read-time">'+readtime+'</div>\
-                //                 <div class="preview-by">by</div>\
-                //                 <div class="preview-author">'+username+'</div>\
-                //                 <div class="preview-create-date">'+date+'</div>\
-                //             </div>\
-                //             <div class="preview-main-content" id="preview-main-content">\
-                //                 <!-- <img src="" alt=""> -->\
-                //                 <div class="previewElementsWrap">'+preview+'</div>\
-                //                 <!-- preview-image -->\
-                //             </div>\
-                //             <div class="priceBtn">\
-                //                 <div class="btn" id="post'+post_id+'" onclick=\'buy();\'>'+price+'P로 구매</div>\
-                //             </div>\
-                //         </div> \
-                //     </div>\
-                // ';
+                // <div class="rating">\
+                //     <input id="star5" name="rating" type="radio" value="5"/>\
+                //     <label for="star5" class="full iconbtn-star-full"></label>\
+                //     <input id="star4.5" name="rating" type="radio" value="4.5"/>\
+                //     <label for="star4.5" class="half iconbtn-star-half"></label>\
+                //     <input id="star3" name="rating" type="radio" value="3"/>\
+                //     <label for="star3" class="full iconbtn-star-full"></label>\
+                //     <input id="star3.5" name="rating" type="radio" value="3.5"/>\
+                //     <label for="star3.5" class="half iconbtn-star-half"></label>\
+                //     <input id="star2" name="rating" type="radio" value="2"/>\
+                //     <label for="star2" class="full iconbtn-star-full"></label>\
+                //     <input id="star2.5" name="rating" type="radio" value="2.5"/>\
+                //     <label for="star2.5" class="half iconbtn-star-half"></label>\
+                //     <input id="star1" name="rating" type="radio" value="1"/>\
+                //     <label for="star1" class="full iconbtn-star-full"></label>\
+                //     <input id="star1.5"  name="rating" type="radio" value="1.5"/>\
+                //     <label for="star1.5" class="half iconbtn-star-half"></label>\
+                //     <input id="star0"  name="rating" type="radio" value="0"/>\
+                //     <label for="star0" class="full iconbtn-star-full"></label>\
+                //     <input id="star0.5"  name="rating" type="radio" value="0.5"/>\
+                //     <label for="star0.5" class="half iconbtn-star-half"></label>\
+                // </div>\
                 $('.page').after(previewHtml);
                 $(".page").css("position", "fixed"); 
             }

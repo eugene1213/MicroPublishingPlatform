@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Micro Publishing Platform, octocolumn</title>
+<title>Micro Publishing Platform, byCAL</title>
 <!-- core CSS -->
 {% load static %}
 <link rel="stylesheet" href="{% static 'support/css/main.css' %}">
@@ -21,7 +21,6 @@
     {% if login %}
         {% include 'support/s_header_on.html' %}
     {% else %}
-        <script>window.location.href = '/signin/'</script>
         {% include 'support/s_header.html' %}
     {% endif %}
     <div class="profile-img"></div>
@@ -43,7 +42,7 @@
                     <ul class="search-results" id="results"></ul>
                 </div>
             </div>
-            <h6 class="policies-muted">또는 support@octocolumn.com으로 email을 보내주세요.</h6>
+            <h6 class="policies-muted">yourfriends@bycal.co 또는 support@octocolumn.com으로 email을 보내주세요.</h6>
         </div>
     </div>
     

@@ -15,6 +15,8 @@
 	<meta name="theme-color" content="#2a292a">
 	<title>byCAL</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon-32.ico' %}">
+	<link rel="apple-touch-icon" href="{% static 'images/favicon/favicon-32.ico' %}" />
+	<link rel="stylesheet prefetch" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/sub.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
@@ -32,66 +34,90 @@
 		<script>var text = '댓글을 입력하려면 로그인 해주세요.'</script>
 		<!-- <script>window.location.href = "/signin/"</script> -->
 	{% endif %}
-	<div class="read">
-		<div class="mainImg image-loader">
-		</div>
-		<div class="read_wrap">
-			<h2><!--제목--></h2>
-			<div class="write">
-				<div class="writer">
-					by <span><!--작가이름--></span>
+
+	<div id="preview-container">
+		<!-- social preview -->
+		<div class="preview-content">
+			<div class="wrap-cover-img">
+				<div class="cover-img image-loader"></div>
+			</div>
+			<!-- Column Preview -->
+			<div class="column-preview">
+				<div class="column-title">column title</div>
+				<div class="columnist-info">
+					<div class="columnist-name">
+						by <span class="user-name"><i>columnist-name</i></span>
+					</div>
+					<div class="date-published">2222-12-22 22:22</div>
 				</div>
-				<div class="date">
-					<!--작성날짜--> <span><!--작성시각--></span>
+				<!-- ribbon -->
+				<div class="ribbon"></div>
+				<!-- Main Contents -->
+				<div class="column-content">
+
+				</div>
+				
+				<!-- Tags -->
+				<div class="column-tags">
+					<p>Tags</p>
+					<ul>
+
+					</ul>
+				</div>
+				<!-- Star Rating -->
+				<div class="rating">
+					<input id="star5" name="rating" type="radio" value="5"/>
+					<label for="star5" class="full"></label>
+					
+					<input id="star4.5" name="rating" type="radio" value="4.5"/>
+					<label for="star4.5" class="half"></label>
+					
+					<input id="star3" name="rating" type="radio" value="3"/>
+					<label for="star3" class="full"></label>
+					
+					<input id="star3.5" name="rating" type="radio" value="3.5"/>
+					<label for="star3.5" class="half"></label>
+					
+					<input id="star2" name="rating" type="radio" value="2"/>
+					<label for="star2" class="full"></label>
+					
+					<input id="star2.5" name="rating" type="radio" value="2.5"/>
+					<label for="star2.5" class="half"></label>
+					
+					<input id="star1" name="rating" type="radio" value="1"/>
+					<label for="star1" class="full"></label>
+					
+					<input id="star1.5"  name="rating" type="radio" value="1.5"/>
+					<label for="star1.5" class="half"></label>
+					
+					<input id="star0"  name="rating" type="radio" value="0"/>
+					<label for="star0" class="full"></label>
+					
+					<input id="star0.5"  name="rating" type="radio" value="0.5"/>
+					<label for="star0.5" class="half"></label>
+				</div>
+				<!-- Share Button-->
+				<div class="post-share-btn">
+					<span class="share-btn-facebook"></span>
+					<span class="share-btn-twitter"></span>
+					<span class="share-btn-link"></span>
+				</div>
+				
+				<div class="writer_intro">
+					<div class="waiting-btn">
+						<span class="icon-heart hvr-icon-pulse-shrink"></span>
+					</div>
+					<div class="writer_info">
+						<div class="writer_cover image-loader"></div>
+						<div class="writer_name">이것은 이름입니다</div>
+						<div class="writer_follow">Follow</div>
+					</div>
+					<div class="writer_say"> 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요.</div>
 				</div>
 			</div>
-		</div>
-		<div class="main_content_wrap">
-			<!-- 여기에 포스트 데이터 -->
-		</div>
-		<div class="read_wrap">
-			<div class="preview-tag-wrap">
-			</div>
-			<div class="read_profile">
-				<div class="click">
-					<!-- <div class="wait">
-						<img src="{% static 'images/icons/read/wtb.png' %}" alt="기다림">
-						기다림
-					</div>
-					<div class="star">
-						<div class="star_click">
-							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
-							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
-							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
-							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
-							<img src="{% static 'images/icons/read/yst.png' %}" alt="평가">
-						</div>
-						평가하기
-					</div> -->
-					<div class="sns">
-						<!-- <img src="{% static 'images/icons/read/Fb.png' %}" alt="페이스북"> -->
-						<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.byCAL.co%2Fpreview%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
-						<!-- <img src="{% static 'images/icons/read/twt.png' %}" alt="트위터">
-						<img src="{% static 'images/icons/read/eCombined Shape.png' %}" alt="공유">
-						<img src="{% static 'images/icons/read/bmb.png' %}" alt="북마크">
-						<img src="{% static 'images/icons/read/alert-triangle.png' %}" alt="경고">						 -->
-					</div>
-				</div><!-- click -->
-				<div class="contents_wrap">
-					<div class="contents">
-						<div class="contents_title">
-							<div class="picture image-loader">
-							</div>
-							<div class="name"></div>
-							<!-- <div class="title_name">여행 전문가</div> -->
-							<div class="btnFollow">Follow</div>
-						</div>
-						<div class="text">
-							<!-- 작가 자기소개 -->
-						</div>
-					</div><!-- class="contents" -->
-				</div><!-- class="contents_wrap" -->
-			</div><!-- "read_profile" -->
+			<div class="sns">
+					<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.byCAL.co%2Fpreview%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
+				</div>
 			<div class="comments-container">
 				<ul id="comments-list" class="comments-list">
 					<li>
@@ -102,8 +128,22 @@
 					</li>
 				</ul>
 			</div>
-		</div><!-- class="read_wrap" -->
-	</div><!-- read -->
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	{% if login %}
 	
 	{% else %}

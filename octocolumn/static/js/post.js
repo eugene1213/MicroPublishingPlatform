@@ -67,7 +67,6 @@ $(document).ready(function(){
                     authorApply(temp_id, cover_img, preview_img, tag, price, intro, url);
                 }
                 $(".btn-confirm").unbind('click').click(function(){
-
                     window.location.href = "/";
                 });
             });
@@ -246,7 +245,7 @@ function authorApply(temp_id, cover_img, preview_img, tag, price, intro, url) {
             modal({
                 type: 'inverted', //Type of Modal Box (alert | confirm | prompt | success | warning | error | info | inverted | primary)
                 title: '', //Modal Title
-                text: '작성하신 칼럼은 octocolumn의 승인을 거쳐 출판되게 됩니다.<br />이러한 과정은 첫번째 칼럼에만 적용됩니다.<br />두번째 칼럼부터는 바로 출판하실 수 있습니다.<br />감사합니다!', //Modal HTML Content
+                text: '작성하신 칼럼은 byCAL의 승인을 거쳐 출판되게 됩니다.<br />이러한 과정은 첫번째 칼럼에만 적용됩니다.<br />두번째 칼럼부터는 바로 출판하실 수 있습니다.<br />감사합니다!', //Modal HTML Content
                 size: 'normal', //Modal Size (normal | large | small)
                 buttons: [{
 					text: "별말씀을요.",

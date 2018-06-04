@@ -26,11 +26,14 @@ $(document).ready(function() {
     $(".cancel-publish").click(function(){
         $(".preview-wrap").hide();
         $(".container").css({"position": "static","left":"","margin-left":""});
+        $("#authorApply").hide();
+        $("#preview").show();
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
         $(".container").css({"position": "static","left":"","margin-left":""});
-        
+        $("#authorApply").hide();
+        $("#preview").show();
     });
 
     /* read time 계산기 */
