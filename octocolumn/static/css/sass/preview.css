@@ -242,7 +242,6 @@
       float: left;
       margin: 0 30px 20px 0; }
       .column-preview .column-content .medium-insert-images-left img + figcaption {
-        float: left;
         clear: both; }
   .column-preview .column-content .medium-insert-images-right {
     width: 90%;
@@ -252,7 +251,6 @@
       float: right;
       margin: 0 0 20px 30px; }
       .column-preview .column-content .medium-insert-images-right img + figcaption {
-        float: right;
         clear: both; }
   .column-preview .column-content .medium-insert-images-full {
     width: 100%; }
