@@ -6,8 +6,8 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = '*'
+ALLOWED_HOSTS = ['bycal.co']
+# ALLOWED_HOSTS = '*'
 
 
 # WSGI application
@@ -171,63 +171,58 @@ REDIRECT_URI = config_secret_deploy['accounts']['google']['javascript_origins']
 AUTH_URI = config_secret_deploy['accounts']['google']['auth_uri']
 TOKEN_URI = config_secret_deploy['accounts']['google']['token_uri']
 
-# Facebook
-FACEBOOK_APP_ID = config_secret_deploy['account']['facebook']['app_id']
-FACEBOOK_APP_SECRET_CODE = config_secret_deploy['account']['facebook']['secret_code']
-
-
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
-
-ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters':
-        {
-            'verbose':
-              {
-                  'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-                  'datefmt' : "%d/%b/%Y %H:%M:%S"
-              },
-            'simple':
-                {
-                    'format': '%(levelname)s %(message)s'
-                },
-        },
-    'handlers':
-        {
-            'file':
-                {
-                    'level': 'DEBUG',
-                    'class': 'logging.handlers.RotatingFileHandler',
-                    'filename': os.path.join(ERROR_DIR, 'debug.txt'),
-                    'formatter': 'verbose',
-                    'maxBytes': 1024*1024*10, 'backupCount': 5,
-                },
-        },
-    'loggers':
-        {
-            'django':
-                {
-                    'handlers': ['file'],
-                    'propagate': True,
-                    'level':'INFO',
-                },
-            'django.request':
-                {
-                    'handlers':['file'],
-                    'propagate': False,
-                    'level':'INFO',
-                },
-            'myAppName':
-                {
-                    'handlers': ['file'],
-                    'level': 'DEBUG',
-                },
-        }
-}
+#
+# ERROR_DIR = os.path.join(ROOT_DIR, '.error_log')
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters':
+#         {
+#             'verbose':
+#               {
+#                   'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+#                   'datefmt' : "%d/%b/%Y %H:%M:%S"
+#               },
+#             'simple':
+#                 {
+#                     'format': '%(levelname)s %(message)s'
+#                 },
+#         },
+#     'handlers':
+#         {
+#             'file':
+#                 {
+#                     'level': 'DEBUG',
+#                     'class': 'logging.handlers.RotatingFileHandler',
+#                     'filename': os.path.join(ERROR_DIR, 'debug.txt'),
+#                     'formatter': 'verbose',
+#                     'maxBytes': 1024*1024*10, 'backupCount': 5,
+#                 },
+#         },
+#     'loggers':
+#         {
+#             'django':
+#                 {
+#                     'handlers': ['file'],
+#                     'propagate': True,
+#                     'level':'INFO',
+#                 },
+#             'django.request':
+#                 {
+#                     'handlers':['file'],
+#                     'propagate': False,
+#                     'level':'INFO',
+#                 },
+#             'myAppName':
+#                 {
+#                     'handlers': ['file'],
+#                     'level': 'DEBUG',
+#                 },
+#         }
+# }
 
 JET_SIDE_MENU_COMPACT = True
 #
@@ -237,7 +232,7 @@ JET_SIDE_MENU_COMPACT = True
 #
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 CSRF_COOKIE_SECURE = True
 
