@@ -129,7 +129,8 @@ class Logout(APIView):
         response = Response({"detail": "Successfully logged out."},
                             status=status.HTTP_200_OK)
         response.delete_cookie('sessionid')
-        return
+        response.delete_cookie('token')
+        return response
 
 
 
@@ -320,7 +321,6 @@ class UserInfo(APIView):
     def post(self, request):
         user = self.request.user
         serializer = UserSerializer(user)
-        print(user.is_authenticated)
         if user.is_authenticated:
             try:
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
@@ -347,6 +347,7 @@ class UserInfo(APIView):
                 }
                 , status=status.HTTP_402_PAYMENT_REQUIRED)
             response.delete_cookie('sessionid')
+            response.delete_cookie('token')
             return response
 
 
