@@ -1,4 +1,5 @@
 # deploy.py
+# -*- coding: utf-8 -*-
 from .base import *
 
 
@@ -8,7 +9,7 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 DEBUG = False
 ALLOWED_HOSTS = ['bycal.co']
 # ALLOWED_HOSTS = '*'
-
+#
 
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.deploy.application'
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+
 
     'member',
     'column',
@@ -153,7 +155,8 @@ DATABASES = {
 #     },
 # }
 # CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
-BROKER_URL = 'amqp://devocto:devocto1234@13.125.224.253:5672//'
+CELERY_BROKER_URL = 'redis://A49gZTVTQ9uUpzX3m4B8ZnRTuUDKgV7PGimIxGTcuCo=@bycal.redis.cache.windows.net:6380/0'
+CELERY_RESULT_BACKEND = 'redis://A49gZTVTQ9uUpzX3m4B8ZnRTuUDKgV7PGimIxGTcuCo=@bycal.redis.cache.windows.net:6380/0'
 # CELERY
 # CELERY_BROKER_URL = '{}:{}'.format(
 #     config_secret_deploy['django']['celery']['broker_url'],
