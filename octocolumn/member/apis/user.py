@@ -1,12 +1,13 @@
 from django.core.exceptions import ObjectDoesNotExist
-import requests
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from ipware.ip import get_ip
+import requests
 from redis_cache import cache
+from requests import Request
 
 from rest_framework import status, generics, permissions
 from rest_framework.authtoken.models import Token
@@ -85,16 +86,20 @@ class Login(APIView):
                     return response
                 # return response
                 return response
-            data = {
-                "detail": "This Account is not Activate"
-            }
-            return Response(data, status=status.HTTP_401_UNAUTHORIZED)
-            # return HttpResponseRedirect(redirect_to='/signin/')
-        data = {
-            'detail': 'Invalid credentials'
-        }
+            return Response(
+                {
+                    "code": 406,
+                    "content": kr_error_code(401)
 
-        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+                }
+                , status=status.HTTP_406_NOT_ACCEPTABLE)
+            # return HttpResponseRedirect(redirect_to='/signin/')
+        return Response(
+            {
+                "code": 401,
+                "content": kr_error_code(401)
+            }
+            , status=status.HTTP_401_UNAUTHORIZED)
         # return HttpResponseRedirect(redirect_to='/signin/')
 
 
@@ -137,7 +142,15 @@ class SignUp(generics.CreateAPIView):
             serializer.save()
             # return HttpResponseRedirect(redirect_to='/okay/')
             return Response(serializer.data, status=200)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {
+                "code": 401,
+                "content": {
+                    "title": "Sign up Failed",
+                    "message": "비밀번호를 다시 한번 확인해주세요"
+                }
+            }
+            , status=status.HTTP_401_UNAUTHORIZED)
         # return HttpResponseRedirect(redirect_to='/signup/')
 
 
@@ -149,61 +162,82 @@ class FacebookLogin(APIView):
     permission_classes = (AllowAny,)
     # /api/member/facebook-login/
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         # request.data에
         #   access_token
         #   facebook_user_id
         #       데이터가 전달됨
 
         # Debug결과의 NamedTuple
-        class DebugTokenInfo(NamedTuple):
-            app_id: str
-            application: str
-            expires_at: int
-            is_valid: bool
-            scopes: list
-            type: str
-            user_id: str
+        # class DebugTokenInfo(NamedTuple):
+        #     app_id: str
+        #     application: str
+        #     expires_at: int
+        #     is_valid: bool
+        #     scopes: list
+        #     type: str
+        #     user_id: str
+        #
+        # # token(access_token)을 받아 해당 토큰을 Debug
+        # def get_debug_token_info(token):
+        #     app_id = settings.FACEBOOK_APP_ID
+        #     app_secret_code = settings.FACEBOOK_APP_SECRET_CODE
+        #     app_access_token = f'{app_id}|{app_secret_code}'
+        #
+        #     # url_debug_token = \
+        #     #     'https://graph.facebook.com/debug_token?input_token={input_token}&access_token={access_token}'.format(
+        #     #         input_token=token,
+        #     #         access_token=app_access_token
+        #     # )
+        #     url = 'https://graph.facebook.com/debug_token?input_token=EAAIZAwa297ZBEBAF6hZAnwZBpYdIShZAkGHajem0q7QTgG6HTjak0y1KLn4cZAdcxeNAhbHE3yPn3aWLuiRKapYy03gH3cqSZAd0KZAktefbHCzKMET3rqjlc3IDztWuZAdpAEf4YcHTTIw247fEnLZAxi0szeWuJ5Sl6CYyQp2qelkB0sJOoPL6UsrofP2iidZBMJsXZCmsie7mbwZDZD&access_token=591269587709921|0bef4b65c4ec01eb73703a042812e612 '
+        #     # params_debug_token = {
+        #     #     'input_token': token,
+        #     #     'access_token': app_access_token,
+        #     # }
+        #     print(type(url))
+        #     response = requests.get(url)
+        #     print(response)
+        #     return DebugTokenInfo(**response.json()['data'])
+        #
+        # # request.data로 전달된 access_token값을 페이스북API쪽에 debug요청, 결과를 받아옴
+        # debug_token_info = get_debug_token_info(self.request.data['access_token'])
+        # print(debug_token_info)
 
-        # token(access_token)을 받아 해당 토큰을 Debug
-        def get_debug_token_info(token):
-            app_id = settings.FACEBOOK_APP_ID
-            app_secret_code = settings.FACEBOOK_APP_SECRET_CODE
-            app_access_token = f'{app_id}|{app_secret_code}'
+        # if debug_token_info.user_id != request.data['facebook_user_id']:
+        #     raise APIException('페이스북 토큰의 사용자와 전달받은 facebook_user_id가 일치하지 않음')
+        #
+        # if not debug_token_info.is_valid:
+        #     raise APIException('페이스북 토큰이 유효하지 않음')
+        #
+        uid = self.request.data['uid']
+        if not self.request.data.get('email'):
+            return Response(
+                {
+                    "code": 433,
+                    "content": kr_error_code(433)
 
-            url_debug_token = 'https://graph.facebook.com/debug_token'
-            params_debug_token = {
-                'input_token': token,
-                'access_token': app_access_token,
-            }
-            response = requests.get(url_debug_token, params_debug_token)
-            return DebugTokenInfo(**response.json()['data'])
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
-        # request.data로 전달된 access_token값을 페이스북API쪽에 debug요청, 결과를 받아옴
-        debug_token_info = get_debug_token_info(request.data['access_token'])
-
-        if debug_token_info.user_id != request.data['facebook_user_id']:
-            raise APIException('페이스북 토큰의 사용자와 전달받은 facebook_user_id가 일치하지 않음')
-
-        if not debug_token_info.is_valid:
-            raise APIException('페이스북 토큰이 유효하지 않음')
-
-        userid = debug_token_info.user_id
-
-        userinfo = User.objects.filter(username=request.data['email']).count()
+        userinfo = User.objects.filter(username=self.request.data['email']).count()
 
         if not userinfo == 0:
-            raise APIException('Already exists this email')
+            return Response(
+                {
+                    "code": 432,
+                    "content": kr_error_code(432)
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
         # FacebookBackend를 사용해서 유저 인증
-        user = FacebookBackend.authenticate(facebook_user_id=userid)
+        user = FacebookBackend.authenticate(user_id=uid)
         # 인증에 실패한 경우 페이스북유저 타입으로 유저를 만들어줌
         if not user:
             user = User.objects.create_facebook_user(
-                username=request.data['email'],
-                first_name=request.data['first_name'],
-                last_name=request.data['last_name'],
-                social_id=f'fb_{request.data["facebook_user_id"]}',
+                username=self.request.data['email'],
+                nickname=self.request.data['nickname'],
+                social_id=f'fb_{uid}',
                 )
             Profile.objects.create(user=user)
             ProfileImage.objects.create(user=user)

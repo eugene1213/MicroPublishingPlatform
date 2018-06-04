@@ -6,3 +6,5 @@ from .profile import *
 from .follower import *
 from .author import *
 from .verify import *
+from .usersettings import *
+

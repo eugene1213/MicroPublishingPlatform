@@ -42,6 +42,18 @@ class PostSerializer(serializers.ModelSerializer):
 
 class MyPublishPostSerializer(serializers.ModelSerializer):
 
+    def get_is_temp(self, obj):
+        if isinstance(obj, Temp):
+            return True
+        return False
+
+    def get_created_date(self, obj):
+        return str(obj.created_date.strftime('%B')[:3] + obj.created_date.strftime(' %d')+', ' + \
+               obj.created_date.strftime('%Y'))
+
+    is_temp = SerializerMethodField()
+    created_date = SerializerMethodField()
+
     class Meta:
         model = Post
         fields = (
@@ -52,12 +64,13 @@ class MyPublishPostSerializer(serializers.ModelSerializer):
             'price',
             'preview',
             'cover_image',
+            'is_temp'
         )
 
 
 class PostMoreSerializer(serializers.ModelSerializer):
     def get_all_status(self, obj):
-        user = self.context.get('request').user
+        user = self.context.get('user')
         author_serializer = UserSerializer(obj.author)
         data = {
             "img": self.image(obj.author),

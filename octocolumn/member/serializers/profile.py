@@ -3,22 +3,20 @@ from rest_framework import serializers, exceptions
 from rest_framework.fields import SerializerMethodField
 
 from column.models import Post
-from member.models import ProfileImage, Profile
+from member.models import ProfileImage, Profile, UserSettings
 from member.models.user import WaitingRelation, Relation
 
 __all__ = (
-    'ProfileSerializer',
+    'ProfileMainSerializer',
     'ProfileImageSerializer',
+    'ProfileSubSerializer',
 )
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileMainSerializer(serializers.ModelSerializer):
 
     def get_nickname(self,obj):
         return obj.user.nickname
-
-    def get_username(self,obj):
-        return obj.user.username
 
     def get_following(self, obj):
         return Relation.objects.filter(from_user=obj.user).count()
@@ -47,39 +45,94 @@ class ProfileSerializer(serializers.ModelSerializer):
             }
             return data
 
+    # def get_birth_day(self, obj):
+    #     return str(obj.month) + '/' + str(obj.day) + '/' + str(obj.year)
+
     post_count = SerializerMethodField()
     follower = SerializerMethodField()
     following = SerializerMethodField()
     waiting = SerializerMethodField()
     image = SerializerMethodField()
     nickname = SerializerMethodField()
-    username = SerializerMethodField()
+    # birth_day = SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = (
             'nickname',
-            'username',
-            'year',
-            'month',
-            'day',
-            'sex',
             'facebook',
             'instagram',
             'twitter',
-            'age',
-            'phone',
-            'intro',
-            'jobs',
-            'subjects',
             'web',
-            'region',
             'intro',
             'follower',
             'following',
             'post_count',
             'waiting',
             'image'
+        )
+
+
+class ProfileSubSerializer(serializers.ModelSerializer):
+    def get_username(self,obj):
+        return obj.user.username
+    
+    def get_settings(self, obj):
+        try:
+            user = self.context.get('user')
+            if user == obj.user:
+                settings = UserSettings.objects.filter(user=obj.user).get()
+
+                data = {
+                        "phone": settings.phone,
+                        "email": settings.email,
+                        "facebook": settings.facebook,
+                        "web": settings.web,
+                        "sex": settings.sex,
+                        "instagram": settings.instagram,
+                        "birthday": settings.birthday,
+                        "twitter": settings.twitter,
+                        "jobs": settings.jobs,
+                        "interest": settings.subjects
+
+                    }
+                return data
+            return None
+        except ObjectDoesNotExist:
+            user = self.context.get('user')
+            if user == obj.user:
+                user_settings = UserSettings.objects.create(user=obj.user)
+                data = {
+                    "phone": user_settings.phone,
+                    "email": user_settings.email,
+                    "facebook": user_settings.facebook,
+                    "web": user_settings.web,
+                    "sex": user_settings.sex,
+                    "instagram": user_settings.instagram,
+                    "birthday": user_settings.birthday,
+                    "jobs": user_settings.jobs,
+                    "twitter": user_settings.twitter,
+                    "interest": user_settings.subjects
+
+                }
+
+                return data
+            return None
+
+    username = SerializerMethodField()
+    settings = SerializerMethodField()
+
+    class Meta:
+        model = Profile
+        fields = (
+            'username',
+            'sex',
+            'birthday',
+            'phone',
+            'jobs',
+            'subjects',
+            'intro',
+            'settings'
         )
 
 

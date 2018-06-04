@@ -6,19 +6,19 @@ RUN chsh -s /usr/bin/zsh
 
 RUN curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 # 파이썬 패키
-RUN apt-get install python3 && apt-get install python-pip
+#RUN apt-get install python3 && apt-get install python-pip
 
 
 
 # pyenv
-RUN apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev
-
-RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-
-# virtualevn
-# git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+#RUN apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+#libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+#xz-utils tk-dev
+#
+#RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+#
+## virtualevn
+#RUN git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 # nginx
 
 
@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 ENV         LANG C.UTF-8
 
 # 현재경로의 모든 파일들을 컨테이너의 /srv/app폴더에 복사
-COPY         . /srv/app
+COPY         .  /srv/app
 # cd /srv/app와 같은 효과
 WORKDIR     /srv/app
 
@@ -48,6 +48,8 @@ RUN         /root/.pyenv/versions/app/bin/pip install -r /srv/app/requirements/r
 ## supervisor파일 복사
 COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
 COPY        .config/supervisor/nginx.conf /etc/supervisor/conf.d/
+COPY        .config/supervisor/celery.conf /etc/supervisor/conf.d/
+
 ##
 ## nginx파일 복사
 COPY        .config/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -71,7 +73,7 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # collectstatic 실행
-#RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
+RUN         /root/.pyenv/versions/app/bin/python /srv/app/octocolumn/manage.py collectstatic --settings=config.settings.deploy --noinput
 # manage.py
 #WORKDIR     /srv/app/octocolumn
 
@@ -100,19 +102,21 @@ RUN         mkdir -p /var/log/uwsgi/app
 
 
 # Certbot 설치
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:certbot/certbot
-RUN apt-get update
-RUN apt-get install dialog apt-utils -y
-RUN apt-get install -y python-certbot-nginx
-
-RUN         cp /srv/app/.config/supervisor/* \
-                /etc/supervisor/conf.d/
+#RUN apt-get update
+#RUN apt-get install -y software-properties-common
+#RUN add-apt-repository -y ppa:certbot/certbot
+#RUN apt-get update
+#RUN apt-get install dialog apt-utils -y
+#RUN apt-get install -y python-certbot-nginx
+#
+#RUN         cp /srv/app/.config/supervisor/* \
+#                /etc/supervisor/conf.d/
 
 RUN chmod +x run.sh
 
 CMD         supervisord -n
+#EXPOSE      80
+#RUN ./run.sh
 EXPOSE      80
 
 

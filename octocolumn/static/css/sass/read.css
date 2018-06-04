@@ -12,13 +12,19 @@ body {
   position: relative;
   word-break: break-word; }
   .main_content_wrap a:link {
-    text-decoration: none; }
+    text-decoration: none;
+    color: #004b8d; }
   .main_content_wrap a:visited {
-    text-decoration: none; }
+    text-decoration: none;
+    color: #004b8d; }
   .main_content_wrap a:active {
-    text-decoration: none; }
+    text-decoration: none;
+    color: #004b8d;
+    font-weight: bold;
+    zoom: 1.2; }
   .main_content_wrap a:hover {
     text-decoration: none;
+    font-weight: bold;
     color: #004b8d;
     cursor: pointer; }
   .main_content_wrap p, .main_content_wrap blockquote, .main_content_wrap h1, .main_content_wrap h2 {
@@ -143,6 +149,6 @@ body {
     width: auto !important; }
 
   .text {
-    width: 75% !important; } }
+    width: 65% !important; } }
 
 /*# sourceMappingURL=read.css.map */

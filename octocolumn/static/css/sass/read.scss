@@ -14,15 +14,21 @@ body {
 
     a:link {
         text-decoration: none;
+        color: #004b8d;
     }
     a:visited {
         text-decoration: none;
+        color: #004b8d;
     }
     a:active {
         text-decoration: none;
+        color: #004b8d;
+        font-weight: bold;        
+        zoom: 1.2;
     }
     a:hover {
         text-decoration: none;
+        font-weight: bold;
         color: #004b8d;
         cursor: pointer;
     }
@@ -178,6 +184,6 @@ body {
         width: auto !important;
     }
     .text {
-        width: 75% !important;
+        width: 65% !important;
     }
 }

@@ -39,8 +39,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'config.middleware.AuthenticationMiddlewareJWT',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'silk.middleware.SilkyMiddleware',
@@ -73,6 +74,7 @@ INSTALLED_APPS = [
     # 장고 접속 에이전트 체크 라이브러리
     'django_user_agents',
 
+    # CORS 수정
     'corsheaders',
     # compressor
     # 'compressor',
@@ -195,4 +197,3 @@ SESSION_COOKIE_HTTPONLY =True
 CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_COOKIE_SECURE = False
-

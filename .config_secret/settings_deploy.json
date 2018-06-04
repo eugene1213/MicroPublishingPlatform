@@ -5,11 +5,10 @@
     "databases":{
       "engine":"django.db.backends.postgresql_psycopg2",
       "name":"octo",
-      "user":"devocto",
+      "user":"bycal@bycal",
       "password":"!devocto1234",
-      "host":"octocolumn.cgkhz06rcrfm.ap-northeast-2.rds.amazonaws.com",
+      "host":"bycal.postgres.database.azure.com",
       "port":"5432"
-
     },
     "email":{
       "host":"smtp.gmail.com",
@@ -24,14 +23,13 @@
     "s3_bucket_name":"devtestserver"
   },
   "azure":{
-    "account":"devocto",
-    "account_key":"8/bQE7j+UP3eE04x9NaBzrS6zcRUUNTopjqdvDIWj3TXMHivhTy8O11JuIQjBOpiPe5AR53T+E9CcE4vnozjEw==",
-    "container":"devocto"
+    "account":"bycal",
+    "account_key":"8JX98OjFx6qJlMH/JNzSWomWxq+RnB4kgHqWXlQDMBL2CfNdYMISvyY7e0Q4SQs2BCJRkoZn7XaSiCVxkWtT0g=="
   },
   "accounts":{
     "facebook":{
-    "app_id" : "591269587709921" ,
-    "secret_code" :"0bef4b65c4ec01eb73703a042812e612 "
+    "app_id" : "187797705177095" ,
+    "secret_code" :"afa8e7afe951ca87ecb9c7ba23bed49e "
   },
     "google":{
         "client_id":"556104186701-si5hpqqo9jl066op8rv1rn0vsn0i4u82.apps.googleusercontent.com",

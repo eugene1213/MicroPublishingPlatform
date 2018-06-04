@@ -56,8 +56,8 @@
     /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
   }
 
-.icon-bookmark:before { content: '\e800';} /* '북마크' */
-.icon-bookmark-empty:before { content: '\f097';} /* '빈 북마크' */
+.icon-bookmark:before { content: '\e800'; font-family: "fontello" !important;} /* '북마크' */
+.icon-bookmark-empty:before { content: '\f097'; font-family: "fontello" !important;} /* '빈 북마크' */
 .icon-television:before { content: '\f26c'; } /* '풀스크린 이미지' */
 .icon-img-align-center:before { content: '\e805'; } /* '가운데 정렬' */
 .icon-img-align-right:before {

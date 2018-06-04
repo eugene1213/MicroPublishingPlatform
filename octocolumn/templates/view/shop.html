@@ -8,15 +8,13 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta name="bootpay-application-id" content="5ab88457b6d49c1aaa550da7" />	
 	<!-- <link rel="shortcut icon" href="/images/favi.ico" type="image/x-icon" /> -->
-	<meta name="description" content="octocolumn" />
-	<meta name="keywords" content="octocolumn">
-	<meta name="copyright" content="octocolumn"/>
+	<meta name="description" content="byCAL" />
+	<meta name="keywords" content="byCAL">
+	<meta name="copyright" content="byCAL"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="x-rim-auto-match" content="none">
-	<title>octocolumn</title>
+	<title>byCAL</title>
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/shop.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
@@ -77,74 +75,75 @@ function buyBtnClick() {
         });
   }
 </script>
-<body>
-	{% if login %}
-		{% include 'view/header_on.html' %}
-	{% else %}
-		{% include 'view/header.html' %}
-    {% endif %}
-	<div class="shop">
-		<h2 class="shop_title">Choose Plan</h2>
-		<p class="shop_contents">
-			좋아하는 글을 읽고, 작가를 지원하기 위해서는 포인트가 필요합니다. <br />
-			당신에게 필요한 만큼 포인트를 구매하세요. <br />
-		</p>
-		<!-- 자동충전 -->
-		<!-- <div class="shop_recharge">
-			<div class="title">
-				<h2>자동 충전</h2>
-				<p class="money">5,000 ₩</p>
+<body class="scrollbar-basic">
+	<!-- wrapper -->
+	<div class="page">
+		{% if login %}
+			{% include 'view/header_on.html' %}
+		{% else %}
+			{% include 'view/header.html' %}
+		{% endif %}
+		<main>
+			<div class="main-container">
+				<div class="shop-header">
+					<div class="shop-title">Choose Plan</div>
+					<div class="shop-sub">좋아하는 칼럼을 읽고, 칼럼니스트를 지원하기 위해서는 포인트가 필요합니다.<br>당신에게 필요한 만큼 포인트를 구매하세요.</div>
+				</div>
+				
+				<div class="shop-item">
+					<!-- Item 01 -->
+					<div class="item tester">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Tester</h4>
+								<h3 class="display-2">2,000 P</h3>
+								<div class="display-3">
+									<p><span>2,200</span> ₩</p>
+									( 부가세 10% 포함 )
+								</div>
+							</div>
+							<div class="card-block">
+								<a href="javascript:buyBtnClick()" class="btn btn-gradient">Choose Plan</a>
+							</div>
+						</div>
+					</div>
+					
+					<!-- Item 02 -->
+					<div class="item starter">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Starter</h4>
+								<h3 class="display-2">5,000 P</h3>
+								<div class="display-3">
+									<p><span>5,500</span> ₩</p>
+									( 부가세 10% 포함 )
+								</div>
+							</div>
+							<div class="card-block">
+								<a href="javascript:buyBtnClick()" class="btn btn-gradient">Choose Plan</a>
+							</div>
+						</div>
+					</div>
+					
+					<!-- Item 03 -->
+					<div class="item regular">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Regular</h4>
+								<h3 class="display-2">10,000 P</h3>
+								<div class="display-3">
+									<p><span>11,000</span> ₩</p>
+									( 부가세 10% 포함 )
+								</div>
+							</div>
+							<div class="card-block">
+								<a href="javascript:buyBtnClick()" class="btn btn-gradient">Choose Plan</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="detail">
-				<p>보유 포인트가 5,000P보다 낮아지면 미리 입력한 신용카드를 이용해 바로 자동 충전되는 기능입니다.</p>
-				<p>5,000Point</p>
-				<p>부가세  10% 포함</p>
-			</div>
-			<div class="chooseBtn">
-				<a href="javascript:void(0)">선택하기</a>
-			</div>
-		</div> -->
-		<div class="shop_chose">
-			<div class="shop_chose_content">
-				<div class="title">
-					<h2>Tester</h2>
-					<p class="money">2,200 ₩</p>
-				</div>
-				<div class="detail">
-					<p>2,000 Point</p>
-					<p>부가세 10% 포함</p>
-				</div>
-				<div class="chooseBtn">
-					<a href="javascript:buyBtnClick()">선택하기</a>
-				</div>
-			</div>
-			<div class="shop_chose_content">
-				<div class="title">
-					<h2>Starter</h2>
-					<p class="money">5,500 ₩</p>
-				</div>
-				<div class="detail">
-					<p>5,000 Point</p>
-					<p>부가세 10% 포함</p>
-				</div>
-				<div class="chooseBtn">
-					<a href="javascript:void(0)">선택하기</a>
-				</div>
-			</div>
-			<div class="shop_chose_content">
-				<div class="title">
-					<h2>Regular</h2>
-					<p class="money">11,000 ₩</p>
-				</div>
-				<div class="detail">
-					<p>10,000 Point</p>
-					<p>부가세 10% 포함</p>
-				</div>
-				<div class="chooseBtn">
-					<a href="javascript:void(0)">선택하기</a>
-				</div>
-			</div>
-		</div>
-	</div><!-- shop -->
+		</main>
+	</div>
 </body>
 </html>

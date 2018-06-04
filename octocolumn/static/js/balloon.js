@@ -19,7 +19,13 @@ function popBalloon() { //getPostList.js 에서 호출한다.
             type: 'GET',
             dataType: 'json',
             success: function(jsons) {
+                console.log(jsons)
     
+                var ins= 'https://'+jsons.instagram;
+                var fb = 'https://'+jsons.facebook;
+                var tw = 'https://'+jsons.twitter;
+                var web= 'https://'+jsons.web;
+
                 var followers = jsons.follower_count;
                 var follow_status = jsons.follow_status;
                 var author_id = pk;
@@ -73,10 +79,10 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                             \
                         </div>\
                         <div class="socialbar">\
-                            <a><i class="iconbtn-facebook"></i></a>\
-                            <a><i class="iconbtn-twitter-bird"></i></a>\
-                            <a><i class="iconbtn-instagram-filled"></i></a>\
-                            <a><i class="iconbtn-globe"></i></a>\
+                            <a href="'+fb+'"><i class="iconbtn-facebook"></i></a>\
+                            <a href="'+tw+'"><i class="iconbtn-twitter-bird"></i></a>\
+                            <a href="'+ins+'"><i class="iconbtn-instagram-filled"></i></a>\
+                            <a href="'+web+'"><i class="iconbtn-globe"></i></a>\
                             <a><i class="iconbtn-info-circled-alt more-info"></i></a>\
                         </div>\
                     </div>\
@@ -85,10 +91,10 @@ function popBalloon() { //getPostList.js 에서 호출한다.
                             '+profileIntro+'\
                         </div>\
                         <div class="socialbar">\
-                            <a><i class="iconbtn-facebook"></i></a>\
-                            <a><i class="iconbtn-twitter-bird"></i></a>\
-                            <a><i class="iconbtn-instagram-filled"></i></a>\
-                            <a><i class="iconbtn-globe"></i></a>\
+                            <a href="'+fb+'"><i class="iconbtn-facebook"></i></a>\
+                            <a href="'+tw+'"><i class="iconbtn-twitter-bird"></i></a>\
+                            <a href="'+ins+'"><i class="iconbtn-instagram-filled"></i></a>\
+                            <a href="'+web+'"><i class="iconbtn-globe"></i></a>\
                             <a><i class="iconbtn-info-circled-alt more-info"></i></a>\
                         </div>\
                     </div>\

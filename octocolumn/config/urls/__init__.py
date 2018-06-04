@@ -10,8 +10,7 @@ urlpatterns = [
     url(r'^api/', include(apis, namespace='api')),
     url(r'^morningCoffee/', include(admin.site.urls)),
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # D
-
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
 
 ]
 
