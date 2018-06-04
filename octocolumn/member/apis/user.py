@@ -108,7 +108,7 @@ class Login(APIView):
 # URL /api/member/logout/
 # 전달 키값 : username, password1, password2, nickname
 class Logout(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def saved_logout_log(self, user):
         log = ConnectedLog()
@@ -310,7 +310,7 @@ class PasswordReset(APIView):
 # 유저정보 관련 API
 # URL /api/member/userInfo/
 class UserInfo(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         user = self.request.user
