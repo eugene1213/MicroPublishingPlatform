@@ -137,10 +137,9 @@ class SignUp(generics.CreateAPIView):
     serializer_class = SignUpSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = SignUpSerializer(data=request.data)
+        serializer = SignUpSerializer(data=self.request.data)
         if serializer.is_valid():
             serializer.save()
-            # return HttpResponseRedirect(redirect_to='/okay/')
             return Response(serializer.data, status=200)
         return Response(
             {
