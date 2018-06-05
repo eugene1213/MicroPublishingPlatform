@@ -87,9 +87,8 @@ class SignUpSerializer(serializers.ModelSerializer):
             )
             email.attach_alternative(message, "text/html")
             email.send()
-            if email.send():
-                return True
-            return False
+            return True
+        return False
 
     def to_representation(self, instance):
         # serializer된 형태를 결정

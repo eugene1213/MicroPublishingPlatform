@@ -148,8 +148,19 @@ class SignUp(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = SignUpSerializer(data=self.request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=200)
+            print(serializer.save())
+            if serializer.save():
+                return Response(serializer.data, status=200)
+
+            return Response(
+                {
+                    "code": 401,
+                    "content": {
+                        "title": "Sign up Failed",
+                        "message": "이미 가입된 메일입니다."
+                    }
+                }
+                , status=status.HTTP_401_UNAUTHORIZED)
         return Response(
             {
                 "code": 401,
@@ -382,9 +393,9 @@ class SendInviteEmail(APIView):
         )
         email.attach_alternative(message, "text/html")
 
-        if email.send():
-            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
-        raise APIException({"Email send failed"})
+        email.send()
+        return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+
 
 
 # 1
@@ -416,11 +427,16 @@ class PasswordResetSendEmail(APIView):
             email.attach_alternative(message, "text/html")
             email.send()
 
-            if email:
-                return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
-            raise APIException({"Email send failed"})
+            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+
         except ObjectDoesNotExist:
-            raise APIException({"this username is not valid"})
+            return Response(
+                {
+                    "code": "Email send Faild",
+                    "content": "이메일 발송에 실패했습니다."
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
 
 # 1
