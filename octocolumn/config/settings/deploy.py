@@ -1,5 +1,4 @@
 # deploy.py
-# -*- coding: utf-8 -*-
 from .base import *
 
 
@@ -7,9 +6,9 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = ['bycal.co']
-# ALLOWED_HOSTS = '*'
-#
+# ALLOWED_HOSTS = ['bycal.co']
+ALLOWED_HOSTS = '*'
+
 
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.deploy.application'
@@ -241,10 +240,10 @@ JET_SIDE_MENU_COMPACT = True
 #
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-SECURE_SSL_REDIRECT = True
-
-CSRF_COOKIE_SECURE = True
-
+# SECURE_SSL_REDIRECT = True
+#
+# CSRF_COOKIE_SECURE = True
+#
 CORS_ORIGIN_ALLOW_ALL = True
 
 SITE_ID = 1
