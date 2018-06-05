@@ -62,11 +62,16 @@ INSTALLED_APPS = [
 
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config_secret_deploy['django']['email']['host']
-EMAIL_HOST_USER = config_secret_deploy['django']['email']['host_user']
-EMAIL_HOST_PASSWORD = config_secret_deploy['django']['email']['host_password']
+# EMAIL_HOST = config_secret_debug['django']['email']['host']
+# EMAIL_HOST_USER = config_secret_debug['django']['email']['host_user']
+# EMAIL_HOST_PASSWORD = config_secret_debug['django']['email']['host_password']
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'azure_3d95bc9766fc6c1c425b6283d64a5593@azure.com'
+EMAIL_HOST_PASSWORD = '!devocto1234'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'yourfriends@bycal.co'
 
 # AWS settings
 # AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
@@ -155,8 +160,9 @@ DATABASES = {
 #     },
 # }
 # CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
-CELERY_BROKER_URL = 'redis://A49gZTVTQ9uUpzX3m4B8ZnRTuUDKgV7PGimIxGTcuCo=@bycal.redis.cache.windows.net:6380/0'
-CELERY_RESULT_BACKEND = 'redis://A49gZTVTQ9uUpzX3m4B8ZnRTuUDKgV7PGimIxGTcuCo=@bycal.redis.cache.windows.net:6380/0'
+CELERY_BROKER_URL = 'amqp://user:devocto1234@//'
+
+CELERY_RESULT_BACKEND = 'amqp://user:devocto1234@//'
 # CELERY
 # CELERY_BROKER_URL = '{}:{}'.format(
 #     config_secret_deploy['django']['celery']['broker_url'],

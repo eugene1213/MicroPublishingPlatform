@@ -1,9 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
+from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.utils.encoding import force_text, force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from ipware.ip import get_ip
 import requests
 from redis_cache import cache
@@ -29,7 +31,7 @@ from member.task import PasswordResetTask, InviteUserTask
 from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.error_code import kr_error_code
 from utils.jwt import jwt_token_generator
-from utils.tokengenerator import account_activation_token
+from utils.tokengenerator import account_activation_token, invite_token
 
 __all__ = (
     'Login',
@@ -362,9 +364,25 @@ class SendInviteEmail(APIView):
         data = self.request.data
 
         user = InviteUser.objects.create(email=data['email'])
-        task = InviteUserTask
-        email = task.delay(user.pk, self.request.user.pk)
-        if email:
+        # task = InviteUserTask
+        # email = task.delay(user.pk, self.request.user.pk)
+        send_user = self.request.user
+        # 이메일 발송
+        mail_subject = 'byCAL Invite'
+        message = render_to_string('invitation.html', {
+            'user': user,
+            'domain': 'bycal.com',
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': invite_token.make_token(user),
+            'send_user': send_user.nickname
+        })
+        to_email = user.email
+        email = EmailMultiAlternatives(
+            mail_subject, to=[to_email]
+        )
+        email.attach_alternative(message, "text/html")
+
+        if email.send():
             return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
         raise APIException({"Email send failed"})
 
@@ -381,9 +399,22 @@ class PasswordResetSendEmail(APIView):
 
         try:
             user = User.objects.filter(username=data['username']).get()
-            task = PasswordResetTask
-
-            email = task.delay(user.pk)
+            # task = PasswordResetTask
+            #
+            # email = task.delay(user.pk)
+            mail_subject = 'byCAL 비밀번호 변경.'
+            message = render_to_string('pw_change.html', {
+                'user': user,
+                'domain': 'bycal.co',
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = user.username
+            email = EmailMultiAlternatives(
+                mail_subject, to=[to_email]
+            )
+            email.attach_alternative(message, "text/html")
+            email.send()
 
             if email:
                 return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
