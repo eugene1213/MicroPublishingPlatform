@@ -171,10 +171,11 @@ def profile(request, member_id=None):
 
 
 def more(request, type=None):
+    # print(request.user.is_authenticated)
     if request.user.is_authenticated:
         response = render_to_response("view/recent-more.html", {"login": True})
         return response
-    response = render_to_response("view/recent-more.html", {"login": True})
+    response = render_to_response("view/recent-more.html", {"login": False})
     return response
 
 
