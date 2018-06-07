@@ -5,9 +5,9 @@
     "databases":{
       "engine":"django.db.backends.postgresql_psycopg2",
       "name":"octo",
-      "user":"bycal@bycal",
+      "user":"bycal@azurebycal",
       "password":"!devocto1234",
-      "host":"bycal.postgres.database.azure.com",
+      "host":"azurebycal.postgres.database.azure.com",
       "port":"5432"
     },
     "email":{
