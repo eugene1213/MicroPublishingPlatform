@@ -101,7 +101,12 @@ function btn_activation(handler,target){
  * 출판하기 버튼이 활성화 되기 위한 조건
  */
 function btn_activation_checklist() {
-    if( $(".editable").text().length > 543 ){       // 글자 수 체크 후 발행버튼 활성화
+
+    var content = $('#editable').text().trim();                            // 전체 글자수
+    var countSpace = ((content.match(/\s/g) || []).length)/2;       // 띄어쓰기를 0.5글자 계산
+    var sum = content.length - 3.5 - countSpace;                    // 전체 글자수에서 띄어쓰기 갯수*0.5 뺀 값
+
+    if( sum >= 1500 ){       // 글자 수 체크 후 발행버튼 활성화
         if( $('.added-tag-wrap').length != 0 ){
             if( $('#blah').attr('src') ){
                 $('#errMsg').detach();

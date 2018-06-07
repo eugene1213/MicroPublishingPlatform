@@ -175,7 +175,7 @@ def more(request, type=None):
     if request.user.is_authenticated:
         response = render_to_response("view/recent-more.html", {"login": True})
         return response
-    response = render_to_response("view/recent-more.html", {"login": False})
+    response = render_to_response("view/recent-more.html")
     return response
 
 

@@ -31,9 +31,14 @@ $(document).ready(function(){
             var post_id = json.detail.post_id;
             var url = '/@'+ urlAuthor+'/'+urlTitle+'-'+post_id;
             var href = 'https://www.octocolumn.com'+url;
-            var tags = json.detail.tag;  //미구현
-            // var reply = json.detail.reply; //미구현
+            var bookmark_status = json.detail.bookmark_status;
+            var tags = json.detail.tag;
             var tagsHtml = '';
+            if(bookmark_status) {
+                $(".ribbon").addClass("marked");
+            }else{
+                $(".ribbon").removeClass("marked");
+            }
             for(i in tags){
                 tagsHtml += '<li>'+tags[i].tag+'</li>';
             }
@@ -51,7 +56,7 @@ $(document).ready(function(){
             $('meta[property="og:title"]').attr('content',title);
             
             
-            $('.fb-share-button').attr('data-href', 'https://www.octocolumn.com/preview'+url);
+            $('.fb-share-button').attr('data-href', 'https://bycal.co/preview'+url);
             $(".mainImg").css("background-image","url("+cover_img+")");
                 $(".cover-img").css("background-image","url("+cover_img+")");
             $(".read_wrap > h2").text(title);
@@ -74,6 +79,10 @@ $(document).ready(function(){
             //$(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tag+"</div>");
             coverImgController();
 
+            //  북마크
+            $(".ribbon").click(function(){
+                bookmark(post_id,true);
+            });
         },
         error: function(error) {
             console.log(error);
@@ -211,6 +220,7 @@ $(function() {
         return false;
     });
 });
+//  커버이미지 액자 효과
 var margin = 0;
 $(window).scroll(function(){
 

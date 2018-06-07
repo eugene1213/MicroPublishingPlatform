@@ -16,13 +16,10 @@
 	<title>byCAL</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon-32.ico' %}">
 	<link rel="apple-touch-icon" href="{% static 'images/favicon/favicon-32.ico' %}" />
-	<link rel="stylesheet prefetch" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/sub.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/comments.css' %}">	
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">		
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-read.css' %}">		
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 </head>
 <body>
@@ -43,12 +40,12 @@
 			</div>
 			<!-- Column Preview -->
 			<div class="column-preview">
-				<div class="column-title">column title</div>
+				<div class="column-title"></div>
 				<div class="columnist-info">
 					<div class="columnist-name">
-						by <span class="user-name"><i>columnist-name</i></span>
+						by <span class="user-name"><i></i></span>
 					</div>
-					<div class="date-published">2222-12-22 22:22</div>
+					<div class="date-published"></div>
 				</div>
 				<!-- ribbon -->
 				<div class="ribbon"></div>
@@ -67,57 +64,56 @@
 				<!-- Star Rating -->
 				<div class="rating">
 					<input id="star5" name="rating" type="radio" value="5"/>
-					<label for="star5" class="full"></label>
+					<label for="star5" class="font-read-star"></label>
 					
 					<input id="star4.5" name="rating" type="radio" value="4.5"/>
-					<label for="star4.5" class="half"></label>
+					<label for="star4.5" class="font-read-star-half"></label>
 					
 					<input id="star3" name="rating" type="radio" value="3"/>
-					<label for="star3" class="full"></label>
+					<label for="star3" class="font-read-star"></label>
 					
 					<input id="star3.5" name="rating" type="radio" value="3.5"/>
-					<label for="star3.5" class="half"></label>
+					<label for="star3.5" class="font-read-star-half"></label>
 					
 					<input id="star2" name="rating" type="radio" value="2"/>
-					<label for="star2" class="full"></label>
+					<label for="star2" class="font-read-star"></label>
 					
 					<input id="star2.5" name="rating" type="radio" value="2.5"/>
-					<label for="star2.5" class="half"></label>
+					<label for="star2.5" class="font-read-star-half"></label>
 					
 					<input id="star1" name="rating" type="radio" value="1"/>
-					<label for="star1" class="full"></label>
+					<label for="star1" class="font-read-star"></label>
 					
 					<input id="star1.5"  name="rating" type="radio" value="1.5"/>
-					<label for="star1.5" class="half"></label>
+					<label for="star1.5" class="font-read-star-half"></label>
 					
 					<input id="star0"  name="rating" type="radio" value="0"/>
-					<label for="star0" class="full"></label>
+					<label for="star0" class="font-read-star"></label>
 					
 					<input id="star0.5"  name="rating" type="radio" value="0.5"/>
-					<label for="star0.5" class="half"></label>
+					<label for="star0.5" class="font-read-star-half"></label>
 				</div>
 				<!-- Share Button-->
 				<div class="post-share-btn">
-					<span class="share-btn-facebook"></span>
-					<span class="share-btn-twitter"></span>
-					<span class="share-btn-link"></span>
+					<span class="font-read-facebook" style="position:relative;">
+						<div class="fb-share-button" style="opacity:0;overflow:hidden;width:24px;height:32px;position:absolute;top:0;left:0;" data-href="" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.byCAL.co%2Fpreview%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>					
+					</span>
+					<span class="font-read-twitter"></span>
+					<span class="font-read-link"></span>
 				</div>
 				
 				<div class="writer_intro">
 					<div class="waiting-btn">
-						<span class="icon-heart hvr-icon-pulse-shrink"></span>
+						<span class="font-read-heart hvr-icon-pulse-shrink"></span>
 					</div>
 					<div class="writer_info">
 						<div class="writer_cover image-loader"></div>
-						<div class="writer_name">이것은 이름입니다</div>
+						<div class="writer_name"></div>
 						<div class="writer_follow">Follow</div>
 					</div>
-					<div class="writer_say"> 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요.</div>
+					<div class="writer_say"></div>
 				</div>
 			</div>
-			<div class="sns">
-					<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.byCAL.co%2Fpreview%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
-				</div>
 			<div class="comments-container">
 				<ul id="comments-list" class="comments-list">
 					<li>
@@ -130,19 +126,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	{% if login %}
 	
@@ -157,6 +140,7 @@
 	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/read.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>
 	<script src="{% static 'js/jquery.imageloader.js' %}"></script>
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {

@@ -53,10 +53,10 @@
     border-left: 20px solid transparent; }
   .preview-content .ribbon:hover {
     background-color: #e5e5e5; }
-    .preview-content .ribbon:hover:before, .preview-content .ribbon:hover :after {
+    .preview-content .ribbon:hover:before, .preview-content .ribbon:hover:after {
       border-top: 12px solid #e5e5e5; }
   .preview-content .ribbon.marked {
-    background-color: #004b8d; }
+    background-color: #004b8d !important; }
     .preview-content .ribbon.marked:after, .preview-content .ribbon.marked:before {
       content: "";
       position: absolute;
@@ -75,7 +75,7 @@
   opacity: 0.5;
   font-size: 16px;
   margin-bottom: 12px; }
-  .preview-content .balance:contains(로그인 해주세요) {
+  .preview-content .balance:contains('로그인 해주세요') {
     cursor: pointer; }
 
 /* close button */
