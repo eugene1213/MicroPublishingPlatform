@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from column.models import Post
 from member.models import User, ProfileImage, Profile
-from member.models.user import Relation, Bookmark
+from member.models.user import Relation, Bookmark, WaitingRelation
 from member.serializers import ProfileImageSerializer, ProfileMainSerializer, FollowStatusSerializer
 from utils.error_code import kr_error_code
 
@@ -47,9 +47,6 @@ class FollowerStatus(APIView):
                     "message": kr_error_code(500)
                 }
                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
 
 
 # 1
@@ -101,10 +98,11 @@ class Waiting(APIView):
 
         try:
             from_user = User.objects.filter(pk=user_pk).get()
-            result = from_user.waiting_toggle(user)
+            result, result_created = WaitingRelation.objects.get_or_create(receive_user=from_user, send_user=user)
 
-            if result:
+            if result_created:
                 return Response({'detail': 'created'})
+            result.delete()
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:

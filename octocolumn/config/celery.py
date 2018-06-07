@@ -9,8 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.deploy')
 # if DEBUG:
 # app = Celery('config', backend='redis', broker='redis://127.0.0.1:6379/0')
 # else:
-app = Celery('config', backend='redis',
-             broker='redis://A49gZTVTQ9uUpzX3m4B8ZnRTuUDKgV7PGimIxGTcuCo=@bycal.redis.cache.windows.net:6379')
+app = Celery('config')
 
 
 # namespace='CELERY'는 모든 셀러리 관련 구성 키를 의미한다. 반드시 CELERY라는 접두사로 시작해야 한다.

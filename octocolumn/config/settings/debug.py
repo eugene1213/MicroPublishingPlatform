@@ -106,11 +106,16 @@ INSTALLED_APPS = [
 # Email
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config_secret_debug['django']['email']['host']
-EMAIL_HOST_USER = config_secret_debug['django']['email']['host_user']
-EMAIL_HOST_PASSWORD = config_secret_debug['django']['email']['host_password']
+# EMAIL_HOST = config_secret_debug['django']['email']['host']
+# EMAIL_HOST_USER = config_secret_debug['django']['email']['host_user']
+# EMAIL_HOST_PASSWORD = config_secret_debug['django']['email']['host_password']
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'azure_3d95bc9766fc6c1c425b6283d64a5593@azure.com'
+EMAIL_HOST_PASSWORD = '!devocto1234'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'yourfriends@bycal.co'
 
 SITE_ID = 1
 # Database
@@ -175,8 +180,8 @@ TOKEN_URI = config_secret_debug['accounts']['google']['token_uri']
 
 
 # Celery
-# BROKER_URL = 'redis://127.0.0.1:6379/0'
-# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 
 # CELERY_BROKER_URL = 'redis://{}:{}'.format(
 #     config_secret_debug['django']['celery']['broker_url'],
@@ -192,7 +197,7 @@ JET_SIDE_MENU_COMPACT = True
 print('@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
 
-SESSION_COOKIE_HTTPONLY =True
+# SESSION_COOKIE_HTTPONLY =True
 
 CORS_ORIGIN_ALLOW_ALL = True
 
