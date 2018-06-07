@@ -101,7 +101,7 @@ function btn_activation(handler,target){
  * 출판하기 버튼이 활성화 되기 위한 조건
  */
 function btn_activation_checklist() {
-    if( $(".editable").text().length > 543 ){       // 글자 수 체크 후 발행버튼 활성화
+    if( $(".editable").text().length > 1542 ){       // 글자 수 체크 후 발행버튼 활성화
         if( $('.added-tag-wrap').length != 0 ){
             if( $('#blah').attr('src') ){
                 $('#errMsg').detach();

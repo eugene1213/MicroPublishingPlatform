@@ -37,7 +37,7 @@ $(window).resize(function(){
 });
 
 /* 임시저장 */
-function saveTmp(auto){
+function saveTmp(auto){ //auto는 boolean값. 수동저장은 false 자동저장은 true
         
     var main_content = editor.getContent();
     var temp_id = "";
