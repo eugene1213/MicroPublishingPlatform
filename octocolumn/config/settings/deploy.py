@@ -93,11 +93,11 @@ AZURE_STORAGE_KEY = config_secret_deploy['azure']['account_key']
 ## AZURE Static Setting
 STATICFILES_STORAGE = 'config.s3storages.AzureStaticStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
-                account=AZURE_STORAGE_ACCOUNT,
-                mediafiles_location=STATICFILES_LOCATION
-)
-
+# STATIC_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
+#                 account=AZURE_STORAGE_ACCOUNT,
+#                 mediafiles_location=STATICFILES_LOCATION
+# )
+STATIC_URL = 'https://bycal.blob.core.windows.net/static/'
 
 # AWS Static Settings
 # STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
@@ -116,10 +116,13 @@ STATIC_ROOT = STATIC_URL
 ## AZURE Media settigns
 DEFAULT_FILE_STORAGE = 'config.s3storages.AzureMediaStorage'
 MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
-                account=AZURE_STORAGE_ACCOUNT,
-                mediafiles_location=MEDIAFILES_LOCATION
-)
+# MEDIA_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
+#                 account=AZURE_STORAGE_ACCOUNT,
+#                 mediafiles_location=MEDIAFILES_LOCATION
+# )
+
+MEDIA_URL = 'https://bycal.blob.core.windows.net/media/'
+
 
 ## AWS Media Setting
 # DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
