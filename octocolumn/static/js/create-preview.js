@@ -44,7 +44,7 @@ $(document).ready(function() {
             var content = $(this).text().trim();                            // 전체 글자수
             var countSpace = ((content.match(/\s/g) || []).length)/2;       // 띄어쓰기를 0.5글자 계산
             var sum = content.length - 3.5 - countSpace;                    // 전체 글자수에서 띄어쓰기 갯수*0.5 뺀 값
-            var time = Math.round(sum / 515);                               // 1분/515자 반올림
+            var time = Math.floor(sum / 500);                               // 1분/500자 so림
 
             if(time > 0) {                                                  // 글을 1분 분량 이상 작성하면 read time 출력해서 보여줌
                 $(".read-time").replaceWith("<div class=\"read-time\">" + time + " min read</div>");
