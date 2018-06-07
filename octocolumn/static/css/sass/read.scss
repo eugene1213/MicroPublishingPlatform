@@ -279,6 +279,21 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+
+    .column-content {
+
+        p,blockquote,h1,h2,b,.medium-insert-images,.medium-insert-images-right,.medium-insert-images-left {
+            width: 90% !important;
+        }
+        .medium-insert-images-full {
+            width: 100% !important;
+        }
+        .medium-insert-images-wide {
+            width: 70% !important;
+        }
+    }
+}
 
 /* Column Tags*/
 .column-preview .column-tags {
