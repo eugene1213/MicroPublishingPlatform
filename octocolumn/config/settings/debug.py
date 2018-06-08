@@ -79,6 +79,12 @@ INSTALLED_APPS = [
     # compressor
     # 'compressor',
 
+    # elasticsearch
+    # 'search_indexs',
+    #
+    # 'django_elasticsearch_dsl',
+    # 'django_elasticsearch_dsl_drf',
+
     # storages
     'storages',
 
@@ -160,6 +166,17 @@ CACHES = {
             # 'DB': 1,
         },
     },
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': '127.0.0.1:9200'
+    },
+}
+
+ELASTICSEARCH_INDEX_NAMES = {
+    'search_indexes.document.post': 'post',
+    'search_indexes.document.author': 'author',
 }
 
 # Storage settings

@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
     CommentListView, CommentView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
     CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star, PaymentInfo
+# from search_indexs.viewset.post import PostDocumentView
 
 urlpatterns = [
     # 포스트 생성
@@ -58,6 +59,9 @@ urlpatterns = [
     url(r'^temp/$', TempCreateView.as_view(), name='post-create'),
     url(r'^temp-list/$', TempListView.as_view(), name='temp'),
     url(r'^tmpimageupload/$', TempFileUpload.as_view(), name='image-upload'),
+
+    # 거색
+    # url(r'^search/post$', PostDocumentView.as_view(), name='search'),
 
     # url(r'^login/$', apis.PostLikeToggleView.as_view(), name='login'),
 ]

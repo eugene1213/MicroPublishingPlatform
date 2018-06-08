@@ -58,6 +58,11 @@ class Post(models.Model):
         self.like_count = self.like_users.count()
         self.save()
 
+    @property
+    def author_indexing(self):
+        if self.author is not None:
+            return self.author.nickname
+
 
 class PostLike(models.Model):
     post = models.ForeignKey('column.Post',null=True)

@@ -28,6 +28,7 @@ from member.models.invitations import InvitationUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
 from member.task import PasswordResetTask, InviteUserTask
+from utils.crypto import decode
 from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.error_code import kr_error_code
 from utils.jwt import jwt_token_generator
