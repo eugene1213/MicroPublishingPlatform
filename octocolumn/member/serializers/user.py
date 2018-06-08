@@ -75,7 +75,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         if user:
             mail_subject = 'byCAL 이메일 인증.'
             user = user
-            message = render_to_string('singup_activation.html', {
+            message = render_to_string('welcome.html', {
                 'user': user.nickname,
                 'domain': 'bycal.co',
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
