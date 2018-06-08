@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 
 from column.models import Post
 from column.models.star import PostStar
+from member.models import BuyList
 from utils.error_code import kr_error_code
 
 __all__ = (
@@ -24,10 +25,10 @@ class Star(generics.GenericAPIView):
         if isinstance(star, int):
             if star >= 0 or star <= 10:
                 try:
-                    buy_list = user.buy_list.filter(post=post).get()
+                    buy_list = BuyList.objects.select_related('user', 'post').filter(user=user, post=post).get()
                     if not buy_list.star:
                         try:
-                            star = PostStar.objects.filter(post=post).get()
+                            star = PostStar.objects.select_related('post').filter(post=post).get()
                             star.content += int(data['star'])
                             star.member_num += 1
                             buy_list.star = True
@@ -39,7 +40,7 @@ class Star(generics.GenericAPIView):
 
                             )
                         except ObjectDoesNotExist:
-                            star = PostStar.objects.create(post=post)
+                            star = PostStar.objects.select_related('post').create(post=post)
                             if star:
                                 star.content += int(data['star'])
                                 star.member_num += 1
