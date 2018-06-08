@@ -19,7 +19,9 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/comments.css' %}">	
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-read.css' %}">		
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-read.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 </head>
 <body>
@@ -136,12 +138,13 @@
 		$('.input_comment').attr('placeholder',text);
 		if(text == '댓글을 입력하려면 로그인 해주세요.') $('.input_comment, .comment_button').css('pointer-events','none');
 	</script>
+	<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>	
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/read.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>
-	<script src="{% static 'js/jquery.imageloader.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.imageloader.js' %}"></script>
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];

@@ -232,11 +232,9 @@ $(function(){
         var post_id = current_url.split("-");
             post_id = post_id[post_id.length-1];
 
-        console.log($(e.target).prop("for"));
         var string = $(e.target).prop("for");
         var star = string.replace("star","");
             star *= 1;
-        console.log(star)
 
         $.ajax({
             url: "/api/column/postStar/",
@@ -253,6 +251,9 @@ $(function(){
                 $("#star"+rating).prop("checked","true");
             },
             error: function(err){
+                if(err.responseJSON.code == 431){
+                    error_modal("","이미 평가한 칼럼입니다.",true);
+                }
                 console.log(err);
             }
         });

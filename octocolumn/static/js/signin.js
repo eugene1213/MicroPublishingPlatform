@@ -82,7 +82,7 @@ function signin_api() {
         error: function(error) {
             var msg = error.responseJSON.content.message
             var title = error.responseJSON.content.title
-            error_modal(title, msg);
+            error_modal(title, msg, false);
         }
     });
 }
