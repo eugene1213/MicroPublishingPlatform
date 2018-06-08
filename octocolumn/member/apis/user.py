@@ -1,9 +1,11 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
+from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.utils.encoding import force_text, force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from ipware.ip import get_ip
 import requests
 from redis_cache import cache
@@ -26,10 +28,11 @@ from member.models.invitations import InvitationUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
 from member.task import PasswordResetTask, InviteUserTask
+from utils.crypto import decode
 from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.error_code import kr_error_code
 from utils.jwt import jwt_token_generator
-from utils.tokengenerator import account_activation_token
+from utils.tokengenerator import account_activation_token, invite_token
 
 __all__ = (
     'Login',
@@ -89,7 +92,7 @@ class Login(APIView):
             return Response(
                 {
                     "code": 406,
-                    "content": kr_error_code(401)
+                    "content": kr_error_code(406)
 
                 }
                 , status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -108,7 +111,7 @@ class Login(APIView):
 # URL /api/member/logout/
 # 전달 키값 : username, password1, password2, nickname
 class Logout(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def saved_logout_log(self, user):
         log = ConnectedLog()
@@ -119,12 +122,19 @@ class Logout(APIView):
         return log.save()
 
     def post(self, request):
+        user = self.request.user
+        if user.is_authenticated:
+            response = Response({"detail": "Successfully logged out."},
+                            status= status.HTTP_200_OK)
+            self.saved_logout_log(user)
+            response.delete_cookie('token')
+            return response
         response = Response({"detail": "Successfully logged out."},
-                        status= status.HTTP_200_OK)
-
-        self.saved_logout_log(self.request.user)
+                            status=status.HTTP_200_OK)
+        response.delete_cookie('sessionid')
         response.delete_cookie('token')
         return response
+
 
 
 # 1
@@ -137,11 +147,20 @@ class SignUp(generics.CreateAPIView):
     serializer_class = SignUpSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = SignUpSerializer(data=request.data)
+        serializer = SignUpSerializer(data=self.request.data)
         if serializer.is_valid():
-            serializer.save()
-            # return HttpResponseRedirect(redirect_to='/okay/')
-            return Response(serializer.data, status=200)
+            if serializer.save():
+                return Response(serializer.data, status=200)
+
+            return Response(
+                {
+                    "code": 401,
+                    "content": {
+                        "title": "Sign up Failed",
+                        "message": "이미 가입된 메일입니다."
+                    }
+                }
+                , status=status.HTTP_401_UNAUTHORIZED)
         return Response(
             {
                 "code": 401,
@@ -310,7 +329,7 @@ class PasswordReset(APIView):
 # 유저정보 관련 API
 # URL /api/member/userInfo/
 class UserInfo(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         user = self.request.user
@@ -340,8 +359,8 @@ class UserInfo(APIView):
                     "message": kr_error_code(402)
                 }
                 , status=status.HTTP_402_PAYMENT_REQUIRED)
+            response.delete_cookie('sessionid')
             response.delete_cookie('token')
-
             return response
 
 
@@ -356,11 +375,27 @@ class SendInviteEmail(APIView):
         data = self.request.data
 
         user = InviteUser.objects.create(email=data['email'])
-        task = InviteUserTask
-        email = task.delay(user.pk, self.request.user.pk)
-        if email:
-            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
-        raise APIException({"Email send failed"})
+        # task = InviteUserTask
+        # email = task.delay(user.pk, self.request.user.pk)
+        send_user = self.request.user
+        # 이메일 발송
+        mail_subject = 'byCAL Invite'
+        message = render_to_string('invitation.html', {
+            'user': user,
+            'domain': 'bycal.com',
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': invite_token.make_token(user),
+            'send_user': send_user.nickname
+        })
+        to_email = user.email
+        email = EmailMultiAlternatives(
+            mail_subject, to=[to_email]
+        )
+        email.attach_alternative(message, "text/html")
+
+        email.send()
+        return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+
 
 
 # 1
@@ -375,15 +410,33 @@ class PasswordResetSendEmail(APIView):
 
         try:
             user = User.objects.filter(username=data['username']).get()
-            task = PasswordResetTask
+            # task = PasswordResetTask
+            #
+            # email = task.delay(user.pk)
+            mail_subject = 'byCAL 비밀번호 변경.'
+            message = render_to_string('pw_change.html', {
+                'user': user,
+                'domain': 'bycal.co',
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = user.username
+            email = EmailMultiAlternatives(
+                mail_subject, to=[to_email]
+            )
+            email.attach_alternative(message, "text/html")
+            email.send()
 
-            email = task.delay(user.pk)
+            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
 
-            if email:
-                return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
-            raise APIException({"Email send failed"})
         except ObjectDoesNotExist:
-            raise APIException({"this username is not valid"})
+            return Response(
+                {
+                    "code": "Email send Faild",
+                    "content": "이메일 발송에 실패했습니다."
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
 
 # 1

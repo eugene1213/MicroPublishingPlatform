@@ -13,7 +13,6 @@ ul {
    list-style-type: none;
 }
 body {
-   font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
    background: #f9f9f9;
 }
 
@@ -585,15 +584,18 @@ body {
 * Responsive
 ========================*/
 @media only screen and (max-width: 766px) {
-   .comments-container {
-       width: 480px;
-   }
+    .comments-container {
+        width: 98%;
+    }
 
-   .comments-list .comment-box {
-       width: 390px;
-   }
+    .comments-list .comment-box {
+        width: 82%;
+    }
 
-   .reply-list {
-       width: 390px;
-   }
+    .reply-list {
+        width: 390px;
+    }
+    .input_comment {
+        width: 100% !important;
+    }
 }

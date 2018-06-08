@@ -17,7 +17,7 @@ class UserSettings(models.Model):
     email = models.BooleanField(default=False)
     subjects = models.BooleanField(default=False)
     twitter = models.BooleanField(default=False)
-
+#
 
 
 

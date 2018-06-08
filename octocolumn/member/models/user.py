@@ -194,16 +194,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         relation.delete()
         return False
 
-    def waiting_toggle(self,user):
-        if not isinstance(user, User):
-            raise ValueError('"user" argument must be User instance!')
-
-        relation, relation_created = self.waiting_from_user_relations.get_or_create(send_user=user)
-        if relation_created:
-            return True
-        relation.delete()
-        return False
-
 
         # if user in self.following_users.all():
         #     Relation.objects.filter(

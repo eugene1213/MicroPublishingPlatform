@@ -7,8 +7,9 @@ from rest_framework.views import APIView
 
 from column.models import Post
 from member.models import User, ProfileImage, Profile
-from member.models.user import Relation, Bookmark
+from member.models.user import Relation, Bookmark, WaitingRelation
 from member.serializers import ProfileImageSerializer, ProfileMainSerializer, FollowStatusSerializer
+from utils.crypto import decode
 from utils.error_code import kr_error_code
 
 __all__ = (
@@ -29,8 +30,10 @@ class FollowerStatus(APIView):
 
         user = self.request.user
 
+        decode_pk = int(decode(enc=str(user_pk)))
+
         try:
-            to_user = User.objects.filter(pk=user_pk).get()
+            to_user = User.objects.filter(pk=decode_pk).get()
             serializer = FollowStatusSerializer(to_user, context={'request': request})
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -49,9 +52,6 @@ class FollowerStatus(APIView):
                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-
 # 1
 # 팔로워 API
 # URL  /api/member/(?P<user_pk>\d+)/follow/$
@@ -61,9 +61,11 @@ class Follower(APIView):
     def get(self,request, *args, **kwargs):
         user = self.request.user
         user_pk = self.kwargs.get('user_pk')
+        decode_pk = int(decode(enc=str(user_pk)))
+
 
         try:
-            to_user = User.objects.filter(pk=user_pk).get()
+            to_user = User.objects.filter(pk=decode_pk).get()
             result, relation = Relation.objects.select_related('to_user', 'from_user').get_or_create(to_user=to_user, from_user=user)
 
             if relation:
@@ -101,10 +103,11 @@ class Waiting(APIView):
 
         try:
             from_user = User.objects.filter(pk=user_pk).get()
-            result = from_user.waiting_toggle(user)
+            result, result_created = WaitingRelation.objects.get_or_create(receive_user=from_user, send_user=user)
 
-            if result:
+            if result_created:
                 return Response({'detail': 'created'})
+            result.delete()
             return Response({'created': 'deleted'})
 
         except ObjectDoesNotExist:

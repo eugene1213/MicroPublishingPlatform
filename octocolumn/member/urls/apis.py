@@ -47,8 +47,8 @@ urlpatterns = [
     url(r'^(?P<post_pk>\d+)/bookmark/$', BookmarkView.as_view(), name='bookmark'),
 
     # follower
-    url(r'^(?P<user_pk>\d+)/follow/$', Follower.as_view(), name='follower'),
-    url(r'^(?P<user_pk>\d+)/followStatus/$', FollowerStatus.as_view(), name='follower-status'),
+    url(r'^(?P<user_pk>.*)/follow/$', Follower.as_view(), name='follower'),
+    url(r'^(?P<user_pk>.*)/followStatus/$', FollowerStatus.as_view(), name='follower-status'),
     url(r'^getUserFollowerCard/', include([
             url(r'^$', GetUserFollowerCard.as_view(), name="follower"),
             url(r'^(?P<count>\w+)$', GetUserFollowerCard.as_view(), name="follower")])),

@@ -6,7 +6,7 @@ config_secret_deploy = json.loads(open(CONFIG_SECRET_DEPLOY_FILE).read())
 
 # 배포모드니까 DEBUG는 False
 DEBUG = False
-ALLOWED_HOSTS = ['bycal.co']
+ALLOWED_HOSTS = ['bycal.co', '*.bycal.co']
 # ALLOWED_HOSTS = '*'
 
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+
     'member',
     'column',
     'octo'
@@ -60,11 +61,16 @@ INSTALLED_APPS = [
 
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config_secret_deploy['django']['email']['host']
-EMAIL_HOST_USER = config_secret_deploy['django']['email']['host_user']
-EMAIL_HOST_PASSWORD = config_secret_deploy['django']['email']['host_password']
+# EMAIL_HOST = config_secret_debug['django']['email']['host']
+# EMAIL_HOST_USER = config_secret_debug['django']['email']['host_user']
+# EMAIL_HOST_PASSWORD = config_secret_debug['django']['email']['host_password']
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'azure_3d95bc9766fc6c1c425b6283d64a5593@azure.com'
+EMAIL_HOST_PASSWORD = '!devocto1234'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'yourfriends@bycal.co'
 
 # AWS settings
 # AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
@@ -87,11 +93,11 @@ AZURE_STORAGE_KEY = config_secret_deploy['azure']['account_key']
 ## AZURE Static Setting
 STATICFILES_STORAGE = 'config.s3storages.AzureStaticStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
-                account=AZURE_STORAGE_ACCOUNT,
-                mediafiles_location=STATICFILES_LOCATION
-)
-
+# STATIC_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
+#                 account=AZURE_STORAGE_ACCOUNT,
+#                 mediafiles_location=STATICFILES_LOCATION
+# )
+STATIC_URL = 'https://bycal.blob.core.windows.net/static/'
 
 # AWS Static Settings
 # STATICFILES_STORAGE = 'config.s3storages.StaticStorage'
@@ -110,10 +116,13 @@ STATIC_ROOT = STATIC_URL
 ## AZURE Media settigns
 DEFAULT_FILE_STORAGE = 'config.s3storages.AzureMediaStorage'
 MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
-                account=AZURE_STORAGE_ACCOUNT,
-                mediafiles_location=MEDIAFILES_LOCATION
-)
+# MEDIA_URL = 'https://{account}.azureedge.net/{mediafiles_location}/'.format(
+#                 account=AZURE_STORAGE_ACCOUNT,
+#                 mediafiles_location=MEDIAFILES_LOCATION
+# )
+
+MEDIA_URL = 'https://bycal.blob.core.windows.net/media/'
+
 
 ## AWS Media Setting
 # DEFAULT_FILE_STORAGE = 'config.s3storages.MediaStorage'
@@ -153,7 +162,9 @@ DATABASES = {
 #     },
 # }
 # CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
-BROKER_URL = 'amqp://devocto:devocto1234@13.125.224.253:5672//'
+CELERY_BROKER_URL = 'amqp://user:devocto1234@//'
+
+CELERY_RESULT_BACKEND = 'amqp://user:devocto1234@//'
 # CELERY
 # CELERY_BROKER_URL = '{}:{}'.format(
 #     config_secret_deploy['django']['celery']['broker_url'],

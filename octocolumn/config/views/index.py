@@ -6,9 +6,11 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 
 from column.models import Post
 from member.models import User, BuyList
+from utils.crypto import decode
 from utils.tokengenerator import account_activation_token
 
 __all__ = (
@@ -104,7 +106,8 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) +
+                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                       url_exchange(post.title) +
                        "-" + str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -128,7 +131,8 @@ def preview(request, author=None, title=None):
                 "title": post.title,
                 "main_content": main_content(post.main_content),
                 "cover_image": post.cover_image,
-                "url": 'https://bycal.co/preview/'+'@' + author_exchange(post.author.nickname) + '/' + url_exchange(post.title) + "-" +
+                "url": 'https://bycal.co/preview/'+'@' + author_exchange(post.author.nickname) + '/' +
+                       url_exchange(post.title) + "-" +
                 str(post.pk),
                 "preview": post.preview,
                 "created_datetime": post.created_date.strftime('%Y.%m.%d') + ' ' + post.created_date.strftime('%H:%M'),
@@ -140,10 +144,11 @@ def preview(request, author=None, title=None):
 
 
 def profile(request, member_id=None):
+    decode_pk = int(decode(enc=str(member_id)))
+
     if request.user.is_authenticated:
         try:
-            member = User.objects.filter(pk=member_id).get()
-            print(request.user == member)
+            member = User.objects.filter(pk=decode_pk).get()
             if request.user == member:
                 response = render_to_response("view/profile.html", {
                     "login": True,
@@ -170,10 +175,11 @@ def profile(request, member_id=None):
 
 
 def more(request, type=None):
+    # print(request.user.is_authenticated)
     if request.user.is_authenticated:
         response = render_to_response("view/recent-more.html", {"login": True})
         return response
-    response = render_to_response("view/recent-more.html", {"login": True})
+    response = render_to_response("view/recent-more.html")
     return response
 
 

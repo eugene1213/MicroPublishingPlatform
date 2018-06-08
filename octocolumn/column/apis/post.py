@@ -15,7 +15,7 @@ from column.models import Temp, SearchTag, PostStar
 from column.pagination import PostPagination, PostListPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
-from member.models.user import WaitingRelation, Bookmark
+from member.models.user import WaitingRelation, Bookmark, Relation
 from member.serializers import ProfileImageSerializer
 from octo.models import UsePoint
 from utils.error_code import kr_error_code
@@ -320,12 +320,39 @@ class PostReadView(APIView):
         return Post.objects.select_related('author').filter(pk=post_id).get()
 
     def bookmark_status(self, post):
-
-        try:
-            Bookmark.objects.select_related('user').filter(user=self.request.user, post=post).get()
-            return True
-        except ObjectDoesNotExist:
+        user = self.request.user
+        if user.is_authenticated:
+            try:
+                Bookmark.objects.select_related('user').filter(user=self.request.user, post=post).get()
+                return True
+            except ObjectDoesNotExist:
+                return False
+        else:
             return False
+
+    def follow_status(self, author):
+        user = self.request.user
+        if user.is_authenticated:
+            if author == user:
+                return 2
+            try:
+                Relation.objects.select_related('to_user', 'from_user').filter(to_user=author, from_user=user).get()
+                return True
+            except ObjectDoesNotExist:
+                return False
+        return False
+
+    def star_rating(self, post):
+        try:
+            star = PostStar.objects.filter(post=post).get()
+            if star.member_num == 0:
+                return 0
+            return round(star.content / star.member_num)
+        except ObjectDoesNotExist:
+            star = PostStar.objects.create(post=post)
+            if star.member_num == 0:
+                return 0
+            return round(star.content / star.member_num)
 
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
@@ -346,12 +373,12 @@ class PostReadView(APIView):
                     post.hit += 1
                     post.save()
                     # 작가임
-                    bookmark_status = self.bookmark_status(post)
-                    user = User.objects.filter(pk=post.author_id).get()
-                    profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
+                    author = post.author
+                    profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
                     image_serializer = ProfileImageSerializer(profile_image)
                     time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-                    profile = Profile.objects.select_related('user').filter(user=user).get()
+                    profile = Profile.objects.select_related('user').filter(user=author).get()
+
                     return Response({
                         "detail": {
                             "post_id": serializer.data['pk'],
@@ -359,11 +386,14 @@ class PostReadView(APIView):
                             "main_content": serializer.data['main_content'],
                             "title": serializer.data['title'],
                             "tag": self.tag(post),
-                            "bookmark_status": bookmark_status,
+                            "bookmark_status": self.bookmark_status(post),
+                            "follow_status": self.follow_status(author),
+                            "following_url": "/api/member/" + str(post.author.pk) + "/follow/",
+                            "star": self.star_rating(post),
+                            "waiting": WaitingRelation.objects.filter(receive_user=author).count(),
                             "author": {
-                                "author_id": serializer.data['author'],
-                                "username": user.nickname,
-                                "achevement": "",
+                                "author_id": author.pk,
+                                "username": author.nickname,
                                 "intro": profile.intro,
                                 "image": image_serializer.data
                             },
@@ -392,12 +422,12 @@ class PostReadView(APIView):
                     post.hit += 1
                     post.save()
                     # 작가임
-                    # bookmark_status = self.bookmark_status(post)
-                    user = User.objects.filter(pk=post.author_id).get()
-                    profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
+                    author = post.author
+                    profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
                     image_serializer = ProfileImageSerializer(profile_image)
                     time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-                    profile = Profile.objects.select_related('user').filter(user=user).get()
+                    profile = Profile.objects.select_related('user').filter(user=author).get()
+
                     return Response({
                         "detail": {
                             "post_id": serializer.data['pk'],
@@ -405,11 +435,14 @@ class PostReadView(APIView):
                             "main_content": serializer.data['main_content'],
                             "title": serializer.data['title'],
                             "tag": self.tag(post),
-                            # "bookmark_status": bookmark_status,
+                            "bookmark_status": self.bookmark_status(post),
+                            "follow_status": self.follow_status(author),
+                            "following_url": "/api/member/" + str(post.author.pk) + "/follow/",
+                            "star": self.star_rating(post),
+                            "waiting": WaitingRelation.objects.filter(receive_user=author).count(),
                             "author": {
-                                "author_id": serializer.data['author'],
-                                "username": user.nickname,
-                                "achevement": "",
+                                "author_id": author.pk,
+                                "username": author.nickname,
                                 "intro": profile.intro,
                                 "image": image_serializer.data
                             },
