@@ -65,7 +65,7 @@ class Star(APIView):
                             "code": 431,
                             "message": kr_error_code(431)
                         }
-                        , status=status.HTTP_431_REQUEST_HEADER_FIELDS_TOO_LARGE
+                        , status=status.HTTP_400_BAD_REQUEST
                     )
                 except ObjectDoesNotExist:
                     return Response(
@@ -73,21 +73,21 @@ class Star(APIView):
                             "code": 407,
                             "message": kr_error_code(407)
                         }
-                        , status=status.HTTP_402_PAYMENT_REQUIRED
+                        , status=status.HTTP_400_BAD_REQUEST
                     )
             return Response(
                 {
                     "code": 424,
                     "message": kr_error_code(424)
                 }
-                , status=status.HTTP_424_FAILED_DEPENDENCY
+                , status=status.HTTP_400_BAD_REQUEST
             )
         return Response(
             {
                 "code": 424,
                 "message": kr_error_code(424)
             }
-            , status=status.HTTP_424_FAILED_DEPENDENCY
+            , status=status.HTTP_400_BAD_REQUEST
         )
 
 
