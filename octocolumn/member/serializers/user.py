@@ -4,9 +4,11 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 
 from member.models import User, Profile, ProfileImage
 from member.task import SignupEmailTask
+from utils.crypto import encode, decode
 from utils.customsendmail import signup_email_send
 from utils.tokengenerator import account_activation_token
 
@@ -18,6 +20,12 @@ __all__=(
 
 
 class UserSerializer(serializers.ModelSerializer):
+
+    def get_pk(self, obj):
+        return encode(clear=str(obj.pk))
+
+    pk = SerializerMethodField()
+
     class Meta:
         model = User
         fields = (
@@ -75,7 +83,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         if user:
             mail_subject = 'byCAL 이메일 인증.'
             user = user
-            message = render_to_string('singup_activation.html', {
+            message = render_to_string('welcome.html', {
                 'user': user.nickname,
                 'domain': 'bycal.co',
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),

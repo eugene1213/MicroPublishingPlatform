@@ -80,9 +80,10 @@ function signin_api() {
             else window.location.href = current_url;
         },
         error: function(error) {
+            console.log(error)
             var msg = error.responseJSON.content.message
             var title = error.responseJSON.content.title
-            error_modal(title, msg);
+            error_modal(title, msg, false);
         }
     });
 }

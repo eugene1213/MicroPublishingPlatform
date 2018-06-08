@@ -13,7 +13,7 @@ from member.apis import VerifyEmail, InviteVerifyEmail
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^naver6bc332ab9aa51989a598805bc6c439d3.html', naver_request, name='naver'),
+    url(r'^naverd45c8d580806584cb434be95a432581b.html', naver_request, name='naver'),
 
     url(r'^write/',
         include([
@@ -24,9 +24,9 @@ urlpatterns = [
     url(r'^@(?P<author>.+)/(?P<title>.+)$', read, name='read'),
     url(r'^preview/@(?P<author>.+)/(?P<title>.+)$', preview, name='preview'),
     url(r'^profile/', include([
-            url(r'^$', profile, name="write"),
-            url(r'^(?P<member_id>\d+)$',
-                profile, name="temp_write")
+            url(r'^$', profile, name="profile"),
+            url(r'^(?P<member_id>.+)$',
+                profile, name="profile")
     ]), name='profile'),
     url(r'^more/(?P<type>[-\w]+)/$', more, name='more'),
     # url(r'^recent/$', recent, name='recent'),

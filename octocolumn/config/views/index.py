@@ -6,9 +6,11 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 
 from column.models import Post
 from member.models import User, BuyList
+from utils.crypto import decode
 from utils.tokengenerator import account_activation_token
 
 __all__ = (
@@ -142,9 +144,11 @@ def preview(request, author=None, title=None):
 
 
 def profile(request, member_id=None):
+    decode_pk = int(decode(enc=str(member_id)))
+
     if request.user.is_authenticated:
         try:
-            member = User.objects.filter(pk=member_id).get()
+            member = User.objects.filter(pk=decode_pk).get()
             if request.user == member:
                 response = render_to_response("view/profile.html", {
                     "login": True,
@@ -275,5 +279,5 @@ def google(reqeust):
 
 
 def naver_request(request):
-    return render_to_response('naver6bc332ab9aa51989a598805bc6c439d3.html')
+    return render_to_response('naverd45c8d580806584cb434be95a432581b.html')
 

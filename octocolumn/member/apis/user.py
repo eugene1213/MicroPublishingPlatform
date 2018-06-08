@@ -28,6 +28,7 @@ from member.models.invitations import InvitationUser
 from member.serializers import UserSerializer, SignUpSerializer, ProfileImageSerializer
 from member.serializers.user import ChangePasswordSerializer
 from member.task import PasswordResetTask, InviteUserTask
+from utils.crypto import decode
 from utils.customsendmail import invite_email_send, password_reset_email_send
 from utils.error_code import kr_error_code
 from utils.jwt import jwt_token_generator
@@ -91,7 +92,7 @@ class Login(APIView):
             return Response(
                 {
                     "code": 406,
-                    "content": kr_error_code(401)
+                    "content": kr_error_code(406)
 
                 }
                 , status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -148,7 +149,6 @@ class SignUp(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = SignUpSerializer(data=self.request.data)
         if serializer.is_valid():
-            print(serializer.save())
             if serializer.save():
                 return Response(serializer.data, status=200)
 

@@ -74,9 +74,34 @@ class ProfileMainSerializer(serializers.ModelSerializer):
 
 
 class ProfileSubSerializer(serializers.ModelSerializer):
-    def get_username(self,obj):
+    def get_username(self, obj):
         return obj.user.username
-    
+
+    def get_sex(self, obj):
+        if obj.sex is None:
+            return ' '
+        return obj.sex
+
+    def get_birthday(self,obj):
+        if obj.birthday is None:
+            return ' '
+        return obj.birthday
+
+    def get_subjects(self, obj):
+        if obj.subjects is None:
+            return ' '
+        return obj.subjects
+
+    def get_phone(self, obj):
+        if obj.phone is None:
+            return ' '
+        return obj.phone
+
+    def get_jobs(self, obj):
+        if obj.jobs is None:
+            return ' '
+        return obj.jobs
+
     def get_settings(self, obj):
         try:
             user = self.context.get('user')
@@ -121,6 +146,11 @@ class ProfileSubSerializer(serializers.ModelSerializer):
 
     username = SerializerMethodField()
     settings = SerializerMethodField()
+    sex = SerializerMethodField()
+    jobs = SerializerMethodField()
+    phone = SerializerMethodField()
+    subjects = SerializerMethodField()
+    birthday = SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -131,7 +161,6 @@ class ProfileSubSerializer(serializers.ModelSerializer):
             'phone',
             'jobs',
             'subjects',
-            'intro',
             'settings'
         )
 

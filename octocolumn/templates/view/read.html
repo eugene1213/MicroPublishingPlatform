@@ -19,7 +19,9 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/comments.css' %}">	
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-read.css' %}">		
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-read.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 </head>
 <body>
@@ -63,35 +65,35 @@
 				</div>
 				<!-- Star Rating -->
 				<div class="rating">
+					<input id="star10" name="rating" type="radio" value="10"/>
+					<label for="star10" class="font-read-star"></label>
+					
+					<input id="star9" name="rating" type="radio" value="9"/>
+					<label for="star9" class="font-read-star-half"></label>
+					
+					<input id="star8" name="rating" type="radio" value="8"/>
+					<label for="star8" class="font-read-star"></label>
+					
+					<input id="star7" name="rating" type="radio" value="7"/>
+					<label for="star7" class="font-read-star-half"></label>
+					
+					<input id="star6" name="rating" type="radio" value="6"/>
+					<label for="star6" class="font-read-star"></label>
+					
 					<input id="star5" name="rating" type="radio" value="5"/>
-					<label for="star5" class="font-read-star"></label>
+					<label for="star5" class="font-read-star-half"></label>
 					
-					<input id="star4.5" name="rating" type="radio" value="4.5"/>
-					<label for="star4.5" class="font-read-star-half"></label>
+					<input id="star4" name="rating" type="radio" value="4"/>
+					<label for="star4" class="font-read-star"></label>
 					
-					<input id="star3" name="rating" type="radio" value="3"/>
-					<label for="star3" class="font-read-star"></label>
+					<input id="star3"  name="rating" type="radio" value="3"/>
+					<label for="star3" class="font-read-star-half"></label>
 					
-					<input id="star3.5" name="rating" type="radio" value="3.5"/>
-					<label for="star3.5" class="font-read-star-half"></label>
-					
-					<input id="star2" name="rating" type="radio" value="2"/>
+					<input id="star2"  name="rating" type="radio" value="2"/>
 					<label for="star2" class="font-read-star"></label>
 					
-					<input id="star2.5" name="rating" type="radio" value="2.5"/>
-					<label for="star2.5" class="font-read-star-half"></label>
-					
-					<input id="star1" name="rating" type="radio" value="1"/>
-					<label for="star1" class="font-read-star"></label>
-					
-					<input id="star1.5"  name="rating" type="radio" value="1.5"/>
-					<label for="star1.5" class="font-read-star-half"></label>
-					
-					<input id="star0"  name="rating" type="radio" value="0"/>
-					<label for="star0" class="font-read-star"></label>
-					
-					<input id="star0.5"  name="rating" type="radio" value="0.5"/>
-					<label for="star0.5" class="font-read-star-half"></label>
+					<input id="star1"  name="rating" type="radio" value="1"/>
+					<label for="star1" class="font-read-star-half"></label>
 				</div>
 				<!-- Share Button-->
 				<div class="post-share-btn">
@@ -136,12 +138,13 @@
 		$('.input_comment').attr('placeholder',text);
 		if(text == '댓글을 입력하려면 로그인 해주세요.') $('.input_comment, .comment_button').css('pointer-events','none');
 	</script>
+	<script type="text/javascript" src="{% static 'js/jquery.modal.js' %}"></script>	
 	<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/getComment.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/read.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/title-to-header.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/checkBookMark.js' %}"></script>
-	<script src="{% static 'js/jquery.imageloader.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.imageloader.js' %}"></script>
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];

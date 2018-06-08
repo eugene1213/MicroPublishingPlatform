@@ -34,6 +34,7 @@ $(document).ready(function(){
             var bookmark_status = json.detail.bookmark_status;
             var tags = json.detail.tag;
             var tagsHtml = '';
+            var rating = json.detail.star;
             if(bookmark_status) {
                 $(".ribbon").addClass("marked");
             }else{
@@ -57,22 +58,15 @@ $(document).ready(function(){
             
             
             $('.fb-share-button').attr('data-href', 'https://bycal.co/preview'+url);
-            $(".mainImg").css("background-image","url("+cover_img+")");
-                $(".cover-img").css("background-image","url("+cover_img+")");
-            $(".read_wrap > h2").text(title);
-                $(".column-title").text(title);
-            $(".date").text(created_datetime);
-                $(".date-published ").text(created_datetime);
-            $(".main_content_wrap").html(json.detail.main_content);
-                $(".column-content").html(json.detail.main_content);
-            $(".writer > span").text(author);
-                $(".user-name i").text(author);
-            $('.picture').css('background-image','url('+author_image+')');
-                $(".writer_cover").css('background-image','url('+author_image+')');
-            $('.name').text(author);
-                $(".writer_name").text(author);
-            $('.contents > .text').html(intro);
-                $(".writer_say").html(intro);
+            $(".cover-img").css("background-image","url("+cover_img+")");
+            $(".column-title").text(title);
+            $(".date-published ").text(created_datetime);
+            $(".column-content").html(json.detail.main_content);
+            $(".user-name i").text(author);
+            $(".writer_cover").css('background-image','url('+author_image+')');
+            $(".writer_name").text(author);
+            $(".writer_say").html(intro);
+            $("#star"+rating).prop("checked","true");
             var descText = $(".column-content").text().substr(0,100)+'...';
             
             $('meta[property="og:description"]').attr('content',descText);
@@ -220,7 +214,7 @@ $(function() {
         return false;
     });
 });
-//  커버이미지 액자 효과
+//  커버이미지 창문 효과
 var margin = 0;
 $(window).scroll(function(){
 
@@ -228,4 +222,56 @@ $(window).scroll(function(){
         margin = (-1) * st / 3;
 
     $('.wrap-cover-img').css('margin-top',margin);
+});
+
+//별점
+$(function(){
+    $(".rating > label").click(function(e){
+
+        var current_url = window.location.href;
+        var post_id = current_url.split("-");
+            post_id = post_id[post_id.length-1];
+
+        var string = $(e.target).prop("for");
+        var star = string.replace("star","");
+            star *= 1;
+
+        $.ajax({
+            url: "/api/column/postStar/",
+            async: true,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                star: star,
+                pk: post_id
+            },
+            success: function(json) {
+                var rating = json.detail;
+                $("#star"+rating).prop("checked","true");
+            },
+            error: function(err){
+                
+                errJson = $.parseJSON(err.responseText);
+                if(errJson.code == 431){
+                    error_modal(errJson.message.message,"",true);
+                }
+                $("#star"+errJson.star).prop("checked","true");
+                console.log(err)
+            }
+        });
+    });
+});
+
+// 링크 복사
+$(function(){
+    $(".font-read-link").click(function(){
+
+        var t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = decodeURI(window.location.href);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        alert('Copied!');
+    });
 });
