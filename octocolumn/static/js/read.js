@@ -240,7 +240,7 @@ $(function(){
             url: "/api/column/postStar/",
             async: true,
             type: 'POST',
-            dataType: 'json',
+            dataType: 'application/json',
             data: {
                 star: star,
                 pk: post_id
@@ -251,7 +251,7 @@ $(function(){
                 $("#star"+rating).prop("checked","true");
             },
             error: function(err){
-                if(err.responseJSON.code == 431){
+                if(err.responseText.code == 431){
                     error_modal("","이미 평가한 칼럼입니다.",true);
                 }
                 console.log(err);

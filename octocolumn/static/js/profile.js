@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    console.log(xor_encrypt(encodeURI(window.location.href)));
+
     var current_url = window.location.href;
     var pk = current_url.split("/");
         pk = pk[pk.length-1];
@@ -453,13 +453,3 @@ $(function(){
         });
     });
 });
-
-function xor_encrypt(inTxt){
-    key = "devocto";
-    txt = inTxt;
-    outTxt = '';
-    for(i in txt){
-        outTxt += txt[i]^key[i % key.length];
-    }
-    return outTxt;
-}
