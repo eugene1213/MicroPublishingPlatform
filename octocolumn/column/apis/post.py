@@ -377,7 +377,7 @@ class PostReadView(APIView):
                     profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
                     image_serializer = ProfileImageSerializer(profile_image)
                     time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-                    profile = Profile.objects.select_related('user').filter(user=user).get()
+                    profile = Profile.objects.select_related('user').filter(user=author).get()
 
                     return Response({
                         "detail": {
@@ -392,7 +392,7 @@ class PostReadView(APIView):
                             "star": self.star_rating(post),
                             "waiting": WaitingRelation.objects.filter(receive_user=author).count(),
                             "author": {
-                                "author_id": serializer.data['author'],
+                                "author_id": author.pk,
                                 "username": author.nickname,
                                 "intro": profile.intro,
                                 "image": image_serializer.data

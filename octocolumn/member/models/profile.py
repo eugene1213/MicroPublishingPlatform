@@ -23,9 +23,9 @@ class Profile(models.Model):
     intro = models.TextField(null=True, blank=True)
     web = models.CharField(max_length=255, null=True, blank=True)
     jobs = models.CharField(max_length=255, null=True, blank=True)
-    facebook = models.CharField(max_length=255,null=True, blank=True)
-    instagram = models.CharField(max_length=255,null=True, blank=True)
-    twitter = models.CharField(max_length=255,null=True, blank=True)
+    facebook = models.CharField(max_length=255, null=True, blank=True)
+    instagram = models.CharField(max_length=255, null=True, blank=True)
+    twitter = models.CharField(max_length=255, null=True, blank=True)
     subjects = models.CharField(max_length=255, null=True, blank=True)
 
 

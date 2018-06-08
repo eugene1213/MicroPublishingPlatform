@@ -52,7 +52,7 @@ class UserAdmin(admin.ModelAdmin):
 
     )
 
-    readonly_fields = ['username', 'last_name', 'first_name', 'post_count', 'created_at', 'is_active', 'last_login']
+    readonly_fields = ['post_count', 'created_at', 'is_active', 'last_login']
 
     def post_count(self, obj):
         return Post.objects.filter(author=obj).count()

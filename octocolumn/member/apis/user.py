@@ -148,7 +148,6 @@ class SignUp(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = SignUpSerializer(data=self.request.data)
         if serializer.is_valid():
-            print(serializer.save())
             if serializer.save():
                 return Response(serializer.data, status=200)
 

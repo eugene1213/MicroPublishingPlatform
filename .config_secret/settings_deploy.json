@@ -5,9 +5,9 @@
     "databases":{
       "engine":"django.db.backends.postgresql_psycopg2",
       "name":"octo",
-      "user":"bycal@bycal",
+      "user":"bycal@azurebycal",
       "password":"!devocto1234",
-      "host":"bycal.postgres.database.azure.com",
+      "host":"azurebycal.postgres.database.azure.com",
       "port":"5432"
     },
     "email":{
@@ -24,7 +24,7 @@
   },
   "azure":{
     "account":"bycal",
-    "account_key":"8JX98OjFx6qJlMH/JNzSWomWxq+RnB4kgHqWXlQDMBL2CfNdYMISvyY7e0Q4SQs2BCJRkoZn7XaSiCVxkWtT0g=="
+    "account_key":"KP4xADBk8eLG1NFIf/AbvPsH7W7V5MZ/+ppbnq1bDlS2wTO+vEaafuz4PNFyPCMkoEoZp6V/v42yRSivM2aMgQ=="
   },
   "accounts":{
     "facebook":{

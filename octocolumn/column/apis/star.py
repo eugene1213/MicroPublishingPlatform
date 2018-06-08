@@ -20,9 +20,9 @@ class Star(generics.GenericAPIView):
         user = self.request.user
         data = self.request.data
         post = Post.objects.filter(pk=data['pk']).get()
-
-        if isinstance(int(data['star']), int):
-            if data['star'] >= 0 or data['star'] <= 10:
+        star = int(data['star'])
+        if isinstance(star, int):
+            if star >= 0 or star <= 10:
                 try:
                     buy_list = user.buy_list.filter(post=post).get()
                     if not buy_list.star:
