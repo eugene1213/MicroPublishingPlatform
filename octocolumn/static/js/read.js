@@ -240,7 +240,7 @@ $(function(){
             url: "/api/column/postStar/",
             async: true,
             type: 'POST',
-            dataType: 'application/json',
+            dataType: 'json',
             data: {
                 star: star,
                 pk: post_id
