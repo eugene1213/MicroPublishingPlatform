@@ -35,7 +35,7 @@ class Star(generics.GenericAPIView):
                             buy_list.save()
                             star.save()
                             return Response(
-                                {"detail": "success"}
+                                {"detail": round(star.content/star.member_num)}
                                 , status=status.HTTP_200_OK
 
                             )
@@ -48,7 +48,7 @@ class Star(generics.GenericAPIView):
                                 buy_list.save()
                                 star.save()
                                 return Response(
-                                    {"detail": "success"}
+                                    {"detail": round(star.content/star.member_num)}
                                     , status=status.HTTP_200_OK
 
                                 )
