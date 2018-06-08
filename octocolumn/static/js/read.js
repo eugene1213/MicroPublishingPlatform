@@ -254,7 +254,7 @@ $(function(){
                 pk: post_id
             },
             success: function(json) {
-
+                console.log(json)
             },
             error: function(err){
                 console.log(err);
