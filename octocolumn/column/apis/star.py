@@ -14,16 +14,16 @@ __all__ = (
 )
 
 
-class Star(generics.GenericAPIView):
+class Star(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         user = self.request.user
         data = self.request.data
         post = Post.objects.filter(pk=data['pk']).get()
-        star = int(data['star'])
-        if isinstance(star, int):
-            if star >= 0 or star <= 10:
+        data_star = int(data['star'])
+        if isinstance(data_star, int):
+            if data_star >= 0 or data_star <= 10:
                 try:
                     buy_list = BuyList.objects.select_related('user', 'post').filter(user=user, post=post).get()
                     if not buy_list.star:
@@ -50,8 +50,7 @@ class Star(generics.GenericAPIView):
                                 return Response(
                                     {"detail": round(star.content/star.member_num)}
                                     , status=status.HTTP_200_OK
-
-                                )
+                                    )
                             return Response(
                                 {
                                     "code": 500,
@@ -59,9 +58,10 @@ class Star(generics.GenericAPIView):
                                 }
                                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR
                             )
-
+                    star = PostStar.objects.select_related('post').filter(post=post).get()
                     return Response(
                         {
+                            "star": round(star.content/star.member_num),
                             "code": 431,
                             "message": kr_error_code(431)
                         }

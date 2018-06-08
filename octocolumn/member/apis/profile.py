@@ -18,6 +18,7 @@ from column.serializers.post import MyPublishPostSerializer
 from member.models import ProfileImage, Profile, UserSettings, User
 from member.models.user import WaitingRelation, Relation
 from member.serializers import ProfileImageSerializer, ProfileMainSerializer, ProfileSubSerializer
+from utils.crypto import decode
 from utils.error_code import kr_error_code
 from utils.image_rescale import profile_image_resizing, image_quality_down
 
@@ -43,8 +44,10 @@ class ProfileMainInfo(APIView):
 
     def post(self, request):
         member_id = self.request.data['pk']
+        decode_pk = int(decode(enc=str(member_id)))
+
         try:
-            member = User.objects.filter(pk=member_id).get()
+            member = User.objects.filter(pk=decode_pk).get()
             user = self.request.user
 
             if user == member:
@@ -140,7 +143,9 @@ class ProfileSubInfo(APIView):
 
     def post(self, request):
         member_id = self.request.data['pk']
-        member = User.objects.filter(pk=member_id).get()
+        decode_pk = int(decode(enc=str(member_id)))
+
+        member = User.objects.filter(pk=decode_pk).get()
         user = self.request.user
 
         if user == member:
@@ -327,7 +332,6 @@ class ProfileImageUpload(generics.CreateAPIView):
     #파일 업로드
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        print(self.request.data)
         profile_file_obj = self.base64_content(self.request.data['img'])
         resizing_image = profile_image_resizing(profile_file_obj)
 

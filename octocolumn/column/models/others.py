@@ -21,6 +21,12 @@ class SearchTag(models.Model):
     def __str__(self):
         return 'Post({}), Tag({})'.format(self.post, self.tag)
 
+    # @property
+    # def tags_indexing(self):
+    #     if self.tag is not None:
+    #         for i in self.tag:
+    #         return [tag.title for tag in self.tag]
+
 
 class PreSearchTag(models.Model):
     post = models.ForeignKey('column.PreAuthorPost')

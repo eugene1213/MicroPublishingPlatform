@@ -10,6 +10,7 @@ from column.models import TempFile
 from member.models import ProfileImage
 from member.models.user import Bookmark
 from member.serializers import UserSerializer, ProfileImageSerializer
+from utils.crypto import encode
 from ..models import Post
 
 

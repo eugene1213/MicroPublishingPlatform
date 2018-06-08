@@ -24,9 +24,9 @@ urlpatterns = [
     url(r'^@(?P<author>.+)/(?P<title>.+)$', read, name='read'),
     url(r'^preview/@(?P<author>.+)/(?P<title>.+)$', preview, name='preview'),
     url(r'^profile/', include([
-            url(r'^$', profile, name="write"),
-            url(r'^(?P<member_id>\d+)$',
-                profile, name="temp_write")
+            url(r'^$', profile, name="profile"),
+            url(r'^(?P<member_id>.+)$',
+                profile, name="profile")
     ]), name='profile'),
     url(r'^more/(?P<type>[-\w]+)/$', more, name='more'),
     # url(r'^recent/$', recent, name='recent'),
