@@ -246,15 +246,17 @@ $(function(){
                 pk: post_id
             },
             success: function(json) {
-                console.log(json)
                 var rating = json.detail;
                 $("#star"+rating).prop("checked","true");
             },
             error: function(err){
-                if(err.responseText.code == 431){
-                    error_modal("","이미 평가한 칼럼입니다.",true);
+                
+                errJson = $.parseJSON(err.responseText);
+                if(errJson.code == 431){
+                    error_modal(errJson.message.message,"",true);
                 }
-                console.log(err);
+                $("#star"+errJson.star).prop("checked","true");
+                console.log(err)
             }
         });
     });
