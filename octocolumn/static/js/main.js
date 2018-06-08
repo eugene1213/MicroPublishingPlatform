@@ -26,7 +26,7 @@ $(document).ready(function() {
         var spinner = new Spinner(opts).spin(target);
 
     getData();
-    popBalloon();
+    // popBalloon();
 
     $(document).click(function(e){
         

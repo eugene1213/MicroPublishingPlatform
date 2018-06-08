@@ -220,7 +220,7 @@ $(function() {
         return false;
     });
 });
-//  커버이미지 액자 효과
+//  커버이미지 창문 효과
 var margin = 0;
 $(window).scroll(function(){
 
@@ -228,4 +228,51 @@ $(window).scroll(function(){
         margin = (-1) * st / 3;
 
     $('.wrap-cover-img').css('margin-top',margin);
+});
+
+//별점
+$(function(){
+    $(".rating > label").click(function(e){
+
+        var current_url = window.location.href;
+        var post_id = current_url.split("-");
+            post_id = post_id[post_id.length-1];
+
+        console.log($(e.target).prop("for"));
+        var string = $(e.target).prop("for");
+        var star = string.replace("star","");
+            star *= 1;
+        console.log(star)
+
+        $.ajax({
+            url: "/api/column/postStar/",
+            async: true,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                star: star,
+                pk: post_id
+            },
+            success: function(json) {
+
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    });
+});
+
+// 링크 복사
+$(function(){
+    $(".font-read-link").click(function(){
+
+        var t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = decodeURI(window.location.href);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        alert('Copied!');
+    });
 });

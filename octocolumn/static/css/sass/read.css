@@ -332,10 +332,12 @@ a {
   content: "\e805";
   position: absolute; }
 
-.rating > input:checked ~ label,
+.rating > input:checked ~ label {
+  color: #FFD700; }
+
 .rating:not(:checked) > label:hover,
 .rating:not(:checked) > label:hover ~ label {
-  color: #FFD700; }
+  color: #f2cc00; }
 
 /* Post Share Button */
 .post-share-btn {
