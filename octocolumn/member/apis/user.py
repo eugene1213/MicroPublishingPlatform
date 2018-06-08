@@ -92,7 +92,7 @@ class Login(APIView):
             return Response(
                 {
                     "code": 406,
-                    "content": kr_error_code(401)
+                    "content": kr_error_code(406)
 
                 }
                 , status=status.HTTP_406_NOT_ACCEPTABLE)
