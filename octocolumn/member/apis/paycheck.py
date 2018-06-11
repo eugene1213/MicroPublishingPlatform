@@ -67,6 +67,7 @@ class BootPayCheckView(APIView):
             return Response({"detail": "success"}, status=status.HTTP_200_OK)
 
 
+
 class ShopUserData(APIView):
     permission_classes = (IsAuthenticated,)
 
