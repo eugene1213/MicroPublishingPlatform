@@ -42,9 +42,10 @@ class BootPayCheckView(APIView):
                                      content=data['price'],
                                      payment_type=None,
                                      order_num=data['receipt_id'])
-        user.point += int(data['price']) - int(data['price']/1.1)
+        user.point += int(data['price'])/1.1
+        user.save()
         if pay:
-            return Response({"detail": "success"}, status=status.HTTP_200_OK)
+            return Response({"detail": user.point}, status=status.HTTP_200_OK)
         return Response(
             {
                 "code": 425,
