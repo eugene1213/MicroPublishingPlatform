@@ -68,9 +68,9 @@ function buyBtnClick(price) {
                     },
                     success: function(json) {
                         if(json) { // 재고 수량 관리 로직 혹은 다른 처리
-                            this.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+                            BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
                         } else {
-                            this.removeWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+                            BootPay.removeWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
                         }
                     },
                     error: function(err){
