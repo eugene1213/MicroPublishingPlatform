@@ -1,27 +1,38 @@
+import json
+
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from member.models import Profile
+from member.models import Profile, PayList
 from utils.pay_check import BootpayApi
 
 __all__ = (
     'ShopUserData',
+    'BootPayCheckView'
 )
 
 
-# class BootPayCheckView(APIView):
-#     def post(self, request, *args, **kwargs):
-#         data = self.request.data
-#
-#         api = BootpayApi("5ab88457b6d49c1aaa550daa", rec)
-#
-#         return Response({
-#             api.confirm(data['receipt_id']).text
-#         }, status=status.HTTP_200_OK)
-#
+class BootPayCheckView(APIView):
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        data = self.request.data
+
+        api = BootpayApi("5ab88457b6d49c1aaa550daa", "ja0mQQI+zwpS2YlCqoJuqBXsfPcVfzUlSDLRMigalDg=")
+
+        text = api.confirm(data['receipt_id']).text
+        json_data = json.loads(text)
+
+        if json_data['data']['status'] is 1:
+            if json_data['data']['method'] is 'card':
+                PayList.objects.card(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
+                return Response({True}, status=status.HTTP_200_OK)
+            return Response({False}, status=status.HTTP_200_OK)
+
+        return Response({False}, status=status.HTTP_200_OK)
+
 
 class ShopUserData(APIView):
     permission_classes = (IsAuthenticated,)
