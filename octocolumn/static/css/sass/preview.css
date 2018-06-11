@@ -315,23 +315,17 @@
   cursor: pointer; }
 
 .rating label:before {
+  content: "\e801";
   margin: 5px;
   font-size: 30px;
-  font-family: btn;
+  font-family: font-read;
   display: inline-block; }
 
-.rating .half:before {
+.rating .font-read-star-half:before {
+  content: "\e805";
   position: absolute; }
 
-.iconbtn-star-full {
-  content: "\f800"; }
-
-.iconbtn-star-half {
-  content: "\f022"; }
-
-.rating > input:checked ~ label,
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
+.rating > input:checked ~ label {
   color: #FFD700; }
 
 /* Purchase Button */
@@ -353,5 +347,8 @@
 
 .purchase-btn:hover {
   opacity: 0.9; }
+
+.balance {
+  cursor: pointer; }
 
 /*# sourceMappingURL=preview.css.map */
