@@ -28,13 +28,14 @@ class BootPayCheckView(APIView):
         if json_data['data']['status'] is 1:
             if json_data['data']['method'] is 'card':
                 PayList.objects.card(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
-                return Response({True}, status=status.HTTP_200_OK)
+                return Response({1}, status=status.HTTP_200_OK)
             elif json_data['data']['method'] is 'phone':
                 PayList.objects.phone(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
-                return Response({True}, status=status.HTTP_200_OK)
-            return Response({False}, status=status.HTTP_200_OK)
+                return Response({1}, status=status.HTTP_200_OK)
+            return Response({2}, status=status.HTTP_200_OK)
 
-        return Response({False}, status=status.HTTP_200_OK)
+        elif json_data['data']['status'] is 0 or 2 or 3:
+            return Response({3}, status=status.HTTP_200_OK)
 
 
 class ShopUserData(APIView):
