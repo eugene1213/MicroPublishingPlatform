@@ -38,34 +38,19 @@ class BootPayCheckView(APIView):
         # elif json_data['data']['status'] is 0 or 2 or 3:
         #     return Response({3}, status=status.HTTP_200_OK)
 
-        if data['method'] is 'card':
-            pay = PayList.objects.card(user=user, price=data['price'],
-                                       content=data['price'],
-                                       order_number=data['receipt_id'])
-            if pay:
-                return Response({"detail": "success"}, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 425,
-                    "message": kr_error_code(425)
-                }
-                , status=status.HTTP_400_BAD_REQUEST)
-        elif data['method'] is 'phone':
-            pay = PayList.objects.card(user=user, price=data['price'],
-                                       content=data['price'],
-                                       order_number=data['receipt_id'])
-            if pay:
-                return Response({"detail": "success"}, status=status.HTTP_200_OK)
-            return Response(
-                {
-                    "code": 425,
-                    "message": kr_error_code(425)
-                }
-                , status=status.HTTP_400_BAD_REQUEST)
-        
-        else:
+        pay = PayList.objects.create(user=user, price=data['price'],
+                                     content=data['price'],
+                                     payment_type=None,
+                                     order_num=data['receipt_id'])
+        user.point += int(data['price']) - int(data['price']/1.1)
+        if pay:
             return Response({"detail": "success"}, status=status.HTTP_200_OK)
-
+        return Response(
+            {
+                "code": 425,
+                "message": kr_error_code(425)
+            }
+            , status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShopUserData(APIView):
