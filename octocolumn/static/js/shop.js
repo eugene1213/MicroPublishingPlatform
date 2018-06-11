@@ -84,7 +84,7 @@ function buyBtnClick(price) {
                     dataType: 'json',
                     data: {
                         receipt_id: data.receipt_id,
-                        price: price
+                        price: price,
                     },
                     success: function(json) {
                         window.location.href = "/";
