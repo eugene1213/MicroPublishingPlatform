@@ -7,9 +7,9 @@ function buyBtnClick(price) {
     var phone = '';
 
     switch(price){
-        case 2200: name = 'Tester';break;
-        case 5500: name = 'Starter';break;
-        case 11000: name = 'Regular';
+        case 2000: name = 'Tester';break;
+        case 5000: name = 'Starter';break;
+        case 10000: name = 'Regular';
     }
     $.ajax({
         url: "/api/member/shopUserData/",
@@ -31,13 +31,13 @@ function buyBtnClick(price) {
                 show_agree_window: 0,       // 부트페이 정보 동의 창 보이기 여부
                 items: [
                     {
-                        item_name: name,    //상품명
-                        qty: 1,             //수량
-                        unique: '1',        //해당 상품을 구분짓는 primary key
-                        price: price,       //상품 단가
-                        cat1: '',           // 대표 상품의 카테고리 상, 50글자 이내
-                        cat2: '',           // 대표 상품의 카테고리 중, 50글자 이내
-                        cat3: '',           // 대표상품의 카테고리 하, 50글자 이내
+                        item_name: name,            //상품명
+                        qty: 1,                     //수량
+                        unique: '1',                //해당 상품을 구분짓는 primary key
+                        price: price+price*0.1,     //상품 단가
+                        cat1: '',                   // 대표 상품의 카테고리 상, 50글자 이내
+                        cat2: '',                   // 대표 상품의 카테고리 중, 50글자 이내
+                        cat3: '',                   // 대표상품의 카테고리 하, 50글자 이내
                     }
                 ],
                 user_info: {
