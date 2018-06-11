@@ -190,6 +190,7 @@ FACEBOOK_APP_SECRET_CODE = config_secret_debug['accounts']['facebook']['secret_c
 
 # Google
 CLIENT_ID = config_secret_debug['accounts']['google']['client_id']
+print(CLIENT_ID)
 CLIENT_SECRET = config_secret_debug['accounts']['google']['client_secret']
 REDIRECT_URI = config_secret_debug['accounts']['google']['javascript_origins']
 AUTH_URI = config_secret_debug['accounts']['google']['auth_uri']
