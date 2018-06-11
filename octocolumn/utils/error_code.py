@@ -95,6 +95,11 @@ def kr_error_code(x):
             "message": "이메일 권한 설정을 확인해주세요",
         },
 
+        425:{
+            "title": "Payment Failed",
+            "message": "결제에 실패하였습니다.",
+        },
+
         500: {
             "title": "Fatal error",
             "message": "허용되지 않은 접속입니다.",

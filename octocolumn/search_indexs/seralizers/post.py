@@ -5,6 +5,8 @@
 #
 #
 # class PostDocumentSerializer(DocumentSerializer):
+#     pk = serializers.IntegerField(read_only=True)
+#
 #     title = serializers.CharField(read_only=True)
 #     author = serializers.CharField(read_only=True)
 #     price = serializers.IntegerField(read_only=True)
@@ -18,6 +20,7 @@
 #         # List the serializer fields. Note, that the order of the fields
 #         # is preserved in the ViewSet.
 #         fields = (
+#             'pk',
 #             'title',
 #             'author',
 #             'created_date',

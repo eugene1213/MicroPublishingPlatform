@@ -6,7 +6,7 @@ from member.apis import Login, SignUp, FacebookLogin, Logout, \
     GoogleLogin, Follower, UserInfo, KakaoLogin, UserCoverImageUpload, ProfileImageUpload, \
     Waiting, PublishPost, MyTemp, ProfileUpdate, GetUserFollowerCard, \
     GetUserFollowingCard, SendInviteEmail, PasswordReset, PasswordResetSendEmail, InvitationUserView, BookmarkView, \
-    FollowerStatus, ProfileMainInfo, ProfileSubInfo, AllMyPost, ProfileOpenSettings
+    FollowerStatus, ProfileMainInfo, ProfileSubInfo, AllMyPost, ProfileOpenSettings, ShopUserData, BootPayCheckView
 from member.apis.point import UserPointHistory
 
 urlpatterns = [
@@ -67,6 +67,12 @@ urlpatterns = [
 
     # api:author 신청
     url(r'^authorApply', apis.AuthorApply.as_view(), name='apply'),
+
+    # ShopPayCheck
+    url(r'^shopUserData/$', ShopUserData.as_view(), name='shopUserData'),
+
+    #payCheck
+    url(r'^payCheck/$', BootPayCheckView.as_view(), name='shopUserData'),
 
     # 2차 비밀번호 관련
     # url(r'^octoCode', OctoCodeView.as_view(), name='create-sp'),

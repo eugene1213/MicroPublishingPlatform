@@ -26,7 +26,7 @@ class PayListManager(models.Manager):
         instance.save()
         return instance
 
-    def card(self, user, price, content, order_number):
+    def card(self, user, price, content, order_number=None):
         instance = self.model(
             user=user,
             payment_type=PayList.PAYMENT_TYPE_CARD,
@@ -34,13 +34,13 @@ class PayListManager(models.Manager):
             content=content,
             order_number=order_number
         )
-        user.point += int(price)
+        user.point += int(price) - int(price/1.1)
         PointHistory.objects.charge(user=user, point=int(price), history='카드')
         user.save()
         instance.save()
         return instance
 
-    def bank(self, user, price, content, order_number):
+    def bank(self, user, price, content, order_number=None):
         instance = self.model(
             user=user,
             payment_type=PayList.PAYMENT_TYPE_BANK,
@@ -49,13 +49,13 @@ class PayListManager(models.Manager):
             order_number=order_number
 
         )
-        user.point += int(price)
+        user.point += int(price) - int(price/1.1)
         PointHistory.objects.charge(user=user, point=int(price), history='은행')
         user.save()
         instance.save()
         return instance
 
-    def phone(self, user, price, content, order_number):
+    def phone(self, user, price, content, order_number=None):
         instance = self.model(
             user=user,
             payment_type=PayList.PAYMENT_TYPE_PHONE,
@@ -63,7 +63,7 @@ class PayListManager(models.Manager):
             content=content,
             order_number=order_number
         )
-        user.point += int(price)
+        user.point += int(price) - int(price/1.1)
         PointHistory.objects.charge(user=user, point=int(price), history='소액결제')
         user.save()
         instance.save()
@@ -76,7 +76,7 @@ class PayListManager(models.Manager):
             price=price,
             content=content
         )
-        user.point -= int(price)
+        user.point -= int(price) - int(price/1.1)
         user.save()
         instance.save()
         return instance

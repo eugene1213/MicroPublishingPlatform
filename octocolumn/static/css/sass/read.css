@@ -83,7 +83,7 @@ a {
   background-color: #fff; }
 
 .column-preview .column-title {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   font-size: 36px;
   font-weight: 700; }
@@ -474,5 +474,12 @@ a {
   font-size: 0.8rem;
   font-weight: 300;
   line-height: 1.5; }
+
+.gradient {
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  bottom: 0px;
+  background: linear-gradient(to top, #fff 25%, transparent); }
 
 /*# sourceMappingURL=read.css.map */

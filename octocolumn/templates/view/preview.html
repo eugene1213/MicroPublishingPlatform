@@ -19,8 +19,6 @@
 	<meta property="og:image:height" content="200px" />
 	<title>byCAL</title>
 	<link rel="shortcut icon" href="{% static 'images/favicon/favicon-32.ico' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/sub.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/read.css' %}">
@@ -29,6 +27,22 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.css' %}"/>    
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sass/jquery.modal.theme-atlant.css' %}" />	
 	<script type="text/javascript" src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+	<script>
+		//  커버이미지 창문 효과
+		var margin = 0;
+		$(window).scroll(function(){
+
+			var st = $(document).scrollTop();
+				margin = (-1) * st / 3;
+
+			$('.wrap-cover-img').css('margin-top',margin);
+		});
+	</script>
+	<style>
+		figcaption{
+			float: none !important;
+		}
+	</style>
 </head>
 <body>
 	{% if login %}
@@ -36,36 +50,46 @@
     {% else %}
 
 	{% endif %}
-	<div class="read">
-		<div class="mainImg image-loader" style="background-image: url({{ cover_image.url }});">
-            {{ MEDIA_URL }}
-		</div>
-		<div class="read_wrap">
-			<h2 class="preview-title" id="preview-title">{{ title }}</h2>
-			<div class="write">
-				<div class="writer">
-					by <span class="preview-author" id="preview-author">{{ username }}</span>
-				</div>
-				<div class="date">
-                    {{ created_datetime }}
+	<div id="preview-container">
+		<!-- social preview -->
+		<div class="preview-content">
+			<div class="wrap-cover-img">
+				<div class="cover-img image-loader" style="background-image: url({{ cover_image.url }});">
+					{{ MEDIA_URL }}
 				</div>
 			</div>
-		</div>
-		<div class="main_content_wrap">
-            {% autoescape off %}
-			    {{ preview }}
-			{% endautoescape %}
-			<div class="gradient"></div>
-		</div>
-		<div class="read_wrap">
-			{% if login %}
-				{% include 'view/preview-purchase.html' %}
-			{% else %}
-				{% include 'view/preview-signin.html' %}
-			{% endif %}
+			<!-- Column Preview -->
+			<div class="column-preview">
+				<div class="column-title">{{ title }}</div>
+				<div class="columnist-info">
+					<div class="columnist-name">
+						by <span class="user-name"><i>{{ username }}</i></span>
+					</div>
+					<div class="date-published">{{ created_datetime }}</div>
+				</div>
+				<!-- ribbon -->
+				<div class="ribbon"></div>
+				<!-- Main Contents -->
+				<div class="column-content">
+					{% autoescape off %}
+						{{ preview }}
+					{% endautoescape %}
+					<div class="gradient"></div>
+				</div>
+				{% if login %}
+					{% include 'view/preview-purchase.html' %}
+				{% else %}
+					{% include 'view/preview-signin.html' %}
+				{% endif %}
+			</div>
 		</div>
 	</div>
-	<!-- //read end -->
+	<script>
+		var imgHeight = window.innerHeight - 108 - 44;
+
+		$(".cover-img").height(imgHeight);
+		$(".column-preview").css('margin-top',imgHeight-44);
+	</script>
     <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
 	<script type="text/javascript" src="{% static 'js/jquery.imageloader.js' %}"></script>
 	<div id="fb-root"></div>
