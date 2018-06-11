@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from member.models import Profile, PayList
+from utils.error_code import kr_error_code
 from utils.pay_check import BootpayApi
 
 __all__ = (
@@ -20,22 +21,50 @@ class BootPayCheckView(APIView):
         user = self.request.user
         data = self.request.data
 
-        api = BootpayApi("5ab88457b6d49c1aaa550daa", "ja0mQQI+zwpS2YlCqoJuqBXsfPcVfzUlSDLRMigalDg=")
+        # api = BootpayApi("5ab88457b6d49c1aaa550daa", "ja0mQQI+zwpS2YlCqoJuqBXsfPcVfzUlSDLRMigalDg=")
+        #
+        # text = api.confirm(data['receipt_id']).text
+        # json_data = json.loads(text)
+        #
+        # if json_data['data']['status'] is 1:
+        #     if json_data['data']['method'] is 'card':
+        #         PayList.objects.card(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
+        #         return Response({1}, status=status.HTTP_200_OK)
+        #     elif json_data['data']['method'] is 'phone':
+        #         PayList.objects.phone(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
+        #         return Response({1}, status=status.HTTP_200_OK)
+        #     return Response({2}, status=status.HTTP_200_OK)
+        #
+        # elif json_data['data']['status'] is 0 or 2 or 3:
+        #     return Response({3}, status=status.HTTP_200_OK)
 
-        text = api.confirm(data['receipt_id']).text
-        json_data = json.loads(text)
-
-        if json_data['data']['status'] is 1:
-            if json_data['data']['method'] is 'card':
-                PayList.objects.card(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
-                return Response({1}, status=status.HTTP_200_OK)
-            elif json_data['data']['method'] is 'phone':
-                PayList.objects.phone(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
-                return Response({1}, status=status.HTTP_200_OK)
-            return Response({2}, status=status.HTTP_200_OK)
-
-        elif json_data['data']['status'] is 0 or 2 or 3:
-            return Response({3}, status=status.HTTP_200_OK)
+        if data['method'] is 'card':
+            pay = PayList.objects.card(user=user, price=data['price'],
+                                       content=data['price'],
+                                       order_number=data['receipt_id'])
+            if pay:
+                return Response({"detail": "success"}, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "code": 425,
+                    "message": kr_error_code(425)
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
+        elif data['method'] is 'phone':
+            pay = PayList.objects.card(user=user, price=data['price'],
+                                       content=data['price'],
+                                       order_number=data['receipt_id'])
+            if pay:
+                return Response({"detail": "success"}, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "code": 425,
+                    "message": kr_error_code(425)
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
+        
+        else:
+            return Response({"detail": "success"}, status=status.HTTP_200_OK)
 
 
 class ShopUserData(APIView):
