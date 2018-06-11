@@ -142,7 +142,7 @@ function getRecent(url){
                         </div>\
                         <div class="user-container">\
                             <div class="bookmark" id="bookmark_'+pk+'"><i class="'+bookmarkClass+'"></i></div>\
-                            <div class="user full-right">\
+                            <div class="user full-right" onclick="window.location.href=\'/profile/'+author_id+'\'">\
                                 <div class="user-pic image-loader" id="author_'+author_id+'" style="background-image:url('+profile_image+')"></div>\
                                 <div class="user-info">\
                                     <h1>'+username+'</h1>\

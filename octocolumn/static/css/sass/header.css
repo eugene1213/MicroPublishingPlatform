@@ -17,7 +17,8 @@ header .site-name {
   color: #fff;
   font-size: 20px;
   text-align: center;
-  width: 83px;
+  width: 70%;
+  text-overflow: ellipsis;
   height: 25px;
   margin-top: 11px;
   background-image: url(../../images/example/bycal_logo_83x25.svg);

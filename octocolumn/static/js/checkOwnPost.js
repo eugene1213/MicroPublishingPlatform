@@ -56,40 +56,50 @@ function isBought(post_id, readtime, bookmark_status) {
                                     '+preview+'\
                                 <div class="gradient"></div>\
                                 </div>\
-                                <div class="column-tags">\
-                                    <p>Tags</p>\
-                                    <ul>\
-                                        '+tagsHtml+'\
-                                    </ul>\
+                                <div class="rating">\
+                                    <input id="star10" name="rating" type="radio" value="10"/>\
+                                    <label for="star10" class="font-read-star"></label>\
+                                    \
+                                    <input id="star9" name="rating" type="radio" value="9"/>\
+                                    <label for="star9" class="font-read-star-half"></label>\
+                                    \
+                                    <input id="star8" name="rating" type="radio" value="8"/>\
+                                    <label for="star8" class="font-read-star"></label>\
+                                    \
+                                    <input id="star7" name="rating" type="radio" value="7"/>\
+                                    <label for="star7" class="font-read-star-half"></label>\
+                                    \
+                                    <input id="star6" name="rating" type="radio" value="6"/>\
+                                    <label for="star6" class="font-read-star"></label>\
+                                    \
+                                    <input id="star5" name="rating" type="radio" value="5"/>\
+                                    <label for="star5" class="font-read-star-half"></label>\
+                                    \
+                                    <input id="star4" name="rating" type="radio" value="4"/>\
+                                    <label for="star4" class="font-read-star"></label>\
+                                    \
+                                    <input id="star3"  name="rating" type="radio" value="3"/>\
+                                    <label for="star3" class="font-read-star-half"></label>\
+                                    \
+                                    <input id="star2"  name="rating" type="radio" value="2"/>\
+                                    <label for="star2" class="font-read-star"></label>\
+                                    \
+                                    <input id="star1"  name="rating" type="radio" value="1"/>\
+                                    <label for="star1" class="font-read-star-half"></label>\
                                 </div>\
+                                <div class="column-tags">\
+                                <p>Tags</p>\
+                                <ul>\
+                                    '+tagsHtml+'\
+                                </ul>\
+                            </div>\
                             </div>\
                             <div class="balance">'+point+'</div>\
                             <div class="purchase-btn" onclick=\'buy('+post_id+');\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
                         </div>\
                     </div>\
                 ';
-                // <div class="rating">\
-                //     <input id="star5" name="rating" type="radio" value="5"/>\
-                //     <label for="star5" class="full iconbtn-star-full"></label>\
-                //     <input id="star4.5" name="rating" type="radio" value="4.5"/>\
-                //     <label for="star4.5" class="half iconbtn-star-half"></label>\
-                //     <input id="star3" name="rating" type="radio" value="3"/>\
-                //     <label for="star3" class="full iconbtn-star-full"></label>\
-                //     <input id="star3.5" name="rating" type="radio" value="3.5"/>\
-                //     <label for="star3.5" class="half iconbtn-star-half"></label>\
-                //     <input id="star2" name="rating" type="radio" value="2"/>\
-                //     <label for="star2" class="full iconbtn-star-full"></label>\
-                //     <input id="star2.5" name="rating" type="radio" value="2.5"/>\
-                //     <label for="star2.5" class="half iconbtn-star-half"></label>\
-                //     <input id="star1" name="rating" type="radio" value="1"/>\
-                //     <label for="star1" class="full iconbtn-star-full"></label>\
-                //     <input id="star1.5"  name="rating" type="radio" value="1.5"/>\
-                //     <label for="star1.5" class="half iconbtn-star-half"></label>\
-                //     <input id="star0"  name="rating" type="radio" value="0"/>\
-                //     <label for="star0" class="full iconbtn-star-full"></label>\
-                //     <input id="star0.5"  name="rating" type="radio" value="0.5"/>\
-                //     <label for="star0.5" class="half iconbtn-star-half"></label>\
-                // </div>\
+                
                 $('.page').after(previewHtml);
                 $(".page").css("position", "fixed"); 
             }
