@@ -69,7 +69,7 @@ urlpatterns = [
     url(r'^authorApply', apis.AuthorApply.as_view(), name='apply'),
 
     # ShopPayCheck
-    url(r'^shopPayCheck/$', ShopUserData.as_view(), name='waiting'),
+    url(r'^shopUserData/$', ShopUserData.as_view(), name='waiting'),
 
     # 2차 비밀번호 관련
     # url(r'^octoCode', OctoCodeView.as_view(), name='create-sp'),
