@@ -34,7 +34,9 @@ class PayListManager(models.Manager):
             content=content,
             order_number=order_number
         )
+        print(price)
         user.point += int(price) - int(price/1.1)
+        print(user.point)
         PointHistory.objects.charge(user=user, point=int(price), history='카드')
         user.save()
         instance.save()

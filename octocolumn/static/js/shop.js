@@ -58,24 +58,31 @@ function buyBtnClick(price) {
             }).confirm(function (data) {
                 //결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
                 //주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
-                $.ajax({
-                    url: "/api/member/payCheck/",
-                    async: true,
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        receipt_id: data.receipt_id
-                    },
-                    success: function(json) {
-                        if(json) { // 재고 수량 관리 로직 혹은 다른 처리
-                            BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
-                        } else {
-                            BootPay.removeWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+                while(true){
+                    $.ajax({
+                        url: "/api/member/payCheck/",
+                        async: true,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            receipt_id: data.receipt_id
+                        },
+                        success: function(json) {
+                            console.log(json[0])
+                            if(json[0] === 1) { // 재고 수량 관리 로직 혹은 다른 처리
+                                BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+                                break;
+                            } else if(json[0] === 2){
+                                BootPay.removeWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+                                break;
+                            } else if(json[0] === 3){
+                                setTimeout(function(){continue;},2000)
+                            }
+                        },
+                        error: function(err){
                         }
-                    },
-                    error: function(err){
-                    }
-                });
+                    });
+                }
             }).done(function (data) {
                 //결제가 정상적으로 완료되면 수행됩니다
                 //비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
