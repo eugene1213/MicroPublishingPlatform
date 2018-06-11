@@ -54,4 +54,6 @@ urlpatterns = [
 
     url(r'^support/', include(support, namespace='support')),
 
+    # url(r'^search/', include('search_indexs.urls')),
+
 ]
