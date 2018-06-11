@@ -51,7 +51,7 @@ class BootPayCheckView(APIView):
                 }
                 , status=status.HTTP_400_BAD_REQUEST)
         elif data['method'] is 'phone':
-            pay = PayList.objects.card(user=user, price=data['price'],
+            pay = PayList.objects.phone(user=user, price=data['price'],
                                        content=data['price'],
                                        order_number=data['receipt_id'])
             if pay:
