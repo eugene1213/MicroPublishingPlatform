@@ -29,6 +29,9 @@ class BootPayCheckView(APIView):
             if json_data['data']['method'] is 'card':
                 PayList.objects.card(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
                 return Response({True}, status=status.HTTP_200_OK)
+            elif json_data['data']['method'] is 'phone':
+                PayList.objects.phone(user=user, price=json_data['data']['price'], content=json_data['data']['price'])
+                return Response({True}, status=status.HTTP_200_OK)
             return Response({False}, status=status.HTTP_200_OK)
 
         return Response({False}, status=status.HTTP_200_OK)
@@ -60,7 +63,7 @@ class ShopUserData(APIView):
                 }
             }, status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            profile = Profile.objects.create(user=user)
+            Profile.objects.create(user=user)
 
             return Response({"detail":
                 {
