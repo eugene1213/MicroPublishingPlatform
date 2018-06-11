@@ -16,8 +16,8 @@
 <meta name="google-site-verification" content="lhwgx-hKGoQ9Bh0otrtcDmyu-dhG9idAGigBWHgmWMc" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bycal.co/" />
-<meta property="og:title" content=“byCAL - A book of new era” />
-<meta property=“지식 콘텐츠의 캐쥬얼한 소비를 위한 플랫폼” />
+<meta property="og:title" content="byCAL - A book of new era" />
+<meta property="지식 콘텐츠의 캐쥬얼한 소비를 위한 플랫폼" />
 <meta property="og:image" content="{% static 'images/example/kakao-url-img.png' %}" />
 
     <title>byCAL</title>
@@ -36,12 +36,19 @@
 <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
     
-<span itemscope="" itemtype="http://schema.org/Organization">
- <link itemprop="url" href="https://bycal.co/">
- <a itemprop="sameAs" href="https://blog.naver.com/bycal_official"></a>
- <a itemprop="sameAs" href="https://www.facebook.com/bycal.co/"></a>
- <a itemprop="sameAs" href="https://www.instagram.com/bycal_official/"></a>
-</span>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Person",
+        "name": "byCAL",
+        "url": "https://bycal.co/",
+        "sameAs": [
+           "https://blog.naver.com/bycal_official",
+           "https://www.facebook.com/bycal.co/",
+           "https://www.instagram.com/bycal_official/",
+        ]
+    }
+</script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 

@@ -475,4 +475,11 @@ a {
   font-weight: 300;
   line-height: 1.5; }
 
+.gradient {
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  bottom: 0px;
+  background: linear-gradient(to top, #fff 25%, transparent); }
+
 /*# sourceMappingURL=read.css.map */
