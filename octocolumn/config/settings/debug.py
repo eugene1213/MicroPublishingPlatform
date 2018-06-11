@@ -81,7 +81,7 @@ INSTALLED_APPS = [
 
     # elasticsearch
     # 'search_indexs',
-    #
+    # #
     # 'django_elasticsearch_dsl',
     # 'django_elasticsearch_dsl_drf',
 
@@ -175,8 +175,8 @@ ELASTICSEARCH_DSL = {
 }
 
 ELASTICSEARCH_INDEX_NAMES = {
-    'search_indexes.document.post': 'post',
-    'search_indexes.document.author': 'author',
+    'search_indexs.document.post': 'post',
+    'search_indexs.document.author': 'author',
 }
 
 # Storage settings

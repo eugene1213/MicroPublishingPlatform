@@ -13,7 +13,7 @@ from member.apis import VerifyEmail, InviteVerifyEmail
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^naver6bc332ab9aa51989a598805bc6c439d3.html', naver_request, name='naver'),
+    url(r'^naverd45c8d580806584cb434be95a432581b.html', naver_request, name='naver'),
 
     url(r'^write/',
         include([
@@ -53,5 +53,7 @@ urlpatterns = [
         InviteVerifyEmail.as_view(), name='InviteVerifyEmail'),
 
     url(r'^support/', include(support, namespace='support')),
+
+    # url(r'^search/', include('search_indexs.urls')),
 
 ]

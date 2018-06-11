@@ -279,5 +279,5 @@ def google(reqeust):
 
 
 def naver_request(request):
-    return render_to_response('naver6bc332ab9aa51989a598805bc6c439d3.html')
+    return render_to_response('naverd45c8d580806584cb434be95a432581b.html')
 
