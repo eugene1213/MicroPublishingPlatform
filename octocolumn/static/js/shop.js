@@ -24,7 +24,7 @@ function buyBtnClick(price) {
             phone = json.detail.phone;
 
             BootPay.request({
-                price: price,               //실제 결제되는 가격
+                price: price+price*0.1,               //실제 결제되는 가격
                 application_id: '5ab88457b6d49c1aaa550da7',
                 name: name,                 //결제창에서 보여질 이름
                 pg: 'danal',
