@@ -1,4 +1,5 @@
 import base64
+import operator
 import re
 
 from datetime import datetime
@@ -33,7 +34,8 @@ __all__ = (
     'PostListView',
     'PostMoreListView',
     'BookmarkListView',
-    'BuyListView'
+    'BuyListView',
+    'FeedListView'
 )
 
 
@@ -647,10 +649,13 @@ class FeedListView(generics.ListAPIView):
         user = self.request.user
         list = []
         try:
-            post = BuyList.objects.select_related('user', 'post').filter(user=user).all().order_by('-created_at')
-            for i in post:
-                list.append(i.post)
+            follower = Relation.objects.select_related('to_user', 'from_user').filter(from_user=user).all()
+            for i in follower:
+                post = Post.objects.filter(author=i.to_user).all()
+                for j in post:
+                    list.append(j)
 
+            list.sort(key=operator.attrgetter('created_date'))
             page = self.paginate_queryset(list)
             serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
