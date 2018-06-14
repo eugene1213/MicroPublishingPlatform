@@ -59,7 +59,7 @@ class Post(models.Model):
         self.save()
 
     @property
-    def author_indexing(self):
+    def author_nickname(self):
         if self.author is not None:
             return self.author.nickname
 
