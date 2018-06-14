@@ -30,7 +30,6 @@ class GoogleLogin(APIView):
     def post(self, request, *args, **kwargs):
 
         token = self.request.data['id_token']
-        print(token)
 
         class DebugTokenInfo(NamedTuple):
             azp: str
@@ -52,6 +51,8 @@ class GoogleLogin(APIView):
 
         def get_debug_token_info(token):
             id_info = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+
+            print(id_info)
             if id_info.get('hd'):
                 return DebugTokenInfo(**id_info)
             id_info['hd'] = None
