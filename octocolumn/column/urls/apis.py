@@ -2,7 +2,8 @@ from django.conf.urls import url, include
 
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
     CommentListView, CommentView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
-    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star, PaymentInfo
+    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star, PaymentInfo, Search
+
 # from search_indexs.viewset.post import PostDocumentView
 
 urlpatterns = [
@@ -43,6 +44,9 @@ urlpatterns = [
 
     # 별점
     url(r'^postStar/$', Star.as_view(), name='postStar'),
+
+    # 검색
+    url(r'^search/$', Search.as_view(), name='search'),
 
     # 결제
     url(r'^payment/$', PaymentInfo.as_view(), name='payment'),
