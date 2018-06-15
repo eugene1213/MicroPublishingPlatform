@@ -28,8 +28,10 @@ function isBought(post_id, readtime, bookmark_status) {
                 var price = json.detail.price;
                 var date = json.detail.created_datetime;
                 var point = json.detail.point;
+                var rating = json.detail.star;
                 var ribbonClassName = '';
-                
+                var checkStarProp = ['','','','','','','','','',''];
+                if(rating>0) checkStarProp[rating-1] = 'checked=true';
                 if(bookmark_status) ribbonClassName = ' marked';
 
                 var previewHtml = '\
@@ -56,35 +58,35 @@ function isBought(post_id, readtime, bookmark_status) {
                                     '+preview+'\
                                 <div class="gradient"></div>\
                                 </div>\
-                                <div class="rating">\
-                                    <input id="star10" name="rating" type="radio" value="10"/>\
+                                <div class="rating" style="pointer-events:none;">\
+                                    <input id="star10" name="rating" '+checkStarProp[9]+' type="radio" value="10"/>\
                                     <label for="star10" class="font-read-star"></label>\
                                     \
-                                    <input id="star9" name="rating" type="radio" value="9"/>\
+                                    <input id="star9" name="rating" '+checkStarProp[8]+' type="radio" value="9"/>\
                                     <label for="star9" class="font-read-star-half"></label>\
                                     \
-                                    <input id="star8" name="rating" type="radio" value="8"/>\
+                                    <input id="star8" name="rating" '+checkStarProp[7]+' type="radio" value="8"/>\
                                     <label for="star8" class="font-read-star"></label>\
                                     \
-                                    <input id="star7" name="rating" type="radio" value="7"/>\
+                                    <input id="star7" name="rating" '+checkStarProp[6]+' type="radio" value="7"/>\
                                     <label for="star7" class="font-read-star-half"></label>\
                                     \
-                                    <input id="star6" name="rating" type="radio" value="6"/>\
+                                    <input id="star6" name="rating" '+checkStarProp[5]+' type="radio" value="6"/>\
                                     <label for="star6" class="font-read-star"></label>\
                                     \
-                                    <input id="star5" name="rating" type="radio" value="5"/>\
+                                    <input id="star5" name="rating" '+checkStarProp[4]+' type="radio" value="5"/>\
                                     <label for="star5" class="font-read-star-half"></label>\
                                     \
-                                    <input id="star4" name="rating" type="radio" value="4"/>\
+                                    <input id="star4" name="rating" '+checkStarProp[3]+' type="radio" value="4"/>\
                                     <label for="star4" class="font-read-star"></label>\
                                     \
-                                    <input id="star3"  name="rating" type="radio" value="3"/>\
+                                    <input id="star3"  name="rating" '+checkStarProp[2]+' type="radio" value="3"/>\
                                     <label for="star3" class="font-read-star-half"></label>\
                                     \
-                                    <input id="star2"  name="rating" type="radio" value="2"/>\
+                                    <input id="star2"  name="rating" '+checkStarProp[1]+' type="radio" value="2"/>\
                                     <label for="star2" class="font-read-star"></label>\
                                     \
-                                    <input id="star1"  name="rating" type="radio" value="1"/>\
+                                    <input id="star1"  name="rating" '+checkStarProp[0]+' type="radio" value="1"/>\
                                     <label for="star1" class="font-read-star-half"></label>\
                                 </div>\
                                 <div class="column-tags">\

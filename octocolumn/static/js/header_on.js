@@ -39,3 +39,33 @@ function getUserInfo() {
         }
     });
 }
+
+/* =================================
+   TYPING EFFECT
+=================================== */
+(function($) {
+    "use strict";
+
+    $('[data-typer-targets]').typer();
+    $.typer.options.clearOnHighlight=false;
+
+})(jQuery);
+
+// http://cosmos.layervault.com/typer-js.html
+// https://www.paulund.co.uk/create-typing-effect
+// https://www.mattboldt.com/demos/typed-js/
+
+
+$(".control").click( function(){
+    $("body").addClass("search-active");
+    $(".search-input").show();
+    $(".search-close").show();
+    $(".input-search").focus();
+});
+
+$(".search-close").click( function(){
+    $("body").removeClass("search-active");
+    $(".input-search").val('');
+    $(".search-close").hide();  
+    $(".search-input").hide();
+});

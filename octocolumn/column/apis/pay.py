@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from member.models import Profile
 
 
-__all__=(
+__all__ = (
     'PaymentInfo',
 )
 

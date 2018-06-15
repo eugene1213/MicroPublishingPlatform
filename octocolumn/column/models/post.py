@@ -37,10 +37,20 @@ class Post(models.Model):
                                     null=True
                                     )
     thumbnail = models.ImageField('섬네일 이미지',
-                                    upload_to=thumbnail_image_user_directory_path,
-                                    blank=True,
-                                    null=True
-                                    )
+                                  upload_to=thumbnail_image_user_directory_path,
+                                  blank=True,
+                                  null=True
+                                  )
+
+    # tags = models.ManyToManyField('column.Tag',
+    #                               related_name='column',
+    #                               blank=True)
+    #
+    # recommend = models.ManyToManyField('column.Recommend',
+    #                                    related_name='recommand',
+    #                                    blank=True,
+    #                                    null=True
+    #                                    )
 
     class Meta:
         ordering = ['-pk', ]
@@ -62,6 +72,10 @@ class Post(models.Model):
     def author_nickname(self):
         if self.author is not None:
             return self.author.nickname
+
+    @property
+    def tags_indexing(self):
+        return [tag.title for tag in self.tags.all()]
 
 
 class PostLike(models.Model):

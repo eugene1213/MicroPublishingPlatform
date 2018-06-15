@@ -17,6 +17,12 @@ __all__ = (
 class Star(APIView):
     permission_classes = (IsAuthenticated,)
 
+    def except_division(self, star):
+        try:
+            return round(star.content / star.member_num)
+        except ZeroDivisionError:
+            return 0
+
     def post(self, request):
         user = self.request.user
         data = self.request.data
@@ -35,7 +41,7 @@ class Star(APIView):
                             buy_list.save()
                             star.save()
                             return Response(
-                                {"detail": round(star.content/star.member_num)}
+                                {"detail": self.except_division(star)}
                                 , status=status.HTTP_200_OK
 
                             )
@@ -48,7 +54,7 @@ class Star(APIView):
                                 buy_list.save()
                                 star.save()
                                 return Response(
-                                    {"detail": round(star.content/star.member_num)}
+                                    {"detail": self.except_division(star)}
                                     , status=status.HTTP_200_OK
                                     )
                             return Response(
@@ -61,7 +67,7 @@ class Star(APIView):
                     star = PostStar.objects.select_related('post').filter(post=post).get()
                     return Response(
                         {
-                            "star": round(star.content/star.member_num),
+                            "star": self.except_division(star),
                             "code": 431,
                             "message": kr_error_code(431)
                         }

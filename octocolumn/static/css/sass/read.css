@@ -82,11 +82,17 @@ a {
   z-index: 1;
   background-color: #fff; }
 
+.column-title-wrap {
+  width: 90%;
+  margin: 0 auto; }
+
 .column-preview .column-title {
-  width: 80%;
-  margin: 0 auto;
   font-size: 36px;
-  font-weight: 700; }
+  text-align: left;
+  font-weight: 700;
+  word-break: break-word;
+  width: calc(100% - 40px);
+  padding-right: 10px; }
 
 /* Columnist Info*/
 .column-preview .columnist-info {
@@ -96,7 +102,7 @@ a {
   font-weight: 300;
   padding: 5px 0;
   display: flex;
-  width: 90%;
+  width: 100%;
   margin: 0 auto; }
 
 .column-preview .columnist-info .columnist-name {
