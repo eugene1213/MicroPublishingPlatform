@@ -1,18 +1,18 @@
 from django.db import models
 
 __all__ = (
-    'Tag',
+    # 'Tag',
     'SearchTag',
     'PreSearchTag',
-    'ChoiceTag'
+    # 'Recommend'
 )
 
-
-class Tag(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return 'Tag({})'.format(self.name)
+#
+# class Tag(models.Model):
+#     name = models.CharField(max_length=255)
+#
+#     def __str__(self):
+#         return 'Tag({})'.format(self.name)
 
 
 class SearchTag(models.Model):
@@ -37,8 +37,8 @@ class PreSearchTag(models.Model):
         return 'Post({}), Tag({})'.format(self.post, self.tag)
 
 
-class ChoiceTag(models.Model):
-    tag = models.CharField(max_length=255)
-
-    def __str__(self):
-        return 'Tag({})'.format(self.tag)
+# class Recommend(models.Model):
+#     text = models.CharField(max_length=255)
+#
+#     def __str__(self):
+#         return 'Tag({})'.format(self.text)
