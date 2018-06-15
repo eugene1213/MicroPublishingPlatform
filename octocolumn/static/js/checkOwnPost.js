@@ -56,7 +56,7 @@ function isBought(post_id, readtime, bookmark_status) {
                                     '+preview+'\
                                 <div class="gradient"></div>\
                                 </div>\
-                                <div class="rating">\
+                                <div class="rating" style="pointer-events:none;">\
                                     <input id="star10" name="rating" type="radio" value="10"/>\
                                     <label for="star10" class="font-read-star"></label>\
                                     \
