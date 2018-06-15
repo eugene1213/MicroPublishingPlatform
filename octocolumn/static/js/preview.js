@@ -30,7 +30,8 @@ $(document).ready(function(){
 
 function coverImgController(){
     
-    var imgHeight = window.innerHeight - $(".read_wrap").height() - 32 - 40;
+    var imgHeight = window.innerHeight - 108 - 44;
 
-    $(".mainImg").height(imgHeight);
+    $(".cover-img").height(imgHeight);
+    $(".column-preview").css('margin-top',imgHeight-44);
 }
