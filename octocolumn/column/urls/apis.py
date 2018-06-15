@@ -2,7 +2,8 @@ from django.conf.urls import url, include
 
 from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleView, PostReadView, AuthorResult, \
     CommentListView, CommentView, IsBuyPost, PostListView, TempListView, TempFileUpload, PostPreReadView, \
-    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star, PaymentInfo, Search
+    CommentLikeToggleView, TempView, PostMoreListView, BookmarkListView, BuyListView, Star, PaymentInfo, Search, \
+    FeedListView
 
 # from search_indexs.viewset.post import PostDocumentView
 
@@ -33,6 +34,8 @@ urlpatterns = [
     url(r'^postRecentMore/$', PostMoreListView.as_view(), name='postView'),
     # 북마크 리스트
     url(r'^bookmarkList/$', BookmarkListView.as_view(), name='bookmark'),
+    # feed
+    url(r'^feedList/$', FeedListView.as_view(), name='bookmark'),
 
     # 구매목록 리스트
     url(r'^buyList/$', BuyListView.as_view(), name='buylist'),

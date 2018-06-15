@@ -4,11 +4,12 @@ __all__ = (
     'Tag',
     'SearchTag',
     'PreSearchTag',
+    'ChoiceTag'
 )
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return 'Tag({})'.format(self.name)
@@ -34,3 +35,10 @@ class PreSearchTag(models.Model):
 
     def __str__(self):
         return 'Post({}), Tag({})'.format(self.post, self.tag)
+
+
+class ChoiceTag(models.Model):
+    tag = models.CharField(max_length=255)
+
+    def __str__(self):
+        return 'Tag({})'.format(self.tag)

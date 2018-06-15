@@ -42,6 +42,14 @@ class Post(models.Model):
                                     null=True
                                     )
 
+    tags = models.ManyToManyField('column.Tag',
+                                  related_name='column',
+                                  blank=True)
+
+    h_choice = models.ManyToManyField('column.ChoiceTag',
+                                  related_name='column',
+                                  blank=True)
+
     class Meta:
         ordering = ['-pk', ]
         verbose_name = '포스팅된 컬럼'
@@ -62,6 +70,10 @@ class Post(models.Model):
     def author_nickname(self):
         if self.author is not None:
             return self.author.nickname
+
+    @property
+    def tags_indexing(self):
+        return [tag.title for tag in self.tags.all()]
 
 
 class PostLike(models.Model):
