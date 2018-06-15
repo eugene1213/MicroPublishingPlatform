@@ -231,6 +231,7 @@ body.search-active .control .search-icon-wrap .search-icon::before {
 
 /* Close button */
 .search-close {
+	display: none;
 	position: fixed;
 	top: 30px;
 	right: 30px;
@@ -271,6 +272,7 @@ body.search-active .control .search-icon-wrap .search-icon::before {
 }
 /* Search Input */
 .search-input {
+	display: none;
 	height: 80px;
 	position: fixed;
 	top: 50%;
