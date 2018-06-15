@@ -152,18 +152,9 @@ class PostCreateView(generics.GenericAPIView,
 
                 # 포인트가 모자르다면 에러발생
                 # 정확한 정보를 위해 db의 유저 정보를 가져온다
-                user_queryset = User.objects.filter(id=self.request.user.id).get()
 
                 # if self.is_post(data['temp_id']):
                 #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
-
-                if self.major_point().point > user_queryset.point:
-                    return Response(
-                        {
-                            "code": 414,
-                            "message": kr_error_code(414)
-                        }
-                        , status=status.HTTP_414_REQUEST_URI_TOO_LONG)
 
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
@@ -186,10 +177,8 @@ class PostCreateView(generics.GenericAPIView,
                             , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
                 # 유저 포인트 업데이트
-                user_queryset.point -= self.major_point().point
-                user_queryset.save()
                 self.waiting_init()
-                self.add_point_history(point=self.major_point().point, post=post, history=temp.title)
+                self.add_point_history(point=0, post=post, history=temp.title)
 
                 # 템프파일 삭제
                 try:
@@ -488,12 +477,19 @@ class IsBuyPost(APIView):
             return tag_serializer.data
         return None
 
+    def except_division(self, star):
+        try:
+            return round(star.content / star.member_num)
+        except ZeroDivisionError:
+            return 0
+
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
         user = self.request.user
         if user.is_authenticated:
             try:
                 post = Post.objects.filter(id=param).get()
+                star = PostStar.objects.filter(post=post).get()
                 serializer = PostSerializer(post)
                 try:
                     BuyList.objects.filter(user=user, post=post).get()
@@ -522,6 +518,7 @@ class IsBuyPost(APIView):
                         "nickname": post.author.nickname,
                         "main_content": self.main_content(post.main_content),
                         "tag": self.tag(post),
+                        "star": self.except_division(star),
                         "point": '보유 포인트: ' + str(user.point) +'P'
 
 
@@ -534,6 +531,12 @@ class IsBuyPost(APIView):
         else:
             try:
                 post = Post.objects.filter(id=param).get()
+                star = PostStar.objects.filter(post=post).get()
+                if star:
+                    pass
+                else:
+                    star = PostStar.objects.create(post=post)
+
                 serializer = PostSerializer(post)
 
                 if post.price == 0:
@@ -554,6 +557,7 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
+                    "star": self.except_division(star),
                     "point": '로그인 해주세요'
 
                 }},
@@ -651,7 +655,7 @@ class FeedListView(generics.ListAPIView):
         try:
             follower = Relation.objects.select_related('to_user', 'from_user').filter(from_user=user).all()
             for i in follower:
-                post = Post.objects.filter(author=i.to_user).all()
+                post = Post.objects.select_related('author').filter(author=i.to_user).all()
                 for j in post:
                     list.append(j)
 
