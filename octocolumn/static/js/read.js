@@ -248,6 +248,8 @@ $(function(){
             success: function(json) {
                 var rating = json.detail;
                 $("#star"+rating).prop("checked","true");
+                var msg = "별점이 등록되었습니다.";
+                error_modal(msg,"",true);
             },
             error: function(err){
                 
