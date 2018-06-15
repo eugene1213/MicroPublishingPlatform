@@ -25,7 +25,7 @@ class Search(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         try:
             data = self.request.data
-            if len(data['keyword']) < 3:
+            if len(data['keyword']) < 2:
                 return Response(
                     {
                         "code": 426,
