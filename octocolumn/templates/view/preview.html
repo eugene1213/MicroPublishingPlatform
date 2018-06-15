@@ -60,15 +60,17 @@
 			</div>
 			<!-- Column Preview -->
 			<div class="column-preview">
-				<div class="column-title">{{ title }}</div>
-				<div class="columnist-info">
-					<div class="columnist-name">
-						by <span class="user-name"><i>{{ username }}</i></span>
+				<div class="column-title-wrap">
+					<div class="column-title">{{ title }}</div>
+					<div class="columnist-info">
+						<div class="columnist-name">
+							by <span class="user-name"><i>{{ username }}</i></span>
+						</div>
+						<div class="date-published">{{ created_datetime }}</div>
 					</div>
-					<div class="date-published">{{ created_datetime }}</div>
+					<!-- ribbon -->
+					<div class="ribbon"></div>
 				</div>
-				<!-- ribbon -->
-				<div class="ribbon"></div>
 				<!-- Main Contents -->
 				<div class="column-content">
 					{% autoescape off %}
