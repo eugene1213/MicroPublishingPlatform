@@ -30,6 +30,32 @@
   transition: all .3s ease;
   display: flex; }
 
+@media screen and (max-width: 560px) {
+  .frame {
+    width: 100% !important;
+    height: calc(100vh - 44px) !important;
+    margin: 0 auto;
+    border-radius: 0px;
+    box-shadow: none;
+    display: block; }
+
+  .img-container {
+    width: 100% !important;
+    height: 30% !important; }
+    .img-container:after {
+      width: 100% !important;
+      height: 30% !important; }
+
+  .form-signin {
+    width: 100% !important;
+    height: 70% !important; }
+
+  .preview-content .column-preview {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important; }
+
+  .preview-content {
+    padding-bottom: 0; } }
 .form_title {
   color: #2a292a;
   font-size: 20px;
