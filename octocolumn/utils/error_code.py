@@ -99,6 +99,10 @@ def kr_error_code(x):
             "title": "Payment Failed",
             "message": "결제에 실패하였습니다.",
         },
+        426:{
+            "title": "Search Keyword",
+            "message": "검색어는 3글자 이상 입력하셔야 합니다.",
+        },
 
         500: {
             "title": "Fatal error",
