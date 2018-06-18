@@ -22,7 +22,6 @@ class Search(generics.ListAPIView):
     permission_classes = (AllowAny,)
     pagination_class = PostPagination
 
-
     def list(self, request, *args, **kwargs):
         try:
             data = request.GET
