@@ -101,7 +101,7 @@ def kr_error_code(x):
         },
         426:{
             "title": "Search Keyword",
-            "message": "검색어는 3글자 이상 입력하셔야 합니다.",
+            "message": "검색어는 2글자 이상 입력하셔야 합니다.",
         },
 
         500: {
