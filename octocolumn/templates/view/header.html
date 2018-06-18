@@ -10,6 +10,7 @@
 </script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/search.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-side-menu.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon.css' %}">    
 
@@ -67,6 +68,14 @@
     <img src="{% static 'images/icons/header/CombinedShape2.png' %}">
 </div> -->
 <div id="profile-container">
+    <div class="search-container">
+        <div class="control">
+            <div class="search-icon-wrap">
+                <div class="search-icon"></div>
+            </div>
+        </div>
+    </div>
     <div class="profile-text" id="sign" onclick="modalSignin();" style="margin-right:12px;cursor:pointer;">Signin / Signup</div>
 </div>
 </header>
+<script type="text/javascript" src="{% static 'js/search.js' %}"></script>
