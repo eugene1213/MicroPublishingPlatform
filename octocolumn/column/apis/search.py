@@ -22,9 +22,10 @@ class Search(generics.ListAPIView):
     permission_classes = (AllowAny,)
     pagination_class = PostPagination
 
+
     def list(self, request, *args, **kwargs):
         try:
-            data = self.request.data
+            data = request.GET
             if len(data['keyword']) < 2:
                 return Response(
                     {
@@ -55,5 +56,5 @@ class Search(generics.ListAPIView):
         except ObjectDoesNotExist:
             return Response('', 200)
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         return self.list(request)
