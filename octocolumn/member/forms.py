@@ -2,6 +2,10 @@ from distutils import errors
 
 from django import forms
 from django.contrib.admin.helpers import ActionForm
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar
 from member.models import Author
@@ -49,6 +53,20 @@ class AuthorIsActive(forms.Form):
 
         user = author_post.author
         author = Author.objects.filter(author=user).get()
+
+        if user:
+            mail_subject = 'byCAL 출판 완료.'
+            user = user
+            message = render_to_string('accept.html', {
+                'user': user.nickname,
+            })
+            to_email = user.username
+            email = EmailMultiAlternatives(
+                mail_subject, to=[to_email]
+            )
+            email.attach_alternative(message, "text/html")
+            email.send()
+            pass
 
         post = PreAuthorPost.objects.filter(author=author_post.author).all()
         if post is not None:
