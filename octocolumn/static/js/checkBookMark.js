@@ -17,6 +17,7 @@ function bookmark(post_id,isPreview) {
         },
         error: function(error) {
             console.log(error);
+            error_modal("로그인 후 이용해주세요.","",true);
         }
     });
 }
