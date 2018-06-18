@@ -31,6 +31,13 @@ $(function(){
         }
     });
 });
+$(function(){    
+    $('#search-container').on('click','.bookmark>i',function(e){
+        
+        var bookmark_id = $(e.target).closest('.bookmark').attr("id").replace("bookmark_",'');        
+        bookmark(bookmark_id,false);
+    });
+});
 function search(url){
         
     $.ajax({
