@@ -5,7 +5,8 @@
   top: 0;
   background-color: rgba(42, 41, 42, 0.5);
   width: 100%;
-  display: block; }
+  display: block;
+  z-index: 100; }
   .preview-wrap .preview {
     margin: auto;
     margin-top: 154px;

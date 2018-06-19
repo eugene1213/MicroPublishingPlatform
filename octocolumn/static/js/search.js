@@ -9,14 +9,17 @@ var searchHtml = '\
                 ';
 $(".control").click( function(){
     $(".input-search").focus();
-    $(".page").css("position", "fixed"); 
-    $(".page").after(searchHtml);
+    $(".page").css("position", "fixed");
+    $(".preview-container").css("position", "fixed");
+    $("#read-container").css("position", "fixed");
+    $("body").append(searchHtml);
 });
 $(function(){
     $(document).on('click','.search-close',function(e){
         $(".input-search").val('');
         $("#search-container").detach();
         $(".page").css("position", "static"); 
+        $("#read-container").css("position", "static");
     });
 });
 $(function(){    

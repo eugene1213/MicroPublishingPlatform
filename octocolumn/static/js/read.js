@@ -50,7 +50,7 @@ $(document).ready(function(){
                 
                 var tagText = tagArray[i].tag;
         
-                $(".preview-tag-wrap").append("<div class=\"preview-tag\" id=\"preview-tag-"+i+"\">"+tagText+"</div>");
+                $(".read-tag-wrap").append("<div class=\"read-tag\" id=\"read-tag-"+i+"\">"+tagText+"</div>");
             }
             $('meta[property="og:url"]').attr('content',href);
             $('meta[property="og:image"]').attr('content',cover_img);
@@ -201,7 +201,7 @@ function coverImgController(){
     var imgHeight = window.innerHeight - 108 - 44;
 
     $(".cover-img").height(imgHeight);
-    $(".column-preview").css('margin-top',imgHeight-44);
+    $(".column-read").css('margin-top',imgHeight-44);
 }
 //  우클릭 방지
 $(function() {
@@ -210,7 +210,7 @@ $(function() {
     });
 });
 $(function() {
-	$('.main_content_wrap').on('mousedown', function() {
+	$('.column-read').on('mousedown', function() {
         return false;
     });
 });
