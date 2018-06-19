@@ -38,7 +38,7 @@ function isBought(post_id, readtime, bookmark_status) {
                     <div id="preview-container">\
                         <div class="preview-content">\
                             <div class="ribbon'+ribbonClassName+'" onclick="bookmark('+post_id+',true);"></div>\
-                            <div class="close" onclick="javascript:(function(){$(\'#preview-container\').remove();$(\'.page\').css(\'position\', \'static\');})();"></div>\
+                            <div class="close" onclick="javascript:(function(){$(\'#preview-container\').remove();$(\'.page\').css(\'position\', \'static\')})();"></div>\
                             <div class="warning-phrase">\
                                 이 칼럼의 프리뷰가 마음에 드셨다면 구매 후 완독하여주세요.\
                             </div>\
@@ -102,8 +102,10 @@ function isBought(post_id, readtime, bookmark_status) {
                     </div>\
                 ';
                 
-                $('.page').after(previewHtml);
-                $(".page").css("position", "fixed"); 
+                $('body').append(previewHtml);
+                $(".page").css("position", "fixed");
+                $("#read-container").css("position", "fixed"); 
+                
             }
             // console.log("isBought: "+json.detail.isBuy);
         },
@@ -111,7 +113,7 @@ function isBought(post_id, readtime, bookmark_status) {
             console.log(error);
         },
         complete: function(){
-            var contentHeight = $('.column-content').height();
+            var contentHeight = $('#preview-container .column-content').height();
             $('.gradient').height(contentHeight);
             $(window).resize(function(){
                 contentHeight = $('.column-content').height();

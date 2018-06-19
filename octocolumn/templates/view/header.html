@@ -12,7 +12,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/search.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-side-menu.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon.css' %}">    
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/font-icon.css' %}">   
+<link rel="stylesheet" type="text/css" href="{% static 'css/sass/preview.css' %}" />
 
 <header tabindex="0"><span class="site-name" onclick="window.location.href='/'"></span>
 <div id="nav-container">
@@ -79,3 +80,19 @@
 </div>
 </header>
 <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/checkOwnPost.js' %}"></script>
+<script>
+$(document).click(function(e){
+    
+    var post_id = e.target.getAttribute("id");
+    var readtime = $('#readtime'+post_id).text();
+    var bookmark_className = $('#bookmark_'+post_id +'> i').attr('class');
+    var bookmark_status = false;
+    bookmark_className == 'icon-bookmark'?bookmark_status = true:bookmark_status = false;
+
+    if(post_id > 0){
+
+        isBought(post_id, readtime, bookmark_status);
+    }
+});
+</script>
