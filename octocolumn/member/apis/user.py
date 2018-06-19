@@ -334,6 +334,7 @@ class UserInfo(APIView):
     def post(self, request):
         user = self.request.user
         serializer = UserSerializer(user)
+        notification_serializer = NotificationSerializer(user)
         if user.is_authenticated:
             try:
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()
@@ -348,8 +349,8 @@ class UserInfo(APIView):
             except ObjectDoesNotExist:
                 return Response({"user": serializer.data,
                                  "profileImg": {
-                                     "profile_image": 'https://devtestserver.s3.amazonaws.com/media/example/2_x20_.jpeg',
-                                     "cover_image": 'https://devtestserver.s3.amazonaws.com/media/example/1.jpeg'
+                                     "profile_image": 'https://bycal.azureedge.net/media/example/2_x20_.jpeg',
+                                     "cover_image": 'https://bycal.azureedge.net/media/example/1.jpeg'
                                  }}, status=status.HTTP_200_OK)
 
         else:

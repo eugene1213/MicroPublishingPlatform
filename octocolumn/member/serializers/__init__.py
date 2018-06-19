@@ -4,3 +4,4 @@ from .author import *
 from .profile import *
 from .follow import *
 from .point import *
+from .notification import *
