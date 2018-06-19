@@ -46,6 +46,13 @@ def write(request, temp_id=None):
 
 
 def read(request, author=None, title=None):
+    def url_exchange(title):
+        url = re.sub('[/~₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|,|\.|\/|<|>|\?/g]', '', title)
+        return url.replace(' ', '-')
+
+    def author_exchange(author):
+        url = re.sub('[/~₩|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|-|\+|=|\[|\]|{|}|\\|\||;|:|,|\.|\/|<|>|\?/g]', '', author)
+        return url.replace(' ', '')
 
     post_num = title.split('-')
     if len(post_num) is 1:
@@ -59,9 +66,24 @@ def read(request, author=None, title=None):
 
         if post.price == 0:
             if request.user.is_authenticated:
-                response = render_to_response("view/read.html", {"login": True})
+                response = render_to_response("view/read.html", {
+                    "login": True,
+                    "title": post.title,
+                    "cover_image": post.cover_image,
+                    "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                           url_exchange(post.title) +
+                           "-" + str(post.pk),
+
+                })
                 return response
-            response = render_to_response("view/read.html")
+            response = render_to_response("view/read.html", {
+                "login": True,
+                "title": post.title,
+                "cover_image": post.cover_image,
+                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                       url_exchange(post.title) +
+                       "-" + str(post.pk),
+            })
             return response
 
         else:
