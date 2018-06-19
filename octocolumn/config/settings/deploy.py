@@ -162,9 +162,7 @@ DATABASES = {
 #     },
 # }
 # CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
-CELERY_BROKER_URL = 'amqp://user:devocto1234@//'
 
-CELERY_RESULT_BACKEND = 'amqp://user:devocto1234@//'
 # CELERY
 # CELERY_BROKER_URL = '{}:{}'.format(
 #     config_secret_deploy['django']['celery']['broker_url'],
@@ -174,6 +172,18 @@ CELERY_RESULT_BACKEND = 'amqp://user:devocto1234@//'
 #     config_secret_deploy['django']['celery']['broker_url'],
 #     config_secret_deploy['django']['celery']['broker_port']
 # )
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'redis_cache.RedisCache',
+#         'LOCATION': 'bycal.redis.cache.windows.net:6380',
+#         'OPTIONS': {
+#             "PASSWORD": "XNv66F+JWKzeJdD+mYs9wvhlcKbs2Ax95pJ+HXpX4NQ=",
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             # 'DB': 1,
+#         },
+#     },
+# }
 
 # Google
 CLIENT_ID = config_secret_deploy['accounts']['google']['client_id']
