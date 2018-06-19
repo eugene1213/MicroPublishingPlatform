@@ -70,7 +70,7 @@ def read(request, author=None, title=None):
                     "login": True,
                     "title": post.title,
                     "cover_image": post.cover_image,
-                    "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                    "url": 'https://bycal.co/' + '@' + author_exchange(post.author.nickname) + '/' +
                            url_exchange(post.title) +
                            "-" + str(post.pk),
 
@@ -80,7 +80,7 @@ def read(request, author=None, title=None):
                 "login": True,
                 "title": post.title,
                 "cover_image": post.cover_image,
-                "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                "url": 'https://bycal.co/' + '@' + author_exchange(post.author.nickname) + '/' +
                        url_exchange(post.title) +
                        "-" + str(post.pk),
             })
@@ -88,7 +88,14 @@ def read(request, author=None, title=None):
 
         else:
             if request.user.is_authenticated:
-                response = render_to_response("view/read.html", {"login": True})
+                response = render_to_response("view/read.html", {
+                    "login": True,
+                    "title": post.title,
+                    "cover_image": post.cover_image,
+                    "url": 'https://bycal.co/preview/' + '@' + author_exchange(post.author.nickname) + '/' +
+                           url_exchange(post.title) +
+                           "-" + str(post.pk),
+                })
                 return response
             return redirect('views:index')
 
