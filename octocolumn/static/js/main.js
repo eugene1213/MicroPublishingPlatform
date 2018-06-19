@@ -28,20 +28,6 @@ $(document).ready(function() {
     getData();
     // popBalloon();
 
-    $(document).click(function(e){
-        
-        var post_id = e.target.getAttribute("id");
-        var readtime = $('#readtime'+post_id).text();
-        var bookmark_className = $('#bookmark_'+post_id +'> i').attr('class');
-        var bookmark_status = false;
-        bookmark_className == 'icon-bookmark'?bookmark_status = true:bookmark_status = false;
-
-        if(post_id > 0){
-
-            isBought(post_id, readtime, bookmark_status);
-        }
-    });
-
     $('.image-loader').imageloader({
         background: true,
         callback: function (elm) {
