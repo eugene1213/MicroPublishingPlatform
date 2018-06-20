@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from column.models import SearchTag, Tag
 from member.models import Profile
 
 
@@ -32,3 +33,16 @@ class PaymentInfo(APIView):
 
                     }
             }, status=status.HTTP_200_OK)
+
+
+# class Test(APIView):
+#     def post(self, request, *args, **kwargs):
+#         search_tag = SearchTag.objects.all()
+#
+#         for i in search_tag:
+#             tags = Tag.objects.create(tags=i.tag)
+#             i.post.tags.add(tags)
+#
+#         return Response({
+#             "success"
+#         }, status=status.HTTP_200_OK)
