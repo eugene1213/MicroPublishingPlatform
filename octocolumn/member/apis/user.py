@@ -334,7 +334,6 @@ class UserInfo(APIView):
     def post(self, request):
         user = self.request.user
         serializer = UserSerializer(user)
-        notification_serializer = NotificationSerializer(user)
         if user.is_authenticated:
             try:
                 profile_image = ProfileImage.objects.select_related('user').filter(user=user).get()

@@ -50,16 +50,16 @@
     {% else %}
 		{% include 'view/header.html' %}
 	{% endif %}
-	<div id="preview-container">
+	<div id="read-container">
 		<!-- social preview -->
-		<div class="preview-content">
+		<div class="read-content">
 			<div class="wrap-cover-img">
 				<div class="cover-img image-loader" style="background-image: url({{ cover_image.url }});">
 					{{ MEDIA_URL }}
 				</div>
 			</div>
 			<!-- Column Preview -->
-			<div class="column-preview">
+			<div class="column-read">
 				<div class="column-title-wrap">
 					<div class="column-title">{{ title }}</div>
 					<div class="columnist-info">
@@ -90,7 +90,7 @@
 		var imgHeight = window.innerHeight - 108 - 44;
 
 		$(".cover-img").height(imgHeight);
-		$(".column-preview").css('margin-top',imgHeight-44);
+		$(".column-read").css('margin-top',imgHeight-44);
 	</script>
     <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
 	<script type="text/javascript" src="{% static 'js/jquery.imageloader.js' %}"></script>

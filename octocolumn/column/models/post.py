@@ -46,11 +46,11 @@ class Post(models.Model):
     #                               related_name='column',
     #                               blank=True)
     #
-    # recommend = models.ManyToManyField('column.Recommend',
-    #                                    related_name='recommand',
-    #                                    blank=True,
-    #                                    null=True
-    #                                    )
+    recommend = models.ManyToManyField('column.Recommend',
+                                       related_name='recommand',
+                                       blank=True,
+                                       null=True
+                                       )
 
     class Meta:
         ordering = ['-pk', ]

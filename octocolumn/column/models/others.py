@@ -37,8 +37,8 @@ class PreSearchTag(models.Model):
         return 'Post({}), Tag({})'.format(self.post, self.tag)
 
 
-# class Recommend(models.Model):
-#     text = models.CharField(max_length=255)
-#
-#     def __str__(self):
-#         return 'Tag({})'.format(self.text)
+class Recommend(models.Model):
+    text = models.CharField(max_length=255)
+
+    def __str__(self):
+        return 'Tag({})'.format(self.text)

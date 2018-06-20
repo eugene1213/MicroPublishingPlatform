@@ -51,6 +51,9 @@ function getUserInfo() {
             $("#header-profile-image").css("background-image", "url("+profile_image+")");
             $('.point > .text > span').text(point);
             $(".setting").attr('onclick','window.location.href=\'/profile/'+pk+'\'');
+        },
+        error: function(err) {
+            console.log(err);
         }
     });
 }
