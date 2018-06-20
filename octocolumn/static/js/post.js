@@ -116,19 +116,19 @@ function btn_activation_checklist() {
                 $(".btn-publish-final").attr("disabled", "true");
                 $(".btn-publish-final").addClass("btn_disabled");
                 $('#errMsg').detach();
-                $('.btn-publish-final').before('<span id="errMsg" style="font-size:8px;color:#2a292a;opacity:0.5;float:left;margin-left:30px;margin-top:30px;">표지 사진을 설정해 주세요.</span>');       // 분량 미달이면 자동저장x    
+                $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">표지 사진을 설정해 주세요.</p>');       // 분량 미달이면 자동저장x    
             }
         }else {
             $(".btn-publish-final").attr("disabled", "true");
             $(".btn-publish-final").addClass("btn_disabled");
             $('#errMsg').detach();
-            $('.btn-publish-final').before('<span id="errMsg" style="font-size:8px;color:#2a292a;opacity:0.5;float:left;margin-left:30px;margin-top:30px;">태그를 한개 이상 설정해 주세요</span>');
+            $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">태그를 한개 이상 설정해 주세요</p>');
         }
     }else{
         $(".btn-publish-final").attr("disabled", "true");
         $(".btn-publish-final").addClass("btn_disabled");
         $('#errMsg').detach();
-        $('.btn-publish-final').before('<span id="errMsg" style="font-size:8px;color:#2a292a;opacity:0.5;float:left;margin-left:30px;margin-top:30px;">분량이 부족합니다.</span>');
+        $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">분량이 부족합니다.</p>');
     }
 }
 
