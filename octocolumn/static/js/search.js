@@ -52,7 +52,7 @@ function search(url){
 
             var posts = jsons.results;
             if(jsons.count == 0){
-                $(".search-result").append("<span style=\"color:#fff\">검색 결과가 없습니다.</span>");
+                $(".search-result").html("<span style=\"color:#fff\">검색 결과가 없습니다.</span>");
             }
             console.log(jsons)
             var next = jsons.next;
