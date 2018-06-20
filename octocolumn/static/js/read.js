@@ -35,6 +35,15 @@ $(document).ready(function(){
             var tags = json.detail.tag;
             var tagsHtml = '';
             var rating = json.detail.star;
+            var following_url = json.detail.following_url;
+            var follow_status = json.detail.follow_status;
+
+            if(follow_status) {
+                $(".writer_follow").text("Following");
+            }else{
+                $(".writer_follow").text("Follow");                
+            }
+
             if(bookmark_status) {
                 $(".ribbon").addClass("marked");
             }else{
@@ -76,6 +85,9 @@ $(document).ready(function(){
             //  북마크
             $(".ribbon").click(function(){
                 bookmark(post_id,true);
+            });
+            $(".writer_follow").click(function(){
+                follow(following_url);
             });
         },
         error: function(error) {
@@ -277,3 +289,34 @@ $(function(){
         alert('Copied!');
     });
 });
+
+/* follow / unfollow */
+function follow(url) {
+    
+        $.ajax({
+            url: url,
+            async: true,
+            type: 'GET',
+            dataType: 'json',
+            success: function(json) {
+    
+                if(json.author.follow_status){
+                    
+                    $(".writer_follow").text("Following");
+                    // $(".num_of_followers").text($(".num_of_followers").text()*1+1);
+                }else{
+    
+                    $(".writer_follow").text("Follow");
+                    // $(".num_of_followers").text() >= 1 ? $(".num_of_followers").text($(".num_of_followers").text()*1-1) : 0;
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                if(error.status == 401) {
+                    error_modal("로그인 후 이용해주세요.","",true);
+                } else {
+                    error_modal("알 수 없는 에러가 발생했습니다.","",true);
+                }
+            }
+        });
+    }
