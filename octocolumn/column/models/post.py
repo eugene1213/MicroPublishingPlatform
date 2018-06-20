@@ -42,11 +42,11 @@ class Post(models.Model):
                                   null=True
                                   )
 
-    # tags = models.ManyToManyField('column.Tag',
-    #                               related_name='column',
-    #                               blank=True)
-    #
-    recommend = models.ManyToManyField('column.Recommend',
+    tags = models.ManyToManyField('column.Tag',
+                                  related_name='column',
+                                  blank=True)
+
+    recommand = models.ManyToManyField('column.Recommend',
                                        related_name='recommand',
                                        blank=True,
                                        null=True

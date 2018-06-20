@@ -11,7 +11,6 @@ from member.models import User, InviteUser, PointHistory
 from utils.tokengenerator import account_activation_token, invite_token
 
 
-
 class SignupEmailTask(Task):
     def run(self, pk):
         # 이메일 발송
