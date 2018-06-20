@@ -11,7 +11,6 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sass/fontello.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/sass/common.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sass/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sass/write.css' %}">
@@ -39,71 +38,6 @@
             {% include 'view/header.html' %}
         {% endif %}
         <div class="container" id="container">
-            <!-- <div class="audio-wrap">
-                <audio preload id="audio_1">
-                    <source src="{% static 'mp3/key-01.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_2">
-                    <source src="{% static 'mp3/key-02.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_3">
-                    <source src="{% static 'mp3/key-03.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_4">
-                    <source src="{% static 'mp3/key-04.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_5">
-                    <source src="{% static 'mp3/key-new-01.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_6">
-                    <source src="{% static 'mp3/key-new-02.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_7">
-                    <source src="{% static 'mp3/key-new-03.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_8">
-                    <source src="{% static 'mp3/key-new-04.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_9">
-                    <source src="{% static 'mp3/key-new-05.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_return_1">
-                    <source src="{% static 'mp3/return-01.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_return_2">
-                    <source src="{% static 'mp3/return-02.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_return_3">
-                    <source src="{% static 'mp3/return-03.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_return_4">
-                    <source src="{% static 'mp3/return-new.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_space_1">
-                    <source src="{% static 'mp3/space-01.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_space_2">
-                    <source src="{% static 'mp3/space-02.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_space_3">
-                    <source src="{% static 'mp3/space-03.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_backspace_1">
-                    <source src="{% static 'mp3/backspace-01.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_backspace_2">
-                    <source src="{% static 'mp3/backspace-02.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_backspace_3">
-                    <source src="{% static 'mp3/backspace-03.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_scrollUp">
-                    <source src="{% static 'mp3/scrollUp.mp3' %}" type="audio/mp3">
-                </audio>
-                <audio preload id="audio_scrollDown">
-                    <source src="{% static 'mp3/scrollDown.mp3' %}" type="audio/mp3">
-                </audio>
-            </div> -->
             <div class="toggle-wrap">
                 <!-- <label class="switch">
                     <input type="checkbox">
@@ -112,8 +46,7 @@
                 <p id="btn-off">OFF</p>
                 <p id="btn-on" style="display:none;">ON</p> -->
                 <button class="btn-save">저장</button>
-                <button class="btn-publish" id="publish">출판<span class="css-arrow"></span>
-                </button>
+                <button class="btn-publish" id="publish">출판</button>
                 <!-- arrow-box -->
                 <div class="arrow-box">
                     <div class="cover-wrap">
@@ -376,15 +309,17 @@
                 </div>
             </div>
         </div>
-        <div class="modal-extend-wrap">
+        <div class="modal-extend-wrap" style="display: block;">
             <div class="modal-extend">
                 <div class="modal-ask-text">
-                    이전에 쓰던 글이 있습니다.<br />
-                    <span>2018.03.14	&nbsp;&nbsp;&nbsp;14:02</span>
+                    <span>2018.06.04 13:00</span>
+                    이전에 쓰던 글이 있습니다.<br>
                     이어 쓰시겠습니까?
                 </div>
-                <div class="btn-yes">예</div>
-                <div class="btn-no">아니요</div>
+                <div class="modal-ask-btn">
+                    <div class="btn-yes"><span>예</span></div>
+                    <div class="btn-no"><span>아니요</span></div>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="{% static 'js/dom-to-image.min.js' %}"></script>
