@@ -380,12 +380,12 @@ class PostReadView(APIView):
                             "tag": self.tag(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
-                            "following_url": "/api/member/" + str(user_serializer.data['pk']) + "/follow/",
+                            "following_url": "/api/member/" + str(user_serializer.data['pk'], 'utf-8') + "/follow/",
                             "star": self.star_rating(post),
                             "waiting": WaitingRelation.objects.filter(receive_user=author).count(),
                             "author": {
-                                "author_id": author.pk,
-                                "username": author.nickname,
+                                "author_id": user_serializer.data['pk'],
+                                "username": user_serializer.data['nickname'],
                                 "intro": profile.intro,
                                 "image": image_serializer.data
                             },
