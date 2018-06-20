@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from column.models import Temp, SearchTag, PostStar
+from column.models import Temp, SearchTag, PostStar, Tag, Recommend
 from column.pagination import PostPagination, PostListPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
@@ -76,7 +76,7 @@ class PostCreateView(generics.GenericAPIView,
                                             history=history)
 
     # 검색 태그 추가
-    def search_tag(self, post_id, tag):
+    def search_tag(self, post, tag):
         search_tag = tag.split(',')
         if len(search_tag) > 5:
             return Response(
@@ -86,7 +86,25 @@ class PostCreateView(generics.GenericAPIView,
                 }
                 , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
         for i in search_tag:
-            SearchTag.objects.create(post_id=post_id, tag=i)
+            tags = Tag.objects.create(tags=i)
+            post.tags.add(tags)
+
+        return True
+
+    def recommend_text(self, post, recommend):
+        recommend_tag = recommend.split('|')
+
+        if len(recommend_tag) > 5:
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+
+        for i in recommend_tag:
+            tags = Recommend.objects.create(text=i)
+            post.recommand.add(tags)
 
         return True
 
@@ -168,7 +186,16 @@ class PostCreateView(generics.GenericAPIView,
                 serializer = PostSerializer(post)
                 # 태그 추가
                 if data['tag'] != '':
-                    if not self.search_tag(post_id=serializer.data['pk'], tag=self.request.data['tag']):
+                    if not self.search_tag(post, data['tag']):
+                        return Response(
+                            {
+                                "code": 413,
+                                "message": kr_error_code(413)
+                            }
+                            , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+
+                if data['recommend'] != '':
+                    if not self.recommend_text(post, data['recommend']):
                         return Response(
                             {
                                 "code": 413,
@@ -415,6 +442,7 @@ class PostReadView(APIView):
                     post.save()
                     # 작가임
                     author = post.author
+                    user_serializer = UserSerializer(author)
                     profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
                     image_serializer = ProfileImageSerializer(profile_image)
                     time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
@@ -429,7 +457,7 @@ class PostReadView(APIView):
                             "tag": self.tag(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
-                            "following_url": "/api/member/" + str(post.author.pk) + "/follow/",
+                            "following_url": "/api/member/" + str(user_serializer.data['pk'], 'utf-8') + "/follow/",
                             "star": self.star_rating(post),
                             "waiting": WaitingRelation.objects.filter(receive_user=author).count(),
                             "author": {
