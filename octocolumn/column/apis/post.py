@@ -17,7 +17,7 @@ from column.pagination import PostPagination, PostListPagination
 from column.serializers.tag import SearchTagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import WaitingRelation, Bookmark, Relation
-from member.serializers import ProfileImageSerializer
+from member.serializers import ProfileImageSerializer, UserSerializer
 from octo.models import UsePoint
 from utils.error_code import kr_error_code
 from utils.image_rescale import image_quality_down, thumnail_cover_image_resize
@@ -365,6 +365,7 @@ class PostReadView(APIView):
                     post.save()
                     # 작가임
                     author = post.author
+                    user_serializer = UserSerializer(author)
                     profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
                     image_serializer = ProfileImageSerializer(profile_image)
                     time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
@@ -379,7 +380,7 @@ class PostReadView(APIView):
                             "tag": self.tag(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
-                            "following_url": "/api/member/" + str(post.author.pk) + "/follow/",
+                            "following_url": "/api/member/" + user_serializer.data['pk'] + "/follow/",
                             "star": self.star_rating(post),
                             "waiting": WaitingRelation.objects.filter(receive_user=author).count(),
                             "author": {
