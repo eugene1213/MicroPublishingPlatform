@@ -1,1 +1,3 @@
-https://bycal.co/sitemap.xml
+User-agent: *
+Disallow: /
+Sitemap: https://bycal.co/sitemap.xml

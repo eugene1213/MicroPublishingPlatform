@@ -5,14 +5,14 @@ $(document).ready(function(){
 
     loadTemp();
 
-    $(".modal-extend > .btn-yes").click(function(){
+    $(".btn-yes > span").click(function(){
         $(".editable > p").remove();
         $(".editable > div").remove();
         viewTemp( loadTemp() );
         
         $(".modal-extend-wrap").hide();
     });
-    $(".modal-extend > .btn-no").click(function(){
+    $(".btn-no > span").click(function(){
         $(".modal-extend-wrap").hide();
     });
 
