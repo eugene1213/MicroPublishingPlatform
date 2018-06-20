@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag, PostStar, Tag, Recommend
 from column.pagination import PostPagination, PostListPagination
-from column.serializers.tag import SearchTagSerializer
+from column.serializers.tag import SearchTagSerializer, TagSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import WaitingRelation, Bookmark, Relation
 from member.serializers import ProfileImageSerializer, UserSerializer
@@ -104,7 +104,7 @@ class PostCreateView(generics.GenericAPIView,
 
         for i in recommend_tag:
             tags = Recommend.objects.create(text=i)
-            post.recommand.add(tags)
+            post.recommend.add(tags)
 
         return True
 
@@ -321,8 +321,8 @@ class PostReadView(APIView):
             return False
 
     def tag(self, post):
-        tag = SearchTag.objects.filter(post=post)
-        tag_serializer = SearchTagSerializer(tag, many=True)
+        tag = post.tags.all()
+        tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
             return tag_serializer.data
         return None
@@ -500,8 +500,8 @@ class IsBuyPost(APIView):
         return clean_text[:300]
 
     def tag(self, post):
-        tag = SearchTag.objects.filter(post=post)
-        tag_serializer = SearchTagSerializer(tag, many=True)
+        tag = Tag.objects.all()
+        tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
             return tag_serializer.data
         return None
