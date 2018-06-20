@@ -76,7 +76,7 @@ INSTALLED_APPS = [
 
     # CORS 수정
     'corsheaders',
-    'notifications',
+    # 'notifications',
 
     # compressor
     # 'compressor',
