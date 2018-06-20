@@ -310,3 +310,11 @@ def google(reqeust):
 def naver_request(request):
     return render_to_response('naverd45c8d580806584cb434be95a432581b.html')
 
+
+def sitemap(request):
+    return render_to_response('sitemap.xml')
+
+
+def robot(request):
+    return render_to_response('robots.txt')
+

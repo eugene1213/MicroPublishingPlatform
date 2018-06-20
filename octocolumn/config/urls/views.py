@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 
 from config.urls import support
 from config.views import index
-from config.views.index import write, naver_request, preview, more
+from config.views.index import write, naver_request, preview, more, robot, sitemap
 from config.views.index import bookmark, buylist, feed
 from config.views.index import findPass, kakao, google, facebook, resetPass
 from config.views.index import read
@@ -14,6 +14,7 @@ from member.apis import VerifyEmail, InviteVerifyEmail
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^naverd45c8d580806584cb434be95a432581b.html', naver_request, name='naver'),
+
 
     url(r'^write/',
         include([
@@ -55,5 +56,8 @@ urlpatterns = [
     url(r'^support/', include(support, namespace='support')),
 
     # url(r'^search/', include('search_indexs.urls')),
+
+    url(r'^robots.txt', robot, name='robot'),
+    url(r'^sitemap.xml', sitemap, name='sitemap'),
 
 ]
