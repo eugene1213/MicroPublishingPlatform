@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag, PostStar, Tag, Recommend
 from column.pagination import PostPagination, PostListPagination
-from column.serializers.tag import SearchTagSerializer, TagSerializer
+from column.serializers.tag import SearchTagSerializer, TagSerializer, RecommendSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import WaitingRelation, Bookmark, Relation
 from member.serializers import ProfileImageSerializer, UserSerializer
@@ -92,7 +92,7 @@ class PostCreateView(generics.GenericAPIView,
         return True
 
     def recommend_text(self, post, recommend):
-        recommend_tag = recommend.split('|')
+        recommend_tag = recommend.split('|~%')
 
         if len(recommend_tag) > 5:
             return Response(
@@ -326,6 +326,13 @@ class PostReadView(APIView):
         if tag_serializer:
             return tag_serializer.data
         return None
+
+    def recommend(self, post):
+        text = post.recommand.all()
+        tag_serializer = RecommendSerializer(text, many=True)
+        if tag_serializer:
+            return tag_serializer.data
+        return None
  
     def post_exist(self, post_id):
         if Post.objects.filter(pk=post_id).count() == 0:
@@ -405,6 +412,7 @@ class PostReadView(APIView):
                             "main_content": serializer.data['main_content'],
                             "title": serializer.data['title'],
                             "tag": self.tag(post),
+                            "recommend": self.recommend(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
                             "following_url": "/api/member/" + str(user_serializer.data['pk'], 'utf-8') + "/follow/",
@@ -455,6 +463,7 @@ class PostReadView(APIView):
                             "main_content": serializer.data['main_content'],
                             "title": serializer.data['title'],
                             "tag": self.tag(post),
+                            "recommend": self.recommend(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
                             "following_url": "/api/member/" + str(user_serializer.data['pk'], 'utf-8') + "/follow/",
@@ -506,6 +515,13 @@ class IsBuyPost(APIView):
             return tag_serializer.data
         return None
 
+    def recommend(self, post):
+        text = post.recommand.all()
+        tag_serializer = RecommendSerializer(text, many=True)
+        if tag_serializer:
+            return tag_serializer.data
+        return None
+
     def except_division(self, star):
         try:
             return round(star.content / star.member_num)
@@ -547,6 +563,7 @@ class IsBuyPost(APIView):
                         "nickname": post.author.nickname,
                         "main_content": self.main_content(post.main_content),
                         "tag": self.tag(post),
+                        "recommend": self.recommend(post),
                         "star": self.except_division(star),
                         "point": '보유 포인트: ' + str(user.point) +'P'
 
@@ -586,6 +603,7 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
+                    "recommend": self.recommend(post),
                     "star": self.except_division(star),
                     "point": '로그인 해주세요'
 

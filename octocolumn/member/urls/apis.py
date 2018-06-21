@@ -72,7 +72,7 @@ urlpatterns = [
     url(r'^shopUserData/$', ShopUserData.as_view(), name='shopUserData'),
 
     #payCheck
-    url(r'^payCheck/$', BootPayCheckView.as_view(), name='shopUserData'),
+    url(r'^payCheck/$', BootPayCheckView.as_view(), name='payCheck'),
 
     # 2차 비밀번호 관련
     # url(r'^octoCode', OctoCodeView.as_view(), name='create-sp'),
