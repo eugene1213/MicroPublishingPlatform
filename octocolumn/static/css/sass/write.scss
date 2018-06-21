@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
 input, button {
     outline: none;
 }
@@ -389,9 +395,6 @@ div {
             border: solid 1px #2a292a;
         }
     }
-    #authorApply{
-        display: none;
-    }
 }
 /* ============================ */
 /*          이어쓰기 팝업          */
@@ -541,6 +544,7 @@ div {
 }
 /* 출판 박스 */
 .toggle-wrap .arrow-box {
+    display: none;
     width: 304px;
     position: absolute;
     margin-top: 46px;
@@ -614,7 +618,6 @@ div {
     display: block;
 }
 
-
 /* --- Tag Wrap --- */
 .toggle-wrap .arrow-box .tag-wrap {
 	padding: 20px 0;
@@ -625,7 +628,7 @@ div {
 	padding: 0 16px;
 	position: relative;
 	display: block;
-	width: 100px;
+	width: 104px;
     height: 30px;
     border-radius: 50px;
     background-color: rgba(42, 41, 42, 0.03);
@@ -836,7 +839,7 @@ div {
         position: relative;
         border-radius: 50%;
         z-index: 0;
-        background-size: 100%
+        background-size: cover;
     }
     .profile-sub-wrap {
         margin-left: 16px;
@@ -861,5 +864,156 @@ div {
             color: #c4c3c3;
         }
     }
+}
+/* Recommendation */
+.recommendation {
+	position: relative;
+	width: 90%;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+.recommendation p {
+	font-size: 14px;
+	line-height: 1;
+	font-weight: 800;
+	text-align: left;
+	margin-bottom: 5px;
+}
 
+.recommendation .recommendation-list-wrap {
+	position: relative;
+	margin-top: 20px;
+	padding: 0 10px;
+}
+.recommendation .recommendation-list-wrap p {
+	position: relative;
+	font-size: 0.86rem;
+	line-height: 1.5;
+	font-weight: 500;
+	text-align: left;
+	padding: 0 14px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+}
+.recommendation .recommendation-list-wrap .icon-ok {
+	margin-right: 8px;
+}
+
+
+
+/* Preview Writer Button */
+.preview-writer-button-wrap {
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.price-set-decimal {
+	width: 196px;
+	height: 60px;
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	padding: 12px 18px 8px 18px;
+	border-top: 1px solid rgba(42,41,42,0.1);
+	border-bottom: 1px solid rgba(42,41,42,0.1);
+	border-right: none;
+	border-left: none;
+	border-radius: 5px;
+	cursor: default;
+}
+.price-set-decimal p {
+	font-size: 0.8rem;
+	font-weight: 500;
+	margin-bottom: 0.5rem;
+}
+.price-set-decimal span {
+	font-weight: 800;
+}
+
+.preview-agreement-wrap {
+	display: flex;
+	margin-top: 30px;
+}
+.preview-agreement-wrap .agree_checkbox {
+	width: 12px;
+	height: 12px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	float: left;
+}
+.preview-agreement-wrap .agree_text {
+	position: relative;
+	float: left;
+	margin-left: 10px;
+	font-size: 0.8rem;
+	line-height: 12px;
+	font-weight: 500;
+	color: gba(255,255,255,0.3);
+}
+.preview-agreement-wrap span {
+	font-weight: 500;
+	color: #004b8d;
+	cursor: pointer;
+}
+
+.preview-writer-button {
+	margin-top: 16px;
+}
+.preview-writer-button button {
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 1px;
+	padding: 8px 18px;
+	margin: 0 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.preview-writer-button .btn_disabled {
+	border: 1px solid #B0B0B0;
+	background-color: #B0B0B0;
+	color: #fff;
+	cursor: default;
+}
+.preview-writer-button .btn_disabled:hover {
+	opacity: 1;
+}
+.preview-writer-button .done-publish:hover {
+	opacity: 0.9;
+}
+.preview-writer-button .cancel-publish:hover {
+	border: 1px solid rgba(42,41,42,0.15);
+	color: rgba(42,41,42,1.0);
+}
+.preview-writer-button .done-publish {
+	border: 1px solid #2a292a;
+	background-color: #2a292a;
+	color: #fff;
+	cursor: pointer;
+}
+.preview-writer-button .cancel-publish {
+	border: 1px solid rgba(42,41,42,0.1);
+	background-color: #fff;
+	color: rgba(42,41,42,0.8);
+}
+
+.preview-terms-wrap {
+	font-size: 0.7rem;
+	font-weight: 400;
+	color: #2a292a;
+	cursor: default;
+	letter-spacing: -0.5px;
+	line-height: 1.5;
+	margin-top: 60px;
+}
+.preview-terms-wrap .preview-terms {
+	font-weight: 600;
+	color: #004b8d;
+	cursor: pointer;
 }
