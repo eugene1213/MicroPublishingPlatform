@@ -173,7 +173,7 @@ class PostCreateView(generics.GenericAPIView,
 
                 # if self.is_post(data['temp_id']):
                 #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
-
+                print(data)
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],

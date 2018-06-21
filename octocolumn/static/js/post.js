@@ -27,19 +27,30 @@ $(document).ready(function(){
         }
     });
 
-    $(".agreement-checkbox").click(function(){              // 동의 체크 여부 확인 후 버튼 활성화
-        btn_activation(this,".done-publish");
+    $(document).on('click',".agree_checkbox",function(){              // 동의 체크 여부 확인 후 버튼 활성화
+        btn_activation(".agree_checkbox",".done-publish");
     });
 
-    $(".done-publish").click(function(){                    // 출판 버튼 누르면 작가인지 판단해서 출판/작가신청 진행. 아래 if문에서 data는 boolean타입
+    $(document).on('click',".done-publish",function(){                    // 출판 버튼 누르면 작가인지 판단해서 출판/작가신청 진행. 아래 if문에서 data는 boolean타입
 
         var cover_img = $("#blah").attr("src");
         var preview_img = $("#preview-main-content > img").attr("src");
         var tag = '';
-            tag = $("#tag_all").text();
-        var price = $(".preview-br-list-wrap > .price-set-decimal").text();
+        var price = $("#previewPrice > span").text();
         var temp_id = localStorage.getItem("temp_id");
-        var recommend1, recommend2, recommend3;
+        var recommend1='', recommend2='', recommend3='';
+        var numOfTag = 0;
+        var lastTagId = $(".added-tag-wrap:nth-last-child(1)").attr("id");
+        
+        if(lastTagId != undefined){
+            numOfTag = lastTagId.replace("tag_","");
+        }
+
+        for(let i=1; i<=numOfTag; i++) {
+            
+            tag += $("#tag_"+i).text()+'|~%';
+        }
+        tag = tag.substr(0,tag.length-3);
 
         if($("#recommend1").val()) recommend1 = $("#recommend1").val();
         if($("#recommend2").val()) recommend2 = '|~%' + $("#recommend2").val();
@@ -49,7 +60,7 @@ $(document).ready(function(){
 
         if(data) {
 
-            if(tag==''){
+            if(numOfTag==0){
                 alert('최소 한 개 이상의 태그를 설정해주세요.');
             }else if(cover_img == '') {
                 alert('표지 사진를 추가해주세요.');
@@ -58,20 +69,20 @@ $(document).ready(function(){
             }
         } else {
 
-            $("#authorApply").show();
-            $("#preview").hide();
+            $(".preview-wrap").show();
+            $("#preview-container").detach();
 
             $("#btn-author-apply").unbind('click').click(function(){
         
                 var intro = $(".author-intro").html();
                 var url = $("#inputUrl").val();
 
-                if(tag==''){
+                if(numOfTag==0){
                     alert('최소 한 개 이상의 태그를 설정해주세요.');
                 }else if(cover_img == '') {
                     alert('표지 사진를 추가해주세요.');
                 }else {
-                    authorApply(temp_id, cover_img, preview_img, tag, price, intro, url);
+                    authorApply(temp_id, cover_img, preview_img, tag, price, intro, url, recommend);
                 }
                 $(".btn-confirm").unbind('click').click(function(){
                     window.location.href = "/";
@@ -112,13 +123,31 @@ function btn_activation_checklist() {
     var content = $('#editable').text().trim();                            // 전체 글자수
     var countSpace = ((content.match(/\s/g) || []).length)/2;       // 띄어쓰기를 0.5글자 계산
     var sum = content.length - 3.5 - countSpace;                    // 전체 글자수에서 띄어쓰기 갯수*0.5 뺀 값
-
+    $(".recommendation-input").keypress(function(){
+        if($("#recommend1").val()||$("#recommend2").val()||$("#recommend3").val()){
+            $('#errMsg').detach();
+            $(".btn-publish-final").removeAttr("disabled");
+            $(".btn-publish-final").removeClass("btn_disabled");
+        }else {
+            $(".btn-publish-final").attr("disabled", "true");
+            $(".btn-publish-final").addClass("btn_disabled");
+            $('#errMsg').detach();
+            $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">칼럼 소개를 작성해 주세요</p>');
+        }
+    })
     if( sum >= 1500 ){       // 글자 수 체크 후 발행버튼 활성화
         if( $('.added-tag-wrap').length != 0 ){
             if( $('#blah').attr('src') ){
-                $('#errMsg').detach();
-                $(".btn-publish-final").removeAttr("disabled");
-                $(".btn-publish-final").removeClass("btn_disabled");
+                if($("#recommend1").val()||$("#recommend2").val()||$("#recommend3").val()){
+                    $('#errMsg').detach();
+                    $(".btn-publish-final").removeAttr("disabled");
+                    $(".btn-publish-final").removeClass("btn_disabled");
+                }else {
+                    $(".btn-publish-final").attr("disabled", "true");
+                    $(".btn-publish-final").addClass("btn_disabled");
+                    $('#errMsg').detach();
+                    $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">칼럼 소개를 작성해 주세요</p>');
+                }
             }else {
                 $(".btn-publish-final").attr("disabled", "true");
                 $(".btn-publish-final").addClass("btn_disabled");
@@ -160,7 +189,7 @@ function publish(temp_id, cover_img, preview_img, tag, price, recommend) {
             "tag" : tag,
             "price" : price,
             "preview" : preview.outerHTML,
-            "recommendation" : recommend,            
+            "recommend" : recommend,            
         }),
         success: function(json) {
             modal({
@@ -216,14 +245,6 @@ function isAuthor() {
         success: function(json) {
 
             data = json.author;
-
-            if(data) {
-                $(".ready2publish").text("Ready to publish?");      // 작가면 모달창 상단에 보여줄 텍스트
-            }
-            else {
-                $(".ready2publish").text("Become a writer");
-                $("#done-publish").text("다음 단계");
-            }
         },
         error: function(error) {
             console.log(error);
@@ -232,7 +253,7 @@ function isAuthor() {
     return data;
 }
 /* 작가신청 */
-function authorApply(temp_id, cover_img, preview_img, tag, price, intro, url) {
+function authorApply(temp_id, cover_img, preview_img, tag, price, intro, url, recommend) {
     
     var preview = creatPreviewElements();
 
@@ -252,7 +273,8 @@ function authorApply(temp_id, cover_img, preview_img, tag, price, intro, url) {
             "tag" : tag,
             "price" : price,
             "intro" : intro,
-            "blog" : url
+            "blog" : url,
+            "recommend" : recommend, 
         }),
         success: function(json) {
             modal({

@@ -46,7 +46,7 @@ class Post(models.Model):
                                   related_name='column',
                                   blank=True)
 
-    recommand = models.ManyToManyField('column.Recommend',
+    recommend = models.ManyToManyField('column.Recommend',
                                        related_name='recommand',
                                        blank=True,
                                        null=True
