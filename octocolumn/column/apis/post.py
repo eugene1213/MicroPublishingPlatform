@@ -77,7 +77,7 @@ class PostCreateView(generics.GenericAPIView,
 
     # 검색 태그 추가
     def search_tag(self, post, tag):
-        search_tag = tag.split(',')
+        search_tag = tag.split('|~%')
         if len(search_tag) > 5:
             return Response(
                 {
@@ -517,7 +517,7 @@ class IsBuyPost(APIView):
         return None
 
     def recommend(self, post):
-        text = post.recommand.all()
+        text = post.recommend.all()
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
             return tag_serializer.data
