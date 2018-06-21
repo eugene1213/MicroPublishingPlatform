@@ -16,7 +16,8 @@ $(document).ready(function(){
 });
 function modalSignin() {
     $('.welcome-container').css('display','block');
-    $(".page").css("position", "fixed"); 
+    $(".page").css("position", "fixed");
+    $("#read-container").css("position", "fixed");    
 }
 /* 로그인 창 좌우로 넘기기 */
 function toggle() {

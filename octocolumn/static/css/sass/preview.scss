@@ -361,7 +361,7 @@
 	width: 190px;
 	height: 40px;
 	margin-top: 5px;
-	margin-left: 5%;
+	margin-left: calc((100% - 952px)/2);
 }
 .rating input {
 	display: none;
