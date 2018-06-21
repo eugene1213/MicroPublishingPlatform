@@ -161,6 +161,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         related_name='pointhistory_relation_set',
     ),
 
+    notification = models.ManyToManyField(
+        'member.notification',
+        related_name='recommand',
+        blank=True,
+        null=True
+    )
+
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
