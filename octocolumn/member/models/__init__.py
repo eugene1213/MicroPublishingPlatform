@@ -6,3 +6,4 @@ from .point import *
 from .connectedlog import *
 from .activate import *
 from .pay import *
+from .notification import *

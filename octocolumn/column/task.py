@@ -1,9 +1,16 @@
-from config.celery import app
+from celery import Task
+from notifications.signals import notify
+
+from column.models import Post
+from member.models import User
+from member.models.user import Relation
 
 
-@app.task
-def task_update_post_like_count(post_pk):
-    from column.models import Post
-    post = Post.objects.get(pk=post_pk)
-    post.calc_like_count()
-    return post.like_count
+class PostCreateNotifySend(Task):
+    def run(self, pk, title, post_pk):
+        # 이메일 발송
+        user = User.objects.filter(pk=pk).get()
+        post = Post.objects.filter(pk=post_pk).get()
+        follower = Relation.objects.select_related('to_user', 'from_user').filter(to_user=user).all()
+        for i in follower:
+            notify.send(user, i.from_user, verb=post.title + '이 출판 되었습니다.', target='post@'+ post.pk, description='컬럼')
