@@ -6,6 +6,7 @@ __all__ =(
     'TagSerializer',
     'SearchTagSerializer',
     'PreSearchTagSerializer',
+    'RecommendSerializer'
 )
 
 
@@ -22,6 +23,14 @@ class SearchTagSerializer(serializers.ModelSerializer):
         model = SearchTag
         fields = (
             'tag',
+        )
+
+
+class RecommendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = (
+            'text',
         )
 
 

@@ -294,19 +294,6 @@ def handler500(request):
     response.status_code = 500
     return response
 
-
-def facebook(request):
-    return render_to_response('view/login/facebook_login.html')
-
-
-def kakao(request):
-    return render_to_response('view/login/kakao_login.html')
-
-
-def google(reqeust):
-    return render_to_response('view/login/google_login.html')
-
-
 def naver_request(request):
     return render_to_response('naverd45c8d580806584cb434be95a432581b.html')
 
