@@ -9,7 +9,7 @@ __all__ = (
 
 
 class Tag(models.Model):
-    tags = models.CharField(max_length=255)
+    tags = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return 'Tag({})'.format(self.tags)
@@ -38,7 +38,7 @@ class PreSearchTag(models.Model):
 
 
 class Recommend(models.Model):
-    text = models.CharField(max_length=255)
+    text = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return 'Tag({})'.format(self.text)

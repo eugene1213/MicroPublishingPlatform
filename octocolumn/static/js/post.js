@@ -39,6 +39,13 @@ $(document).ready(function(){
             tag = $("#tag_all").text();
         var price = $(".preview-br-list-wrap > .price-set-decimal").text();
         var temp_id = localStorage.getItem("temp_id");
+        var recommend1, recommend2, recommend3;
+
+        if($("#recommend1").val()) recommend1 = $("#recommend1").val();
+        if($("#recommend2").val()) recommend2 = '|~%' + $("#recommend2").val();
+        if($("#recommend3").val()) recommend3 = '|~%' + $("#recommend3").val();
+        
+        var recommend = recommend1 + recommend2 + recommend3;
 
         if(data) {
 
@@ -47,7 +54,7 @@ $(document).ready(function(){
             }else if(cover_img == '') {
                 alert('표지 사진를 추가해주세요.');
             }else {
-                publish(temp_id, cover_img, preview_img, tag, price);
+                publish(temp_id, cover_img, preview_img, tag, price, recommend);
             }
         } else {
 
@@ -133,7 +140,7 @@ function btn_activation_checklist() {
 }
 
 /* 최종적으로 발행을 결정하면 실행되는 함수*/
-function publish(temp_id, cover_img, preview_img, tag, price) {
+function publish(temp_id, cover_img, preview_img, tag, price, recommend) {
 
     var preview = creatPreviewElements();
 
@@ -152,7 +159,8 @@ function publish(temp_id, cover_img, preview_img, tag, price) {
             "cover" : cover_img,
             "tag" : tag,
             "price" : price,
-            "preview" : preview.outerHTML
+            "preview" : preview.outerHTML,
+            "recommendation" : recommend,            
         }),
         success: function(json) {
             modal({
