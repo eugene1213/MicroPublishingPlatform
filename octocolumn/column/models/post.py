@@ -44,9 +44,10 @@ class Post(models.Model):
 
     tags = models.ManyToManyField('column.Tag',
                                   related_name='column',
+                                  null=True,
                                   blank=True)
 
-    recommand = models.ManyToManyField('column.Recommend',
+    recommend = models.ManyToManyField('column.Recommend',
                                        related_name='recommand',
                                        blank=True,
                                        null=True
