@@ -326,7 +326,7 @@ class PostReadView(APIView):
         if tag_serializer:
             return tag_serializer.data
         return None
-
+ 
     def post_exist(self, post_id):
         if Post.objects.filter(pk=post_id).count() == 0:
             return Response(

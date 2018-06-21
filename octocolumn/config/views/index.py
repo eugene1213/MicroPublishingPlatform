@@ -77,7 +77,7 @@ def read(request, author=None, title=None):
                 })
                 return response
             response = render_to_response("view/read.html", {
-                "login": True,
+                "login": False,
                 "title": post.title,
                 "cover_image": post.cover_image,
                 "url": 'https://bycal.co/' + '@' + author_exchange(post.author.nickname) + '/' +

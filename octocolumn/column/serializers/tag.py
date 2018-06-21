@@ -16,6 +16,7 @@ class TagSerializer(serializers.ModelSerializer):
             'tags',
         )
 
+
 class SearchTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = SearchTag
