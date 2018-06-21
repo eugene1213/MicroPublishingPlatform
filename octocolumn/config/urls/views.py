@@ -4,7 +4,7 @@ from config.urls import support
 from config.views import index
 from config.views.index import write, naver_request, preview, more, robot, sitemap
 from config.views.index import bookmark, buylist, feed
-from config.views.index import findPass, kakao, google, facebook, resetPass
+from config.views.index import findPass, resetPass
 from config.views.index import read
 from config.views.index import profile
 from config.views.index import shop
@@ -42,9 +42,6 @@ urlpatterns = [
         resetPass, name='resetPass'),
     # url(r'^signup/$', signup, name='signup'),
     url(r'^shop/$', shop, name='shop'),
-    url(r'^kakao-login/$', kakao, name='kakao-login'),
-    url(r'^google-login/$', google, name='google-login'),
-    url(r'^facebook-login/$', facebook, name='google-login'),
 
     # 이메일 체킹
     url(r'^verifyChecking/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

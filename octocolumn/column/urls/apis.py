@@ -6,6 +6,7 @@ from column.apis import PostCreateView, TempCreateView, PostBuy, PostLikeToggleV
     FeedListView
 
 # from search_indexs.viewset.post import PostDocumentView
+# from column.apis.pay import Test
 
 urlpatterns = [
     # 포스트 생성
@@ -66,6 +67,8 @@ urlpatterns = [
     url(r'^temp/$', TempCreateView.as_view(), name='post-create'),
     url(r'^temp-list/$', TempListView.as_view(), name='temp'),
     url(r'^tmpimageupload/$', TempFileUpload.as_view(), name='image-upload'),
+
+    # url(r'^test/$', Test.as_view(), name='image-upload'),
 
     # 거색
     # url(r'^search/post$', PostDocumentView.as_view(), name='search'),

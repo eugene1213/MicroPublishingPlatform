@@ -77,7 +77,7 @@ def read(request, author=None, title=None):
                 })
                 return response
             response = render_to_response("view/read.html", {
-                "login": True,
+                "login": False,
                 "title": post.title,
                 "cover_image": post.cover_image,
                 "url": 'https://bycal.co/' + '@' + author_exchange(post.author.nickname) + '/' +
@@ -293,19 +293,6 @@ def handler500(request):
     response = render_to_response('404.html')
     response.status_code = 500
     return response
-
-
-def facebook(request):
-    return render_to_response('view/login/facebook_login.html')
-
-
-def kakao(request):
-    return render_to_response('view/login/kakao_login.html')
-
-
-def google(reqeust):
-    return render_to_response('view/login/google_login.html')
-
 
 def naver_request(request):
     return render_to_response('naverd45c8d580806584cb434be95a432581b.html')

@@ -58,7 +58,7 @@ class InviteUserTask(Task):
         user = InviteUser.objects.filter(pk=user_pk).get()
         send_user = User.objects.filter(pk=send_user_pk).get()
         # 이메일 발송
-        mail_subject = 'byCAL Invite'
+        mail_subject = 'byCAL Invite.'
         message = render_to_string('invitation.html', {
             'user': user,
             'domain': 'bycal.com',

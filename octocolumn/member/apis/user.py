@@ -375,27 +375,37 @@ class SendInviteEmail(APIView):
         data = self.request.data
 
         user = InviteUser.objects.create(email=data['email'])
-        # task = InviteUserTask
-        # email = task.delay(user.pk, self.request.user.pk)
-        send_user = self.request.user
-        # 이메일 발송
-        mail_subject = 'byCAL Invite'
-        message = render_to_string('invitation.html', {
-            'user': user,
-            'domain': 'bycal.com',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': invite_token.make_token(user),
-            'send_user': send_user.nickname
-        })
-        to_email = user.email
-        email = EmailMultiAlternatives(
-            mail_subject, to=[to_email]
-        )
-        email.attach_alternative(message, "text/html")
+        task = InviteUserTask
+        email = task.delay(user.pk, self.request.user.pk)
+        if email:
+        # send_user = self.request.user
+        # # 이메일 발송
+        # mail_subject = 'byCAL Invite'
+        # message = render_to_string('invitation.html', {
+        #     'user': user,
+        #     'domain': 'bycal.com',
+        #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #     'token': invite_token.make_token(user),
+        #     'send_user': send_user.nickname
+        # })
+        # to_email = user.email
+        # email = EmailMultiAlternatives(
+        #     mail_subject, to=[to_email]
+        # )
+        # email.attach_alternative(message, "text/html")
+        #
+        # email.send()
+            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+        return Response(
+            {
+                "code": 409,
+                "message": {
+                    "title": "Email sended fail",
+                    "content": "이메일 발송에 실패했습니다."
+                }
 
-        email.send()
-        return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
-
+            }
+            , status=status.HTTP_400_BAD_REQUEST)
 
 
 # 1
@@ -410,30 +420,44 @@ class PasswordResetSendEmail(APIView):
 
         try:
             user = User.objects.filter(username=data['username']).get()
-            # task = PasswordResetTask
-            #
-            # email = task.delay(user.pk)
-            mail_subject = 'byCAL 비밀번호 변경.'
-            message = render_to_string('pw_change.html', {
-                'user': user,
-                'domain': 'bycal.co',
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            to_email = user.username
-            email = EmailMultiAlternatives(
-                mail_subject, to=[to_email]
-            )
-            email.attach_alternative(message, "text/html")
-            email.send()
+            task = PasswordResetTask
 
-            return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+            email = task.delay(user.pk)
+            if email:
+            # mail_subject = 'byCAL 비밀번호 변경.'
+            # message = render_to_string('pw_change.html', {
+            #     'user': user,
+            #     'domain': 'bycal.co',
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # to_email = user.username
+            # email = EmailMultiAlternatives(
+            #     mail_subject, to=[to_email]
+            # )
+            # email.attach_alternative(message, "text/html")
+            # email.send()
+
+                return Response({"detail": "Email Send Success"}, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "code": 409,
+                    "message": {
+                        "title": "Email sended fail",
+                        "content": "이메일 발송에 실패했습니다."
+                    }
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
 
         except ObjectDoesNotExist:
             return Response(
                 {
-                    "code": "Email send Faild",
-                    "content": "이메일 발송에 실패했습니다."
+                    "code": 409,
+                    "message": {
+                        "title": "Email sended fail",
+                        "content": "이메일 발송에 실패했습니다."
+                    }
 
                 }
                 , status=status.HTTP_400_BAD_REQUEST)

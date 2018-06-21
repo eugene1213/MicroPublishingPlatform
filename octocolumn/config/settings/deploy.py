@@ -185,6 +185,9 @@ DATABASES = {
 #     },
 # }
 
+CELERY_BROKER_URL = 'amqp://bycal:Devocto12345678@52.231.67.49:5672//'
+
+
 # Google
 CLIENT_ID = config_secret_deploy['accounts']['google']['client_id']
 CLIENT_SECRET = config_secret_deploy['accounts']['google']['client_secret']

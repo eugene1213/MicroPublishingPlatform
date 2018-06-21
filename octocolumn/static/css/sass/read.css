@@ -83,7 +83,7 @@ a {
   background-color: #fff; }
 
 .column-title-wrap {
-  width: 66%;
+  width: 952px;
   margin: 0 auto; }
 
 .column-read .column-title {
@@ -91,7 +91,6 @@ a {
   text-align: left;
   font-weight: 700;
   word-break: break-word;
-  width: calc(100% - 40px);
   padding-right: 10px; }
 
 /* Columnist Info*/
@@ -126,7 +125,7 @@ a {
 .read-content .ribbon {
   position: absolute;
   top: 60px;
-  right: 5%;
+  right: calc((100% - 952px)/2);
   width: 40px;
   height: 42px;
   border-top-right-radius: .2em;
@@ -268,6 +267,21 @@ a {
     margin-top: -10px; }
 
 @media screen and (max-width: 960px) {
+  .post-share-btn {
+    width: 90% !important; }
+
+  .rating {
+    margin-left: 5% !important; }
+
+  .column-tags {
+    width: 90% !important; }
+
+  .ribbon {
+    right: 5% !important; }
+
+  .column-title-wrap {
+    width: 90% !important; }
+
   .column-content p, .column-content blockquote, .column-content h1, .column-content h2, .column-content b, .column-content .medium-insert-images, .column-content .medium-insert-images-right, .column-content .medium-insert-images-left {
     width: 90% !important; }
   .column-content .medium-insert-images-full {
@@ -278,7 +292,7 @@ a {
 .column-read .column-tags {
   height: auto;
   position: relative;
-  width: 90%;
+  width: 952px;
   margin: 0 auto; }
 
 .column-read .column-tags p {
@@ -317,7 +331,7 @@ a {
   width: 190px;
   height: 40px;
   margin-top: 5px;
-  margin-left: 5%; }
+  margin-left: calc((100% - 952px)/2); }
 
 .rating input {
   display: none; }
@@ -347,7 +361,7 @@ a {
 
 /* Post Share Button */
 .post-share-btn {
-  width: 90%;
+  width: 952px;
   margin: 0 auto;
   text-align: right;
   font-size: 1.4rem;

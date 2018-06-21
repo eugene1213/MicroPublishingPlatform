@@ -10,11 +10,9 @@ $(document).ready(function() {
         // setTimeout(function(){
 
         $("#tmp").replaceWith("<div id='tmp'>" + $(".editable").html() + "</div>");
-        $(".preview-wrap").show();
         $(".container").css("position", "fixed");
         if($(".container").width() < 960) $(".container").css({"left": "50%","margin-left": $(".container").width()/(-2)});
-        // dom2img();                           // 미리보기 이미지 렌더링
-        previewCoverImg();                      // 설정된 커버이미지 미리보기에 출력
+
         previewContentInfo();                   // 설정된 값들 미리보기에 출력
 
         $("#previewPrice").text($("#setPrice").text());
@@ -22,18 +20,121 @@ $(document).ready(function() {
         $(".arrow-box").hide();
         $(".css-arrow").css("transform","rotate(360deg)");
         saveTmp(false); // 임시저장
+
+        var mainContent = $(".editable").html();
+        var imgSrc = $("#blah").attr("src");
+        var title = $(".title").text();
+        var readTime = $(".read-time").text();
+        var author = $(".username").text();
+        var numOfTag = 0;
+        var lastTagId = $(".added-tag-wrap:nth-last-child(1)").attr("id");
+        var tagHtml = "";
+        var price = $("#setPrice").text();
+        var recommend1, recommend2, recommend3;
+        var recommendHtml = "";
+        data = isAuthor();
+        if(data) {
+            previewBtn = "출판";
+            
+        }
+        else {
+            previewBtn = "다음 단계";
+        }
+
+
+        if($("#recommend1").val()) {
+            recommend1 = $("#recommend1").val();
+            recommendHtml += "<p><span class=\"icon-ok\"></span>"+recommend1+"</p>";
+        }
+        if($("#recommend2").val()){
+            recommend2 = $("#recommend2").val();
+            recommendHtml += "<p><span class=\"icon-ok\"></span>"+recommend2+"</p>";
+        }
+        if($("#recommend3").val()){
+            recommend3 = $("#recommend3").val();
+            recommendHtml += "<p><span class=\"icon-ok\"></span>"+recommend3+"</p>";            
+        }
+
+        if(lastTagId != undefined){
+            numOfTag = lastTagId.replace("tag_","");
+        }
+
+        for(let i=1; i<=numOfTag; i++) {
+            
+            var tag = $("#tag_"+i).text();
+    
+            tagHtml += "<li>"+tag+"</li>";
+        }
+
+        previewHtml = "\
+            <div id=\"preview-container\">\
+                <div class=\"preview-content\">\
+                    <div class=\"close\"></div>\
+                    <div class=\"warning-phrase\">\
+                    출판하려는 칼럼의 정보를 확인하시고, 칼럼을 출판해주세요.<br>칼럼을 출판한 후에는 수정, 삭제가 불가능합니다.\
+                    </div>\
+                    <!-- Column Preview -->\
+                    <div class=\"column-preview\">\
+                        <div class=\"preview-cover-img\" style=\"background-image:url("+imgSrc+");\"></div>\
+                        <div class=\"column-title\">"+title+"</div>\
+                        <div class=\"columnist-info\">\
+                            <div class=\"columnist-name\">\
+                                by <span class=\"user-name\"><i>"+author+"</i></span>\
+                            </div>\
+                            <div class=\"column-read-time\">\
+                                <span class=\"read-time\">"+readTime+"</span>\
+                            </div>\
+                        </div>\
+                        <!-- Main Contents -->\
+                        <div class=\"column-content\">\
+                        "+mainContent+"\
+                        </div>\
+                        <div class=\"column-tags\">\
+                            <p>Tags</p>\
+                            <ul>\
+                                "+tagHtml+"\
+                            </ul>\
+                        </div>\
+                        <div class=\"recommendation\">\
+                            <p>이런 분들께 추천해요.</p>\
+                            <div class=\"recommendation-list-wrap\">\
+                                "+recommendHtml+"\
+                            </div>\
+                        </div>\
+                    </div>\
+                    <div class=\"preview-writer-button-wrap\">\
+                        <div class=\"price-set-decimal\" id=\"previewPrice\">\
+                            <p>칼럼 가격</p>\
+                            <span>"+price+"</span>&nbsp;Point\
+                        </div>\
+                        <div class=\"preview-agreement-wrap\">\
+                            <input type=\"checkbox\" class=\"agree_checkbox\">\
+                            <div class=\"agree_text\">본인은&nbsp;<span onClick=\"term()\">환불불가정책</span>에 동의합니다.</div>\
+                        </div>\
+                        <div class=\"preview-writer-button\">\
+                            <button class=\"done-publish btn_disabled\" disabled=\"disabled\">"+previewBtn+"</button>\
+                            <button class=\"cancel-publish\" id=\"cancel-publish\">취소</button>\
+                        </div>\
+                        <div class=\"preview-terms-wrap\">\
+                            <span class=\"preview-terms\">대가성 콘텐츠 표기</span>,&nbsp;\
+                            <span class=\"preview-terms\">사용자 아이디 정책</span>,&nbsp;\
+                            <span class=\"preview-terms\">서비스 운영정책</span>,&nbsp;\
+                            <span class=\"preview-terms\">서비스 이용약관</span>,&nbsp;\
+                            <span class=\"preview-terms\">저작권법</span>을 참고하세요.\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+        ";
+        $(".container").after(previewHtml);
     });
     $(".cancel-publish").click(function(){
         $(".preview-wrap").hide();
         $(".container").css({"position": "static","left":"","margin-left":""});
-        $("#authorApply").hide();
-        $("#preview").show();
     });
     $(".btn-cancel-wrap").click(function(){
         $(".preview-wrap").hide();
         $(".container").css({"position": "static","left":"","margin-left":""});
-        $("#authorApply").hide();
-        $("#preview").show();
     });
 
     /* read time 계산기 */
@@ -53,6 +154,15 @@ $(document).ready(function() {
     });
     countTitle();   // 제목 글자수 체크
 }); // $(document).ready(function()
+
+$(function(){
+    $(document).on('click','.close',function(){
+        $("#preview-container").detach();
+    });
+    $(document).on('click','#cancel-publish',function(){
+        $("#preview-container").detach();
+    });
+})
 
 /* 설정된 커버 이미지 preview에 출력 */
 function previewCoverImg() {

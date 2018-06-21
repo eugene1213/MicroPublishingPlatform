@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 
 from column.models import Temp, SearchTag, PostStar, Tag, Recommend
 from column.pagination import PostPagination, PostListPagination
-from column.serializers.tag import SearchTagSerializer
+from column.serializers.tag import SearchTagSerializer, TagSerializer, RecommendSerializer
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import WaitingRelation, Bookmark, Relation
 from member.serializers import ProfileImageSerializer, UserSerializer
@@ -64,7 +64,7 @@ class PostCreateView(generics.GenericAPIView,
     # 작가인증
     def is_author(self):
         try:
-            author = AuthorModel.objects.filter(author=self.request.user).get()
+            author = AuthorModel.objects.select_related('author').filter(author=self.request.user).get()
             return author
         except ObjectDoesNotExist:
             author = None
@@ -77,7 +77,7 @@ class PostCreateView(generics.GenericAPIView,
 
     # 검색 태그 추가
     def search_tag(self, post, tag):
-        search_tag = tag.split(',')
+        search_tag = tag.split('|~%')
         if len(search_tag) > 5:
             return Response(
                 {
@@ -92,9 +92,9 @@ class PostCreateView(generics.GenericAPIView,
         return True
 
     def recommend_text(self, post, recommend):
-        recommend_tag = recommend.split('|')
+        recommend_tag = recommend.split('|~%')
 
-        if len(recommend_tag) > 5:
+        if len(recommend_tag) > 3:
             return Response(
                 {
                     "code": 413,
@@ -104,7 +104,7 @@ class PostCreateView(generics.GenericAPIView,
 
         for i in recommend_tag:
             tags = Recommend.objects.create(text=i)
-            post.recommand.add(tags)
+            post.recommend.add(tags)
 
         return True
 
@@ -173,7 +173,7 @@ class PostCreateView(generics.GenericAPIView,
 
                 # if self.is_post(data['temp_id']):
                 #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
-
+                print(data)
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],
@@ -279,7 +279,7 @@ class PostMoreListView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         try:
-            post = Post.objects.all().order_by('-created_date')
+            post = Post.objects.select_related('atuhor').all().order_by('-created_date')
 
             page = self.paginate_queryset(post)
             serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
@@ -313,7 +313,7 @@ class PostReadView(APIView):
 
     def is_buyed(self, post):
         try:
-            BuyList.objects.filter(user=self.request.user, post=post).get()
+            BuyList.objects.select_related('user', 'post').filter(user=self.request.user, post=post).get()
             return True
         except ObjectDoesNotExist:
             if self.request.user == post.author:
@@ -321,21 +321,29 @@ class PostReadView(APIView):
             return False
 
     def tag(self, post):
-        tag = SearchTag.objects.filter(post=post)
-        tag_serializer = SearchTagSerializer(tag, many=True)
+        tag = post.tags.all()
+        tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
             return tag_serializer.data
         return None
 
+    def recommend(self, post):
+        text = post.recommend.all()
+        tag_serializer = RecommendSerializer(text, many=True)
+        if tag_serializer:
+            return tag_serializer.data
+        return None
+ 
     def post_exist(self, post_id):
-        if Post.objects.filter(pk=post_id).count() == 0:
+        post = Post.objects.prefetch_related('tags', 'recommend').select_related('author').filter(pk=post_id).get()
+        if not post:
             return Response(
                 {
                     "code": 409,
                     "message": kr_error_code(409)
                 }
                 , status=status.HTTP_409_CONFLICT)
-        return Post.objects.select_related('author').filter(pk=post_id).get()
+        return post
 
     def bookmark_status(self, post):
         user = self.request.user
@@ -362,7 +370,7 @@ class PostReadView(APIView):
 
     def star_rating(self, post):
         try:
-            star = PostStar.objects.filter(post=post).get()
+            star = PostStar.objects.select_related('post').filter(post=post).get()
             if star.member_num == 0:
                 return 0
             return round(star.content / star.member_num)
@@ -405,6 +413,7 @@ class PostReadView(APIView):
                             "main_content": serializer.data['main_content'],
                             "title": serializer.data['title'],
                             "tag": self.tag(post),
+                            "recommend": self.recommend(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
                             "following_url": "/api/member/" + str(user_serializer.data['pk'], 'utf-8') + "/follow/",
@@ -455,6 +464,7 @@ class PostReadView(APIView):
                             "main_content": serializer.data['main_content'],
                             "title": serializer.data['title'],
                             "tag": self.tag(post),
+                            "recommend": self.recommend(post),
                             "bookmark_status": self.bookmark_status(post),
                             "follow_status": self.follow_status(author),
                             "following_url": "/api/member/" + str(user_serializer.data['pk'], 'utf-8') + "/follow/",
@@ -500,8 +510,15 @@ class IsBuyPost(APIView):
         return clean_text[:300]
 
     def tag(self, post):
-        tag = SearchTag.objects.filter(post=post)
-        tag_serializer = SearchTagSerializer(tag, many=True)
+        tag = Tag.objects.all()
+        tag_serializer = TagSerializer(tag, many=True)
+        if tag_serializer:
+            return tag_serializer.data
+        return None
+
+    def recommend(self, post):
+        text = post.recommend.all()
+        tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
             return tag_serializer.data
         return None
@@ -547,6 +564,7 @@ class IsBuyPost(APIView):
                         "nickname": post.author.nickname,
                         "main_content": self.main_content(post.main_content),
                         "tag": self.tag(post),
+                        "recommend": self.recommend(post),
                         "star": self.except_division(star),
                         "point": '보유 포인트: ' + str(user.point) +'P'
 
@@ -586,6 +604,7 @@ class IsBuyPost(APIView):
                     "nickname": post.author.nickname,
                     "main_content": self.main_content(post.main_content),
                     "tag": self.tag(post),
+                    "recommend": self.recommend(post),
                     "star": self.except_division(star),
                     "point": '로그인 해주세요'
 
