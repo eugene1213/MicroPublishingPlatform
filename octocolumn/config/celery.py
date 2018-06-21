@@ -7,10 +7,10 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.deploy')
 
 # if DEBUG:
-app = Celery('config',
-             broker='redis://XNv66F+JWKzeJdD+mYs9wvhlcKbs2Ax95pJ+HXpX4NQ=@bycal.redis.cache.windows.net:6380/0')
+# app = Celery('config',
+#              broker='redis://YfgUM0bovxG6EDScyvIsxxpoZ+6Z3rupjpS29yd2aPs=@bycal.redis.cache.windows.net:6379/0')
 # else:
-# app = Celery('config')
+app = Celery('config')
 
 
 # namespace='CELERY'는 모든 셀러리 관련 구성 키를 의미한다. 반드시 CELERY라는 접두사로 시작해야 한다.

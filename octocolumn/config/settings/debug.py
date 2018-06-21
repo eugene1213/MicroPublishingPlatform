@@ -198,6 +198,9 @@ AUTH_URI = config_secret_debug['accounts']['google']['auth_uri']
 TOKEN_URI = config_secret_debug['accounts']['google']['token_uri']
 
 
+CELERY_BROKER_URL = 'amqp://bycal:Devocto12345678@52.231.67.49:5672//'
+
+
 # Celery
 # CELERY_BROKER_URL = 'bycal.redis.cache.windows.net:6380'
 # CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'

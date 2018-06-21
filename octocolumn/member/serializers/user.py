@@ -3,8 +3,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from rest_framework import serializers
+from rest_framework import serializers, status
 from rest_framework.fields import SerializerMethodField
+from rest_framework.response import Response
 
 from member.models import User, Profile, ProfileImage
 from member.task import SignupEmailTask
@@ -70,33 +71,50 @@ class SignUpSerializer(serializers.ModelSerializer):
            password=validated_data['password1'],
            nickname=validated_data['nickname'],
         )
-        # if user:
-        #     task = SignupEmailTask
-        #
-        #     if task.delay(user.pk):
-        #         return user
-        #     else:
-        #         raise serializers.ValidationError('치명적인 오류입니다')
-        #
-        # else:
-        #     raise serializers.ValidationError('이메일을 다시한번 확인해주시기 바랍니다.')
         if user:
-            mail_subject = 'byCAL 이메일 인증.'
-            user = user
-            message = render_to_string('welcome.html', {
-                'user': user.nickname,
-                'domain': 'bycal.co',
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            to_email = user.username
-            email = EmailMultiAlternatives(
-                mail_subject, to=[to_email]
-            )
-            email.attach_alternative(message, "text/html")
-            email.send()
-            return True
-        return False
+            task = SignupEmailTask
+            if task.delay(user.pk):
+                return user
+            else:
+                return Response(
+                    {
+                        "code": 409,
+                        "message": {
+                            "title": "Email sended fail",
+                            "content": "이메일 발송에 실패했습니다."
+                        }
+
+                    }
+                    , status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            return Response(
+                {
+                    "code": 409,
+                    "message": {
+                        "title": "Email sended fail",
+                        "content": "이메일 발송에 실패했습니다."
+                    }
+
+                }
+                , status=status.HTTP_400_BAD_REQUEST)
+        # if user:
+        #     mail_subject = 'byCAL 이메일 인증.'
+        #     user = user
+        #     message = render_to_string('welcome.html', {
+        #         'user': user.nickname,
+        #         'domain': 'bycal.co',
+        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #         'token': account_activation_token.make_token(user),
+        #     })
+        #     to_email = user.username
+        #     email = EmailMultiAlternatives(
+        #         mail_subject, to=[to_email]
+        #     )
+        #     email.attach_alternative(message, "text/html")
+        #     email.send()
+        #     return True
+        # return False
 
     def to_representation(self, instance):
         # serializer된 형태를 결정
