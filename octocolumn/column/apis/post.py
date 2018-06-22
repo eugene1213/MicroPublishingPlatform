@@ -320,14 +320,14 @@ class PostReadView(APIView):
             return False
 
     def tag(self, post):
-        tag = post.tags.all()
+        tag = post.tags
         tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
             return tag_serializer.data
         return None
 
     def recommend(self, post):
-        text = post.recommend.all()
+        text = post.recommend
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
             return tag_serializer.data
@@ -509,14 +509,14 @@ class IsBuyPost(APIView):
         return clean_text[:300]
 
     def tag(self, post):
-        tag = Tag.objects.all()
+        tag = Tag.objects
         tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
             return tag_serializer.data
         return None
 
     def recommend(self, post):
-        text = post.recommend.all()
+        text = post.recommend
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
             return tag_serializer.data
