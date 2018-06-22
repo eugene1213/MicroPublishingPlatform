@@ -323,14 +323,19 @@ class PostReadView(APIView):
         tag = post.tags
         tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['tags'])
+            return list
         return None
 
     def recommend(self, post):
         text = post.recommend
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['text'])
         return None
  
     def post_exist(self, post_id):
@@ -509,17 +514,22 @@ class IsBuyPost(APIView):
         return clean_text[:300]
 
     def tag(self, post):
-        tag = Tag.objects
+        tag = post.tags
         tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['tags'])
+            return list
         return None
 
     def recommend(self, post):
         text = post.recommend
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['text'])
         return None
 
     def except_division(self, star):
