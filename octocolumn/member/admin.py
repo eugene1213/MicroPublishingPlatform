@@ -276,13 +276,13 @@ class PreAuthorPostAdmin(admin.ModelAdmin):
 
     def download_action(self, request, post_pk):
         post = PreAuthorPost.objects.filter(pk=post_pk).get()
-        cover_image = '<div class="mainImg image-loader" style="background-image: url(/media/'\
+        cover_image = '<div class="mainImg image-loader" style="background-image: url(https://bycal.azureedge.net/media/'\
                       + str(post.cover_image) + '); height: 568px;"><!--url({cover_img})--></div>'
         contents = '<div class="main_content_wrap">' + post.main_content + '</div>'
         read_css = \
-            '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/read.css">'
+            '<link rel="stylesheet" type="text/css" href="https://bycal.azureedge.net/static/css/sass/read.css">'
         sub_css = \
-            '<link rel="stylesheet" type="text/css" href="https://static.octocolumn.com/static/css/sass/sub.css">'
+            '<link rel="stylesheet" type="text/css" href="https://bycal.azureedge.net/static/css/sass/sub.css">'
         response = HttpResponse(read_css + sub_css + cover_image +contents)
         return response
 
