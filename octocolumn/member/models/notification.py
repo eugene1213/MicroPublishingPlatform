@@ -1,26 +1,25 @@
-from django.db import models
-
-
-class Notification(models.Model):
-    # to_user = models.ForeignKey()
-    # contents = models.ForeignKey()
-    # from_user = models.ForeignKey()
-    pass
-
-
-class NotificationType(models.Model):
-    NOTI_TYPE_POINT_CHARGE = 'pc'
-    NOTI_TYPE_REWARD = 'r'
-    NOTI_TYPE_WEB = 'w'
-    CHOICES_USER_TYPE = (
-        (NOTI_TYPE_POINT_CHARGE, 'Point-charge'),
-        (NOTI_TYPE_REWARD, 'Reward'),
-        (NOTI_TYPE_WEB, 'WebSite-use'),
-
-    )
-    user_type = models.CharField(
-        max_length=1,
-        choices=CHOICES_USER_TYPE,
-    )
-
-    pass
+# from django.db import models
+#
+# __all__ = (
+#     'Notification',
+# )
+#
+#
+# class Notification(models.Model):
+#     post = models.ForeignKey(
+#         'column.Post',
+#         on_delete=models.CASCADE,
+#         null=True,
+#         blank=True
+#     )
+#     comment = models.ForeignKey(
+#         'column.Comment',
+#         on_delete=models.CASCADE,
+#         null=True,
+#         blank=True
+#     )
+#     contents = models.CharField(max_length=255, null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#
+#
+#

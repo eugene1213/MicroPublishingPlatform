@@ -173,7 +173,6 @@ class PostCreateView(generics.GenericAPIView,
 
                 # if self.is_post(data['temp_id']):
                 #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
-                print(data)
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],
@@ -246,7 +245,7 @@ class PostCreateView(generics.GenericAPIView,
                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-################################### 목록  ###############################
+###################################  목록   ##################################
 
 class PostListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
@@ -321,17 +320,22 @@ class PostReadView(APIView):
             return False
 
     def tag(self, post):
-        tag = post.tags.all()
+        tag = post.tags
         tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['tags'])
+            return list
         return None
 
     def recommend(self, post):
-        text = post.recommend.all()
+        text = post.recommend
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['text'])
         return None
  
     def post_exist(self, post_id):
@@ -510,17 +514,22 @@ class IsBuyPost(APIView):
         return clean_text[:300]
 
     def tag(self, post):
-        tag = Tag.objects.all()
+        tag = post.tags
         tag_serializer = TagSerializer(tag, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['tags'])
+            return list
         return None
 
     def recommend(self, post):
-        text = post.recommend.all()
+        text = post.recommend
         tag_serializer = RecommendSerializer(text, many=True)
         if tag_serializer:
-            return tag_serializer.data
+            list = []
+            for i in tag_serializer.data:
+                list.append(i['text'])
         return None
 
     def except_division(self, star):
