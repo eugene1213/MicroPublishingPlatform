@@ -6,7 +6,7 @@ from rest_framework import generics, mixins, exceptions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from column.models import Temp, PreAuthorPost, Post, SearchTag, PreSearchTag
+from column.models import Temp, PreAuthorPost, Post, SearchTag, PreSearchTag, PreTag, PreRecommend
 
 from column.serializers import PostSerializer, PreAuthorPostSerializer
 from member.models import Author as AuthorModel, User, PointHistory
@@ -48,7 +48,7 @@ class AuthorApply(generics.GenericAPIView,
 
     # 검색 태그 추가
     def search_tag(self, post, tag):
-        search_tag = tag.split(',')
+        search_tag = tag.split('|~%')
         if len(search_tag) > 5:
             return Response(
                 {
@@ -56,11 +56,24 @@ class AuthorApply(generics.GenericAPIView,
                     "message": kr_error_code(413)
                 }
                 , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
-
         for i in search_tag:
-            PreSearchTag.objects.select_related('post').create(post=post, tag=i)
+            tags = PreTag.objects.create(tags=i)
+            post.tags.add(tags)
 
-        return True
+    def recommend_text(self, post, recommend):
+        recommend_tag = recommend.split('|~%')
+
+        if len(recommend_tag) > 3:
+            return Response(
+                {
+                    "code": 413,
+                    "message": kr_error_code(413)
+                }
+                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+
+        for i in recommend_tag:
+            tags = PreRecommend.objects.create(text=i)
+            post.recommend.add(tags)
 
     # 작가 신청메서드
     def post(self, request):
@@ -127,13 +140,22 @@ class AuthorApply(generics.GenericAPIView,
                     serializer = PostSerializer(created)
 
                     # 태그 추가 에외처리
-                    if not self.search_tag(post=created, tag=self.request.data['tag']):
+                    if not self.search_tag(created, data['tag']):
                         return Response(
                             {
                                 "code": 413,
                                 "message": kr_error_code(413)
                             }
                             , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+
+                    if data['recommend'] != '':
+                        if not self.recommend_text(created, data['recommend']):
+                            return Response(
+                                {
+                                    "code": 413,
+                                    "message": kr_error_code(413)
+                                }
+                                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
                     # 템프파일 삭제 예외처리
                     try:
@@ -211,13 +233,24 @@ class AuthorApply(generics.GenericAPIView,
                         serializer = PostSerializer(created)
 
                         # 태그 추가 에외처리
-                        if not self.search_tag(post=created, tag=self.request.data['tag']):
-                            return Response(
-                                {
-                                    "code": 413,
-                                    "message": kr_error_code(413)
-                                }
-                                , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+
+                        if data['tag'] != '':
+                            if not self.search_tag(created, data['tag']):
+                                return Response(
+                                    {
+                                        "code": 413,
+                                        "message": kr_error_code(413)
+                                    }
+                                    , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+
+                        if data['recommend'] != '':
+                            if not self.recommend_text(created, data['recommend']):
+                                return Response(
+                                    {
+                                        "code": 413,
+                                        "message": kr_error_code(413)
+                                    }
+                                    , status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
                         # 템프파일 삭제 예외처리
                         try:

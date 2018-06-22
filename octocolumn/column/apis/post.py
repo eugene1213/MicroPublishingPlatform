@@ -173,7 +173,6 @@ class PostCreateView(generics.GenericAPIView,
 
                 # if self.is_post(data['temp_id']):
                 #     raise exceptions.ParseError({"detail": "You are not the owner of this article"})
-                print(data)
                 post = Post.objects.create(author=user, title=temp.title,
                                            main_content=temp.main_content,
                                            price=data['price'],
@@ -246,7 +245,7 @@ class PostCreateView(generics.GenericAPIView,
                 , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-################################### 목록  ###############################
+###################################  목록   ##################################
 
 class PostListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
