@@ -44,13 +44,11 @@ class Post(models.Model):
 
     tags = models.ManyToManyField('column.Tag',
                                   related_name='column',
-                                  null=True,
                                   blank=True)
 
     recommend = models.ManyToManyField('column.Recommend',
                                        related_name='recommand',
                                        blank=True,
-                                       null=True
                                        )
 
     class Meta:
@@ -110,6 +108,15 @@ class PreAuthorPost(models.Model):
         blank=True,
         null=True
     )
+
+    tags = models.ManyToManyField('column.PreTag',
+                                  related_name='pretag',
+                                  blank=True)
+
+    recommend = models.ManyToManyField('column.PreRecommend',
+                                       related_name='prerecommand',
+                                       blank=True,
+                                       )
 
     class Meta:
         ordering = ['-created_date', ]

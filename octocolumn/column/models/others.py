@@ -4,7 +4,9 @@ __all__ = (
     'Tag',
     'SearchTag',
     'PreSearchTag',
-    'Recommend'
+    'Recommend',
+    'PreTag',
+    'PreRecommend'
 )
 
 
@@ -38,6 +40,20 @@ class PreSearchTag(models.Model):
 
 
 class Recommend(models.Model):
+    text = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return 'Tag({})'.format(self.text)
+
+
+class PreTag(models.Model):
+    tags = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return 'Tag({})'.format(self.tags)
+
+
+class PreRecommend(models.Model):
     text = models.CharField(max_length=255, null=True)
 
     def __str__(self):
