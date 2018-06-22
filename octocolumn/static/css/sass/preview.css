@@ -300,6 +300,34 @@
   border: 1px solid rgba(42, 41, 42, 0.03);
   box-sizing: border-box; }
 
+/* Recommendation */
+.recommendation {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 40px; }
+  .recommendation p {
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 800;
+    text-align: left;
+    margin-bottom: 5px; }
+  .recommendation .recommendation-list-wrap {
+    position: relative;
+    margin-top: 20px;
+    padding: 0 10px; }
+    .recommendation .recommendation-list-wrap p {
+      position: relative;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      font-weight: 500;
+      text-align: left;
+      padding: 0 14px;
+      margin-right: 5px;
+      margin-bottom: 10px; }
+    .recommendation .recommendation-list-wrap .icon-ok {
+      margin-right: 8px; }
+
 /* Star Rating*/
 .rating {
   width: 190px;

@@ -23,6 +23,11 @@ function isBought(post_id, readtime, bookmark_status) {
                 for(i in tags){
                     tagsHtml += '<li>'+tags[i]+'</li>';
                 }
+                var recommends = json.detail.recommend;
+                var recommendHtml = "";
+                for(i in recommends){
+                    recommendHtml += '<p>'+recommends[i]+'</p>';
+                }
                 var cover_img = json.detail.cover_image;
                 var preview = json.detail.preview;
                 var price = json.detail.price;
@@ -90,11 +95,18 @@ function isBought(post_id, readtime, bookmark_status) {
                                     <label for="star1" class="font-read-star-half"></label>\
                                 </div>\
                                 <div class="column-tags">\
-                                <p>Tags</p>\
-                                <ul>\
-                                    '+tagsHtml+'\
-                                </ul>\
-                            </div>\
+                                    <p>Tags</p>\
+                                    <ul>\
+                                        '+tagsHtml+'\
+                                    </ul>\
+                                </div>\
+                                <!-- Recommendation -->\
+                                <div class="recommendation">\
+                                    <p>이런 분들께 추천해요.</p>\
+                                    <div class="recommendation-list-wrap">\
+                                        '+recommendHtml+'\
+                                    </div>\
+                                </div>\
                             </div>\
                             <div class="balance">'+point+'</div>\
                             <div class="purchase-btn" onclick=\'buy('+post_id+');\'><span class="column-price">'+price+'</span>Point로 구매하기</div>\
