@@ -61,12 +61,25 @@ class InviteUserTask(Task):
         mail_subject = 'byCAL Invite.'
         message = render_to_string('invitation.html', {
             'user': user,
-            'domain': 'bycal.com',
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': invite_token.make_token(user),
             'send_user': send_user.nickname
         })
         to_email = user.email
+        email = EmailMultiAlternatives(
+            mail_subject, to=[to_email]
+        )
+        email.attach_alternative(message, "text/html")
+        email.send()
+
+
+class IsActiveAuthorMail(Task):
+    def run(self, user_pk):
+        user = User.objects.filter(pk=user_pk).get()
+
+        mail_subject = 'byCAL 출판 완료.'
+        message = render_to_string('accept.html', {
+            'user': user.nickname,
+        })
+        to_email = user.username
         email = EmailMultiAlternatives(
             mail_subject, to=[to_email]
         )
@@ -89,3 +102,4 @@ app.tasks.register(SignupEmailTask)
 app.tasks.register(PasswordResetTask)
 app.tasks.register(InviteUserTask)
 app.tasks.register(MemberPointTask)
+app.tasks.register(IsActiveAuthorMail)
