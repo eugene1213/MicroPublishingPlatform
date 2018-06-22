@@ -59,10 +59,10 @@ class AuthorApply(generics.GenericAPIView,
         for i in search_tag:
             tags = PreTag.objects.create(tags=i)
             post.tags.add(tags)
+        return True
 
     def recommend_text(self, post, recommend):
         recommend_tag = recommend.split('|~%')
-
         if len(recommend_tag) > 3:
             return Response(
                 {
@@ -74,6 +74,7 @@ class AuthorApply(generics.GenericAPIView,
         for i in recommend_tag:
             tags = PreRecommend.objects.create(text=i)
             post.recommend.add(tags)
+        return True
 
     # 작가 신청메서드
     def post(self, request):
