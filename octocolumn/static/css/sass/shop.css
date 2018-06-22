@@ -119,7 +119,7 @@ main {
   will-change: transform;
   background-color: #fff;
   position: relative;
-  cursor: pointer; }
+  cursor: default; }
 
 .card:after {
   content: '';

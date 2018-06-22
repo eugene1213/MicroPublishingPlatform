@@ -114,24 +114,24 @@ main {
 }
 .card {
 	height: 300px;
-  border: 0;
-  border-radius: 0px;
-  transition: all .3s ease-in-out;
-  position: relative;
-  will-change: transform;
-  background-color: #fff;
-  position: relative;
-  cursor: pointer;
+	border: 0;
+	border-radius: 0px;
+	transition: all .3s ease-in-out;
+	position: relative;
+	will-change: transform;
+	background-color: #fff;
+	position: relative;
+	cursor: default;
 }
 .card:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 5px;
-  background-color: #2a292a;
-  transition: 0.5s;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0%;
+	height: 5px;
+	background-color: #2a292a;
+	transition: 0.5s;
 }
 .card:hover {
 	transform: scale(1.05);
@@ -150,14 +150,14 @@ main {
 	text-align: center;
 }
 .card .card-block {
-  padding-top: 0;
+  	padding-top: 0;
 }
 
 .display-2 {
-  font-size: 50px;
-  letter-spacing: 1px;
-  text-align: center;
-  margin: 36px 0;
+	font-size: 50px;
+	letter-spacing: 1px;
+	text-align: center;
+	margin: 36px 0;
 }
 .display-3 {
 	font-size: 10px;
