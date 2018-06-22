@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar
+from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar, Tag, Recommend
 from member.models import Author
 # from common.utils import send_email
 # from . import errors
@@ -46,6 +46,7 @@ from member.models import Author
 #             )
 #     return account, action
 #
+from member.task import IsActiveAuthorMail
 
 
 class AuthorIsActive(forms.Form):
@@ -54,41 +55,53 @@ class AuthorIsActive(forms.Form):
         user = author_post.author
         author = Author.objects.filter(author=user).get()
 
+        # if user:
+        #     mail_subject = 'byCAL 출판 완료.'
+        #     user = user
+        #     message = render_to_string('accept.html', {
+        #         'user': user.nickname,
+        #     })
+        #     to_email = user.username
+        #     email = EmailMultiAlternatives(
+        #         mail_subject, to=[to_email]
+        #     )
+        #     email.attach_alternative(message, "text/html")
+        #     email.send()
+        #     pass
+
         if user:
-            mail_subject = 'byCAL 출판 완료.'
-            user = user
-            message = render_to_string('accept.html', {
-                'user': user.nickname,
-            })
-            to_email = user.username
-            email = EmailMultiAlternatives(
-                mail_subject, to=[to_email]
-            )
-            email.attach_alternative(message, "text/html")
-            email.send()
-            pass
+            task = IsActiveAuthorMail
+            if task.delay(user.pk):
+                post = PreAuthorPost.objects.filter(author=author_post.author).all()
+                if post is not None:
+                    for i in post:
+                        new_post = Post.objects.select_related('author').create(
+                            author=i.author,
+                            main_content=i.main_content,
+                            price=i.price,
+                            preview=i.preview,
+                            title=i.title,
+                            cover_image=i.cover_image,
+                            thumbnail=i.thumbnail,
 
-        post = PreAuthorPost.objects.filter(author=author_post.author).all()
-        if post is not None:
-            for i in post:
-                new_post = Post.objects.select_related('author').create(
-                    author=i.author,
-                    main_content=i.main_content,
-                    price=i.price,
-                    preview=i.preview,
-                    title=i.title,
-                    cover_image=i.cover_image,
-                    thumbnail=i.thumbnail,
+                        )
+                        PostStar.objects.create(post=new_post)
+                        tag = i.tags.all()
+                        for j in tag:
+                            tags = Tag.objects.create(tags=j.tags)
+                            new_post.tags.add(tags)
 
-                )
-                PostStar.objects.create(post=new_post)
-                tag = post.tags
-                for j in tag:
-                    new_post.tags.add(j.tags)
-
-        author.is_active = True
-        author.save()
-        return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
+                        recommend = i.recommend.all()
+                        for k in recommend:
+                            recommeds = Recommend.objects.create(text=k.text)
+                            new_post.recommend.add(recommeds)
+                
+                    author.is_active = True
+                    author.save()
+                    return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
+                raise ValueError
+            raise ValueError
+        raise ValueError
 
     def save(self, author_post):
         author = self.form_action(author_post)
