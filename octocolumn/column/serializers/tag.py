@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from column.models import SearchTag, PreSearchTag, Tag
+from column.models import SearchTag, PreSearchTag, Tag, Recommend
 
 __all__ =(
     'TagSerializer',
@@ -28,7 +28,7 @@ class SearchTagSerializer(serializers.ModelSerializer):
 
 class RecommendSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag
+        model = Recommend
         fields = (
             'text',
         )

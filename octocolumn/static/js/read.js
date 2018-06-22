@@ -50,17 +50,11 @@ $(document).ready(function(){
                 $(".ribbon").removeClass("marked");
             }
             for(i in tags){
-                tagsHtml += '<li>'+tags[i].tag+'</li>';
+                tagsHtml += '<li>'+tags[i]+'</li>';
             }
             $(".column-tags ul").html(tagsHtml);
             if(window.location.href != href) history.replaceState(null,null,url);   // 유저가 임의로 url 변경시 올바른 url로 조정
 
-            for(var i in tagArray) {
-                
-                var tagText = tagArray[i].tag;
-        
-                $(".read-tag-wrap").append("<div class=\"read-tag\" id=\"read-tag-"+i+"\">"+tagText+"</div>");
-            }
             $('meta[property="og:url"]').attr('content',href);
             $('meta[property="og:image"]').attr('content',cover_img);
             $('meta[property="og:title"]').attr('content',title);

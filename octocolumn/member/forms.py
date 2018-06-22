@@ -82,9 +82,9 @@ class AuthorIsActive(forms.Form):
 
                 )
                 PostStar.objects.create(post=new_post)
-                tag = PreSearchTag.objects.select_related('post').filter(post=i).all()
+                tag = post.tags
                 for j in tag:
-                    SearchTag.objects.create(post=new_post, tag=j.tag)
+                    new_post.tags.add(j.tags)
 
         author.is_active = True
         author.save()
