@@ -21,7 +21,7 @@ function isBought(post_id, readtime, bookmark_status) {
                 // var reply = json.detail.reply; //미구현
                 var tagsHtml = '';
                 for(i in tags){
-                    tagsHtml += '<li>'+tags[i].tag+'</li>';
+                    tagsHtml += '<li>'+tags[i]+'</li>';
                 }
                 var cover_img = json.detail.cover_image;
                 var preview = json.detail.preview;
@@ -58,7 +58,7 @@ function isBought(post_id, readtime, bookmark_status) {
                                     '+preview+'\
                                 <div class="gradient"></div>\
                                 </div>\
-                                <div class="rating" style="pointer-events:none;">\
+                                <div class="rating" style="pointer-events:none;margin-left:5%;">\
                                     <input id="star10" name="rating" '+checkStarProp[9]+' type="radio" value="10"/>\
                                     <label for="star10" class="font-read-star"></label>\
                                     \

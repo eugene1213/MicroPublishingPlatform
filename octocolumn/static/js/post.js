@@ -17,13 +17,11 @@ $(document).ready(function(){
         if($(".arrow-box").is(":visible")){     // 출판메뉴와 버튼 화살표 방향 변경
 
             $(".arrow-box").hide();
-            $(".css-arrow").css("transform","rotate(360deg)");
         } else {
 
             btn_activation_checklist();
             
             $(".arrow-box").show();
-            $(".css-arrow").css("transform","rotate(180deg)");
         }
     });
 
@@ -123,21 +121,21 @@ function btn_activation_checklist() {
     var content = $('#editable').text().trim();                            // 전체 글자수
     var countSpace = ((content.match(/\s/g) || []).length)/2;       // 띄어쓰기를 0.5글자 계산
     var sum = content.length - 3.5 - countSpace;                    // 전체 글자수에서 띄어쓰기 갯수*0.5 뺀 값
-    $(".recommendation-input").keypress(function(){
-        if($("#recommend1").val()||$("#recommend2").val()||$("#recommend3").val()){
-            $('#errMsg').detach();
-            $(".btn-publish-final").removeAttr("disabled");
-            $(".btn-publish-final").removeClass("btn_disabled");
-        }else {
-            $(".btn-publish-final").attr("disabled", "true");
-            $(".btn-publish-final").addClass("btn_disabled");
-            $('#errMsg').detach();
-            $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">칼럼 소개를 작성해 주세요</p>');
-        }
-    })
-    if( sum >= 1500 ){       // 글자 수 체크 후 발행버튼 활성화
-        if( $('.added-tag-wrap').length != 0 ){
-            if( $('#blah').attr('src') ){
+    // $(".recommendation-input").keypress(function(){
+    //     if($("#recommend1").val()||$("#recommend2").val()||$("#recommend3").val()){
+    //         $('#errMsg').detach();
+    //         $(".btn-publish-final").removeAttr("disabled");
+    //         $(".btn-publish-final").removeClass("btn_disabled");
+    //     }else {
+    //         $(".btn-publish-final").attr("disabled", "true");
+    //         $(".btn-publish-final").addClass("btn_disabled");
+    //         $('#errMsg').detach();
+    //         $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">칼럼 소개를 작성해 주세요</p>');
+    //     }
+    // })
+    if( sum >= 1500 ){       // 글자 수 체크 후 다음 조건 체크
+        if( $('.added-tag-wrap').length != 0 ){ // 태그 유무 체크
+            if( $('#blah').attr('src') ){   // 표지사진 유무 체크
                 if($("#recommend1").val()||$("#recommend2").val()||$("#recommend3").val()){
                     $('#errMsg').detach();
                     $(".btn-publish-final").removeAttr("disabled");
