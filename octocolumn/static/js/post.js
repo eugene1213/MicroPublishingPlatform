@@ -121,18 +121,7 @@ function btn_activation_checklist() {
     var content = $('#editable').text().trim();                            // 전체 글자수
     var countSpace = ((content.match(/\s/g) || []).length)/2;       // 띄어쓰기를 0.5글자 계산
     var sum = content.length - 3.5 - countSpace;                    // 전체 글자수에서 띄어쓰기 갯수*0.5 뺀 값
-    // $(".recommendation-input").keypress(function(){
-    //     if($("#recommend1").val()||$("#recommend2").val()||$("#recommend3").val()){
-    //         $('#errMsg').detach();
-    //         $(".btn-publish-final").removeAttr("disabled");
-    //         $(".btn-publish-final").removeClass("btn_disabled");
-    //     }else {
-    //         $(".btn-publish-final").attr("disabled", "true");
-    //         $(".btn-publish-final").addClass("btn_disabled");
-    //         $('#errMsg').detach();
-    //         $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">칼럼 소개를 작성해 주세요</p>');
-    //     }
-    // })
+
     if( sum >= 1500 ){       // 글자 수 체크 후 다음 조건 체크
         if( $('.added-tag-wrap').length != 0 ){ // 태그 유무 체크
             if( $('#blah').attr('src') ){   // 표지사진 유무 체크
@@ -165,6 +154,10 @@ function btn_activation_checklist() {
         $('.btn-publish-final').before('<p id="errMsg" style="font-size:0.7rem;color:red;text-align:center;">분량이 부족합니다.</p>');
     }
 }
+
+$(".recommendation-input").keypress(function(){
+    btn_activation_checklist();
+});
 
 /* 최종적으로 발행을 결정하면 실행되는 함수*/
 function publish(temp_id, cover_img, preview_img, tag, price, recommend) {

@@ -38,6 +38,7 @@ div {
       content: "제목" !important; }
 
 .editable {
+  margin-top: 10px !important;
   min-height: 690px; }
   .editable figcaption {
     display: none; }
