@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar
+from column.models import PreAuthorPost, Post, Temp, PreSearchTag, SearchTag, PostStar, Tag, Recommend
 from member.models import Author
 # from common.utils import send_email
 # from . import errors
@@ -82,10 +82,16 @@ class AuthorIsActive(forms.Form):
 
                 )
                 PostStar.objects.create(post=new_post)
-                tag = post.tags
+                tag = i.tags.all()
                 for j in tag:
-                    new_post.tags.add(j.tags)
+                    tags = Tag.objects.create(tags=j.tags)
+                    new_post.tags.add(tags)
 
+                recommend = i.recommend.all()
+                for k in recommend:
+                    recommeds = Recommend.objects.create(text=k.text)
+                    new_post.recommend.add(recommeds)
+                
         author.is_active = True
         author.save()
         return PreAuthorPost.objects.filter(author=author_post.author).all().delete()
