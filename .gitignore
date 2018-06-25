@@ -4,6 +4,7 @@
 **/.idea/*
 settings_debug.json
 # **/.config/
+**/.vscode/
 **/migrations/**
 **/.media/post-image/*
 **/.media/profile/*
