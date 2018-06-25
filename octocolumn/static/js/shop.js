@@ -5,11 +5,27 @@ function buyBtnClick(price) {
     var email = '';
     var addr = '';
     var phone = '';
+    var discount = 0.6; // 할인 프로모션 때만 변경, 프로모션 없을 시 1
+    var addPoint = price;
 
     switch(price){
-        case 2000: name = 'Tester';break;
-        case 5000: name = 'Starter';break;
-        case 10000: name = 'Regular';
+        case 2000: {
+            name = 'Tester';
+            // price *= discount;
+            // addPoint = price/discount;        
+            break;
+        }
+        case 5000: {
+            name = 'Starter';
+            price *= discount;
+            addPoint = price/discount;
+            break;
+        }
+        case 10000: {
+            name = 'Regular';
+            // price *= discount;
+            // addPoint = price/discount;        
+        }
     }
     $.ajax({
         url: "/api/member/shopUserData/",
@@ -31,10 +47,10 @@ function buyBtnClick(price) {
                 show_agree_window: 0,       // 부트페이 정보 동의 창 보이기 여부
                 items: [
                     {
-                        item_name: name,            //상품명
-                        qty: 1,                     //수량
-                        unique: '1',                //해당 상품을 구분짓는 primary key
-                        price: price+price*0.1,     //상품 단가
+                        item_name: name,            // 상품명
+                        qty: 1,                     // 수량
+                        unique: '1',                // 해당 상품을 구분짓는 primary key
+                        price: price+price*0.1,     // 상품 단가
                         cat1: '',                   // 대표 상품의 카테고리 상, 50글자 이내
                         cat2: '',                   // 대표 상품의 카테고리 중, 50글자 이내
                         cat3: '',                   // 대표상품의 카테고리 하, 50글자 이내
@@ -84,10 +100,12 @@ function buyBtnClick(price) {
                     dataType: 'json',
                     data: {
                         receipt_id: data.receipt_id,
-                        price: price,
+                        price: addPoint,
                     },
                     success: function(json) {
-                        window.location.href = "/";
+                        var title = "결제 완료!";
+                        var msg = ""
+                        error_modal(title, msg, true);
                     },
                     error: function(err){
                     }

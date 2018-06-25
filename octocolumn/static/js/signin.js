@@ -15,6 +15,24 @@ $(document).ready(function(){
     });
 });
 function modalSignin() {
+    // 모바일에서 뒤로가기 제어
+    if (window.history && window.history.pushState && window.innerWidth <= 600) {
+        
+        $(window).on('popstate', function() {
+            var hashLocation = location.hash;
+            var hashSplit = hashLocation.split("#!/");
+            var hashName = hashSplit[1];
+
+            if (hashName !== '') {
+                var hash = window.location.hash;
+                if (hash === '') {
+                    window.location.reload();
+                }
+            }
+        });
+
+        window.history.pushState('forward', null, '');
+    }
     $('.welcome-container').css('display','block');
     $(".page").css("position", "fixed");
     $("#read-container").css("position", "fixed");    
