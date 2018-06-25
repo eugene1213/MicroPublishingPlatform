@@ -34,18 +34,14 @@ class Search(generics.ListAPIView):
                     , status=status.HTTP_400_BAD_REQUEST
                 )
             post_list = Post.objects.select_related('author').filter(
-                Q(title__icontains=data['keyword']) | Q(author__nickname__icontains=data['keyword'])
-            ).distinct()
-            tag = SearchTag.objects.select_related('post').filter(
-                Q(tag__icontains=data['keyword'])
-            ).distinct()
-            tag_list = []
-            for i in tag:
-                tag_list.append(i.post)
+                Q(title__icontains=data['keyword']) | Q(author__nickname__icontains=data['keyword']) |
+                Q(tags__tags__icontains=data['keyword'])
+            ).distinct().order_by('-created_date')
 
-            all_post = sorted(chain(post_list, tag_list), key=attrgetter('created_date'), reverse=True)
 
-            page = self.paginate_queryset(all_post)
+            # all_post = sorted(chain(post_list, tag_list), key=attrgetter('created_date'), reverse=True)
+
+            page = self.paginate_queryset(post_list)
             serializer = PostMoreSerializer(page, context={'user': self.request.user}, many=True)
 
             if page is not None:
