@@ -171,6 +171,27 @@ main {
 	font-size: 24px;
 }
 
+.starter .display-3 p {
+
+	&:nth-child(1){
+		position: relative;
+
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			width: 76px;
+			top: 11px;
+			left: calc(50% - 38px);
+			border-bottom: 1px solid red;
+		}
+	}
+
+	&:nth-child(2){
+		color: red;
+	}
+}
+
 .btn {
 	width: 100%;
 	font-size: 14px;
