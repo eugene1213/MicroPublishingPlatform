@@ -530,6 +530,7 @@ class IsBuyPost(APIView):
             list = []
             for i in tag_serializer.data:
                 list.append(i['text'])
+            return list
         return None
 
     def except_division(self, star):
