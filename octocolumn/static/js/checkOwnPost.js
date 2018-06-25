@@ -1,6 +1,25 @@
 /* 구매했는지 체크 후 구매하지 않았다면 프리뷰 모달 팝업 */
 function isBought(post_id, readtime, bookmark_status) {
+    
+    // 모바일에서 뒤로가기 제어
+    if (window.history && window.history.pushState && window.innerWidth <= 600) {
 
+        $(window).on('popstate', function() {
+            var hashLocation = location.hash;
+            var hashSplit = hashLocation.split("#!/");
+            var hashName = hashSplit[1];
+
+            if (hashName !== '') {
+                var hash = window.location.hash;
+                if (hash === '') {
+                    window.location.reload();
+                }
+            }
+        });
+
+        window.history.pushState('forward', null, '');
+    }
+    
     $.ajax({
         url: "/api/column/post-isbuy/"+post_id,
         async: false,

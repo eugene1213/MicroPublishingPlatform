@@ -167,6 +167,19 @@ main {
 .display-3 span {
   font-size: 24px; }
 
+.starter .display-3 p:nth-child(1) {
+  position: relative; }
+  .starter .display-3 p:nth-child(1)::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 76px;
+    top: 11px;
+    left: calc(50% - 38px);
+    border-bottom: 1px solid red; }
+.starter .display-3 p:nth-child(2) {
+  color: red; }
+
 .btn {
   width: 100%;
   font-size: 14px;
