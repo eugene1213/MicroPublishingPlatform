@@ -1,6 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import status, exceptions, generics
-from rest_framework.generics import get_object_or_404
+from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,6 +7,7 @@ from rest_framework.views import APIView
 from column.models import Comment, Post
 from column.pagination import CommentPagination
 from column.serializers import CommentSerializer
+from member.models import Notification
 from utils.error_code import kr_error_code
 
 __all__ = (
@@ -20,6 +20,12 @@ __all__ = (
 class CommentView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = CommentSerializer
+
+    def comment_notify(self, user, comment):
+        notify = Notification.objects.create(comment=comment)
+
+        user.notify.add(notify)
+        return True
 
     def parent(self, parent):
         if parent == '':
@@ -40,6 +46,7 @@ class CommentView(APIView):
             comment = Comment.objects.create(author=user, content=content, post=post)
 
             if comment:
+                self.comment_notify(parent_comment.author, comment)
                 if comment.is_parent:
                     comment.parent = parent_comment
                     comment.save()
@@ -59,6 +66,7 @@ class CommentView(APIView):
             comment = Comment.objects.create(author=user, content=content, post=post, parent=None)
 
             if comment:
+                self.comment_notify(post.author, comment)
                 return Response({"detail": comment.pk}, status=status.HTTP_201_CREATED)
             else:
                 return Response({"detail": "Already added."}, status=status.HTTP_200_OK)

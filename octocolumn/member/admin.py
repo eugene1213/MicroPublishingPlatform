@@ -11,7 +11,6 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from member.forms import AuthorIsActive, PostDraftAction, PointRewardForm
-from member.task import MemberPointTask
 from octo.models import UsePoint
 from column.models import Post, PreAuthorPost
 

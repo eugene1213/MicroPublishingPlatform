@@ -161,12 +161,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         related_name='pointhistory_relation_set',
     ),
 
-    # notification = models.ManyToManyField(
-    #     'member.notification',
-    #     related_name='recommand',
-    #     blank=True,
-    #     null=True
-    # )
+    notify = models.ManyToManyField(
+        'member.notification',
+        related_name='notification_relation',
+        blank=True,
+        null=True
+    )
 
     objects = UserManager()
 
@@ -222,11 +222,14 @@ class Relation(models.Model):
     # User의 follow목록을 가질 수 있도록
     # MTM에 대한 중개모델을 구성
     # from_user, to_user, created_at으로 3개의 필드를 사용
+
+    # 팔로워를 신청하려는 사람
     from_user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
         related_name='following_user_relations',
     )
+    # 팔로워를 받는 사람
     to_user = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
