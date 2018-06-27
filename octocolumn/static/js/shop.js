@@ -108,6 +108,7 @@ function buyBtnClick(price) {
                         error_modal(title, msg, true);
                     },
                     error: function(err){
+                        console.log(err)
                     }
                 });
             });
