@@ -6,8 +6,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 
+from column.models import Post
 from config.celery import app
-from member.models import User, InviteUser, PointHistory
+from member.models import User, InviteUser, PointHistory, Notification
+from member.models.user import Relation
 from utils.tokengenerator import account_activation_token, invite_token
 
 
@@ -87,19 +89,40 @@ class IsActiveAuthorMail(Task):
         email.send()
 
 
-#
-class MemberPointTask(Task):
-    def run(self, point, message):
-        all_member = User.objects.all()
-        for i in all_member:
-            i.point += int(point)
-            PointHistory.objects.reward(user=i, point=point, history=message)
+class NotificationTask(Task):
+    def run(self, user_pk, post_pk):
+        user = User.objects.filter(pk=user_pk).get()
+        post = Post.objects.filter(pk=post_pk).get()
 
+        notify = Notification.objects.create(post=post)
+
+        follower = Relation.objects.filter(to_user=user).all()
+
+        for i in follower:
+            i.from_user.notify.add(notify)
+        
         return True
 
+
+
+        
+
+
+        
+
+
+#
+# class MemberPointTask(Task):
+#     def run(self, point, message):
+#         all_member = User.objects.all()
+#         for i in all_member:
+#             i.point += int(point)
+#             PointHistory.objects.reward(user=i, point=point, history=message)
+
+#         return True
 
 app.tasks.register(SignupEmailTask)
 app.tasks.register(PasswordResetTask)
 app.tasks.register(InviteUserTask)
-app.tasks.register(MemberPointTask)
+app.tasks.register(NotificationTask)
 app.tasks.register(IsActiveAuthorMail)

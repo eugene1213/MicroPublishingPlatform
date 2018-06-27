@@ -90,13 +90,12 @@ class AuthorIsActive(forms.Form):
                         for j in tag:
                             tags = Tag.objects.create(tags=j.tags)
                             new_post.tags.add(tags)
-                            tag.clear()
+
 
                         recommend = i.recommend.all()
                         for k in recommend:
                             recommeds = Recommend.objects.create(text=k.text)
                             new_post.recommend.add(recommeds)
-                            recommend.clear()
                     author.is_active = True
                     author.save()
                     return PreAuthorPost.objects.filter(author=author_post.author).all().delete()

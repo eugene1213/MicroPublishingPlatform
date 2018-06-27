@@ -18,6 +18,7 @@ from column.serializers.tag import SearchTagSerializer, TagSerializer, Recommend
 from member.models import Author as AuthorModel, User, PointHistory, BuyList, ProfileImage, Profile
 from member.models.user import WaitingRelation, Bookmark, Relation
 from member.serializers import ProfileImageSerializer, UserSerializer
+from member.task import NotificationTask
 from octo.models import UsePoint
 from utils.error_code import kr_error_code
 from utils.image_rescale import image_quality_down, thumnail_cover_image_resize
@@ -91,6 +92,7 @@ class PostCreateView(generics.GenericAPIView,
 
         return True
 
+    # 추천하는글 추가로직
     def recommend_text(self, post, recommend):
         recommend_tag = recommend.split('|~%')
 
@@ -108,12 +110,14 @@ class PostCreateView(generics.GenericAPIView,
 
         return True
 
-    def major_point(self):
-        return UsePoint.objects.filter(type='major_user').get()
+    # 알림 추가 작업
+    def notification_task(self,user_pk, post_pk):
+        task = NotificationTask
+        if task.delay(user_pk, post_pk):
+            return True
+        return False
 
-    def first_point(self):
-        return UsePoint.objects.filter(type='first_user').get()
-
+    # 기다림 추가
     def waiting_init(self):
         # 웨이팅 릴레이션 모두 삭제
         if WaitingRelation.objects.filter(receive_user=self.request.user).all().delete():
@@ -204,6 +208,7 @@ class PostCreateView(generics.GenericAPIView,
 
                 # 유저 포인트 업데이트
                 self.waiting_init()
+                self.notification_task(user.pk, post.pk)
                 self.add_point_history(point=0, post=post, history=temp.title)
 
                 # 템프파일 삭제
@@ -384,6 +389,22 @@ class PostReadView(APIView):
                 return 0
             return round(star.content / star.member_num)
 
+    def profile_image(self, author):
+        try:
+            profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
+            return profile_image
+        except ObjectDoesNotExist:
+            profile_image = ProfileImage.objects.create(user=author)
+            return profile_image
+
+    def profile(self, author):
+        try:
+            profile = Profile.objects.select_related('user').filter(user=author).get()
+            return profile
+        except ObjectDoesNotExist:
+            profile = Profile.objects.create(user=author)
+            return profile
+
     def get(self, request, *args, **kwargs):
         param = self.kwargs.get('pk')
 
@@ -405,10 +426,10 @@ class PostReadView(APIView):
                     # 작가임
                     author = post.author
                     user_serializer = UserSerializer(author)
-                    profile_image = ProfileImage.objects.select_related('user').filter(user=author).get()
+                    profile_image = self.profile_image(author)
                     image_serializer = ProfileImageSerializer(profile_image)
                     time = datetime.strptime(serializer.data['created_date'].split('T')[0], '%Y-%m-%d')
-                    profile = Profile.objects.select_related('user').filter(user=author).get()
+                    profile = self.profile(author)
 
                     return Response({
                         "detail": {
