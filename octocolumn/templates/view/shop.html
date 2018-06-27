@@ -36,6 +36,11 @@
 			{% include 'view/header_on.html' %}
 		{% else %}
 			{% include 'view/header.html' %}
+			<script>
+				$(document).ready(function(){
+					modalSignin();
+				});
+			</script>
 		{% endif %}
 		<main>
 			<div class="main-container">
