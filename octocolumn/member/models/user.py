@@ -165,7 +165,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         'member.notification',
         related_name='notification_relation',
         blank=True,
-        null=True
     )
 
     objects = UserManager()
