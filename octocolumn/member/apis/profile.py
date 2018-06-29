@@ -477,7 +477,8 @@ class AllMyPost(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         pk = self.request.data['pk']
-        user = User.objects.filter(pk=pk).get()
+        decode_pk = int(decode(enc=str(pk)))
+        user = User.objects.filter(pk=decode_pk).get()
         try:
             temp = Temp.objects.select_related('author').filter(author=user).all()
             post = Post.objects.select_related('author').filter(author=user).all()
