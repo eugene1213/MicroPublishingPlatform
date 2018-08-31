@@ -1,4 +1,4 @@
-# MicroPublisingPlatform
+# MicroPublishingPlatform
 ### main & side bar
 ![Alt text](https://user-images.githubusercontent.com/42860116/44911103-aadee480-ad60-11e8-8090-ff40f206964a.png "Optional title")
 ### list of columns
